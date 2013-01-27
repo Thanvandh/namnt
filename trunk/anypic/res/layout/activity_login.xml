@@ -1,0 +1,62 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_login"
+    tools:context=".Login" >
+
+<!--     <Button
+        android:id="@+id/btSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="33dp"
+        android:layout_marginTop="23dp"
+        android:text="SignUp" />
+
+    <Button
+        android:id="@+id/btLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btSignUp"
+        android:layout_below="@+id/btSignUp"
+        android:layout_marginTop="19dp"
+        android:text="Login" />
+ -->
+    <Button
+        android:id="@+id/bt_facebooklogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@android:color/transparent"
+        android:drawableTop="@drawable/icon_bt_facebook_login"/>
+        
+<!-- 
+    <com.facebook.widget.LoginButton
+        android:id="@+id/bt_facebooklogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        facebook:login_text="Login with Facebook"
+        android:layout_centerInParent="true"
+        facebook:confirm_logout="false"
+        facebook:fetch_user_info="true" />
+
+    <TextView
+        android:id="@+id/txt_greeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bt_facebooklogin"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/hello_world" />
+
+    <com.facebook.widget.ProfilePictureView
+        android:id="@+id/profilePicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_greeting"
+        android:gravity="center_horizontal"
+        facebook:preset_size="normal" />
+-->
+</RelativeLayout>
