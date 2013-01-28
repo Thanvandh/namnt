@@ -38,7 +38,7 @@ public class MainActivity extends TabActivity {
         cameraspec.setIndicator(prepareTabView("", R.drawable.icon_camera_tab));
         
 
-        Intent songsIntent = new Intent(this, GalleryActivity.class);
+        Intent songsIntent = new Intent(this, PhotoActivity.class);
         cameraspec.setContent(songsIntent);
         
         // Tab for Videos
