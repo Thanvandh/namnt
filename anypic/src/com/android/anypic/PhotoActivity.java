@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -37,6 +38,7 @@ public class PhotoActivity extends Activity {
 	Button bt_take_photo;
 	Button bt_upload;
 	ImageView photo;
+	private ProgressDialog mProgressDialog;
 	private static final int SELECT_PHOTO = 100;
 	private static final int TAKE_PICTURE = 101;
 	Uri imageUri;
@@ -83,6 +85,7 @@ public class PhotoActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				mProgressDialog = ProgressDialog.show(PhotoActivity.this, "", getString(R.string.loading), true);
 				InputStream imageStream = null;
 				byte[] data = null;
 				try {
@@ -109,7 +112,17 @@ public class PhotoActivity extends Activity {
 						final ParseObject photo = new ParseObject("photo");
 						photo.put("image", file);
 						photo.put("user", ParseUser.getCurrentUser());
-						photo.saveInBackground();
+						photo.saveInBackground(new SaveCallback() {
+							
+							@Override
+							public void done(ParseException e) {
+								// TODO Auto-generated method stub
+								if (mProgressDialog.isShowing()) {
+									mProgressDialog.dismiss();
+						      }
+								
+							}
+						});
 //						photo.saveInBackground(new SaveCallback() {
 //							
 //							@Override

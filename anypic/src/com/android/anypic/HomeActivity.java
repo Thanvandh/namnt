@@ -82,10 +82,11 @@ public class HomeActivity extends Activity {
 	static final String KEY_ITEM = "item"; // parent node
 	static final String KEY_ID = "id";
 	static final String OBJECT_ID = "objectid";
+	static final String PHOTO_URL = "image";
 	static final String KEY_NAME = "name";
-	final int LIMIT_PHOTO = 5;
+	final int LIMIT_PHOTO = 3;
 	// Flag for current page
-	int current_page = LIMIT_PHOTO;
+	int current_page = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -132,20 +133,27 @@ public class HomeActivity extends Activity {
 		
 		ParseQuery query_photo = new ParseQuery("photo");
 		query_photo.whereEqualTo("user", parse_user);
-		query_photo.addAscendingOrder("createdAt");
+		query_photo.addDescendingOrder("createdAt");
 		query_photo.setLimit(LIMIT_PHOTO);
 		query_photo.findInBackground(new FindCallback() {
 		    public void done(List<ParseObject> photoList, ParseException e) {
 		        if (e == null) {
-		            Log.d("score", "Retrieved " + photoList.size() + " photos");
+		            Log.d("test", "Retrieved " + photoList.size() + " photos");
 		            for (int i = 0; i < photoList.size(); i++) {
 						// creating new HashMap
 						HashMap<String, String> map = new HashMap<String, String>();
 						// adding each child node to HashMap key => value
-						map.put(OBJECT_ID, photoList.get(i).getObjectId()); // id not using any where
-
+						Log.d("test", "objectid " + photoList.get(i).getObjectId());
+						// id not using any where
+						
+						ParseFile res = (ParseFile) photoList.get(i).get("image");
+						map.put(OBJECT_ID, photoList.get(i).getObjectId()); 
+						map.put(PHOTO_URL, res.getUrl()); 
 						// adding HashList to ArrayList
 						menuItems.add(map);
+						// Getting adapter
+						adapter = new HomeRowAdapter(HomeActivity.this, menuItems);
+						lv.setAdapter(adapter);
 					}
 		            
 		        } else {
@@ -192,9 +200,7 @@ public class HomeActivity extends Activity {
 		// Adding Load More button to lisview at bottom
 		lv.addFooterView(btnLoadMore);
 		
-		// Getting adapter
-		adapter = new HomeRowAdapter(this, menuItems);
-		lv.setAdapter(adapter);
+		
 
 		/**
 		 * Listening to Load More button click event
@@ -281,9 +287,40 @@ public class HomeActivity extends Activity {
 			//map.put(KEY_NAME, "Thanh Nam");
 
 			// adding HashList to ArrayList
-			//menuItems.add(0, map);
+			menuItems.clear();
+			current_page = 0;
 
             // Call onRefreshComplete when the list has been refreshed.
+        	ParseQuery query_photo = new ParseQuery("photo");
+    		query_photo.whereEqualTo("user", parse_user);
+    		query_photo.addDescendingOrder("createdAt");
+    		query_photo.setLimit(LIMIT_PHOTO);
+    		query_photo.findInBackground(new FindCallback() {
+    		    public void done(List<ParseObject> photoList, ParseException e) {
+    		        if (e == null) {
+    		            Log.d("test", "Retrieved " + photoList.size() + " photos");
+    		            for (int i = 0; i < photoList.size(); i++) {
+    						// creating new HashMap
+    						HashMap<String, String> map = new HashMap<String, String>();
+    						// adding each child node to HashMap key => value
+    						Log.d("test", "objectid " + photoList.get(i).getObjectId());
+    						// id not using any where
+    						
+    						ParseFile res = (ParseFile) photoList.get(i).get("image");
+    						map.put(OBJECT_ID, photoList.get(i).getObjectId()); 
+    						map.put(PHOTO_URL, res.getUrl()); 
+    						// adding HashList to ArrayList
+    						menuItems.add(map);
+    						// Getting adapter
+    						adapter = new HomeRowAdapter(HomeActivity.this, menuItems);
+    						lv.setAdapter(adapter);
+    					}
+    		            
+    		        } else {
+    		            Log.d("score", "Error: " + e.getMessage());
+    		        }
+    		    }
+    		});
             lv.onRefreshComplete();
 
             super.onPostExecute(result);
@@ -342,21 +379,35 @@ public class HomeActivity extends Activity {
 //					}
 					ParseQuery query_photo = new ParseQuery("photo");
 					query_photo.whereEqualTo("user", parse_user);
-					query_photo.addAscendingOrder("createdAt");
+					query_photo.addDescendingOrder("createdAt");
 					query_photo.setLimit(LIMIT_PHOTO);
-					query_photo.setSkip(LIMIT_PHOTO);
+					query_photo.setSkip(current_page);
 					query_photo.findInBackground(new FindCallback() {
 					    public void done(List<ParseObject> photoList, ParseException e) {
 					        if (e == null) {
-					            Log.d("score", "Retrieved " + photoList.size() + " photos");
+					            Log.d("test", "Retrieved " + photoList.size() + " photos");
 					            for (int i = 0; i < photoList.size(); i++) {
 									// creating new HashMap
 									HashMap<String, String> map = new HashMap<String, String>();
 									// adding each child node to HashMap key => value
-									map.put(OBJECT_ID, photoList.get(i).getObjectId()); // id not using any where
+									Log.d("test", "objectid " + photoList.get(i).getObjectId());
+									ParseFile res = (ParseFile) photoList.get(i).get("image");
+									map.put(OBJECT_ID, photoList.get(i).getObjectId()); 
+									map.put(PHOTO_URL, res.getUrl());
 
 									// adding HashList to ArrayList
 									menuItems.add(map);
+									// get listview current position - used to maintain scroll position
+									int currentPosition = lv.getFirstVisiblePosition();
+									
+									// Appending new data to menuItems ArrayList
+									adapter = new HomeRowAdapter(
+											HomeActivity.this,
+											menuItems);
+									lv.setAdapter(adapter);
+									
+									// Setting new scroll position
+									lv.setSelectionFromTop(currentPosition + 1, 0);
 								}
 					            
 					        } else {
@@ -365,17 +416,7 @@ public class HomeActivity extends Activity {
 					    }
 					});
 					
-					// get listview current position - used to maintain scroll position
-					int currentPosition = lv.getFirstVisiblePosition();
 					
-					// Appending new data to menuItems ArrayList
-					adapter = new HomeRowAdapter(
-							HomeActivity.this,
-							menuItems);
-					lv.setAdapter(adapter);
-					
-					// Setting new scroll position
-					lv.setSelectionFromTop(currentPosition + 1, 0);
 
 				}
 			});

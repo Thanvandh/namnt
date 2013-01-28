@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.android.utils.ImageLoader;
 import com.parse.GetCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -31,12 +32,14 @@ public class HomeRowAdapter extends BaseAdapter {
 	 private Activity activity;
 	    private ArrayList<HashMap<String, String>> data;
 	    private static LayoutInflater inflater=null;
+	    public ImageLoader imageLoader; 
 	    
 		    
 	    public HomeRowAdapter(Activity a, ArrayList<HashMap<String, String>> d) {
 	        activity = a;
 	        data=d;
 	        inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	        imageLoader=new ImageLoader(activity.getApplicationContext());
 	    }
 
 	    public int getCount() {
@@ -58,48 +61,12 @@ public class HomeRowAdapter extends BaseAdapter {
 	            vi = inflater.inflate(R.layout.list_row_home, null);
 
 	        TextView name = (TextView)vi.findViewById(R.id.list_home_row_displayname); // title
-	        final ImageView photo = (ImageView)vi.findViewById(R.id.list_home_row_bottom);
+	        ImageView photo = (ImageView)vi.findViewById(R.id.list_home_row_bottom);
 	        
 	        HashMap<String, String> item = new HashMap<String, String>();
 	        item = data.get(position);
 	        
-//	        ParseQuery query = new ParseQuery("photo");
-//	        query.getInBackground(item.get(HomeActivity.OBJECT_ID), new GetCallback() {
-//				
-//				@Override
-//				public void done(ParseObject object, ParseException e) {
-//					// TODO Auto-generated method stub
-//					if (e == null) {
-//		        	      // object will be your game score
-//						ParseFile res = (ParseFile)object.get("image");
-//						if (res != null)
-//						{
-//						res.getDataInBackground(new GetDataCallback() {
-//						  public void done(byte[] data, ParseException e) {
-//						    if (e == null) {
-//						    	Log.d("test","download file thanh cong");
-//						    	//byte[] b = getPictureLargeForFacebookId(mfacebookid);
-//						    	ByteArrayInputStream in = new ByteArrayInputStream(data);
-//						    	BufferedInputStream f = new BufferedInputStream(in); 
-//						    	Bitmap bmp = BitmapFactory.decodeStream(f);
-//						    	//Bitmap bmp=BitmapFactory.decodeByteArray(data,0,data.length);
-//						        //Drawable d =new BitmapDrawable(getResources(),bmp);
-//						    	//Drawable d = getResources().getDrawable(R.drawable.profile);
-//						    	photo.setImageBitmap(bmp);
-//						        
-//						    } else {
-//						      // something went wrong
-//						    	Log.d("test","loi downfile|" + e.toString());
-//
-//						    }
-//						  }
-//						});
-//						}
-//		        	    } else {
-//		        	      // something went wrong
-//		        	    }
-//				}
-//			}); 
+	        imageLoader.DisplayImage(item.get(HomeActivity.PHOTO_URL), photo);
 	
 	        
 	        
