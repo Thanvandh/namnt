@@ -4,11 +4,12 @@
     android:layout_height="match_parent"
     tools:context=".TimelineActivity" >
 
-    <TextView
-        android:layout_width="wrap_content"
+     <com.markupartist.android.widget.PullToRefreshListView
+        android:id="@+id/list_activity"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/hello_world" />
+        android:divider="#b5b5b5"
+        android:dividerHeight="1dp"
+        android:listSelector="@drawable/list_selector" />
 
 </RelativeLayout>

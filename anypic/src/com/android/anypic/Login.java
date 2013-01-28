@@ -74,6 +74,7 @@ public class Login extends Activity {
 	String mfacebookid;
 	String mdisplayname;
 	//private GraphUser facebook_user;
+	//key hash co quan 3KuOTz+q0bYAuYpP3+nPk3d2KKE=
 
 	final int REQUESTCODE_HOME_ACTIVITY = 259;
 	

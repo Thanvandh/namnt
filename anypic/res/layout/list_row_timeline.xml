@@ -7,7 +7,7 @@
     android:padding="5dip" >
 
 	<!--  ListRow Left sied Thumbnail image -->
-	<LinearLayout android:id="@+id/small_profile_picture" 
+	<LinearLayout android:id="@+id/list_timeline_row_profile" 
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:padding="3dip"		
@@ -16,7 +16,7 @@
 	    android:layout_marginRight="5dip">
         
 		<ImageView     
-			android:id="@+id/list_image"   
+			android:id="@+id/list_timeline_row_pic"   
 	        android:layout_width="50dip"
 	        android:layout_height="50dip"
 	        android:src="@drawable/rihanna"/>
@@ -25,11 +25,11 @@
     
 	<!-- Displayname-->
     <TextView
-        android:id="@+id/displayname"
+        android:id="@+id/list_timeline_row_displayname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/small_profile_picture"
-        android:layout_toRightOf="@+id/small_profile_picture"
+        android:layout_alignTop="@+id/list_timeline_row_profile"
+        android:layout_toRightOf="@+id/list_timeline_row_profile"
         android:text="Rihanna"
         android:textStyle="bold"
         android:textColor="#040404"
@@ -38,29 +38,29 @@
     
     <!-- Title Of action-->
     <TextView
-        android:id="@+id/action"
+        android:id="@+id/list_timeline_row_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/displayname"
-        android:text="like your photo"
+        android:layout_toRightOf="@+id/list_timeline_row_profile"
+        android:layout_below="@+id/list_timeline_row_displayname"
+        android:text="comment your photo"
         android:textColor="#040404"
         android:typeface="sans" 
-        android:textSize="15dip"/>
+        android:textSize="12dip"/>
 
 	<!-- Time -->
     <TextView
-        android:id="@+id/timeago"
+        android:id="@+id/list_timeline_row_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/displayname"
+        android:layout_below="@+id/list_timeline_row_action"
         android:textColor="#343434"
         android:textSize="10dip"
-        android:layout_marginTop="1dip"
-        android:layout_toRightOf="@+id/small_profile_picture"
+        android:layout_toRightOf="@+id/list_timeline_row_profile"
         android:text="Time ago" />
 
 	<!--  ListRow Right sied Thumbnail image -->
-	<LinearLayout android:id="@+id/thumbnail" 
+	<LinearLayout android:id="@+id/list_timeline_row_thumbnail" 
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:padding="3dip"		
@@ -69,7 +69,7 @@
 	    android:layout_marginRight="5dip">
         
 		<ImageView     
-			android:id="@+id/list_image"   
+			android:id="@+id/list_timeline_row_thumbnail_pic"   
 	        android:layout_width="50dip"
 	        android:layout_height="50dip"
 	        android:src="@drawable/rihanna"/>

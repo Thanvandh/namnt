@@ -5,6 +5,9 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
@@ -17,15 +20,25 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.json.JSONException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import com.android.data.Config;
 import com.android.data.User;
+import com.android.utils.XMLParser;
+import com.markupartist.android.widget.PullToRefreshListView;
+import com.markupartist.android.widget.PullToRefreshListView.OnRefreshListener;
+import com.parse.FindCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -39,9 +52,13 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 import android.support.v4.app.NavUtils;
 
 public class HomeActivity extends Activity {
@@ -51,6 +68,24 @@ public class HomeActivity extends Activity {
 	String mfacebookid;
 	String mfacebook_user;
 	ParseUser parse_user;
+	XMLParser parser;
+	Document doc;
+	String xml;
+	PullToRefreshListView lv;
+	HomeRowAdapter adapter;
+	ArrayList<HashMap<String, String>> menuItems;
+	ProgressDialog pDialog;
+	
+	private String URL = "http://api.androidhive.info/list_paging/?page=1";
+
+	// XML node keys
+	static final String KEY_ITEM = "item"; // parent node
+	static final String KEY_ID = "id";
+	static final String OBJECT_ID = "objectid";
+	static final String KEY_NAME = "name";
+	final int LIMIT_PHOTO = 5;
+	// Flag for current page
+	int current_page = LIMIT_PHOTO;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +93,7 @@ public class HomeActivity extends Activity {
         setContentView(R.layout.activity_home);
         img_profile = (ImageView) findViewById(R.id.img_profile);
         myname = (TextView) findViewById(R.id.txt_profilename);
-        Intent i = getIntent();
+        Intent intent1 = getIntent();
         //mfacebookid = i.getExtras().getString("facebookid");
         //mfacebook_user = i.getExtras().getString("facebook_user");
         parse_user = ParseUser.getCurrentUser();
@@ -66,6 +101,133 @@ public class HomeActivity extends Activity {
 		//mProgressDialog = ProgressDialog.show(HomeActivity.this, "", getString(R.string.loading), true);
 //		Log.d("test","vao day ko");
 		updateUI();
+		lv = (PullToRefreshListView) findViewById(R.id.list_home);
+		lv.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Do work to refresh the list here.
+                new GetDataTask().execute();
+            }
+        });
+
+		menuItems = new ArrayList<HashMap<String, String>>();
+
+//		parser = new XMLParser();
+//		xml = parser.getXmlFromUrl(URL); // getting XML
+//		doc = parser.getDomElement(xml); // getting DOM element
+//
+//		NodeList nl = doc.getElementsByTagName(KEY_ITEM);
+//		// looping through all item nodes <item>
+//				for (int i = 0; i < nl.getLength(); i++) {
+//					// creating new HashMap
+//					HashMap<String, String> map = new HashMap<String, String>();
+//					Element e = (Element) nl.item(i);
+//					// adding each child node to HashMap key => value
+//					map.put(KEY_ID, parser.getValue(e, KEY_ID)); // id not using any where
+//					map.put(KEY_NAME, parser.getValue(e, KEY_NAME));
+//
+//					// adding HashList to ArrayList
+//					menuItems.add(map);
+//				}
+		
+		ParseQuery query_photo = new ParseQuery("photo");
+		query_photo.whereEqualTo("user", parse_user);
+		query_photo.addAscendingOrder("createdAt");
+		query_photo.setLimit(LIMIT_PHOTO);
+		query_photo.findInBackground(new FindCallback() {
+		    public void done(List<ParseObject> photoList, ParseException e) {
+		        if (e == null) {
+		            Log.d("score", "Retrieved " + photoList.size() + " photos");
+		            for (int i = 0; i < photoList.size(); i++) {
+						// creating new HashMap
+						HashMap<String, String> map = new HashMap<String, String>();
+						// adding each child node to HashMap key => value
+						map.put(OBJECT_ID, photoList.get(i).getObjectId()); // id not using any where
+
+						// adding HashList to ArrayList
+						menuItems.add(map);
+					}
+		            
+		        } else {
+		            Log.d("score", "Error: " + e.getMessage());
+		        }
+		    }
+		});
+		
+//		photo.getParseObject("post").fetchIfNeededInBackground(new GetCallback() {
+//			  public void done(ParseObject object, ParseException e) {
+//			    String title = post.getString("title");
+//			  }
+//			});
+//		ParseObject photo = new ParseObject("photo");
+//		ParseRelation relation_photo = photo.getRelation("user");
+//		
+//		relation_photo.add(parse_user);
+//		relation_photo.getQuery().findInBackground(new FindCallback() {
+//
+//			@Override
+//			public void done(List<ParseObject> arg0, ParseException arg1) {
+//				// TODO Auto-generated method stub
+//				if (arg1 != null) {
+//			        // There was an error
+//			      } else {
+//			    	  
+//			        // results have all the Posts the current user liked.
+//			    	  for (int i = 0; i < arg0.size(); i++)
+//			    	  {
+//			    		  String objectid = arg0.get(i).getObjectId();
+//			    		  Log.d("test", "objectid: " + objectid);
+//			    	  }
+//			    		  
+//			      }
+//			}
+//		});
+		
+		
+
+		// LoadMore button
+		Button btnLoadMore = new Button(this);
+		btnLoadMore.setText("Load More");
+
+		// Adding Load More button to lisview at bottom
+		lv.addFooterView(btnLoadMore);
+		
+		// Getting adapter
+		adapter = new HomeRowAdapter(this, menuItems);
+		lv.setAdapter(adapter);
+
+		/**
+		 * Listening to Load More button click event
+		 * */
+		btnLoadMore.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// Starting a new async task
+				new loadMoreListView().execute();
+			}
+		});
+		
+		
+		/**
+		 * Listening to listview single row selected
+		 * **/
+		lv.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// getting values from selected ListItem
+//				String name = ((TextView) view.findViewById(R.id.name))
+//						.getText().toString();
+//
+//				// Starting new intent
+//				Intent in = new Intent(getApplicationContext(),
+//						SingleMenuItemActivity.class);
+//				in.putExtra(KEY_NAME, name);
+//				startActivity(in);
+			}
+		});
         
         
 
@@ -85,9 +247,9 @@ public class HomeActivity extends Activity {
 		    	BufferedInputStream f = new BufferedInputStream(in); 
 		    	Bitmap bmp = BitmapFactory.decodeStream(f);
 		    	//Bitmap bmp=BitmapFactory.decodeByteArray(data,0,data.length);
-		        Drawable d =new BitmapDrawable(getResources(),bmp);
+		        //Drawable d =new BitmapDrawable(getResources(),bmp);
 		    	//Drawable d = getResources().getDrawable(R.drawable.profile);
-		    	img_profile.setImageDrawable(d);
+		    	img_profile.setImageBitmap(bmp);
 		        
 		    } else {
 		      // something went wrong
@@ -99,6 +261,134 @@ public class HomeActivity extends Activity {
 		}
 
     }
+    private class GetDataTask extends AsyncTask<Void, Void, String[]> {
+
+//        @Override
+//        protected String[] doInBackground(Void... params) {
+//            // Simulates a background job.
+//            try {
+//                Thread.sleep(2000);
+//            } catch (InterruptedException e) {
+//                ;
+//            }
+//            return mStrings;
+//        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+        	HashMap<String, String> map = new HashMap<String, String>();
+        	//map.put(OBJECT_ID, "100"); // id not using any where
+			//map.put(KEY_NAME, "Thanh Nam");
+
+			// adding HashList to ArrayList
+			//menuItems.add(0, map);
+
+            // Call onRefreshComplete when the list has been refreshed.
+            lv.onRefreshComplete();
+
+            super.onPostExecute(result);
+        }
+
+		@Override
+		protected String[] doInBackground(Void... arg0) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+    }
+
+	/**
+	 * Async Task that send a request to url
+	 * Gets new list view data
+	 * Appends to list view
+	 * */
+	private class loadMoreListView extends AsyncTask<Void, Void, Void> {
+
+		@Override
+		protected void onPreExecute() {
+			// Showing progress dialog before sending http request
+			pDialog = new ProgressDialog(
+					HomeActivity.this);
+			pDialog.setMessage("Please wait..");
+			pDialog.setIndeterminate(true);
+			pDialog.setCancelable(false);
+			pDialog.show();
+		}
+
+		protected Void doInBackground(Void... unused) {
+			runOnUiThread(new Runnable() {
+				public void run() {
+					// increment current page
+					current_page += LIMIT_PHOTO;
+					
+					// Next page request
+//					URL = "http://api.androidhive.info/list_paging/?page=" + current_page;
+//
+//					xml = parser.getXmlFromUrl(URL); // getting XML
+//					doc = parser.getDomElement(xml); // getting DOM element
+//
+//					NodeList nl = doc.getElementsByTagName(KEY_ITEM);
+//					// looping through all item nodes <item>
+//					for (int i = 0; i < nl.getLength(); i++) {
+//						// creating new HashMap
+//						HashMap<String, String> map = new HashMap<String, String>();
+//						Element e = (Element) nl.item(i);
+//						
+//						// adding each child node to HashMap key => value
+//						map.put(KEY_ID, parser.getValue(e, KEY_ID));
+//						map.put(KEY_NAME, parser.getValue(e, KEY_NAME));
+//
+//						// adding HashList to ArrayList
+//						menuItems.add(map);
+//					}
+					ParseQuery query_photo = new ParseQuery("photo");
+					query_photo.whereEqualTo("user", parse_user);
+					query_photo.addAscendingOrder("createdAt");
+					query_photo.setLimit(LIMIT_PHOTO);
+					query_photo.setSkip(LIMIT_PHOTO);
+					query_photo.findInBackground(new FindCallback() {
+					    public void done(List<ParseObject> photoList, ParseException e) {
+					        if (e == null) {
+					            Log.d("score", "Retrieved " + photoList.size() + " photos");
+					            for (int i = 0; i < photoList.size(); i++) {
+									// creating new HashMap
+									HashMap<String, String> map = new HashMap<String, String>();
+									// adding each child node to HashMap key => value
+									map.put(OBJECT_ID, photoList.get(i).getObjectId()); // id not using any where
+
+									// adding HashList to ArrayList
+									menuItems.add(map);
+								}
+					            
+					        } else {
+					            Log.d("score", "Error: " + e.getMessage());
+					        }
+					    }
+					});
+					
+					// get listview current position - used to maintain scroll position
+					int currentPosition = lv.getFirstVisiblePosition();
+					
+					// Appending new data to menuItems ArrayList
+					adapter = new HomeRowAdapter(
+							HomeActivity.this,
+							menuItems);
+					lv.setAdapter(adapter);
+					
+					// Setting new scroll position
+					lv.setSelectionFromTop(currentPosition + 1, 0);
+
+				}
+			});
+
+			return (null);
+		}
+		
+		
+		protected void onPostExecute(Void unused) {
+			// closing progress dialog
+			pDialog.dismiss();
+		}
+	}
     public byte[] getPictureForFacebookId(String facebookId) {
 
 	    Drawable picture = null;
