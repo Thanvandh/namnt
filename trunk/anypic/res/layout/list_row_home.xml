@@ -101,9 +101,9 @@
     <ImageView
         android:id="@+id/list_home_row_bottom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_below="@+id/list_home_row_top"
         android:scaleType="fitCenter"
-        android:src="@drawable/profile" />
+        android:src="@drawable/test" />
 
 </RelativeLayout>
