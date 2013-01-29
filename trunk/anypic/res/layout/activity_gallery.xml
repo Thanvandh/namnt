@@ -2,13 +2,108 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/list_selector"
     tools:context=".GalleryActivity" >
+    <RelativeLayout
+        android:id="@+id/gallery_top"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
 
-    <TextView
-        android:layout_width="wrap_content"
+        <!-- ListRow Left sied Thumbnail image -->
+
+        <LinearLayout
+            android:id="@+id/img_gallery_avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="5dip"
+            android:background="@drawable/smallprofilepicture"
+            android:padding="3dip" >
+
+            <ImageView
+                android:id="@+id/img_gallery_avatar_pic"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:src="@drawable/rihanna" />
+        </LinearLayout>
+
+        <!-- Displayname -->
+
+        <TextView
+            android:id="@+id/gallery_displayname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/img_gallery_avatar"
+            android:layout_toRightOf="@+id/img_gallery_avatar"
+            android:text="Rihanna"
+            android:textColor="#040404"
+            android:textSize="15dip"
+            android:textStyle="bold"
+            android:typeface="sans" />
+
+        <!-- Time -->
+
+        <TextView
+            android:id="@+id/gallery_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/gallery_displayname"
+            android:layout_marginTop="1dip"
+            android:layout_toRightOf="@+id/img_gallery_avatar"
+            android:text="Time ago"
+            android:textColor="#343434"
+            android:textSize="10dip" />
+
+        <!-- ListRow Right sied Thumbnail image -->
+
+        <RelativeLayout
+            android:id="@+id/gallery_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_toLeftOf="@+id/img_gallery_avatar"
+            android:background="@drawable/icon_like"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/gallery_like_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="10"
+                android:textColor="#000000"
+                android:textSize="10dip" />
+        </RelativeLayout>
+        <!-- ListRow Right sied Thumbnail image -->
+
+        <RelativeLayout
+            android:id="@+id/img_gallery_avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="5dp"
+            android:background="@drawable/icon_comment"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/gallery_comment_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="9"
+                android:textColor="#000000"
+                android:textSize="10dip" />
+        </RelativeLayout>
+       
+    </RelativeLayout>
+    
+     <com.markupartist.android.widget.PullToRefreshListView
+        android:id="@+id/list_gallery_post"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/hello_world" />
+        android:layout_below="@+id/gallery_top"
+        android:divider="#b5b5b5"
+        android:dividerHeight="1dp"
+        android:listSelector="@drawable/list_selector" />
 
 </RelativeLayout>
