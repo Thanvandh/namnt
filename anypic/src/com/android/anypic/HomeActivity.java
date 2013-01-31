@@ -26,11 +26,13 @@ import org.w3c.dom.NodeList;
 
 import com.android.data.Config;
 import com.android.data.User;
+import com.android.utils.ImageLoader;
 import com.android.utils.XMLParser;
 import com.markupartist.android.widget.PullToRefreshListView;
 import com.markupartist.android.widget.PullToRefreshListView.OnRefreshListener;
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -75,6 +77,10 @@ public class HomeActivity extends Activity {
 	HomeRowAdapter adapter;
 	ArrayList<HashMap<String, String>> menuItems;
 	ProgressDialog pDialog;
+	String avatar_url;
+	String displayname;
+	String current_user_id;
+	private ImageLoader imageLoader; 
 	
 	private String URL = "http://api.androidhive.info/list_paging/?page=1";
 
@@ -83,6 +89,9 @@ public class HomeActivity extends Activity {
 	static final String KEY_ID = "id";
 	static final String OBJECT_ID = "objectid";
 	static final String PHOTO_URL = "image";
+	static final String MY_NAME = "myname";
+	static final String AVATAR_URL = "avatar_url";
+	static final String CURRENT_USER_ID = "current_user_id";
 	static final String KEY_NAME = "name";
 	final int LIMIT_PHOTO = 3;
 	// Flag for current page
@@ -92,16 +101,22 @@ public class HomeActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        imageLoader=new ImageLoader(getApplicationContext());
         img_profile = (ImageView) findViewById(R.id.img_profile);
         myname = (TextView) findViewById(R.id.txt_profilename);
-        Intent intent1 = getIntent();
+//        Intent intent1 = getIntent();
         //mfacebookid = i.getExtras().getString("facebookid");
         //mfacebook_user = i.getExtras().getString("facebook_user");
         parse_user = ParseUser.getCurrentUser();
 //        parse_user.Login(mfacebookid + "namnt", mfacebookid + "namnt", handler);
 		//mProgressDialog = ProgressDialog.show(HomeActivity.this, "", getString(R.string.loading), true);
 //		Log.d("test","vao day ko");
-		updateUI();
+        displayname = parse_user.getString("displayname");
+        myname.setText(displayname);       
+        ParseFile res = (ParseFile)parse_user.get("profilePictureMedium");
+        avatar_url = res.getUrl();
+        current_user_id = parse_user.getObjectId();
+        imageLoader.DisplayImage(avatar_url, img_profile);
 		lv = (PullToRefreshListView) findViewById(R.id.list_home);
 		lv.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -149,6 +164,8 @@ public class HomeActivity extends Activity {
 						ParseFile res = (ParseFile) photoList.get(i).get("image");
 						map.put(OBJECT_ID, photoList.get(i).getObjectId()); 
 						map.put(PHOTO_URL, res.getUrl()); 
+						map.put(MY_NAME, displayname);
+						map.put(AVATAR_URL, avatar_url);
 						// adding HashList to ArrayList
 						menuItems.add(map);
 						// Getting adapter
@@ -223,15 +240,22 @@ public class HomeActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				 HashMap<String, String> item = new HashMap<String, String>();
+			     item = menuItems.get(position);
+			     
 				// getting values from selected ListItem
 //				String name = ((TextView) view.findViewById(R.id.name))
 //						.getText().toString();
 //
 //				// Starting new intent
-//				Intent in = new Intent(getApplicationContext(),
-//						SingleMenuItemActivity.class);
-//				in.putExtra(KEY_NAME, name);
-//				startActivity(in);
+				Intent in = new Intent(getApplicationContext(),
+						GalleryActivity.class);
+				in.putExtra(HomeActivity.OBJECT_ID, item.get(HomeActivity.OBJECT_ID));
+				in.putExtra(HomeActivity.MY_NAME, item.get(HomeActivity.MY_NAME));
+				in.putExtra(HomeActivity.PHOTO_URL, item.get(HomeActivity.PHOTO_URL));
+				in.putExtra(HomeActivity.AVATAR_URL, item.get(HomeActivity.AVATAR_URL));
+				in.putExtra(HomeActivity.CURRENT_USER_ID, current_user_id);
+				startActivity(in);
 			}
 		});
         
@@ -240,31 +264,33 @@ public class HomeActivity extends Activity {
     }
     public void updateUI()
     {
-    	String displayname = parse_user.getString("displayname");
+    	displayname = parse_user.getString("displayname");
         myname.setText(displayname);       
         ParseFile res = (ParseFile)parse_user.get("profilePictureMedium");
-		if (res != null)
-		{
-		res.getDataInBackground(new GetDataCallback() {
-		  public void done(byte[] data, ParseException e) {
-		    if (e == null) {
-		    	//byte[] b = getPictureLargeForFacebookId(mfacebookid);
-		    	ByteArrayInputStream in = new ByteArrayInputStream(data);
-		    	BufferedInputStream f = new BufferedInputStream(in); 
-		    	Bitmap bmp = BitmapFactory.decodeStream(f);
-		    	//Bitmap bmp=BitmapFactory.decodeByteArray(data,0,data.length);
-		        //Drawable d =new BitmapDrawable(getResources(),bmp);
-		    	//Drawable d = getResources().getDrawable(R.drawable.profile);
-		    	img_profile.setImageBitmap(bmp);
-		        
-		    } else {
-		      // something went wrong
-		    	Log.d("test","loi downfile|" + e.toString());
-
-		    }
-		  }
-		});
-		}
+        avatar_url = res.getUrl();
+        imageLoader.DisplayImage(avatar_url, img_profile);
+//		if (res != null)
+//		{
+//		res.getDataInBackground(new GetDataCallback() {
+//		  public void done(byte[] data, ParseException e) {
+//		    if (e == null) {
+//		    	//byte[] b = getPictureLargeForFacebookId(mfacebookid);
+//		    	ByteArrayInputStream in = new ByteArrayInputStream(data);
+//		    	BufferedInputStream f = new BufferedInputStream(in); 
+//		    	avatar = BitmapFactory.decodeStream(f);
+//		    	//Bitmap bmp=BitmapFactory.decodeByteArray(data,0,data.length);
+//		        //Drawable d =new BitmapDrawable(getResources(),bmp);
+//		    	//Drawable d = getResources().getDrawable(R.drawable.profile);
+//		    	img_profile.setImageBitmap(avatar);
+//		        
+//		    } else {
+//		      // something went wrong
+//		    	Log.d("test","loi downfile|" + e.toString());
+//
+//		    }
+//		  }
+//		});
+//		}
 
     }
     private class GetDataTask extends AsyncTask<Void, Void, String[]> {
@@ -309,6 +335,8 @@ public class HomeActivity extends Activity {
     						ParseFile res = (ParseFile) photoList.get(i).get("image");
     						map.put(OBJECT_ID, photoList.get(i).getObjectId()); 
     						map.put(PHOTO_URL, res.getUrl()); 
+    						map.put(MY_NAME, displayname);
+    						map.put(AVATAR_URL, avatar_url);
     						// adding HashList to ArrayList
     						menuItems.add(map);
     						// Getting adapter

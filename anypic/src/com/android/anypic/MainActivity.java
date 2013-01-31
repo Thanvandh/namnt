@@ -2,6 +2,8 @@ package com.android.anypic;
 
 
 
+import com.parse.Parse;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.TabActivity;
@@ -31,6 +33,8 @@ public class MainActivity extends TabActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		Parse.initialize(this, "6UGj4uL8HU43HNS0R2XVlRlPh5CN5lXGtOJOUM70",
+				"L7A6SE6RwIn8AjruYFac1jOLhgkIFa4lnm5J52Gb");
 		//ActionItem nextItem 	= new ActionItem(ID_DOWN, "Next", getResources().getDrawable(R.drawable.menu_down_arrow));
 		//ActionItem prevItem 	= new ActionItem(ID_UP, "Prev", getResources().getDrawable(R.drawable.menu_up_arrow));
         ActionItem searchItem 	= new ActionItem(ID_SEARCH, "Find", getResources().getDrawable(R.drawable.menu_search));
