@@ -52,12 +52,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
@@ -65,7 +67,8 @@ import android.support.v4.app.NavUtils;
 
 public class HomeActivity extends Activity {
 	ImageView img_profile;
-	TextView myname;
+//	TextView myname;
+	View home_header;
 	private ProgressDialog mProgressDialog;
 	String mfacebookid;
 	String mfacebook_user;
@@ -102,8 +105,7 @@ public class HomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         imageLoader=new ImageLoader(getApplicationContext());
-        img_profile = (ImageView) findViewById(R.id.img_profile);
-        myname = (TextView) findViewById(R.id.txt_profilename);
+        
 //        Intent intent1 = getIntent();
         //mfacebookid = i.getExtras().getString("facebookid");
         //mfacebook_user = i.getExtras().getString("facebook_user");
@@ -111,12 +113,9 @@ public class HomeActivity extends Activity {
 //        parse_user.Login(mfacebookid + "namnt", mfacebookid + "namnt", handler);
 		//mProgressDialog = ProgressDialog.show(HomeActivity.this, "", getString(R.string.loading), true);
 //		Log.d("test","vao day ko");
-        displayname = parse_user.getString("displayname");
-        myname.setText(displayname);       
-        ParseFile res = (ParseFile)parse_user.get("profilePictureMedium");
-        avatar_url = res.getUrl();
+        update_home_header();
         current_user_id = parse_user.getObjectId();
-        imageLoader.DisplayImage(avatar_url, img_profile);
+        
 		lv = (PullToRefreshListView) findViewById(R.id.list_home);
 		lv.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -125,7 +124,7 @@ public class HomeActivity extends Activity {
                 new GetDataTask().execute();
             }
         });
-
+		lv.addHeaderView(home_header);
 		menuItems = new ArrayList<HashMap<String, String>>();
 
 //		parser = new XMLParser();
@@ -262,8 +261,11 @@ public class HomeActivity extends Activity {
         
 
     }
-    public void updateUI()
+    public void update_home_header()
     {
+    	home_header = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_home_header, null);
+    	img_profile = (ImageView)home_header.findViewById(R.id.img_profile);
+        TextView myname = (TextView)home_header.findViewById(R.id.txt_profilename);
     	displayname = parse_user.getString("displayname");
         myname.setText(displayname);       
         ParseFile res = (ParseFile)parse_user.get("profilePictureMedium");
@@ -315,7 +317,7 @@ public class HomeActivity extends Activity {
 			// adding HashList to ArrayList
 			menuItems.clear();
 			current_page = 0;
-
+			update_home_header();
             // Call onRefreshComplete when the list has been refreshed.
         	ParseQuery query_photo = new ParseQuery("photo");
     		query_photo.whereEqualTo("user", parse_user);
@@ -615,7 +617,7 @@ public class HomeActivity extends Activity {
 				if (mProgressDialog.isShowing()) {
 					mProgressDialog.dismiss();
 				}
-				updateUI();
+//				updateUI();
 				//parse_user.Login(facebook_user.getId() + "namnt", facebook_user.getId() + "namnt", handler);
 
 
@@ -639,7 +641,7 @@ public class HomeActivity extends Activity {
 				if (mProgressDialog.isShowing()) {
 					mProgressDialog.dismiss();
 				}
-				updateUI();
+//				updateUI();
 
 				
 				
