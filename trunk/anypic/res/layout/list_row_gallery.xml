@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+
+	<!--  ListRow Left sied Thumbnail image -->
+	<LinearLayout android:id="@+id/list_gallery_row_profile" 
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:padding="3dip"		
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/smallprofilepicture" 
+	    android:layout_marginRight="5dip">
+        
+		<ImageView     
+			android:id="@+id/list_gallery_row_pic"   
+	        android:layout_width="50dip"
+	        android:layout_height="50dip"
+	        android:src="@drawable/rihanna"/>
+        
+	</LinearLayout>
+    
+	<!-- Displayname-->
+    <TextView
+        android:id="@+id/list_gallery_row_displayname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/list_gallery_row_profile"
+        android:layout_toRightOf="@+id/list_gallery_row_profile"
+        android:text="Rihanna"
+        android:textStyle="bold"
+        android:textColor="#040404"
+        android:typeface="sans" 
+        android:textSize="15dip"/>
+    
+    <!-- Title Of action-->
+    <TextView
+        android:id="@+id/list_gallery_row_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/list_gallery_row_profile"
+        android:layout_below="@+id/list_gallery_row_displayname"
+        android:text="Awesome !!!"
+        android:textColor="#040404"
+        android:typeface="sans" 
+        android:textSize="12dip"/>
+
+	<!-- Time -->
+    <TextView
+        android:id="@+id/list_gallery_row_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/list_gallery_row_action"
+        android:textColor="#343434"
+        android:textSize="10dip"
+        android:layout_toRightOf="@+id/list_gallery_row_profile"
+        android:text="Time ago" />
+
+	
+</RelativeLayout>
