@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ public class GalleryActivity extends Activity {
 	String photo_url;
 	String avatar_url;
 	String current_user_id;
+	String fromuser_id;
 	ImageView img_avatar;
 	TextView txt_my_name;
 	ImageView img_picture;
@@ -44,6 +46,8 @@ public class GalleryActivity extends Activity {
 	final static String KEY_FROM_USER_NAME = "fromUser_name";
 	final static String KEY_FROM_USER_AVATAR_URL = "fromUser_avatar_url";
 	final static String KEY_CONTENT = "content";
+	Button bt_send_comment;
+	EditText text_box_comment;
 	
 	int current_page = 0;
 	
@@ -98,7 +102,16 @@ public class GalleryActivity extends Activity {
 //				}
 		
 		ParseQuery query_activity = new ParseQuery("activity");
-		query_activity.whereEqualTo("photo", object_id);
+		ParseQuery query_photo = new ParseQuery("photo");
+		query_photo.whereEqualTo("objectId", object_id);
+		try {
+			ParseObject photo = query_photo.find().get(0);
+			query_activity.whereEqualTo("photo", photo);
+		} catch (ParseException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
 		query_activity.addDescendingOrder("createdAt");
 		query_activity.setLimit(LIMIT_COMMENT);
 		query_activity.findInBackground(new FindCallback() {
@@ -111,8 +124,8 @@ public class GalleryActivity extends Activity {
 						// adding each child node to HashMap key => value
 						Log.d("test", "objectid " + List.get(i).getObjectId());
 						// id not using any where
-						String fromuser = List.get(i).getString("fromUser");
-						ParseQuery query = ParseUser.getQuery().whereEqualTo("objectId", fromuser);
+						fromuser_id = List.get(i).getString("fromUser");
+						ParseQuery query = ParseUser.getQuery().whereEqualTo("objectId", fromuser_id);
 						List<ParseObject> listuser = null;
 						String fromUser_name = null;
 						String fromUser_avatar_url = null;
@@ -171,6 +184,38 @@ public class GalleryActivity extends Activity {
 			}
 		});
 		
+		text_box_comment = (EditText) findViewById(R.id.text_box_comment);
+		
+		bt_send_comment = (Button)findViewById(R.id.bt_send_comment);
+		bt_send_comment.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				String content = text_box_comment.getText().toString();
+				post_comment(content);
+			}
+		});
+		
+	}
+	public void post_comment(String content){
+		ParseObject activity = new ParseObject("activity");
+		ParseQuery query_photo = new ParseQuery("photo");
+		query_photo.whereEqualTo("objectId", object_id);
+		try {
+			ParseObject photo = query_photo.find().get(0);
+			ParseObject user = (ParseObject)photo.get("user");
+			//String toUser = user.getObjectId();
+			activity.put("fromUser", ParseUser.getCurrentUser());
+			activity.put("toUser", user);
+			activity.put("photo", photo);
+			activity.put("content", content);
+			activity.saveInBackground();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	private class GetDataTask extends AsyncTask<Void, Void, String[]> {
 
@@ -210,8 +255,8 @@ public class GalleryActivity extends Activity {
 							// adding each child node to HashMap key => value
 							Log.d("test", "objectid " + List.get(i).getObjectId());
 							// id not using any where
-							String fromuser = List.get(i).getString("fromUser");
-							ParseQuery query = ParseUser.getQuery().whereEqualTo("objectId", fromuser);
+							fromuser_id = List.get(i).getString("fromUser");
+							ParseQuery query = ParseUser.getQuery().whereEqualTo("objectId", fromuser_id);
 							List<ParseObject> listuser = null;
 							String fromUser_name = null;
 							String fromUser_avatar_url = null;
@@ -312,8 +357,8 @@ public class GalleryActivity extends Activity {
 									HashMap<String, String> map = new HashMap<String, String>();
 									// adding each child node to HashMap key => value
 									Log.d("test", "objectid " + List.get(i).getObjectId());
-									String fromuser = List.get(i).getString("fromUser");
-									ParseQuery query = ParseUser.getQuery().whereEqualTo("objectId", fromuser);
+									fromuser_id = List.get(i).getString("fromUser");
+									ParseQuery query = ParseUser.getQuery().whereEqualTo("objectId", fromuser_id);
 									List<ParseObject> listuser = null;
 									String fromUser_name = null;
 									String fromUser_avatar_url = null;

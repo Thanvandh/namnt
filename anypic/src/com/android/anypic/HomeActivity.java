@@ -46,6 +46,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -66,7 +67,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.support.v4.app.NavUtils;
 
 public class HomeActivity extends Activity {
-	ImageView img_profile;
+//	ImageView img_profile;
 //	TextView myname;
 	View home_header;
 	private ProgressDialog mProgressDialog;
@@ -104,6 +105,8 @@ public class HomeActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        LayoutInflater inflater =(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        home_header = inflater.inflate(R.layout.activity_home_header, null);
         imageLoader=new ImageLoader(getApplicationContext());
         
 //        Intent intent1 = getIntent();
@@ -240,7 +243,7 @@ public class HomeActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				 HashMap<String, String> item = new HashMap<String, String>();
-			     item = menuItems.get(position);
+			     item = menuItems.get((int)id);
 			     
 				// getting values from selected ListItem
 //				String name = ((TextView) view.findViewById(R.id.name))
@@ -263,8 +266,7 @@ public class HomeActivity extends Activity {
     }
     public void update_home_header()
     {
-    	home_header = LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_home_header, null);
-    	img_profile = (ImageView)home_header.findViewById(R.id.img_profile);
+    	ImageView img_profile = (ImageView)home_header.findViewById(R.id.img_profile);
         TextView myname = (TextView)home_header.findViewById(R.id.txt_profilename);
     	displayname = parse_user.getString("displayname");
         myname.setText(displayname);       
