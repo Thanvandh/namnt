@@ -5,11 +5,6 @@
     android:background="@drawable/list_selector"
     tools:context=".GalleryActivity" >
 
-    <RelativeLayout
-        android:id="@+id/gallery_top"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-
         <!-- ListRow Left sied Thumbnail image -->
 
         <LinearLayout
@@ -103,54 +98,4 @@
             android:layout_below="@+id/img_gallery_avatar"
             android:scaleType="fitCenter"
             android:src="@drawable/test" />
-    </RelativeLayout>
-	<LinearLayout 
-	    android:id="@+id/list_gallery_layout_focus"
-	    android:layout_width="0dp"
-	    android:layout_height="0dp"
-	    android:focusableInTouchMode="true">
-	</LinearLayout>
-    <com.markupartist.android.widget.PullToRefreshListView
-        android:id="@+id/list_gallery_post"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/gallery_top"
-        android:divider="#b5b5b5"
-        android:dividerHeight="1dp"
-        android:listSelector="@drawable/list_selector" />
-    <RelativeLayout 
-        android:id="@+id/list_gallery_action"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="3dip"
-        android:layout_alignParentBottom="true">
-        <ImageButton 
-            android:id="@+id/bt_like_picture"
-            android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:layout_alignParentTop="true"
-        	android:layout_alignParentLeft="true"
-        	android:src="@drawable/icon_liked"/>
-
-        <EditText
-            android:id="@+id/text_box_comment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dip"
-            android:layout_marginLeft="3dip"
-            
-            android:lines="2"
-            android:layout_below="@+id/bt_like_picture"
-            android:layout_toLeftOf="@+id/bt_send_comment"
-            android:background="@android:color/white" />
-
-        <Button 
-            android:id="@+id/bt_send_comment"
-            android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:layout_below="@+id/bt_like_picture"
-        	android:layout_alignParentRight="true"
-        	android:text="Send" />"
-    </RelativeLayout>
-
 </RelativeLayout>

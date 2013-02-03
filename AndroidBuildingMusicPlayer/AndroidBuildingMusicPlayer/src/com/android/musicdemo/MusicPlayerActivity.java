@@ -231,9 +231,11 @@ public class MusicPlayerActivity extends Activity implements OnCompletionListene
 					isRepeat = false;
 					Toast.makeText(getApplicationContext(), "Repeat is OFF", Toast.LENGTH_SHORT).show();
 					btnRepeat.setImageResource(R.drawable.btn_repeat);
+					mp.setLooping(false);
 				}else{
 					// make repeat to true
 					isRepeat = true;
+					mp.setLooping(true);
 					Toast.makeText(getApplicationContext(), "Repeat is ON", Toast.LENGTH_SHORT).show();
 					// make shuffle to false
 					isShuffle = false;
@@ -407,7 +409,7 @@ public class MusicPlayerActivity extends Activity implements OnCompletionListene
 		// check for repeat is ON or OFF
 		if(isRepeat){
 			// repeat is on play same song again
-			playSong(currentSongIndex);
+			//playSong(currentSongIndex);
 		} 
 //		else if(!isRepeatAll){
 //			int songid = 0;
