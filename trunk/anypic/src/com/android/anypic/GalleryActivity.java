@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class GalleryActivity extends Activity {
@@ -37,6 +38,7 @@ public class GalleryActivity extends Activity {
 	ImageView img_avatar;
 	TextView txt_my_name;
 	ImageView img_picture;
+	View layout_focus;
 	private ImageLoader imageLoader;
 	PullToRefreshListView lv;
 	GalleryRowAdapter adapter;
@@ -103,61 +105,62 @@ public class GalleryActivity extends Activity {
 		
 		ParseQuery query_activity = new ParseQuery("activity");
 		ParseQuery query_photo = new ParseQuery("photo");
-		query_photo.whereEqualTo("objectId", object_id);
+		ParseObject photo;
 		try {
-			ParseObject photo = query_photo.find().get(0);
+			photo = query_photo.get(object_id);
 			query_activity.whereEqualTo("photo", photo);
+			query_activity.addDescendingOrder("createdAt");
+			query_activity.setLimit(LIMIT_COMMENT);
+			query_activity.findInBackground(new FindCallback() {
+			    public void done(List<ParseObject> List, ParseException e) {
+			        if (e == null) {
+			            Log.d("test", "Retrieved " + List.size() + " photos");
+			            for (int i = 0; i < List.size(); i++) {
+							// creating new HashMap
+							HashMap<String, String> map = new HashMap<String, String>();
+							// adding each child node to HashMap key => value
+							Log.d("test", "objectid " + List.get(i).getObjectId());
+							// id not using any where
+							ParseUser fromuser = new ParseUser();
+							fromuser = (ParseUser) List.get(i).get("fromUser");
+							try {
+								fromuser = fromuser.fetch();
+							} catch (ParseException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							//ParseQuery query = ParseUser.getQuery().whereEqualTo("objectId", fromuser_id);
+							
+							String fromUser_name = null;
+							String fromUser_avatar_url = null;
+							String content = null;
+							fromUser_name = fromuser.getString("displayname");     
+						    ParseFile res = (ParseFile)fromuser.get("profilePictureMedium");
+						    fromUser_avatar_url = res.getUrl();
+						    content = List.get(i).getString("content");
+							
+							//ParseFile res = (ParseFile) photoList.get(i).get("image");
+							map.put(KEY_FROM_USER_NAME, fromUser_name); 
+							map.put(KEY_FROM_USER_AVATAR_URL, fromUser_avatar_url); 
+							map.put(KEY_CONTENT, content);
+							//map.put(AVATAR_URL, avatar_url);
+							// adding HashList to ArrayList
+							menuItems.add(map);
+							// Getting adapter
+							adapter = new GalleryRowAdapter(GalleryActivity.this, menuItems);
+							lv.setAdapter(adapter);
+						}
+			            
+			        } else {
+			            Log.d("score", "Error: " + e.getMessage());
+			        }
+			    }
+			});
 		} catch (ParseException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
 		
-		query_activity.addDescendingOrder("createdAt");
-		query_activity.setLimit(LIMIT_COMMENT);
-		query_activity.findInBackground(new FindCallback() {
-		    public void done(List<ParseObject> List, ParseException e) {
-		        if (e == null) {
-		            Log.d("test", "Retrieved " + List.size() + " photos");
-		            for (int i = 0; i < List.size(); i++) {
-						// creating new HashMap
-						HashMap<String, String> map = new HashMap<String, String>();
-						// adding each child node to HashMap key => value
-						Log.d("test", "objectid " + List.get(i).getObjectId());
-						// id not using any where
-						fromuser_id = List.get(i).getString("fromUser");
-						ParseQuery query = ParseUser.getQuery().whereEqualTo("objectId", fromuser_id);
-						List<ParseObject> listuser = null;
-						String fromUser_name = null;
-						String fromUser_avatar_url = null;
-						String content = null;
-						try {
-							listuser = query.find();
-							fromUser_name = listuser.get(0).getString("displayname");     
-					        ParseFile res = (ParseFile)listuser.get(0).get("profilePictureMedium");
-					        fromUser_avatar_url = res.getUrl();
-					        content = List.get(i).getString("content");
-						} catch (ParseException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-						
-						//ParseFile res = (ParseFile) photoList.get(i).get("image");
-						map.put(KEY_FROM_USER_NAME, fromUser_name); 
-						map.put(KEY_FROM_USER_AVATAR_URL, fromUser_avatar_url); 
-						map.put(KEY_CONTENT, content);
-						//map.put(AVATAR_URL, avatar_url);
-						// adding HashList to ArrayList
-						menuItems.add(map);
-						// Getting adapter
-						adapter = new GalleryRowAdapter(GalleryActivity.this, menuItems);
-						lv.setAdapter(adapter);
-					}
-		            
-		        } else {
-		            Log.d("score", "Error: " + e.getMessage());
-		        }
-		    }
-		});
 		
 
 		
@@ -185,6 +188,10 @@ public class GalleryActivity extends Activity {
 		});
 		
 		text_box_comment = (EditText) findViewById(R.id.text_box_comment);
+		//text_box_comment.clearFocus();
+		layout_focus = (LinearLayout) findViewById(R.id.list_gallery_layout_focus);
+		layout_focus.setFocusableInTouchMode(true);
+		layout_focus.requestFocus();
 		
 		bt_send_comment = (Button)findViewById(R.id.bt_send_comment);
 		bt_send_comment.setOnClickListener(new View.OnClickListener() {
@@ -193,7 +200,12 @@ public class GalleryActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				String content = text_box_comment.getText().toString();
-				post_comment(content);
+				if (content != null){
+					post_comment(content);
+					text_box_comment.clearFocus();
+					text_box_comment.clearComposingText();
+				}
+				
 			}
 		});
 		
@@ -241,52 +253,64 @@ public class GalleryActivity extends Activity {
 			current_page = 0;
 
           // Call onRefreshComplete when the list has been refreshed.
+			
 			ParseQuery query_activity = new ParseQuery("activity");
-			query_activity.whereEqualTo("photo", object_id);
-			query_activity.addDescendingOrder("createdAt");
-			query_activity.setLimit(LIMIT_COMMENT);
-			query_activity.findInBackground(new FindCallback() {
-			    public void done(List<ParseObject> List, ParseException e) {
-			        if (e == null) {
-			            Log.d("test", "Retrieved " + List.size() + " photos");
-			            for (int i = 0; i < List.size(); i++) {
-							// creating new HashMap
-							HashMap<String, String> map = new HashMap<String, String>();
-							// adding each child node to HashMap key => value
-							Log.d("test", "objectid " + List.get(i).getObjectId());
-							// id not using any where
-							fromuser_id = List.get(i).getString("fromUser");
-							ParseQuery query = ParseUser.getQuery().whereEqualTo("objectId", fromuser_id);
-							List<ParseObject> listuser = null;
-							String fromUser_name = null;
-							String fromUser_avatar_url = null;
-							String content = null;
-							try {
-								listuser = query.find();
-								fromUser_name = listuser.get(0).getString("displayname");     
-						        ParseFile res = (ParseFile)listuser.get(0).get("profilePictureMedium");
-						        fromUser_avatar_url = res.getUrl();
-						        content = List.get(i).getString("content");
-							} catch (ParseException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
+			ParseQuery query_photo = new ParseQuery("photo");
+			ParseObject photo;
+			try {
+				photo = query_photo.get(object_id);
+				query_activity.whereEqualTo("photo", photo);
+				query_activity.addDescendingOrder("createdAt");
+				query_activity.setLimit(LIMIT_COMMENT);
+				query_activity.findInBackground(new FindCallback() {
+				    public void done(List<ParseObject> List, ParseException e) {
+				        if (e == null) {
+				            Log.d("test", "Retrieved " + List.size() + " photos");
+				            for (int i = 0; i < List.size(); i++) {
+								// creating new HashMap
+								HashMap<String, String> map = new HashMap<String, String>();
+								// adding each child node to HashMap key => value
+								Log.d("test", "objectid " + List.get(i).getObjectId());
+								// id not using any where
+								fromuser_id = List.get(i).getString("fromUser");
+								//ParseQuery query = ParseUser.getQuery().whereEqualTo("objectId", fromuser_id);
+								ParseUser fromuser = new ParseUser();
+								fromuser = (ParseUser) List.get(i).get("fromUser");
+								try {
+									fromuser = fromuser.fetch();
+								} catch (ParseException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								
+								String fromUser_name = null;
+								String fromUser_avatar_url = null;
+								String content = null;
+								fromUser_name = fromuser.getString("displayname");     
+							    ParseFile res = (ParseFile)fromuser.get("profilePictureMedium");
+							    fromUser_avatar_url = res.getUrl();
+							    content = List.get(i).getString("content");
+								//ParseFile res = (ParseFile) photoList.get(i).get("image");
+								map.put(KEY_FROM_USER_NAME, fromUser_name); 
+								map.put(KEY_FROM_USER_AVATAR_URL, fromUser_avatar_url); 
+								map.put(KEY_CONTENT, content);
+								//map.put(AVATAR_URL, avatar_url);
+								// adding HashList to ArrayList
+								menuItems.add(map);
+								// Getting adapter
+								adapter = new GalleryRowAdapter(GalleryActivity.this, menuItems);
+								lv.setAdapter(adapter);
 							}
-							map.put(KEY_FROM_USER_NAME, fromUser_name); 
-							map.put(KEY_FROM_USER_AVATAR_URL, fromUser_avatar_url); 
-							map.put(KEY_CONTENT, content);
-							//map.put(AVATAR_URL, avatar_url);
-							// adding HashList to ArrayList
-							menuItems.add(map);
-							// Getting adapter
-							adapter = new GalleryRowAdapter(GalleryActivity.this, menuItems);
-							lv.setAdapter(adapter);
-						}
-			            
-			        } else {
-			            Log.d("score", "Error: " + e.getMessage());
-			        }
-			    }
-			});
+				            
+				        } else {
+				            Log.d("score", "Error: " + e.getMessage());
+				        }
+				    }
+				});
+			} catch (ParseException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
           lv.onRefreshComplete();
 
           super.onPostExecute(result);
@@ -343,52 +367,66 @@ public class GalleryActivity extends Activity {
 //						// adding HashList to ArrayList
 //						menuItems.add(map);
 //					}
+					
 					ParseQuery query_activity = new ParseQuery("activity");
-					query_activity.whereEqualTo("photo", object_id);
-					query_activity.addDescendingOrder("createdAt");
-					query_activity.setLimit(LIMIT_COMMENT);
-					query_activity.setSkip(current_page);
-					query_activity.findInBackground(new FindCallback() {
-					    public void done(List<ParseObject> List, ParseException e) {
-					        if (e == null) {
-					            Log.d("test", "Retrieved " + List.size() + " photos");
-					            for (int i = 0; i < List.size(); i++) {
-									// creating new HashMap
-									HashMap<String, String> map = new HashMap<String, String>();
-									// adding each child node to HashMap key => value
-									Log.d("test", "objectid " + List.get(i).getObjectId());
-									fromuser_id = List.get(i).getString("fromUser");
-									ParseQuery query = ParseUser.getQuery().whereEqualTo("objectId", fromuser_id);
-									List<ParseObject> listuser = null;
-									String fromUser_name = null;
-									String fromUser_avatar_url = null;
-									String content = null;
-									try {
-										listuser = query.find();
-										fromUser_name = listuser.get(0).getString("displayname");     
-								        ParseFile res = (ParseFile)listuser.get(0).get("profilePictureMedium");
-								        fromUser_avatar_url = res.getUrl();
-								        content = List.get(i).getString("content");
-									} catch (ParseException e1) {
-										// TODO Auto-generated catch block
-										e1.printStackTrace();
+					ParseQuery query_photo = new ParseQuery("photo");
+					ParseObject photo;
+					try {
+						photo = query_photo.get(object_id);
+						query_activity.whereEqualTo("photo", photo);
+						query_activity.addDescendingOrder("createdAt");
+						query_activity.setLimit(LIMIT_COMMENT);
+						query_activity.setSkip(current_page);
+						query_activity.findInBackground(new FindCallback() {
+						    public void done(List<ParseObject> List, ParseException e) {
+						        if (e == null) {
+						            Log.d("test", "Retrieved " + List.size() + " photos");
+						            for (int i = 0; i < List.size(); i++) {
+										// creating new HashMap
+										HashMap<String, String> map = new HashMap<String, String>();
+										// adding each child node to HashMap key => value
+										Log.d("test", "objectid " + List.get(i).getObjectId());
+										// id not using any where
+										fromuser_id = List.get(i).getString("fromUser");
+										//ParseQuery query = ParseUser.getQuery().whereEqualTo("objectId", fromuser_id);
+										ParseUser fromuser = new ParseUser();
+										fromuser = (ParseUser) List.get(i).get("fromUser");
+										try {
+											fromuser = fromuser.fetch();
+										} catch (ParseException e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										}
+										
+										String fromUser_name = null;
+										String fromUser_avatar_url = null;
+										String content = null;
+										fromUser_name = fromuser.getString("displayname");     
+									    ParseFile res = (ParseFile)fromuser.get("profilePictureMedium");
+									    fromUser_avatar_url = res.getUrl();
+									    content = List.get(i).getString("content");
+										
+										//ParseFile res = (ParseFile) photoList.get(i).get("image");
+										map.put(KEY_FROM_USER_NAME, fromUser_name); 
+										map.put(KEY_FROM_USER_AVATAR_URL, fromUser_avatar_url); 
+										map.put(KEY_CONTENT, content);
+										//map.put(AVATAR_URL, avatar_url);
+										// adding HashList to ArrayList
+										menuItems.add(map);
+										// Getting adapter
+										adapter = new GalleryRowAdapter(GalleryActivity.this, menuItems);
+										lv.setAdapter(adapter);
 									}
-									map.put(KEY_FROM_USER_NAME, fromUser_name); 
-									map.put(KEY_FROM_USER_AVATAR_URL, fromUser_avatar_url); 
-									map.put(KEY_CONTENT, content);
-									//map.put(AVATAR_URL, avatar_url);
-									// adding HashList to ArrayList
-									menuItems.add(map);
-									// Getting adapter
-									adapter = new GalleryRowAdapter(GalleryActivity.this, menuItems);
-									lv.setAdapter(adapter);
-								}
-					            
-					        } else {
-					            Log.d("score", "Error: " + e.getMessage());
-					        }
-					    }
-					});
+						            
+						        } else {
+						            Log.d("score", "Error: " + e.getMessage());
+						        }
+						    }
+						});
+					} catch (ParseException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
 					
 					
 

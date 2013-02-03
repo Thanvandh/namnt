@@ -24,8 +24,6 @@ import org.json.JSONObject;
 
 import com.android.data.Config;
 import com.android.data.User;
-import com.facebook.model.GraphUser;
-import com.facebook.widget.LoginButton.UserInfoChangedCallback;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseFacebookUtils;
@@ -68,7 +66,7 @@ public class Login extends Activity {
 	private TextView greeting;
 	//LoginButton btFacebook_Login;
 	Button btFacebook_Login;
-	private UserInfoChangedCallback userInfoChangedCallback;
+	//private UserInfoChangedCallback userInfoChangedCallback;
 	private ProgressDialog mProgressDialog;
 	ParseUser parse_user;
 	String mfacebookid;

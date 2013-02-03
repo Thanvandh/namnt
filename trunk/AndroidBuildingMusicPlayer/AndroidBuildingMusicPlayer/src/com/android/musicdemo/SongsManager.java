@@ -53,7 +53,7 @@ public class SongsManager {
 	 * */
 	class FileExtensionFilter implements FilenameFilter {
 		public boolean accept(File dir, String name) {
-			return (name.endsWith(".mp3") || name.endsWith(".MP3"));
+			return (name.endsWith(".wav") || name.endsWith(".wav"));
 		}
 	}
 }
