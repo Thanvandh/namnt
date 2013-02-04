@@ -6,7 +6,9 @@ import com.parse.Parse;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.TabActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -39,7 +41,7 @@ public class MainActivity extends TabActivity {
 		//ActionItem prevItem 	= new ActionItem(ID_UP, "Prev", getResources().getDrawable(R.drawable.menu_up_arrow));
         ActionItem searchItem 	= new ActionItem(ID_SEARCH, "Find", getResources().getDrawable(R.drawable.menu_search));
         ActionItem infoItem 	= new ActionItem(ID_INFO, "Info", getResources().getDrawable(R.drawable.menu_info));
-        ActionItem eraseItem 	= new ActionItem(ID_ERASE, "Clear", getResources().getDrawable(R.drawable.menu_eraser));
+        ActionItem eraseItem 	= new ActionItem(ID_ERASE, "SignOut", getResources().getDrawable(R.drawable.menu_eraser));
         ActionItem okItem 		= new ActionItem(ID_OK, "OK", getResources().getDrawable(R.drawable.menu_ok));
         
         //use setSticky(true) to disable QuickAction dialog being dismissed after an item is clicked
@@ -148,5 +150,33 @@ public class MainActivity extends TabActivity {
 		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
+	private void openQuitDialog(){
+  	  AlertDialog.Builder quitDialog 
+  	   = new AlertDialog.Builder(MainActivity.this);
+  	  quitDialog.setTitle("Confirm to Quit?");
+  	  
+  	  quitDialog.setPositiveButton("OK, Quit!", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				finish();
+				
+			}
+  	  });   	  
+  	  quitDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+  		  public void onClick(DialogInterface dialog, int which) {
+  	    // TODO Auto-generated method stub
+  	    
+  	   }});
+  	  
+  	  quitDialog.show();
+  	 }
+  @Override
+  public void onBackPressed() {
+  	// TODO Auto-generated method stub
+  	openQuitDialog();
+  	
+  }
 
 }
