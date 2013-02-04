@@ -69,7 +69,7 @@ import android.support.v4.app.NavUtils;
 public class HomeActivity extends Activity {
 //	ImageView img_profile;
 //	TextView myname;
-	View home_header;
+	//View home_header;
 	private ProgressDialog mProgressDialog;
 	String mfacebookid;
 	String mfacebook_user;
@@ -106,7 +106,7 @@ public class HomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         LayoutInflater inflater =(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        home_header = inflater.inflate(R.layout.activity_home_header, null);
+//        home_header = inflater.inflate(R.layout.activity_home_header, null);
         imageLoader=new ImageLoader(getApplicationContext());
         
 //        Intent intent1 = getIntent();
@@ -116,7 +116,7 @@ public class HomeActivity extends Activity {
 //        parse_user.Login(mfacebookid + "namnt", mfacebookid + "namnt", handler);
 		//mProgressDialog = ProgressDialog.show(HomeActivity.this, "", getString(R.string.loading), true);
 //		Log.d("test","vao day ko");
-        update_home_header();
+        //update_home_header();
         current_user_id = parse_user.getObjectId();
         
 		lv = (PullToRefreshListView) findViewById(R.id.list_home);
@@ -127,7 +127,7 @@ public class HomeActivity extends Activity {
                 new GetDataTask().execute();
             }
         });
-		lv.addHeaderView(home_header);
+		//lv.addHeaderView(home_header);
 		menuItems = new ArrayList<HashMap<String, String>>();
 
 //		parser = new XMLParser();
@@ -149,7 +149,6 @@ public class HomeActivity extends Activity {
 //				}
 		
 		ParseQuery query_photo = new ParseQuery("photo");
-		query_photo.whereEqualTo("user", parse_user);
 		query_photo.addDescendingOrder("createdAt");
 		query_photo.setLimit(LIMIT_PHOTO);
 		query_photo.findInBackground(new FindCallback() {
@@ -264,39 +263,39 @@ public class HomeActivity extends Activity {
         
 
     }
-    public void update_home_header()
-    {
-    	ImageView img_profile = (ImageView)home_header.findViewById(R.id.img_profile);
-        TextView myname = (TextView)home_header.findViewById(R.id.txt_profilename);
-    	displayname = parse_user.getString("displayname");
-        myname.setText(displayname);       
-        ParseFile res = (ParseFile)parse_user.get("profilePictureMedium");
-        avatar_url = res.getUrl();
-        imageLoader.DisplayImage(avatar_url, img_profile);
-//		if (res != null)
-//		{
-//		res.getDataInBackground(new GetDataCallback() {
-//		  public void done(byte[] data, ParseException e) {
-//		    if (e == null) {
-//		    	//byte[] b = getPictureLargeForFacebookId(mfacebookid);
-//		    	ByteArrayInputStream in = new ByteArrayInputStream(data);
-//		    	BufferedInputStream f = new BufferedInputStream(in); 
-//		    	avatar = BitmapFactory.decodeStream(f);
-//		    	//Bitmap bmp=BitmapFactory.decodeByteArray(data,0,data.length);
-//		        //Drawable d =new BitmapDrawable(getResources(),bmp);
-//		    	//Drawable d = getResources().getDrawable(R.drawable.profile);
-//		    	img_profile.setImageBitmap(avatar);
-//		        
-//		    } else {
-//		      // something went wrong
-//		    	Log.d("test","loi downfile|" + e.toString());
+//    public void update_home_header()
+//    {
+//    	ImageView img_profile = (ImageView)home_header.findViewById(R.id.img_profile);
+//        TextView myname = (TextView)home_header.findViewById(R.id.txt_profilename);
+//    	displayname = parse_user.getString("displayname");
+//        myname.setText(displayname);       
+//        ParseFile res = (ParseFile)parse_user.get("profilePictureMedium");
+//        avatar_url = res.getUrl();
+//        imageLoader.DisplayImage(avatar_url, img_profile);
+////		if (res != null)
+////		{
+////		res.getDataInBackground(new GetDataCallback() {
+////		  public void done(byte[] data, ParseException e) {
+////		    if (e == null) {
+////		    	//byte[] b = getPictureLargeForFacebookId(mfacebookid);
+////		    	ByteArrayInputStream in = new ByteArrayInputStream(data);
+////		    	BufferedInputStream f = new BufferedInputStream(in); 
+////		    	avatar = BitmapFactory.decodeStream(f);
+////		    	//Bitmap bmp=BitmapFactory.decodeByteArray(data,0,data.length);
+////		        //Drawable d =new BitmapDrawable(getResources(),bmp);
+////		    	//Drawable d = getResources().getDrawable(R.drawable.profile);
+////		    	img_profile.setImageBitmap(avatar);
+////		        
+////		    } else {
+////		      // something went wrong
+////		    	Log.d("test","loi downfile|" + e.toString());
+////
+////		    }
+////		  }
+////		});
+////		}
 //
-//		    }
-//		  }
-//		});
-//		}
-
-    }
+//    }
     private class GetDataTask extends AsyncTask<Void, Void, String[]> {
 
 //        @Override
@@ -319,10 +318,9 @@ public class HomeActivity extends Activity {
 			// adding HashList to ArrayList
 			menuItems.clear();
 			current_page = 0;
-			update_home_header();
+			//update_home_header();
             // Call onRefreshComplete when the list has been refreshed.
         	ParseQuery query_photo = new ParseQuery("photo");
-    		query_photo.whereEqualTo("user", parse_user);
     		query_photo.addDescendingOrder("createdAt");
     		query_photo.setLimit(LIMIT_PHOTO);
     		query_photo.findInBackground(new FindCallback() {
@@ -410,7 +408,6 @@ public class HomeActivity extends Activity {
 //						menuItems.add(map);
 //					}
 					ParseQuery query_photo = new ParseQuery("photo");
-					query_photo.whereEqualTo("user", parse_user);
 					query_photo.addDescendingOrder("createdAt");
 					query_photo.setLimit(LIMIT_PHOTO);
 					query_photo.setSkip(current_page);
