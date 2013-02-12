@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.app.TabActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -28,7 +29,7 @@ public class MainActivity extends TabActivity {
 	private static final int ID_DOWN   = 2;
 	private static final int ID_SEARCH = 3;
 	private static final int ID_INFO   = 4;
-	private static final int ID_ERASE  = 5;	
+	private static final int ID_SIGN_OUT = 5;	
 	private static final int ID_OK     = 6;
 	ImageButton bt_settings;
 	@Override
@@ -39,9 +40,9 @@ public class MainActivity extends TabActivity {
 				"L7A6SE6RwIn8AjruYFac1jOLhgkIFa4lnm5J52Gb");
 		//ActionItem nextItem 	= new ActionItem(ID_DOWN, "Next", getResources().getDrawable(R.drawable.menu_down_arrow));
 		//ActionItem prevItem 	= new ActionItem(ID_UP, "Prev", getResources().getDrawable(R.drawable.menu_up_arrow));
-        ActionItem searchItem 	= new ActionItem(ID_SEARCH, "Find", getResources().getDrawable(R.drawable.menu_search));
-        ActionItem infoItem 	= new ActionItem(ID_INFO, "Info", getResources().getDrawable(R.drawable.menu_info));
-        ActionItem eraseItem 	= new ActionItem(ID_ERASE, "SignOut", getResources().getDrawable(R.drawable.menu_eraser));
+        ActionItem searchItem 	= new ActionItem(ID_SEARCH, "Find Friends", getResources().getDrawable(R.drawable.menu_search));
+        ActionItem infoItem 	= new ActionItem(ID_INFO, "My Profile", getResources().getDrawable(R.drawable.menu_info));
+        ActionItem eraseItem 	= new ActionItem(ID_SIGN_OUT, "Sign Out", getResources().getDrawable(R.drawable.menu_eraser));
         ActionItem okItem 		= new ActionItem(ID_OK, "OK", getResources().getDrawable(R.drawable.menu_ok));
         
         //use setSticky(true) to disable QuickAction dialog being dismissed after an item is clicked
@@ -71,6 +72,8 @@ public class MainActivity extends TabActivity {
 					Toast.makeText(getApplicationContext(), "Let's do some search action", Toast.LENGTH_SHORT).show();
 				} else if (actionId == ID_INFO) {
 					Toast.makeText(getApplicationContext(), "I have no info this time", Toast.LENGTH_SHORT).show();
+				} else if (actionId == ID_SIGN_OUT) {
+					Toast.makeText(getApplicationContext(), "Sign out", Toast.LENGTH_SHORT).show();
 				} else {
 					Toast.makeText(getApplicationContext(), actionItem.getTitle() + " selected", Toast.LENGTH_SHORT).show();
 				}
@@ -172,11 +175,26 @@ public class MainActivity extends TabActivity {
   	  
   	  quitDialog.show();
   	 }
-  @Override
-  public void onBackPressed() {
-  	// TODO Auto-generated method stub
-  	openQuitDialog();
-  	
-  }
+	public boolean onBackPressed(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+//		if(event.getAction() == KeyEvent.ACTION_DOWN)
+//	    {
+//	        switch(keyCode)
+//	        {
+//	        case KeyEvent.KEYCODE_BACK:
+//	        	openQuitDialog();
+//	            return true;
+//	        }
+//	    }
+//		return super.onKeyDown(keyCode, event);
+		switch(keyCode)
+	    {
+	        case KeyEvent.KEYCODE_BACK:
+	        	openQuitDialog();
+	            return true;
+	    }
+	    return super.onKeyDown(keyCode, event);
+	}
+  
 
 }

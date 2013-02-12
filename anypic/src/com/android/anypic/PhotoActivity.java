@@ -243,7 +243,10 @@ public class PhotoActivity extends Activity {
 			break;
 		}
 	}
-
+	@Override
+	  public void onBackPressed() {
+	    this.getParent().onBackPressed();   
+	  }
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

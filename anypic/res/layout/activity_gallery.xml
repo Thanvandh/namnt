@@ -103,6 +103,13 @@
             android:layout_below="@+id/img_gallery_avatar"
             android:scaleType="fitCenter"
             android:src="@drawable/test" />
+        <ImageButton 
+            android:id="@+id/bt_like_picture"
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_below="@+id/gallery_picture"
+        	android:layout_alignParentLeft="true"
+        	android:src="@drawable/icon_liked"/>
     </RelativeLayout>
 	<LinearLayout 
 	    android:id="@+id/list_gallery_layout_focus"
@@ -124,13 +131,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dip"
         android:layout_alignParentBottom="true">
-        <ImageButton 
-            android:id="@+id/bt_like_picture"
-            android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:layout_alignParentTop="true"
-        	android:layout_alignParentLeft="true"
-        	android:src="@drawable/icon_liked"/>
+        
 
         <EditText
             android:id="@+id/text_box_comment"

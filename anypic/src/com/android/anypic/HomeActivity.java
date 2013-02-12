@@ -45,14 +45,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -157,16 +160,34 @@ public class HomeActivity extends Activity {
 		            Log.d("test", "Retrieved " + photoList.size() + " photos");
 		            for (int i = 0; i < photoList.size(); i++) {
 						// creating new HashMap
-						HashMap<String, String> map = new HashMap<String, String>();
+		            	HashMap<String, String> map = new HashMap<String, String>();
 						// adding each child node to HashMap key => value
-						Log.d("test", "objectid " + photoList.get(i).getObjectId());
 						// id not using any where
 						
 						ParseFile res = (ParseFile) photoList.get(i).get("image");
 						map.put(OBJECT_ID, photoList.get(i).getObjectId()); 
 						map.put(PHOTO_URL, res.getUrl()); 
-						map.put(MY_NAME, displayname);
-						map.put(AVATAR_URL, avatar_url);
+						ParseUser user_photo = new ParseUser();
+						user_photo = (ParseUser) photoList.get(i).get("user");
+						try {
+							user_photo = user_photo.fetch();
+						} catch (ParseException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						// ParseQuery query =
+						// ParseUser.getQuery().whereEqualTo("objectId",
+						// fromuser_id);
+
+						String user_photo_name = null;
+						String user_photo_avatar_url = null;
+						String content = null;
+						user_photo_name = user_photo.getString("displayname");
+						ParseFile res_user_avatar = (ParseFile) user_photo
+								.get("profilePictureMedium");
+						user_photo_avatar_url = res_user_avatar.getUrl();
+						map.put(MY_NAME, user_photo_name);
+						map.put(AVATAR_URL, user_photo_avatar_url);
 						// adding HashList to ArrayList
 						menuItems.add(map);
 						// Getting adapter
@@ -331,14 +352,32 @@ public class HomeActivity extends Activity {
     						// creating new HashMap
     						HashMap<String, String> map = new HashMap<String, String>();
     						// adding each child node to HashMap key => value
-    						Log.d("test", "objectid " + photoList.get(i).getObjectId());
     						// id not using any where
     						
     						ParseFile res = (ParseFile) photoList.get(i).get("image");
     						map.put(OBJECT_ID, photoList.get(i).getObjectId()); 
     						map.put(PHOTO_URL, res.getUrl()); 
-    						map.put(MY_NAME, displayname);
-    						map.put(AVATAR_URL, avatar_url);
+    						ParseUser user_photo = new ParseUser();
+    						user_photo = (ParseUser) photoList.get(i).get("user");
+    						try {
+    							user_photo = user_photo.fetch();
+    						} catch (ParseException e1) {
+    							// TODO Auto-generated catch block
+    							e1.printStackTrace();
+    						}
+    						// ParseQuery query =
+    						// ParseUser.getQuery().whereEqualTo("objectId",
+    						// fromuser_id);
+
+    						String user_photo_name = null;
+    						String user_photo_avatar_url = null;
+    						String content = null;
+    						user_photo_name = user_photo.getString("displayname");
+    						ParseFile res_user_avatar = (ParseFile) user_photo
+    								.get("profilePictureMedium");
+    						user_photo_avatar_url = res_user_avatar.getUrl();
+    						map.put(MY_NAME, user_photo_name);
+    						map.put(AVATAR_URL, user_photo_avatar_url);
     						// adding HashList to ArrayList
     						menuItems.add(map);
     						// Getting adapter
@@ -417,12 +456,34 @@ public class HomeActivity extends Activity {
 					            Log.d("test", "Retrieved " + photoList.size() + " photos");
 					            for (int i = 0; i < photoList.size(); i++) {
 									// creating new HashMap
-									HashMap<String, String> map = new HashMap<String, String>();
-									// adding each child node to HashMap key => value
-									Log.d("test", "objectid " + photoList.get(i).getObjectId());
-									ParseFile res = (ParseFile) photoList.get(i).get("image");
-									map.put(OBJECT_ID, photoList.get(i).getObjectId()); 
-									map.put(PHOTO_URL, res.getUrl());
+					            	HashMap<String, String> map = new HashMap<String, String>();
+		    						// adding each child node to HashMap key => value
+		    						// id not using any where
+		    						
+		    						ParseFile res = (ParseFile) photoList.get(i).get("image");
+		    						map.put(OBJECT_ID, photoList.get(i).getObjectId()); 
+		    						map.put(PHOTO_URL, res.getUrl()); 
+		    						ParseUser user_photo = new ParseUser();
+		    						user_photo = (ParseUser) photoList.get(i).get("user");
+		    						try {
+		    							user_photo = user_photo.fetch();
+		    						} catch (ParseException e1) {
+		    							// TODO Auto-generated catch block
+		    							e1.printStackTrace();
+		    						}
+		    						// ParseQuery query =
+		    						// ParseUser.getQuery().whereEqualTo("objectId",
+		    						// fromuser_id);
+
+		    						String user_photo_name = null;
+		    						String user_photo_avatar_url = null;
+		    						String content = null;
+		    						user_photo_name = user_photo.getString("displayname");
+		    						ParseFile res_user_avatar = (ParseFile) user_photo
+		    								.get("profilePictureMedium");
+		    						user_photo_avatar_url = res_user_avatar.getUrl();
+		    						map.put(MY_NAME, user_photo_name);
+		    						map.put(AVATAR_URL, user_photo_avatar_url);
 
 									// adding HashList to ArrayList
 									menuItems.add(map);
@@ -664,5 +725,9 @@ public class HomeActivity extends Activity {
 			}
 		}
 	};
+	@Override
+	  public void onBackPressed() {
+	    this.getParent().onBackPressed();   
+	  }
 
 }
