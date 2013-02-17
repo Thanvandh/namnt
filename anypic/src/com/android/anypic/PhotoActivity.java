@@ -10,9 +10,12 @@ import java.nio.ByteBuffer;
 
 import org.apache.commons.io.IOUtils;
 
+import com.android.utils.GPSTracker;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -22,7 +25,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -34,13 +39,17 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class PhotoActivity extends Activity {
 	Button bt_choose_photo;
 	Button bt_take_photo;
-	Button bt_upload;
-	ImageView photo;
+	Button bt_publish;
+	EditText comment;
+	ImageView img_photo;
+	GPSTracker gps;
 	private ProgressDialog mProgressDialog;
 	private static final int SELECT_PHOTO = 100;
 	private static final int TAKE_PICTURE = 101;
@@ -57,10 +66,10 @@ public class PhotoActivity extends Activity {
 		setContentView(R.layout.activity_photo);
 		bt_choose_photo = (Button) findViewById(R.id.bt_choose_a_photo);
 		bt_take_photo = (Button) findViewById(R.id.bt_take_a_photo);
-		bt_upload = (Button) findViewById(R.id.bt_upload_photo);
-		bt_upload.setEnabled(false);
+		bt_publish = (Button) findViewById(R.id.activity_photo_bt_publish);
+		comment = (EditText) findViewById(R.id.activity_photo_text_box_comment);
 		
-		photo = (ImageView) findViewById(R.id.activity_photo_picture);
+		img_photo = (ImageView) findViewById(R.id.activity_photo_picture);
 
 		bt_choose_photo.setOnClickListener(new OnClickListener() {
 
@@ -88,12 +97,12 @@ public class PhotoActivity extends Activity {
 			}
 		});
 		
-		bt_upload.setOnClickListener(new OnClickListener() {
+		bt_publish.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				mProgressDialog = ProgressDialog.show(PhotoActivity.this, "", getString(R.string.loading), true);
+				//mProgressDialog = ProgressDialog.show(PhotoActivity.this, "", getString(R.string.loading), true);
 //				InputStream imageStream = null;
 //				byte[] data = null;
 //				try {
@@ -110,58 +119,102 @@ public class PhotoActivity extends Activity {
 //					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //				}
-				
-				final ParseFile file = new ParseFile("photo.jpg", bitmapdata);
-				file.saveInBackground(new SaveCallback() {
-					
-					@Override
-					public void done(ParseException e) {
-						// TODO Auto-generated method stub
-						final ParseFile filethumbnail = new ParseFile("photothumnail.jpg", thumbnaildata);
-						try {
-							filethumbnail.save();
-							final ParseObject photo = new ParseObject("photo");
-							photo.put("image", file);
-							photo.put("thumbnail", filethumbnail);
-							photo.put("user", ParseUser.getCurrentUser());
-							photo.saveInBackground(new SaveCallback() {
-								
-								@Override
-								public void done(ParseException e) {
-									// TODO Auto-generated method stub
-									if (mProgressDialog.isShowing()) {
-										mProgressDialog.dismiss();
-							      }
-									
+				 gps = new GPSTracker(PhotoActivity.this);
+
+					// check if GPS enabled		
+			        if(gps.canGetLocation()){
+			        	
+			        	double latitude = gps.getLatitude();
+			        	double longitude = gps.getLongitude();
+			        	final ParseGeoPoint point = new ParseGeoPoint(latitude, longitude);
+			        	final ParseFile file = new ParseFile("photo.jpg", bitmapdata);
+						file.saveInBackground(new SaveCallback() {
+							
+							@Override
+							public void done(ParseException e) {
+								// TODO Auto-generated method stub
+								final ParseFile filethumbnail = new ParseFile("photothumnail.jpg", thumbnaildata);
+								try {
+									filethumbnail.save();
+									final ParseObject photo = new ParseObject("photo");
+									photo.put("image", file);
+									photo.put("thumbnail", filethumbnail);
+									photo.put("user", ParseUser.getCurrentUser());
+									photo.put("location", point);
+									photo.saveInBackground(new SaveCallback() {
+										
+										@Override
+										public void done(ParseException e) {
+											// TODO Auto-generated method stub
+											String scomment = comment.getEditableText().toString();
+											if (scomment == null){
+												img_photo.setVisibility(View.GONE);
+												comment.setVisibility(View.GONE);
+												bt_publish.setVisibility(View.GONE);
+											} else {
+												post_comment(scomment, photo.getObjectId());
+												img_photo.setVisibility(View.GONE);
+												comment.setVisibility(View.GONE);
+												bt_publish.setVisibility(View.GONE);
+											}
+											
+										}
+									});
+								} catch (ParseException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
 								}
-							});
-						} catch (ParseException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-						
-//						photo.saveInBackground(new SaveCallback() {
-//							
-//							@Override
-//							public void done(ParseException e) {
-//								// TODO Auto-generated method stub
-//								ParseUser user = ParseUser.getCurrentUser();
-//								ParseRelation relation = user.getRelation("photo");
-//								relation.add(photo);
-//								user.saveInBackground();
-//								
-//							}
-//						});
-						
-					}
-				});
+								
+//								photo.saveInBackground(new SaveCallback() {
+//									
+//									@Override
+//									public void done(ParseException e) {
+//										// TODO Auto-generated method stub
+//										ParseUser user = ParseUser.getCurrentUser();
+//										ParseRelation relation = user.getRelation("photo");
+//										relation.add(photo);
+//										user.saveInBackground();
+//										
+//									}
+//								});
+								
+							}
+						});
+			        	// \n is for new line
+			        	//Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();	
+			        }else{
+			        	// can't get location
+			        	// GPS or Network is not enabled
+			        	// Ask user to enable GPS/network in settings
+			        	gps.showSettingsAlert();
+			        }
+				
+				
 				
 				
 			}
 		});
 
 	}
-
+	public void post_comment(String content, String photo_id){
+		ParseObject activity = new ParseObject("activity");
+		ParseQuery query_photo = new ParseQuery("photo");
+		query_photo.whereEqualTo("objectId", photo_id);
+		try {
+			ParseObject photo = query_photo.getFirst();
+			ParseObject user = (ParseObject)photo.get("user");
+			//String toUser = user.getObjectId();
+			activity.put("fromUser", ParseUser.getCurrentUser());
+			activity.put("toUser", user);
+			activity.put("photo", photo);
+			activity.put("content", content);
+			activity.saveInBackground();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	private byte[] Convert(Bitmap bmp) {
 		int bytes = bmp.getWidth() * bmp.getHeight() * 4;
 		// Log.e(“Bytes”, String.valueOf(bytes));
@@ -210,8 +263,10 @@ public class PhotoActivity extends Activity {
 				thumbnailbitmap.compress(CompressFormat.JPEG, 100 /*ignored for PNG*/, bos_thumbnail); 
 				thumbnaildata = bos_thumbnail.toByteArray();
 				// Drawable d = new BitmapDrawable(yourSelectedImage);
-				photo.setImageBitmap(photobitmap);
-				bt_upload.setEnabled(true);
+				img_photo.setImageBitmap(photobitmap);
+				img_photo.setVisibility(View.VISIBLE);
+				comment.setVisibility(View.VISIBLE);
+				bt_publish.setVisibility(View.VISIBLE);
 			}
 			break;
 		case TAKE_PICTURE:
@@ -237,15 +292,46 @@ public class PhotoActivity extends Activity {
 				thumbnailbitmap.compress(CompressFormat.JPEG, 100 /*ignored for PNG*/, bos_thumbnail); 
 				thumbnaildata = bos_thumbnail.toByteArray();
 				// Drawable d = new BitmapDrawable(yourSelectedImage);
-				photo.setImageBitmap(photobitmap);
-				bt_upload.setEnabled(true);
+				img_photo.setImageBitmap(photobitmap);
+				img_photo.setVisibility(View.VISIBLE);
+				comment.setVisibility(View.VISIBLE);
+				bt_publish.setVisibility(View.VISIBLE);
 			}
 			break;
 		}
 	}
+//	@Override
+//	protected void onResume() {
+//		// TODO Auto-generated method stub
+//		super.onResume();
+//		openOptionsMenu();
+//	}
+	private void openQuitDialog(){
+	  	  AlertDialog.Builder quitDialog 
+	  	   = new AlertDialog.Builder(PhotoActivity.this);
+	  	  quitDialog.setTitle("Confirm to Quit?");
+	  	  
+	  	  quitDialog.setPositiveButton("OK, Quit!", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					finish();
+					
+				}
+	  	  });   	  
+	  	  quitDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+	  		  public void onClick(DialogInterface dialog, int which) {
+	  	    // TODO Auto-generated method stub
+	  	    
+	  	   }});
+	  	  
+	  	  quitDialog.show();
+	  	 }
+
 	@Override
 	  public void onBackPressed() {
-	    this.getParent().onBackPressed();   
+		openQuitDialog(); 
 	  }
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

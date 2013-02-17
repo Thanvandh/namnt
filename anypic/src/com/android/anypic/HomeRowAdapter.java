@@ -63,11 +63,14 @@ public class HomeRowAdapter extends BaseAdapter {
 	        TextView name = (TextView)vi.findViewById(R.id.list_home_row_displayname); // title
 	        ImageView photo = (ImageView)vi.findViewById(R.id.list_home_row_bottom);
 	        ImageView avatar = (ImageView)vi.findViewById(R.id.list_home_row_profile_pic);
+	        TextView time_ago = (TextView)vi.findViewById(R.id.list_home_row_time);
+	        
 	        
 	        HashMap<String, String> item = new HashMap<String, String>();
 	        item = data.get(position);
 	        Log.d("test", "name:" + item.get(HomeActivity.MY_NAME) + "avatar:" + item.get(HomeActivity.AVATAR_URL) + "photo:" + item.get(HomeActivity.PHOTO_URL));
 	        name.setText(item.get(HomeActivity.MY_NAME));
+	        time_ago.setText(item.get(HomeActivity.TIME_AGO));
 	        imageLoader.DisplayImage(item.get(HomeActivity.AVATAR_URL), avatar);
 	        imageLoader.DisplayImage(item.get(HomeActivity.PHOTO_URL), photo);
 	

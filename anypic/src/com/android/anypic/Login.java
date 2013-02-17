@@ -41,6 +41,7 @@ import android.os.Message;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -56,6 +57,8 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -187,32 +190,43 @@ public class Login extends Activity {
 						      Toast.makeText(Login.this, "The user cancelled the Facebook login.", Toast.LENGTH_LONG).show();
 						    } else if (user.isNew()) {
 						    	parse_user = user;
-						      Log.d("MyApp", "User signed up and logged in through Facebook!");
-						      //ParseFacebookUtils.getSession(
-
-						        try {
-									JSONObject result = new JSONObject(ParseFacebookUtils.getFacebook()
-									    .request("me"));
+						    	JSONObject result;
+								try {
+									result = new JSONObject(ParseFacebookUtils.getFacebook()
+										    .request("me"));
 									mfacebookid = result.getString("id");
 									mdisplayname = result.getString("name");
-									parse_user.put("displayname",mdisplayname);
-									parse_user.put("facebookid",mfacebookid);
-									parse_user.saveInBackground(new SaveCallback() {
-										
+							    	final Dialog dialog = new Dialog(Login.this);
+									dialog.setContentView(R.layout.displayname_dialog);
+									dialog.setTitle("Displayname");
+
+									// set the custom dialog components - text, image and button
+									final EditText text = (EditText) dialog.findViewById(R.id.displayname_dialog_text);
+									text.setText(mdisplayname);
+									
+									Button dialogButton = (Button) dialog.findViewById(R.id.displayname_dialog_button);
+									// if button is clicked, close the custom dialog
+									dialogButton.setOnClickListener(new OnClickListener() {
 										@Override
-										public void done(com.parse.ParseException e) {
-											// TODO Auto-generated method stub
-											handler.sendEmptyMessage(Message_Put_PictureSmall);
+										public void onClick(View v) {
+											mdisplayname = text.getText().toString();
+											parse_user.put("displayname",mdisplayname);
+											parse_user.put("facebookid",mfacebookid);
+											parse_user.saveInBackground(new SaveCallback() {
+												
+												@Override
+												public void done(com.parse.ParseException e) {
+													// TODO Auto-generated method stub
+													handler.sendEmptyMessage(Message_Put_PictureSmall);
+													
+												}
+											});
 											
+											dialog.dismiss();
 										}
 									});
-//									
-									
-									
-									//user.put("profilePictureSmall", profilePictureSmall);
-									//user.put("profilePictureMedium", profilePictureMedium);
 
-									
+									dialog.show();
 								} catch (MalformedURLException e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();
@@ -223,6 +237,44 @@ public class Login extends Activity {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();
 								}
+								
+//						    	parse_user = user;
+//						      Log.d("MyApp", "User signed up and logged in through Facebook!");
+//						      //ParseFacebookUtils.getSession(
+//
+//						        try {
+//									JSONObject result = new JSONObject(ParseFacebookUtils.getFacebook()
+//									    .request("me"));
+//									mfacebookid = result.getString("id");
+//									mdisplayname = result.getString("name");
+//									parse_user.put("displayname",mdisplayname);
+//									parse_user.put("facebookid",mfacebookid);
+//									parse_user.saveInBackground(new SaveCallback() {
+//										
+//										@Override
+//										public void done(com.parse.ParseException e) {
+//											// TODO Auto-generated method stub
+//											handler.sendEmptyMessage(Message_Put_PictureSmall);
+//											
+//										}
+//									});
+////									
+//									
+//									
+//									//user.put("profilePictureSmall", profilePictureSmall);
+//									//user.put("profilePictureMedium", profilePictureMedium);
+//
+//									
+//								} catch (MalformedURLException e1) {
+//									// TODO Auto-generated catch block
+//									e1.printStackTrace();
+//								} catch (JSONException e1) {
+//									// TODO Auto-generated catch block
+//									e1.printStackTrace();
+//								} catch (IOException e1) {
+//									// TODO Auto-generated catch block
+//									e1.printStackTrace();
+//								}
 						      
 						    } else {
 						      Log.d("MyApp", "User logged in through Facebook!");

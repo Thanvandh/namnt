@@ -21,7 +21,10 @@ import com.parse.ParseUser;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -47,6 +50,9 @@ public class TimelineActivity extends Activity {
 	final static String KEY_TO_USER_NAME = "toUser_name";
 	final static String KEY_TO_USER_AVATAR_URL = "toUser_avatar_url";
 	final static String KEY_CONTENT = "content";
+	final static String TIME_AGO = "time_ago";
+	final static String KEY_PHOTO_ID = "photo_id";
+	final static String KEY_PHOTO_THUMBNAIL = "photo_thumbnail";
 
 	// Flag for current page
 	int current_page = 1;
@@ -118,9 +124,27 @@ public class TimelineActivity extends Activity {
 						toUser_avatar_url = res_to_user.getUrl();
 						content = List.get(i).getString("content");
 						
+						ParseObject photo = List.get(i).getParseObject("photo");
+						try {
+							photo.fetch();
+							String photo_id = photo.getObjectId();
+							ParseFile photofile = (ParseFile) photo
+									.get("thumbnail");
+							String photo_thumbnail = photofile.getUrl();
+							map.put(KEY_PHOTO_ID, photo_id);
+							map.put(KEY_PHOTO_THUMBNAIL, photo_thumbnail);
+						} catch (ParseException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
 
 						// ParseFile res = (ParseFile)
 						// photoList.get(i).get("image");
+						long now = System.currentTimeMillis();
+						long updated = List.get(i).getUpdatedAt().getTime();
+						String time_ago =  (String) DateUtils.getRelativeTimeSpanString(updated, now, DateUtils.MINUTE_IN_MILLIS); 
+						map.put(TIME_AGO, time_ago);
 						map.put(KEY_FROM_USER_NAME, fromUser_name);
 						map.put(KEY_FROM_USER_AVATAR_URL, fromUser_avatar_url);
 						map.put(KEY_TO_USER_NAME, toUser_name);
@@ -259,6 +283,10 @@ public class TimelineActivity extends Activity {
 
 							// ParseFile res = (ParseFile)
 							// photoList.get(i).get("image");
+							long now = System.currentTimeMillis();
+    						long updated = List.get(i).getUpdatedAt().getTime();
+    						String time_ago =  (String) DateUtils.getRelativeTimeSpanString(updated, now, DateUtils.MINUTE_IN_MILLIS); 
+    						map.put(TIME_AGO, time_ago);
 							map.put(KEY_FROM_USER_NAME, fromUser_name);
 							map.put(KEY_FROM_USER_AVATAR_URL, fromUser_avatar_url);
 							map.put(KEY_TO_USER_NAME, toUser_name);
@@ -371,6 +399,11 @@ public class TimelineActivity extends Activity {
 
 									// ParseFile res = (ParseFile)
 									// photoList.get(i).get("image");
+									long now = System.currentTimeMillis();
+		    						long updated = List.get(i).getUpdatedAt().getTime();
+		    						String time_ago =  (String) DateUtils.getRelativeTimeSpanString(updated, now, DateUtils.MINUTE_IN_MILLIS); 
+		    						map.put(TIME_AGO, time_ago);
+		    						
 									map.put(KEY_FROM_USER_NAME, fromUser_name);
 									map.put(KEY_FROM_USER_AVATAR_URL, fromUser_avatar_url);
 									map.put(KEY_TO_USER_NAME, toUser_name);
@@ -414,9 +447,32 @@ public class TimelineActivity extends Activity {
 			pDialog.dismiss();
 		}
 	}
+	private void openQuitDialog(){
+	  	  AlertDialog.Builder quitDialog 
+	  	   = new AlertDialog.Builder(TimelineActivity.this);
+	  	  quitDialog.setTitle("Confirm to Quit?");
+	  	  
+	  	  quitDialog.setPositiveButton("OK, Quit!", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					finish();
+					
+				}
+	  	  });   	  
+	  	  quitDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+	  		  public void onClick(DialogInterface dialog, int which) {
+	  	    // TODO Auto-generated method stub
+	  	    
+	  	   }});
+	  	  
+	  	  quitDialog.show();
+	  	 }
+
 	@Override
 	  public void onBackPressed() {
-	    this.getParent().onBackPressed();   
+		openQuitDialog(); 
 	  }
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
