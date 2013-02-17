@@ -54,6 +54,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -99,6 +100,7 @@ public class HomeActivity extends Activity {
 	static final String MY_NAME = "myname";
 	static final String AVATAR_URL = "avatar_url";
 	static final String CURRENT_USER_ID = "current_user_id";
+	static final String TIME_AGO = "time_ago";
 	static final String KEY_NAME = "name";
 	final int LIMIT_PHOTO = 3;
 	// Flag for current page
@@ -165,7 +167,11 @@ public class HomeActivity extends Activity {
 						// id not using any where
 						
 						ParseFile res = (ParseFile) photoList.get(i).get("image");
-						map.put(OBJECT_ID, photoList.get(i).getObjectId()); 
+						long now = System.currentTimeMillis();
+						long created = photoList.get(i).getUpdatedAt().getTime();
+						String time_ago =  (String) DateUtils.getRelativeTimeSpanString(created, now, DateUtils.MINUTE_IN_MILLIS); 
+						map.put(TIME_AGO, time_ago);
+						map.put(OBJECT_ID, photoList.get(i).getObjectId());
 						map.put(PHOTO_URL, res.getUrl()); 
 						ParseUser user_photo = new ParseUser();
 						user_photo = (ParseUser) photoList.get(i).get("user");
@@ -355,6 +361,10 @@ public class HomeActivity extends Activity {
     						// id not using any where
     						
     						ParseFile res = (ParseFile) photoList.get(i).get("image");
+    						long now = System.currentTimeMillis();
+    						long created = photoList.get(i).getUpdatedAt().getTime();
+    						String time_ago =  (String) DateUtils.getRelativeTimeSpanString(created, now, DateUtils.MINUTE_IN_MILLIS); 
+    						map.put(TIME_AGO, time_ago);
     						map.put(OBJECT_ID, photoList.get(i).getObjectId()); 
     						map.put(PHOTO_URL, res.getUrl()); 
     						ParseUser user_photo = new ParseUser();
@@ -461,6 +471,10 @@ public class HomeActivity extends Activity {
 		    						// id not using any where
 		    						
 		    						ParseFile res = (ParseFile) photoList.get(i).get("image");
+		    						long now = System.currentTimeMillis();
+		    						long created = photoList.get(i).getUpdatedAt().getTime();
+		    						String time_ago =  (String) DateUtils.getRelativeTimeSpanString(created, now, DateUtils.MINUTE_IN_MILLIS); 
+		    						map.put(TIME_AGO, time_ago);
 		    						map.put(OBJECT_ID, photoList.get(i).getObjectId()); 
 		    						map.put(PHOTO_URL, res.getUrl()); 
 		    						ParseUser user_photo = new ParseUser();
@@ -725,9 +739,32 @@ public class HomeActivity extends Activity {
 			}
 		}
 	};
+	private void openQuitDialog(){
+	  	  AlertDialog.Builder quitDialog 
+	  	   = new AlertDialog.Builder(HomeActivity.this);
+	  	  quitDialog.setTitle("Confirm to Quit?");
+	  	  
+	  	  quitDialog.setPositiveButton("OK, Quit!", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					finish();
+					
+				}
+	  	  });   	  
+	  	  quitDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+	  		  public void onClick(DialogInterface dialog, int which) {
+	  	    // TODO Auto-generated method stub
+	  	    
+	  	   }});
+	  	  
+	  	  quitDialog.show();
+	  	 }
+
 	@Override
 	  public void onBackPressed() {
-	    this.getParent().onBackPressed();   
+		openQuitDialog(); 
 	  }
 
 }

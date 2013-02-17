@@ -5,16 +5,16 @@
         android:orderInCategory="100"
         android:title="@string/my_profile_settings"/>
     <item
+        android:id="@+id/photo_around_settings"
+        android:orderInCategory="100"
+        android:title="@string/photo_around_settings"/>
+    <item
         android:id="@+id/find_friends_settings"
         android:orderInCategory="100"
         android:title="@string/find_friends_settings"/>
     <item
-        android:id="@+id/sign_out_settings"
+        android:id="@+id/log_out_settings"
         android:orderInCategory="100"
-        android:title="@string/sign_out_settings"/>
-     <item
-        android:id="@+id/exit_settings"
-        android:orderInCategory="100"
-        android:title="@string/exit_settings"/>
+        android:title="@string/log_out_settings"/>
 
 </menu>

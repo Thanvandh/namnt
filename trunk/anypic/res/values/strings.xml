@@ -14,7 +14,7 @@ facebook home 493005900750680
     <string name="login_failed">Login is Failed</string>
     <string name="logout_success">Logout is Successful</string>
     <string name="loading">Loading</string>
-    <string name="facebook_app_id">473769649348309</string>
+    <string name="facebook_app_id">493005900750680</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="bt_home_text">Home</string>
     <string name="bt_timeline_text">Timeline</string>
@@ -23,9 +23,9 @@ facebook home 493005900750680
     <string name="title_activity_gallery">GalleryActivity</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="my_profile_settings">My Profile</string>
-    <string name="sign_out_settings">Sign Out</string>
+    <string name="log_out_settings">Log Out</string>
     <string name="find_friends_settings">Find Friends</string>
-    <string name="exit_settings">Exit</string>
+    <string name="photo_around_settings">Photo Around</string>
     
 
 </resources>

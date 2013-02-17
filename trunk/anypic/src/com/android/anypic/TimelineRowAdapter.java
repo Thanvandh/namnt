@@ -50,14 +50,18 @@ public class TimelineRowAdapter extends BaseAdapter {
 	        TextView name = (TextView)vi.findViewById(R.id.list_timeline_row_displayname); // title
 	        ImageView avatar = (ImageView)vi.findViewById(R.id.list_timeline_row_pic);
 	        TextView content = (TextView)vi.findViewById(R.id.list_timeline_row_action);
+	        TextView time_ago = (TextView)vi.findViewById(R.id.list_timeline_row_time);
+	        ImageView photo_thumbnail = (ImageView)vi.findViewById(R.id.list_timeline_row_thumbnail_pic);
 	        
 	        HashMap<String, String> item = new HashMap<String, String>();
 	        item = data.get(position);
 	        
 	        //Setting all values in listview
 	        name.setText(item.get(TimelineActivity.KEY_FROM_USER_NAME));
+	        time_ago.setText(item.get(TimelineActivity.TIME_AGO));
 	        content.setText(item.get(TimelineActivity.KEY_CONTENT));
 	        imageLoader.DisplayImage(item.get(TimelineActivity.KEY_FROM_USER_AVATAR_URL), avatar);
+	        imageLoader.DisplayImage(item.get(TimelineActivity.KEY_PHOTO_THUMBNAIL), photo_thumbnail);
 	        return vi;
 	    }
 }

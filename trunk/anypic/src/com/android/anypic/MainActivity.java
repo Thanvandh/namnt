@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.app.TabActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -146,6 +147,12 @@ public class MainActivity extends TabActivity {
         tv.setText(text);
         return view;
    }
+	@Override
+	public void onContentChanged() {
+		// TODO Auto-generated method stub
+		super.onContentChanged();
+		Log.d("Test","chuyentab");
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
