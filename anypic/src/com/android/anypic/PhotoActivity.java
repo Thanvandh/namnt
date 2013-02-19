@@ -333,11 +333,11 @@ public class PhotoActivity extends Activity {
 	  public void onBackPressed() {
 		openQuitDialog(); 
 	  }
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_photo, menu);
-		return true;
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		// Inflate the menu; this adds items to the action bar if it is present.
+//		getMenuInflater().inflate(R.menu.activity_photo, menu);
+//		return true;
+//	}
 
 }

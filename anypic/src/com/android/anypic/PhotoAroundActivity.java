@@ -26,6 +26,7 @@ import org.w3c.dom.NodeList;
 
 import com.android.data.Config;
 import com.android.data.User;
+import com.android.utils.GPSTracker;
 import com.android.utils.ImageLoader;
 import com.android.utils.XMLParser;
 import com.markupartist.android.widget.PullToRefreshListView;
@@ -35,10 +36,12 @@ import com.parse.GetDataCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -69,7 +72,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class HomeActivity extends Activity {
+public class PhotoAroundActivity extends Activity {
 //	ImageView img_profile;
 //	TextView myname;
 	//View home_header;
@@ -87,7 +90,9 @@ public class HomeActivity extends Activity {
 	String avatar_url;
 	String displayname;
 	String current_user_id;
-	private ImageLoader imageLoader; 
+	private ImageLoader imageLoader;
+	GPSTracker gps;
+	ParseGeoPoint point;
 	
 	private String URL = "http://api.androidhive.info/list_paging/?page=1";
 
@@ -102,6 +107,7 @@ public class HomeActivity extends Activity {
 	static final String TIME_AGO = "time_ago";
 	static final String KEY_NAME = "name";
 	final int LIMIT_PHOTO = 3;
+	final double maxDistance = 1;
 	// Flag for current page
 	int current_page = 0;
 
@@ -151,9 +157,27 @@ public class HomeActivity extends Activity {
 //					// adding HashList to ArrayList
 //					menuItems.add(map);
 //				}
+		gps = new GPSTracker(PhotoAroundActivity.this);
+
+		// check if GPS enabled		
+        if(gps.canGetLocation()){
+        	
+        	double latitude = gps.getLatitude();
+        	double longitude = gps.getLongitude();
+        	point = new ParseGeoPoint(latitude, longitude);
+        	
+        	// \n is for new line
+        	//Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();	
+        }else{
+        	// can't get location
+        	// GPS or Network is not enabled
+        	// Ask user to enable GPS/network in settings
+        	gps.showSettingsAlert();
+        }
 		
 		ParseQuery query_photo = new ParseQuery("photo");
 		query_photo.addDescendingOrder("createdAt");
+		query_photo.whereWithinKilometers("location", point, maxDistance);
 		query_photo.setLimit(LIMIT_PHOTO);
 		query_photo.findInBackground(new FindCallback() {
 		    public void done(List<ParseObject> photoList, ParseException e) {
@@ -196,7 +220,7 @@ public class HomeActivity extends Activity {
 						// adding HashList to ArrayList
 						menuItems.add(map);
 						// Getting adapter
-						adapter = new HomeRowAdapter(HomeActivity.this, menuItems);
+						adapter = new HomeRowAdapter(PhotoAroundActivity.this, menuItems);
 						lv.setAdapter(adapter);
 					}
 		            
@@ -277,11 +301,11 @@ public class HomeActivity extends Activity {
 //				// Starting new intent
 				Intent in = new Intent(getApplicationContext(),
 						GalleryActivity.class);
-				in.putExtra(HomeActivity.OBJECT_ID, item.get(HomeActivity.OBJECT_ID));
-				in.putExtra(HomeActivity.MY_NAME, item.get(HomeActivity.MY_NAME));
-				in.putExtra(HomeActivity.PHOTO_URL, item.get(HomeActivity.PHOTO_URL));
-				in.putExtra(HomeActivity.AVATAR_URL, item.get(HomeActivity.AVATAR_URL));
-				in.putExtra(HomeActivity.CURRENT_USER_ID, current_user_id);
+				in.putExtra(PhotoAroundActivity.OBJECT_ID, item.get(PhotoAroundActivity.OBJECT_ID));
+				in.putExtra(PhotoAroundActivity.MY_NAME, item.get(PhotoAroundActivity.MY_NAME));
+				in.putExtra(PhotoAroundActivity.PHOTO_URL, item.get(PhotoAroundActivity.PHOTO_URL));
+				in.putExtra(PhotoAroundActivity.AVATAR_URL, item.get(PhotoAroundActivity.AVATAR_URL));
+				in.putExtra(PhotoAroundActivity.CURRENT_USER_ID, current_user_id);
 				startActivity(in);
 			}
 		});
@@ -348,6 +372,7 @@ public class HomeActivity extends Activity {
             // Call onRefreshComplete when the list has been refreshed.
         	ParseQuery query_photo = new ParseQuery("photo");
     		query_photo.addDescendingOrder("createdAt");
+    		query_photo.whereWithinKilometers("location", point, maxDistance);
     		query_photo.setLimit(LIMIT_PHOTO);
     		query_photo.findInBackground(new FindCallback() {
     		    public void done(List<ParseObject> photoList, ParseException e) {
@@ -390,7 +415,7 @@ public class HomeActivity extends Activity {
     						// adding HashList to ArrayList
     						menuItems.add(map);
     						// Getting adapter
-    						adapter = new HomeRowAdapter(HomeActivity.this, menuItems);
+    						adapter = new HomeRowAdapter(PhotoAroundActivity.this, menuItems);
     						lv.setAdapter(adapter);
     					}
     		            
@@ -422,7 +447,7 @@ public class HomeActivity extends Activity {
 		protected void onPreExecute() {
 			// Showing progress dialog before sending http request
 			pDialog = new ProgressDialog(
-					HomeActivity.this);
+					PhotoAroundActivity.this);
 			pDialog.setMessage("Please wait..");
 			pDialog.setIndeterminate(true);
 			pDialog.setCancelable(false);
@@ -457,6 +482,7 @@ public class HomeActivity extends Activity {
 //					}
 					ParseQuery query_photo = new ParseQuery("photo");
 					query_photo.addDescendingOrder("createdAt");
+					query_photo.whereWithinKilometers("location", point, maxDistance);
 					query_photo.setLimit(LIMIT_PHOTO);
 					query_photo.setSkip(current_page);
 					query_photo.findInBackground(new FindCallback() {
@@ -505,7 +531,7 @@ public class HomeActivity extends Activity {
 									
 									// Appending new data to menuItems ArrayList
 									adapter = new HomeRowAdapter(
-											HomeActivity.this,
+											PhotoAroundActivity.this,
 											menuItems);
 									lv.setAdapter(adapter);
 									
@@ -701,7 +727,7 @@ public class HomeActivity extends Activity {
 					mProgressDialog.dismiss();
 				}
 				String error_desc = msg.getData().getString("error_desc");
-				Toast.makeText(HomeActivity.this, sSignUpFailed + ":" + error_desc,
+				Toast.makeText(PhotoAroundActivity.this, sSignUpFailed + ":" + error_desc,
 						Toast.LENGTH_LONG).show();
 
 			}
@@ -738,32 +764,32 @@ public class HomeActivity extends Activity {
 			}
 		}
 	};
-	private void openQuitDialog(){
-	  	  AlertDialog.Builder quitDialog 
-	  	   = new AlertDialog.Builder(HomeActivity.this);
-	  	  quitDialog.setTitle("Confirm to Quit?");
-	  	  
-	  	  quitDialog.setPositiveButton("OK, Quit!", new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					finish();
-					
-				}
-	  	  });   	  
-	  	  quitDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-	  		  public void onClick(DialogInterface dialog, int which) {
-	  	    // TODO Auto-generated method stub
-	  	    
-	  	   }});
-	  	  
-	  	  quitDialog.show();
-	  	 }
-
-	@Override
-	  public void onBackPressed() {
-		openQuitDialog(); 
-	  }
+//	private void openQuitDialog(){
+//	  	  AlertDialog.Builder quitDialog 
+//	  	   = new AlertDialog.Builder(PhotoAroundActivity.this);
+//	  	  quitDialog.setTitle("Confirm to Quit?");
+//	  	  
+//	  	  quitDialog.setPositiveButton("OK, Quit!", new DialogInterface.OnClickListener() {
+//				
+//				@Override
+//				public void onClick(DialogInterface dialog, int which) {
+//					finish();
+//					
+//				}
+//	  	  });   	  
+//	  	  quitDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+//
+//	  		  public void onClick(DialogInterface dialog, int which) {
+//	  	    // TODO Auto-generated method stub
+//	  	    
+//	  	   }});
+//	  	  
+//	  	  quitDialog.show();
+//	  	 }
+//
+//	@Override
+//	  public void onBackPressed() {
+//		openQuitDialog(); 
+//	  }
 
 }
