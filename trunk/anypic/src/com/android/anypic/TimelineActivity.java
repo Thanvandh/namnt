@@ -474,11 +474,11 @@ public class TimelineActivity extends Activity {
 	  public void onBackPressed() {
 		openQuitDialog(); 
 	  }
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_timeline, menu);
-		return true;
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		// Inflate the menu; this adds items to the action bar if it is present.
+//		getMenuInflater().inflate(R.menu.activity_timeline, menu);
+//		return true;
+//	}
 
 }

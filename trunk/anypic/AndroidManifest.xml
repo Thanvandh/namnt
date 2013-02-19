@@ -67,6 +67,14 @@
             android:name="com.android.anypic.MainActivity"
             android:label="@string/title_activity_main" >
         </activity>
+        <activity
+            android:name="com.android.anypic.ProfileActivity"
+            android:label="@string/title_activity_home" >
+        </activity>
+        <activity
+            android:name="com.android.anypic.PhotoAroundActivity"
+            android:label="@string/title_activity_home" >
+        </activity>
     </application>
 
 </manifest>
