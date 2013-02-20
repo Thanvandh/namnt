@@ -110,6 +110,15 @@
         	android:layout_below="@+id/gallery_picture"
         	android:layout_alignParentLeft="true"
         	android:src="@drawable/icon_liked"/>
+        <Gallery 
+	        android:id="@+id/GalleryLikedPeople" 
+	        android:layout_width="fill_parent" 
+	        android:layout_height="wrap_content" 
+	        android:spacing="5dp"
+	        android:layout_below="@+id/gallery_picture"
+	        android:layout_toRightOf="@+id/bt_like_picture"     
+	           
+		/> 
     </RelativeLayout>
 	<LinearLayout 
 	    android:id="@+id/list_gallery_layout_focus"
