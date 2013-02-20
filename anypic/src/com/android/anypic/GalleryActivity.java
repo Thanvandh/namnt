@@ -18,15 +18,23 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Gallery;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.LinearLayout.LayoutParams;
 
 public class GalleryActivity extends Activity {
 	String object_id;
@@ -43,13 +51,17 @@ public class GalleryActivity extends Activity {
 	PullToRefreshListView lv;
 	GalleryRowAdapter adapter;
 	ArrayList<HashMap<String, String>> menuItems;
+	ArrayList<String> pictureUrl;
 	ProgressDialog pDialog;
 	final static int LIMIT_COMMENT = 5;
 	final static String KEY_FROM_USER_NAME = "fromUser_name";
 	final static String KEY_FROM_USER_AVATAR_URL = "fromUser_avatar_url";
 	final static String KEY_CONTENT = "content";
 	Button bt_send_comment;
+	ImageButton bt_liked;
 	EditText text_box_comment;
+	Gallery likedpeople;
+	
 	
 	int current_page = 0;
 	
@@ -73,6 +85,25 @@ public class GalleryActivity extends Activity {
 		txt_my_name.setText(my_name);
 		imageLoader.DisplayImage(avatar_url, img_avatar);
 		imageLoader.DisplayImage(photo_url, img_picture);
+		likedpeople = (Gallery) findViewById(R.id.GalleryLikedPeople);
+
+		
+		
+//		likedpeople.setOnItemSelectedListener(new OnItemSelectedListener() {
+//
+//			public void onItemSelected(AdapterView<?> parent, View v,
+//					int position, long id) {
+//				mySelection.setText(" selected option: " + position );
+//				
+//			}
+//
+//			public void onNothingSelected(AdapterView<?> parent) {
+//				mySelection.setText("Nothing selected");
+//				
+//			}
+//
+//
+//		});
 		
 		lv = (PullToRefreshListView) findViewById(R.id.list_gallery_post);
 		lv.setOnRefreshListener(new OnRefreshListener() {
@@ -84,6 +115,7 @@ public class GalleryActivity extends Activity {
         });
 
 		menuItems = new ArrayList<HashMap<String, String>>();
+		pictureUrl = new ArrayList<String>();
 
 //		parser = new XMLParser();
 //		xml = parser.getXmlFromUrl(URL); // getting XML
@@ -117,38 +149,63 @@ public class GalleryActivity extends Activity {
 			            Log.d("test", "Retrieved " + List.size() + " photos");
 			            for (int i = 0; i < List.size(); i++) {
 							// creating new HashMap
-							HashMap<String, String> map = new HashMap<String, String>();
-							// adding each child node to HashMap key => value
-							Log.d("test", "objectid " + List.get(i).getObjectId());
-							// id not using any where
-							ParseUser fromuser = new ParseUser();
-							fromuser = (ParseUser) List.get(i).get("fromUser");
-							try {
-								fromuser = fromuser.fetch();
-							} catch (ParseException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-							//ParseQuery query = ParseUser.getQuery().whereEqualTo("objectId", fromuser_id);
-							
-							String fromUser_name = null;
-							String fromUser_avatar_url = null;
-							String content = null;
-							fromUser_name = fromuser.getString("displayname");     
-						    ParseFile res = (ParseFile)fromuser.get("profilePictureMedium");
-						    fromUser_avatar_url = res.getUrl();
-						    content = List.get(i).getString("content");
-							
-							//ParseFile res = (ParseFile) photoList.get(i).get("image");
-							map.put(KEY_FROM_USER_NAME, fromUser_name); 
-							map.put(KEY_FROM_USER_AVATAR_URL, fromUser_avatar_url); 
-							map.put(KEY_CONTENT, content);
-							//map.put(AVATAR_URL, avatar_url);
-							// adding HashList to ArrayList
-							menuItems.add(map);
-							// Getting adapter
-							adapter = new GalleryRowAdapter(GalleryActivity.this, menuItems);
-							lv.setAdapter(adapter);
+			            	String type = List.get(i).getString("type");
+			            	if (type.equals("comment"))
+			            	{
+								HashMap<String, String> map = new HashMap<String, String>();
+								// adding each child node to HashMap key => value
+								Log.d("test", "objectid " + List.get(i).getObjectId());
+								// id not using any where
+								ParseUser fromuser = new ParseUser();
+								fromuser = (ParseUser) List.get(i).get("fromUser");
+								try {
+									fromuser = fromuser.fetch();
+								} catch (ParseException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								//ParseQuery query = ParseUser.getQuery().whereEqualTo("objectId", fromuser_id);
+								
+								String fromUser_name = null;
+								String fromUser_avatar_url = null;
+								String content = null;
+								fromUser_name = fromuser.getString("displayname");     
+							    ParseFile res = (ParseFile)fromuser.get("profilePictureSmall");
+							    fromUser_avatar_url = res.getUrl();
+							    content = List.get(i).getString("content");
+								
+								//ParseFile res = (ParseFile) photoList.get(i).get("image");
+								map.put(KEY_FROM_USER_NAME, fromUser_name); 
+								map.put(KEY_FROM_USER_AVATAR_URL, fromUser_avatar_url); 
+								map.put(KEY_CONTENT, content);
+								//map.put(AVATAR_URL, avatar_url);
+								// adding HashList to ArrayList
+								menuItems.add(map);
+								// Getting adapter
+								adapter = new GalleryRowAdapter(GalleryActivity.this, menuItems);
+								lv.setAdapter(adapter);	
+			            	} else if (type.equalsIgnoreCase("liked"))
+			            	{
+			            		ParseUser fromuser = new ParseUser();
+								fromuser = (ParseUser) List.get(i).get("fromUser");
+								try {
+									fromuser = fromuser.fetch();
+								} catch (ParseException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								//ParseQuery query = ParseUser.getQuery().whereEqualTo("objectId", fromuser_id);
+								
+								String fromUser_name = null;
+								String fromUser_avatar_url = null;
+								String content = null;
+								fromUser_name = fromuser.getString("displayname");     
+							    ParseFile res = (ParseFile)fromuser.get("profilePictureSmall");
+							    fromUser_avatar_url = res.getUrl();
+							    pictureUrl.add(fromUser_avatar_url);
+							    likedpeople.setAdapter(new ImageAdapter(GalleryActivity.this));
+			            		
+			            	}
 						}
 			            
 			        } else {
@@ -208,6 +265,35 @@ public class GalleryActivity extends Activity {
 				
 			}
 		});
+		bt_liked = (ImageButton)findViewById(R.id.bt_like_picture);
+		bt_liked.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				post_liked();
+				
+			}
+		});
+		
+	}
+	public void post_liked(){
+		ParseObject activity = new ParseObject("activity");
+		ParseQuery query_photo = new ParseQuery("photo");
+		query_photo.whereEqualTo("objectId", object_id);
+		try {
+			ParseObject photo = query_photo.find().get(0);
+			ParseObject user = (ParseObject)photo.get("user");
+			//String toUser = user.getObjectId();
+			activity.put("fromUser", ParseUser.getCurrentUser());
+			activity.put("toUser", user);
+			activity.put("photo", photo);
+			activity.put("type", "liked");
+			activity.saveInBackground();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	public void post_comment(String content){
@@ -222,6 +308,7 @@ public class GalleryActivity extends Activity {
 			activity.put("toUser", user);
 			activity.put("photo", photo);
 			activity.put("content", content);
+			activity.put("type", "comment");
 			activity.saveInBackground();
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -250,6 +337,7 @@ public class GalleryActivity extends Activity {
 
 			// adding HashList to ArrayList
 			menuItems.clear();
+			pictureUrl.clear();
 			current_page = 0;
 
           // Call onRefreshComplete when the list has been refreshed.
@@ -267,39 +355,63 @@ public class GalleryActivity extends Activity {
 				        if (e == null) {
 				            Log.d("test", "Retrieved " + List.size() + " photos");
 				            for (int i = 0; i < List.size(); i++) {
-								// creating new HashMap
-								HashMap<String, String> map = new HashMap<String, String>();
-								// adding each child node to HashMap key => value
-								Log.d("test", "objectid " + List.get(i).getObjectId());
-								// id not using any where
-								fromuser_id = List.get(i).getString("fromUser");
-								//ParseQuery query = ParseUser.getQuery().whereEqualTo("objectId", fromuser_id);
-								ParseUser fromuser = new ParseUser();
-								fromuser = (ParseUser) List.get(i).get("fromUser");
-								try {
-									fromuser = fromuser.fetch();
-								} catch (ParseException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								}
-								
-								String fromUser_name = null;
-								String fromUser_avatar_url = null;
-								String content = null;
-								fromUser_name = fromuser.getString("displayname");     
-							    ParseFile res = (ParseFile)fromuser.get("profilePictureMedium");
-							    fromUser_avatar_url = res.getUrl();
-							    content = List.get(i).getString("content");
-								//ParseFile res = (ParseFile) photoList.get(i).get("image");
-								map.put(KEY_FROM_USER_NAME, fromUser_name); 
-								map.put(KEY_FROM_USER_AVATAR_URL, fromUser_avatar_url); 
-								map.put(KEY_CONTENT, content);
-								//map.put(AVATAR_URL, avatar_url);
-								// adding HashList to ArrayList
-								menuItems.add(map);
-								// Getting adapter
-								adapter = new GalleryRowAdapter(GalleryActivity.this, menuItems);
-								lv.setAdapter(adapter);
+				            	String type = List.get(i).getString("type");
+				            	if (type.equalsIgnoreCase("comment"))
+				            	{
+									HashMap<String, String> map = new HashMap<String, String>();
+									// adding each child node to HashMap key => value
+									Log.d("test", "objectid " + List.get(i).getObjectId());
+									// id not using any where
+									ParseUser fromuser = new ParseUser();
+									fromuser = (ParseUser) List.get(i).get("fromUser");
+									try {
+										fromuser = fromuser.fetch();
+									} catch (ParseException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
+									//ParseQuery query = ParseUser.getQuery().whereEqualTo("objectId", fromuser_id);
+									
+									String fromUser_name = null;
+									String fromUser_avatar_url = null;
+									String content = null;
+									fromUser_name = fromuser.getString("displayname");     
+								    ParseFile res = (ParseFile)fromuser.get("profilePictureSmall");
+								    fromUser_avatar_url = res.getUrl();
+								    content = List.get(i).getString("content");
+									
+									//ParseFile res = (ParseFile) photoList.get(i).get("image");
+									map.put(KEY_FROM_USER_NAME, fromUser_name); 
+									map.put(KEY_FROM_USER_AVATAR_URL, fromUser_avatar_url); 
+									map.put(KEY_CONTENT, content);
+									//map.put(AVATAR_URL, avatar_url);
+									// adding HashList to ArrayList
+									menuItems.add(map);
+									// Getting adapter
+									adapter = new GalleryRowAdapter(GalleryActivity.this, menuItems);
+									lv.setAdapter(adapter);	
+				            	} else if (type.equalsIgnoreCase("liked"))
+				            	{
+				            		ParseUser fromuser = new ParseUser();
+									fromuser = (ParseUser) List.get(i).get("fromUser");
+									try {
+										fromuser = fromuser.fetch();
+									} catch (ParseException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
+									//ParseQuery query = ParseUser.getQuery().whereEqualTo("objectId", fromuser_id);
+									
+									String fromUser_name = null;
+									String fromUser_avatar_url = null;
+									String content = null;
+									fromUser_name = fromuser.getString("displayname");     
+								    ParseFile res = (ParseFile)fromuser.get("profilePictureSmall");
+								    fromUser_avatar_url = res.getUrl();
+								    pictureUrl.add(fromUser_avatar_url);
+								    likedpeople.setAdapter(new ImageAdapter(GalleryActivity.this));
+				            		
+				            	}
 							}
 				            
 				        } else {
@@ -382,40 +494,63 @@ public class GalleryActivity extends Activity {
 						        if (e == null) {
 						            Log.d("test", "Retrieved " + List.size() + " photos");
 						            for (int i = 0; i < List.size(); i++) {
-										// creating new HashMap
-										HashMap<String, String> map = new HashMap<String, String>();
-										// adding each child node to HashMap key => value
-										Log.d("test", "objectid " + List.get(i).getObjectId());
-										// id not using any where
-										fromuser_id = List.get(i).getString("fromUser");
-										//ParseQuery query = ParseUser.getQuery().whereEqualTo("objectId", fromuser_id);
-										ParseUser fromuser = new ParseUser();
-										fromuser = (ParseUser) List.get(i).get("fromUser");
-										try {
-											fromuser = fromuser.fetch();
-										} catch (ParseException e1) {
-											// TODO Auto-generated catch block
-											e1.printStackTrace();
-										}
-										
-										String fromUser_name = null;
-										String fromUser_avatar_url = null;
-										String content = null;
-										fromUser_name = fromuser.getString("displayname");     
-									    ParseFile res = (ParseFile)fromuser.get("profilePictureMedium");
-									    fromUser_avatar_url = res.getUrl();
-									    content = List.get(i).getString("content");
-										
-										//ParseFile res = (ParseFile) photoList.get(i).get("image");
-										map.put(KEY_FROM_USER_NAME, fromUser_name); 
-										map.put(KEY_FROM_USER_AVATAR_URL, fromUser_avatar_url); 
-										map.put(KEY_CONTENT, content);
-										//map.put(AVATAR_URL, avatar_url);
-										// adding HashList to ArrayList
-										menuItems.add(map);
-										// Getting adapter
-										adapter = new GalleryRowAdapter(GalleryActivity.this, menuItems);
-										lv.setAdapter(adapter);
+						            	String type = List.get(i).getString("type");
+						            	if (type.equalsIgnoreCase("comment"))
+						            	{
+											HashMap<String, String> map = new HashMap<String, String>();
+											// adding each child node to HashMap key => value
+											Log.d("test", "objectid " + List.get(i).getObjectId());
+											// id not using any where
+											ParseUser fromuser = new ParseUser();
+											fromuser = (ParseUser) List.get(i).get("fromUser");
+											try {
+												fromuser = fromuser.fetch();
+											} catch (ParseException e1) {
+												// TODO Auto-generated catch block
+												e1.printStackTrace();
+											}
+											//ParseQuery query = ParseUser.getQuery().whereEqualTo("objectId", fromuser_id);
+											
+											String fromUser_name = null;
+											String fromUser_avatar_url = null;
+											String content = null;
+											fromUser_name = fromuser.getString("displayname");     
+										    ParseFile res = (ParseFile)fromuser.get("profilePictureSmall");
+										    fromUser_avatar_url = res.getUrl();
+										    content = List.get(i).getString("content");
+											
+											//ParseFile res = (ParseFile) photoList.get(i).get("image");
+											map.put(KEY_FROM_USER_NAME, fromUser_name); 
+											map.put(KEY_FROM_USER_AVATAR_URL, fromUser_avatar_url); 
+											map.put(KEY_CONTENT, content);
+											//map.put(AVATAR_URL, avatar_url);
+											// adding HashList to ArrayList
+											menuItems.add(map);
+											// Getting adapter
+											adapter = new GalleryRowAdapter(GalleryActivity.this, menuItems);
+											lv.setAdapter(adapter);	
+						            	} else if (type.equalsIgnoreCase("liked"))
+						            	{
+						            		ParseUser fromuser = new ParseUser();
+											fromuser = (ParseUser) List.get(i).get("fromUser");
+											try {
+												fromuser = fromuser.fetch();
+											} catch (ParseException e1) {
+												// TODO Auto-generated catch block
+												e1.printStackTrace();
+											}
+											//ParseQuery query = ParseUser.getQuery().whereEqualTo("objectId", fromuser_id);
+											
+											String fromUser_name = null;
+											String fromUser_avatar_url = null;
+											String content = null;
+											fromUser_name = fromuser.getString("displayname");     
+										    ParseFile res = (ParseFile)fromuser.get("profilePictureSmall");
+										    fromUser_avatar_url = res.getUrl();
+										    pictureUrl.add(fromUser_avatar_url);
+										    likedpeople.setAdapter(new ImageAdapter(GalleryActivity.this));
+						            		
+						            	}
 									}
 						            
 						        } else {
@@ -449,5 +584,63 @@ public class GalleryActivity extends Activity {
 		getMenuInflater().inflate(R.menu.activity_gallery, menu);
 		return true;
 	}
+	public class ImageAdapter extends BaseAdapter {
+		/** The parent context */
+		private Context myContext;
+		// Put some images to project-folder: /res/drawable/
+		// format: jpg, gif, png, bmp, ...
+//		private int[] myImageIds = { R.drawable.image1, R.drawable.image2,
+//				       R.drawable.image3 };
+
+		/** Simple Constructor saving the 'parent' context. */
+		public ImageAdapter(Context c) {
+			this.myContext = c;
+		}
+
+		// inherited abstract methods - must be implemented
+		// Returns count of images, and individual IDs
+		public int getCount() {
+			int res = 0;
+			if (pictureUrl != null)
+				res = pictureUrl.size();
+			return res;
+		}
+
+		public Object getItem(int position) {
+			return position;
+		}
+
+		public long getItemId(int position) {
+			return position;
+		}
+		// Returns a new ImageView to be displayed,
+		@Override
+		public View getView(int position, View convertView, 
+				ViewGroup parent) {
+
+			// Get a View to display image data 					
+			ImageView iv = new ImageView(this.myContext);
+			//iv.setImageResource(R.drawable.button_settings);
+			imageLoader.DisplayImage(pictureUrl.get(position), iv);
+
+			// Image should be scaled somehow
+			//iv.setScaleType(ImageView.ScaleType.CENTER);
+			//iv.setScaleType(ImageView.ScaleType.CENTER_CROP);			
+			//iv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+			//iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
+			//iv.setScaleType(ImageView.ScaleType.FIT_XY);
+			//iv.setScaleType(ImageView.ScaleType.FIT_END);
+			iv.setAdjustViewBounds(true);
+            iv.setLayoutParams(new Gallery.LayoutParams(
+                    LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+			
+			// Set the Width & Height of the individual images
+			//iv.setLayoutParams(new Gallery.LayoutParams(150, 150));
+
+			return iv;
+		}
+
+
+	}// ImageAdapter
 
 }
