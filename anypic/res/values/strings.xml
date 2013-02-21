@@ -14,7 +14,7 @@ facebook home 493005900750680
     <string name="login_failed">Login is Failed</string>
     <string name="logout_success">Logout is Successful</string>
     <string name="loading">Loading</string>
-    <string name="facebook_app_id">473769649348309</string>
+    <string name="facebook_app_id">493005900750680</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="bt_home_text">Home</string>
     <string name="bt_timeline_text">Timeline</string>

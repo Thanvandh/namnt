@@ -61,6 +61,7 @@ public class GalleryActivity extends Activity {
 	ImageButton bt_liked;
 	EditText text_box_comment;
 	Gallery likedpeople;
+	boolean bliked = false;
 	
 	
 	int current_page = 0;
@@ -199,14 +200,22 @@ public class GalleryActivity extends Activity {
 								String fromUser_name = null;
 								String fromUser_avatar_url = null;
 								String content = null;
+								if (fromuser.getObjectId().equalsIgnoreCase(ParseUser.getCurrentUser().getObjectId()))
+									bliked = true;
 								fromUser_name = fromuser.getString("displayname");     
 							    ParseFile res = (ParseFile)fromuser.get("profilePictureSmall");
 							    fromUser_avatar_url = res.getUrl();
 							    pictureUrl.add(fromUser_avatar_url);
+							    if (bliked)
+									bt_liked.setImageResource(R.drawable.icon_like);
+								else
+									bt_liked.setImageResource(R.drawable.icon_liked);
+							    //bt_liked.setEnabled(true);
 							    likedpeople.setAdapter(new ImageAdapter(GalleryActivity.this));
 			            		
 			            	}
 						}
+			            bt_liked.setEnabled(true);
 			            
 			        } else {
 			            Log.d("score", "Error: " + e.getMessage());
@@ -261,17 +270,23 @@ public class GalleryActivity extends Activity {
 					post_comment(content);
 					text_box_comment.clearFocus();
 					text_box_comment.clearComposingText();
+					new GetDataTask().execute();
 				}
 				
 			}
 		});
 		bt_liked = (ImageButton)findViewById(R.id.bt_like_picture);
+		bt_liked.setEnabled(false);
 		bt_liked.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				post_liked();
+				if (bliked)
+					unlike();
+				else
+					post_liked();
+				new GetDataTask().execute();
 				
 			}
 		});
@@ -294,6 +309,35 @@ public class GalleryActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+	}
+	public void unlike(){
+//		ParseObject activity = new ParseObject("activity");
+//		activity.
+		ParseQuery query_activity = new ParseQuery("activity");
+		query_activity.whereEqualTo("fromUser", ParseUser.getCurrentUser());
+		query_activity.whereEqualTo("type", "liked");
+		query_activity.findInBackground(new FindCallback() {
+			
+			@Override
+			public void done(List<ParseObject> objects, ParseException e) {
+				// TODO Auto-generated method stub
+			objects.get(0).deleteInBackground();	
+			}
+		});
+		//try {
+			//ParseObject photo = query_photo.find().get(0);
+			//ParseObject user = (ParseObject)photo.get("user");
+			//String toUser = user.getObjectId();
+			//activity.put("fromUser", ParseUser.getCurrentUser());
+			//activity.put("toUser", user);
+			//activity.put("photo", photo);
+		//query_activity.deleteInBackground();
+			//activity.saveInBackground();
+		//} catch (ParseException e) {
+			// TODO Auto-generated catch block
+	//		e.printStackTrace();
+		//}
 		
 	}
 	public void post_comment(String content){
@@ -405,14 +449,21 @@ public class GalleryActivity extends Activity {
 									String fromUser_name = null;
 									String fromUser_avatar_url = null;
 									String content = null;
+									if (fromuser.getObjectId().equalsIgnoreCase(ParseUser.getCurrentUser().getObjectId()))
+										bliked = true;
 									fromUser_name = fromuser.getString("displayname");     
 								    ParseFile res = (ParseFile)fromuser.get("profilePictureSmall");
 								    fromUser_avatar_url = res.getUrl();
 								    pictureUrl.add(fromUser_avatar_url);
+								    if (bliked)
+										bt_liked.setImageResource(R.drawable.icon_like);
+									else
+										bt_liked.setImageResource(R.drawable.icon_liked);
 								    likedpeople.setAdapter(new ImageAdapter(GalleryActivity.this));
 				            		
 				            	}
 							}
+				            bt_liked.setEnabled(true);
 				            
 				        } else {
 				            Log.d("score", "Error: " + e.getMessage());
@@ -544,14 +595,22 @@ public class GalleryActivity extends Activity {
 											String fromUser_name = null;
 											String fromUser_avatar_url = null;
 											String content = null;
+											if (fromuser.getObjectId().equalsIgnoreCase(ParseUser.getCurrentUser().getObjectId()))
+												bliked = true;
 											fromUser_name = fromuser.getString("displayname");     
 										    ParseFile res = (ParseFile)fromuser.get("profilePictureSmall");
 										    fromUser_avatar_url = res.getUrl();
 										    pictureUrl.add(fromUser_avatar_url);
+										    if (bliked)
+												bt_liked.setImageResource(R.drawable.icon_like);
+											else
+												bt_liked.setImageResource(R.drawable.icon_liked);
+										    //bt_liked.setEnabled(true);
 										    likedpeople.setAdapter(new ImageAdapter(GalleryActivity.this));
 						            		
 						            	}
 									}
+						            bt_liked.setEnabled(true);
 						            
 						        } else {
 						            Log.d("score", "Error: " + e.getMessage());
