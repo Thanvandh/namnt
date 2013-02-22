@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <ScrollView 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <RelativeLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView 
+        android:id="@+id/text_header_soundpool"    
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:text="Play with sound pool" 
+    	android:layout_alignParentTop="true"/>
+    <Button 
+        android:id="@+id/bt_play1"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Play"
+        android:layout_below="@+id/text_header_soundpool"/>
+   <TextView 
+       	android:text="ogg_country_straightclean"
+        android:id="@+id/textView1" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/bt_play1"
+        android:layout_below="@+id/text_header_soundpool" />
+   <Button 
+        android:id="@+id/bt_play2"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Play"
+        android:layout_below="@+id/bt_play1"/>
+   <TextView 
+       	android:text="ogg_heavymetal_headbang"
+        android:id="@+id/textView1" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/bt_play2"
+        android:layout_below="@+id/bt_play1" />
+   <Button 
+        android:id="@+id/bt_play3"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Play"
+        android:layout_below="@+id/bt_play2"/>
+   <TextView 
+       	android:text="ogg_pop_rock_dirtygroove"
+        android:id="@+id/textView1" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/bt_play3"
+        android:layout_below="@+id/bt_play2" />
+    <Button 
+        android:id="@+id/bt_play4"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Play"
+        android:layout_below="@+id/bt_play3"/>
+   <TextView 
+       	android:text="starterpack190"
+        android:id="@+id/textView1" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/bt_play4"
+        android:layout_below="@+id/bt_play3" />
+   
+   <Button 
+        android:id="@+id/bt_play5"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Play"
+        android:layout_below="@+id/bt_play4"/>
+   <TextView 
+       	android:text="starterpack60"
+        android:id="@+id/textView1" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/bt_play5"
+        android:layout_below="@+id/bt_play4" />
+   
+   <Button 
+        android:id="@+id/bt_play6"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Stop all music open with sound pool"
+        android:layout_below="@+id/bt_play5"/>
+
+   
+   <TextView 
+        android:id="@+id/text_header_media"    
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:text="Play with media" 
+    	android:layout_below="@+id/bt_play6"/>
+    <Button 
+        android:id="@+id/bt_play7"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Play"
+        android:layout_below="@+id/text_header_media"/>
+   <TextView 
+       	android:text="ogg_country_straightclean"
+        android:id="@+id/textView1" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/bt_play7"
+        android:layout_below="@+id/text_header_media" />
+   <Button 
+        android:id="@+id/bt_play8"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Play"
+        android:layout_below="@+id/bt_play7"/>
+   <TextView 
+       	android:text="ogg_heavymetal_headbang"
+        android:id="@+id/textView1" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/bt_play8"
+        android:layout_below="@+id/bt_play7" />
+   <Button 
+        android:id="@+id/bt_play9"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Play"
+        android:layout_below="@+id/bt_play8"/>
+   <TextView 
+       	android:text="ogg_pop_rock_dirtygroove"
+        android:id="@+id/textView1" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/bt_play9"
+        android:layout_below="@+id/bt_play8" />
+    <Button 
+        android:id="@+id/bt_play10"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Play"
+        android:layout_below="@+id/bt_play9"/>
+   <TextView 
+       	android:text="starterpack190"
+        android:id="@+id/textView1" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/bt_play10"
+        android:layout_below="@+id/bt_play9" />
+   
+   <Button 
+        android:id="@+id/bt_play11"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Play"
+        android:layout_below="@+id/bt_play10"/>
+   <TextView 
+       	android:text="starterpack60"
+        android:id="@+id/textView1" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/bt_play11"
+        android:layout_below="@+id/bt_play10" />
+   
+   <Button 
+        android:id="@+id/bt_play12"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Stop all music open with media"
+        android:layout_below="@+id/bt_play11"/>
+        </RelativeLayout>
+    </ScrollView>
+    
+
+   
+</RelativeLayout>
