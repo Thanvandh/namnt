@@ -305,6 +305,9 @@ public class GalleryActivity extends Activity {
 			activity.put("photo", photo);
 			activity.put("type", "liked");
 			activity.saveInBackground();
+			bliked = true;
+			bt_liked.setImageResource(R.drawable.icon_liked);
+			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -323,6 +326,8 @@ public class GalleryActivity extends Activity {
 			public void done(List<ParseObject> objects, ParseException e) {
 				// TODO Auto-generated method stub
 			objects.get(0).deleteInBackground();	
+			bliked = false;
+			bt_liked.setImageResource(R.drawable.icon_like);
 			}
 		});
 		//try {

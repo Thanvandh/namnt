@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <!-- ListRow Left sied Thumbnail image -->
+
+    <TextView
+        android:id="@+id/row_listview2_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:text="1"
+        android:textColor="@android:color/white"/>
+
+    <!-- Displayname -->
+
+    <TextView
+        android:id="@+id/row_listview2_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/row_listview2_number"
+        android:text="Audio1"
+        android:textColor="@android:color/white"/>
+
+    <ImageButton
+        android:id="@+id/row_listview1_favorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:scaleType="fitCenter"
+        android:background="@null"
+        android:src="@drawable/fav_star_off" />
+
+</RelativeLayout>

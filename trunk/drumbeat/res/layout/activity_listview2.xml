@@ -1,0 +1,92 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TimelineActivity" >
+
+     <ListView
+        android:id="@+id/listview2_activity"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+      <LinearLayout
+            android:id="@+id/footer"
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/console"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/control_footer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/bt_tempo"
+                    android:layout_width="80dp"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/btn_tempo"
+                    android:text="150" 
+                    android:textColor="@android:color/white"/>
+
+                <ImageButton
+                    android:layout_width="120dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/play_button" />
+
+                <Button
+                    android:layout_width="80dp"
+                    android:layout_height="45dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/btn_dice" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" >
+
+                <ImageButton
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_alignParentLeft="true"
+                    android:src="@drawable/volume_down" 
+                    android:scaleType="fitCenter"
+                    android:background="@null"/>
+
+                <!-- Progress Bar/Seek bar -->
+
+                <SeekBar
+                    android:id="@+id/volumeProgressBar"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginRight="35dp"
+                    android:layout_marginBottom="20dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:progressDrawable="@drawable/seekbar_progress"
+                    android:thumb="@drawable/seek_handler" />
+
+                <ImageButton
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/volume_up"
+                    android:layout_marginTop="5dp"
+                    android:scaleType="fitCenter" 
+                    android:background="@null"/>
+            </RelativeLayout>
+        </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <!-- ListRow Left sied Thumbnail image -->
+
+    <LinearLayout
+        android:id="@+id/tempo_top"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="@drawable/top_bar" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tempo_grid"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:background="@drawable/tempo_grid" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tempo_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:background="@drawable/console">
+    </LinearLayout>
+
+</LinearLayout>
