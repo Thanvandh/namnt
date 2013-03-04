@@ -78,7 +78,7 @@ public class ListviewLevel2 extends Activity {
 				
 			}
 		});
-		
+		//int picId = getResources().getIdentifier("ogg_country_straightclean", "raw", getApplicationContext().getPackageName());
 		bt_tempo.setOnClickListener(new OnClickListener() {
 			
 			@Override
