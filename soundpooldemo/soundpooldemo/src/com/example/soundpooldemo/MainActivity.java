@@ -251,9 +251,11 @@ public class MainActivity extends Activity {
 
 							}
 						});
+				
 				soundID = soundPool.load(MainActivity.this,
 						R.raw.starterpack190, 1);
-
+				
+				
 			}
 		});
 		
@@ -368,7 +370,8 @@ public class MainActivity extends Activity {
 					
 				}
 				}
-				mp = MediaPlayer.create(MainActivity.this, R.raw.ogg_country_straightclean);
+				int picId = getResources().getIdentifier("ogg_country_straightclean", "raw", getApplicationContext().getPackageName());
+				mp = MediaPlayer.create(MainActivity.this, picId);
 //				if (mp.isPlaying())
 //				mp.stop();
 				//mp.se
