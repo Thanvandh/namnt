@@ -1,0 +1,11 @@
+BEGIN TRANSACTION;
+CREATE TABLE Favorites (id TEXT);
+CREATE TABLE Songs (folder TEXT, id TEXT, name );
+INSERT INTO Songs VALUES('Artificial 1',11,'707 Hip Groove A');
+INSERT INTO Songs VALUES('Blues 1',NULL,NULL);
+INSERT INTO Songs VALUES('Country 1',NULL,NULL);
+INSERT INTO Songs VALUES('Heavy Metal 1',NULL,NULL);
+INSERT INTO Songs VALUES('Latin Jazz',NULL,NULL);
+INSERT INTO Songs VALUES('Tambourine Pack',NULL,NULL);
+INSERT INTO Songs VALUES('World Beats',NULL,NULL);
+COMMIT;
