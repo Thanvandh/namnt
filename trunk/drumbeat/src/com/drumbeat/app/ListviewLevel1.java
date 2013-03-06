@@ -1,5 +1,6 @@
-package com.example.drumbeat;
+package com.drumbeat.app;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,27 +10,31 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 
+import com.drumbeat.utils.DatabaseHandler;
+
+
 import android.app.Activity;
+import android.app.ActivityGroup;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class ListviewLevel2 extends Activity {
+public class ListviewLevel1 extends ActivityGroup  {
 	
 
 	String xml;
 	ListView lv;
-	ListviewLevel2RowAdapter adapter;
-	Button bt_tempo;
+	ListviewLevel1RowAdapter adapter;
 	ArrayList<HashMap<String, String>> array_name;
-	String[] values = new String[] {"Started Pack", "Break Beats", "Hit Songs 1", "Pop-rock 1" };
+	//String[] values = new String[] {"Started Pack", "Break Beats", "Hit Songs 1", "Pop-rock 1" };
+	String[] values;
 	String[] values1 = new String[] {"Audio1", "Audio2", "Audio3"};
 	String[] values2 = new String[] {"Audio1", "Audio2", "Audio3"};
 	String[] values3 = new String[] {"Audio1", "Audio2", "Audio3"};
@@ -45,21 +50,43 @@ public class ListviewLevel2 extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_listview2);
-		lv = (ListView) findViewById(R.id.listview2_activity);
-		bt_tempo = (Button) findViewById(R.id.bt_tempo);
-
+		setContentView(R.layout.activity_listview1);
+		 DatabaseHandler myDbHelper = new DatabaseHandler(this);
+		  
+		 try {
+		  
+		 myDbHelper.createDataBase();
+		  
+		 } catch (IOException ioe) {
+		  
+		 throw new Error("Unable to create database");
+		  
+		 }
+		 try {
+			 
+			 myDbHelper.openDataBase();
+			 values = myDbHelper.getListFolder();
+			  
+			 }catch(SQLException sqle){
+			  
+			 throw sqle;
+			  
+			 }
+		  
+		 
+		lv = (ListView) findViewById(R.id.listview1_activity);
+		
 		array_name = new ArrayList<HashMap<String, String>>();
 		
-		for (int i=0; i<values1.length; i++){
+		for (int i=0; i<values.length; i++){
 			HashMap<String, String> map = new HashMap<String, String>();
-			map.put(KEY_NAME,values1[i]);
+			map.put(KEY_NAME,values[i]);
 			array_name.add(map);
 		}
 		
 
 		// Getting adapter
-		adapter = new ListviewLevel2RowAdapter(this, array_name);
+		adapter = new ListviewLevel1RowAdapter(this, array_name);
 		lv.setAdapter(adapter);
 
 		/**
@@ -72,29 +99,30 @@ public class ListviewLevel2 extends Activity {
 		 * **/
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+			public void onItemClick(AdapterView<?> arg0, View arg1, int postion,
 					long arg3) {
 				// TODO Auto-generated method stub
+				MainActivity.setNameHomeSpec(values[postion]);
+				Intent intent = new Intent();
+		          intent.setClass(getParent(), ListviewLevel2 .class);
+		          ActivityStack activityStack = (ActivityStack) getParent();
+		          activityStack.push("SecondStackActivity", intent);
 				
-			}
-		});
-		//int picId = getResources().getIdentifier("ogg_country_straightclean", "raw", getApplicationContext().getPackageName());
-		bt_tempo.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent i = new Intent(ListviewLevel2.this,TempoActivity.class);
-				startActivity(i);
 				
 			}
 		});
 	}
-
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		MainActivity.setNameHomeSpec("Drum Beats");
+		super.onResume();
+	}
+	
 	
 //	private void openQuitDialog(){
 //	  	  AlertDialog.Builder quitDialog 
-//	  	   = new AlertDialog.Builder(ListviewLevel2.this);
+//	  	   = new AlertDialog.Builder(ListviewLevel1.this);
 //	  	  quitDialog.setTitle("Confirm to Quit?");
 //	  	  
 //	  	  quitDialog.setPositiveButton("OK, Quit!", new DialogInterface.OnClickListener() {
@@ -119,7 +147,7 @@ public class ListviewLevel2 extends Activity {
 //	  public void onBackPressed() {
 //		openQuitDialog(); 
 //	  }
-//	@Override
+////	@Override
 //	public boolean onCreateOptionsMenu(Menu menu) {
 //		// Inflate the menu; this adds items to the action bar if it is present.
 //		getMenuInflater().inflate(R.menu.activity_timeline, menu);

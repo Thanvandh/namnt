@@ -1,4 +1,4 @@
-package com.example.drumbeat;
+package com.drumbeat.app;
 
 import java.util.ArrayList;
 import java.util.HashMap;

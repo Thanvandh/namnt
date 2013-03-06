@@ -1,10 +1,12 @@
-package com.example.drumbeat;
+package com.drumbeat.app;
+
 
 import android.app.Activity;
 import android.os.Bundle;
 
-public class SettingsActivity extends Activity {
+public class MoreActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_layout);    }
+        setContentView(R.layout.more_layout);
+    }
 }

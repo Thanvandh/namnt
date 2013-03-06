@@ -1,21 +1,33 @@
-package com.example.drumbeat;
+package com.drumbeat.app;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.Button;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 
-public class FavoritesActivity extends Activity {
+public class ListviewLevel2 extends Activity {
 	
 
 	String xml;
 	ListView lv;
-	FavoritesRowAdapter adapter;
+	ListviewLevel2RowAdapter adapter;
+	Button bt_tempo;
 	ArrayList<HashMap<String, String>> array_name;
 	String[] values = new String[] {"Started Pack", "Break Beats", "Hit Songs 1", "Pop-rock 1" };
 	String[] values1 = new String[] {"Audio1", "Audio2", "Audio3"};
@@ -33,8 +45,9 @@ public class FavoritesActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_favorites);
-		lv = (ListView) findViewById(R.id.listview_favorites_activity);
+		setContentView(R.layout.activity_listview2);
+		lv = (ListView) findViewById(R.id.listview2_activity);
+		bt_tempo = (Button) findViewById(R.id.bt_tempo);
 
 		array_name = new ArrayList<HashMap<String, String>>();
 		
@@ -46,7 +59,7 @@ public class FavoritesActivity extends Activity {
 		
 
 		// Getting adapter
-		adapter = new FavoritesRowAdapter(this, array_name);
+		adapter = new ListviewLevel2RowAdapter(this, array_name);
 		lv.setAdapter(adapter);
 
 		/**
@@ -62,6 +75,17 @@ public class FavoritesActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
+				
+			}
+		});
+		//int picId = getResources().getIdentifier("ogg_country_straightclean", "raw", getApplicationContext().getPackageName());
+		bt_tempo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(ListviewLevel2.this,TempoActivity.class);
+				startActivity(i);
 				
 			}
 		});
