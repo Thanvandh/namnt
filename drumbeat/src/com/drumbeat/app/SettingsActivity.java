@@ -1,11 +1,11 @@
-package com.example.drumbeat;
+package com.drumbeat.app;
+
 
 import android.app.Activity;
 import android.os.Bundle;
 
-public class TempoActivity extends Activity {
+public class SettingsActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tempo);
-    }
+        setContentView(R.layout.settings_layout);    }
 }

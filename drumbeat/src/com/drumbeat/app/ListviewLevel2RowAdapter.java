@@ -1,7 +1,8 @@
-package com.example.drumbeat;
+package com.drumbeat.app;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,14 +14,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ListviewLevel1RowAdapter extends BaseAdapter {
+public class ListviewLevel2RowAdapter extends BaseAdapter {
     
 	 private Activity activity;
 	    private ArrayList<HashMap<String, String>> data;
 	    private static LayoutInflater inflater=null;
 	    
 		    
-	    public ListviewLevel1RowAdapter(Activity a, ArrayList<HashMap<String, String>> d) {
+	    public ListviewLevel2RowAdapter(Activity a, ArrayList<HashMap<String, String>> d) {
 	        activity = a;
 	        data=d;
 	        inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -41,9 +42,9 @@ public class ListviewLevel1RowAdapter extends BaseAdapter {
 	    public View getView(int position, View convertView, ViewGroup parent) {
 	        View vi=convertView;
 	        if(convertView==null)
-	            vi = inflater.inflate(R.layout.row_listview1, null);
+	            vi = inflater.inflate(R.layout.row_listview2, null);
 
-	        TextView name = (TextView)vi.findViewById(R.id.row_listview1_name); // title
+	        TextView name = (TextView)vi.findViewById(R.id.row_listview2_name); // title
 	        
 	        
 	        HashMap<String, String> item = new HashMap<String, String>();
