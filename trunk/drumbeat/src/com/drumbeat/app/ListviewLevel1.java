@@ -41,6 +41,7 @@ public class ListviewLevel1 extends ActivityGroup  {
 	String[] values4 = new String[] {"Audio1", "Audio2", "Audio3"};
 	
 	static String KEY_NAME = "name";
+	static String KEY_FOLDER = "folder";
 	
 
 
@@ -72,6 +73,7 @@ public class ListviewLevel1 extends ActivityGroup  {
 			 throw sqle;
 			  
 			 }
+		 myDbHelper.close();
 		  
 		 
 		lv = (ListView) findViewById(R.id.listview1_activity);
@@ -104,9 +106,10 @@ public class ListviewLevel1 extends ActivityGroup  {
 				// TODO Auto-generated method stub
 				MainActivity.setNameHomeSpec(values[postion]);
 				Intent intent = new Intent();
-		          intent.setClass(getParent(), ListviewLevel2 .class);
-		          ActivityStack activityStack = (ActivityStack) getParent();
-		          activityStack.push("SecondStackActivity", intent);
+				intent.putExtra(KEY_FOLDER, values[postion]);
+		        intent.setClass(getParent(), ListviewLevel2 .class);
+		        ActivityStack activityStack = (ActivityStack) getParent();
+		        activityStack.push("SecondStackActivity", intent);
 				
 				
 			}

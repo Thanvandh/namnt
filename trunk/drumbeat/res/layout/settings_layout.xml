@@ -6,9 +6,100 @@
   android:layout_height="match_parent">
   
   <!-- Screen Design for the SONGS -->
-  <TextView android:text="Settings Activity"
-  			android:padding="15dip"
+  <TextView android:text="Count-off"
+  			android:layout_marginLeft="15dp"
+  			android:layout_marginTop="5dp"
+  			android:textColor="@android:color/white"
+  			android:textStyle="bold"
   			android:textSize="18dip"
   			android:layout_width="fill_parent"
   			android:layout_height="wrap_content"/>
+  <RelativeLayout 
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+  <Button
+      android:id="@+id/bt_countoff"
+      android:layout_width="95dp"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:layout_marginLeft="15dp"
+      android:text="OFF"/>
+  <Button
+      android:id="@+id/bt_onebar"
+      android:layout_width="95dp"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:text="One Bar"/>
+  <Button
+      android:id="@+id/bt_twobar"
+      android:layout_width="95dp"
+      android:layout_height="wrap_content"
+      android:layout_alignParentRight="true"
+      android:layout_marginRight="15dp"
+      android:text="Two Bar"/>
+  </RelativeLayout>
+  <TextView android:text="Turning this on will play a count-off before the beat starts. (Count-off will not play if a beat is already playing)"
+  			android:layout_marginLeft="15dp"
+  			android:layout_marginTop="5dp"
+  			android:layout_marginRight="15dp"
+  			android:textColor="@android:color/white"
+  			android:textSize="14dip"
+  			android:layout_width="fill_parent"
+  			android:layout_height="wrap_content"/>
+  <TextView android:text="Randomize Tempo"
+  			android:layout_marginLeft="15dp"
+  			android:layout_marginTop="5dp"
+  			android:textColor="@android:color/white"
+  			android:textStyle="bold"
+  			android:textSize="18dip"
+  			android:layout_width="fill_parent"
+  			android:layout_height="wrap_content"/>
+  <RelativeLayout 
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+  <Button
+      android:id="@+id/bt_randomoff"
+      android:layout_width="145dp"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:layout_marginLeft="15dp"
+      android:text="OFF"/>
+  <Button
+      android:id="@+id/bt_randomon"
+      android:layout_width="145dp"
+      android:layout_height="wrap_content"
+      android:layout_alignParentRight="true"
+      android:layout_marginRight="15dp"
+      android:text="ON"/>
+  </RelativeLayout>
+  <TextView android:text="Turning this on if you'd like the randomizer also change the tempo"
+  			android:layout_marginLeft="15dp"
+  			android:layout_marginTop="5dp"
+  			android:layout_marginRight="15dp"
+  			android:textColor="@android:color/white"
+  			android:textSize="14dip"
+  			android:layout_width="fill_parent"
+  			android:layout_height="wrap_content"/>
+  
+  <Button
+      android:id="@+id/bt_ratethisapp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="15dp"
+      android:layout_marginRight="15dp"
+      android:text="Rate this Apllication"/>
+  <Button
+      android:id="@+id/bt_tellafriend"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="15dp"
+      android:layout_marginRight="15dp"
+      android:text="Tell a Friend"/>
+  <Button
+      android:id="@+id/bt_sendfeeback"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="15dp"
+      android:layout_marginRight="15dp"
+      android:text="Send Feedback"/>
 </LinearLayout>

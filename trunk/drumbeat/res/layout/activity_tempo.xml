@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/top_bar"
     android:orientation="vertical" >
 
     <!-- ListRow Left sied Thumbnail image -->
@@ -17,14 +18,61 @@
         android:id="@+id/tempo_grid"
         android:layout_width="wrap_content"
         android:layout_height="300dp"
-        android:background="@drawable/tempo_grid" >
+        android:background="@drawable/bg" >
+
+        <GridView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/grid_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/tempo_grid"
+            android:columnWidth="76dp"
+            android:gravity="center"
+            android:numColumns="auto_fit"
+            android:stretchMode="none" >
+        </GridView>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/tempo_bottom"
-        android:layout_width="wrap_content"
+        android:id="@+id/favorite_footer"
+        android:layout_width="fill_parent"
         android:layout_height="150dp"
-        android:background="@drawable/console">
+        android:background="@drawable/console"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/tempo_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/bt_done"
+                android:layout_width="80dp"
+                android:layout_height="45dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/done_button"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/bt_playrate"
+                android:layout_width="120dp"
+                android:layout_height="70dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/play_button"
+                android:scaleType="fitXY" />
+
+            <Button
+                android:id="@+id/bt_randomrate"
+                android:layout_width="80dp"
+                android:layout_height="45dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/btn_dice" />
+        </RelativeLayout>
     </LinearLayout>
 
 </LinearLayout>

@@ -154,11 +154,11 @@ public class TimelineActivity extends Activity {
 						// adding HashList to ArrayList
 						menuItems.add(map);
 						// Getting adapter
-						adapter = new TimelineRowAdapter(TimelineActivity.this,
-								menuItems);
-						lv.setAdapter(adapter);
+						
 					}
-
+					adapter = new TimelineRowAdapter(TimelineActivity.this,
+							menuItems);
+					lv.setAdapter(adapter);
 				} else {
 					Log.d("score", "Error: " + e.getMessage());
 				}
@@ -224,98 +224,98 @@ public class TimelineActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(String[] result) {
-			menuItems.clear();
-			current_page = 0;
-			
-			ParseQuery query_activity = new ParseQuery("activity");
-			query_activity.addDescendingOrder("createdAt");
-			query_activity.setLimit(LIMIT_ACTIVITY);
-			query_activity.findInBackground(new FindCallback() {
-				public void done(List<ParseObject> List, ParseException e) {
-					if (e == null) {
-						for (int i = 0; i < List.size(); i++) {
-							// creating new HashMap
-							HashMap<String, String> map = new HashMap<String, String>();
-							// adding each child node to HashMap key => value
-							Log.d("test", "objectid " + List.get(i).getObjectId());
-							// id not using any where
-							ParseUser fromuser = new ParseUser();
-							fromuser = (ParseUser) List.get(i).get("fromUser");
-							try {
-								fromuser = fromuser.fetch();
-							} catch (ParseException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-							// ParseQuery query =
-							// ParseUser.getQuery().whereEqualTo("objectId",
-							// fromuser_id);
-
-							String fromUser_name = null;
-							String fromUser_avatar_url = null;
-							String content = null;
-							fromUser_name = fromuser.getString("displayname");
-							ParseFile res = (ParseFile) fromuser
-									.get("profilePictureMedium");
-							fromUser_avatar_url = res.getUrl();
-							
-							ParseUser touser = new ParseUser();
-							touser = (ParseUser) List.get(i).get("toUser");
-							try {
-								touser = touser.fetch();
-							} catch (ParseException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-							// ParseQuery query =
-							// ParseUser.getQuery().whereEqualTo("objectId",
-							// fromuser_id);
-
-							String toUser_name = null;
-							String toUser_avatar_url = null;
-							toUser_name = touser.getString("displayname");
-							ParseFile res_to_user = (ParseFile) fromuser
-									.get("profilePictureMedium");
-							toUser_avatar_url = res_to_user.getUrl();
-							content = List.get(i).getString("content");
-							
-							
-
-							// ParseFile res = (ParseFile)
-							// photoList.get(i).get("image");
-							long now = System.currentTimeMillis();
-    						long updated = List.get(i).getUpdatedAt().getTime();
-    						String time_ago =  (String) DateUtils.getRelativeTimeSpanString(updated, now, DateUtils.MINUTE_IN_MILLIS); 
-    						map.put(TIME_AGO, time_ago);
-							map.put(KEY_FROM_USER_NAME, fromUser_name);
-							map.put(KEY_FROM_USER_AVATAR_URL, fromUser_avatar_url);
-							map.put(KEY_TO_USER_NAME, toUser_name);
-							map.put(KEY_TO_USER_AVATAR_URL, toUser_avatar_url);
-							map.put(KEY_CONTENT, content);
-							// map.put(AVATAR_URL, avatar_url);
-							// adding HashList to ArrayList
-							menuItems.add(map);
-							// Getting adapter
-							adapter = new TimelineRowAdapter(TimelineActivity.this,
-									menuItems);
-							lv.setAdapter(adapter);
-						}
-
-					} else {
-						Log.d("score", "Error: " + e.getMessage());
-					}
-				}
-			});
-
+			Log.d("test","vao day khong nhi");
+			adapter = new TimelineRowAdapter(TimelineActivity.this,
+					menuItems);
+			lv.setAdapter(adapter);
 			// Call onRefreshComplete when the list has been refreshed.
 			lv.onRefreshComplete();
-
+			
+//
 			super.onPostExecute(result);
 		}
 
 		@Override
 		protected String[] doInBackground(Void... arg0) {
 			// TODO Auto-generated method stub
+			menuItems.clear();
+			current_page = 0;
+			
+			ParseQuery query_activity = new ParseQuery("activity");
+			query_activity.addDescendingOrder("createdAt");
+			query_activity.setLimit(LIMIT_ACTIVITY);
+			try {
+				List<ParseObject> List = query_activity.find();
+				for (int i = 0; i < List.size(); i++) {
+					// creating new HashMap
+					HashMap<String, String> map = new HashMap<String, String>();
+					// adding each child node to HashMap key => value
+					Log.d("test", "objectid " + List.get(i).getObjectId());
+					// id not using any where
+					ParseUser fromuser = new ParseUser();
+					fromuser = (ParseUser) List.get(i).get("fromUser");
+					try {
+						fromuser = fromuser.fetch();
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					// ParseQuery query =
+					// ParseUser.getQuery().whereEqualTo("objectId",
+					// fromuser_id);
+
+					String fromUser_name = null;
+					String fromUser_avatar_url = null;
+					String content = null;
+					fromUser_name = fromuser.getString("displayname");
+					ParseFile res = (ParseFile) fromuser
+							.get("profilePictureMedium");
+					fromUser_avatar_url = res.getUrl();
+					
+					ParseUser touser = new ParseUser();
+					touser = (ParseUser) List.get(i).get("toUser");
+					try {
+						touser = touser.fetch();
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					// ParseQuery query =
+					// ParseUser.getQuery().whereEqualTo("objectId",
+					// fromuser_id);
+
+					String toUser_name = null;
+					String toUser_avatar_url = null;
+					toUser_name = touser.getString("displayname");
+					ParseFile res_to_user = (ParseFile) fromuser
+							.get("profilePictureMedium");
+					toUser_avatar_url = res_to_user.getUrl();
+					content = List.get(i).getString("content");
+					
+					
+
+					// ParseFile res = (ParseFile)
+					// photoList.get(i).get("image");
+					long now = System.currentTimeMillis();
+					long updated = List.get(i).getUpdatedAt().getTime();
+					String time_ago =  (String) DateUtils.getRelativeTimeSpanString(updated, now, DateUtils.MINUTE_IN_MILLIS); 
+					map.put(TIME_AGO, time_ago);
+					map.put(KEY_FROM_USER_NAME, fromUser_name);
+					map.put(KEY_FROM_USER_AVATAR_URL, fromUser_avatar_url);
+					map.put(KEY_TO_USER_NAME, toUser_name);
+					map.put(KEY_TO_USER_AVATAR_URL, toUser_avatar_url);
+					map.put(KEY_CONTENT, content);
+					// map.put(AVATAR_URL, avatar_url);
+					// adding HashList to ArrayList
+					menuItems.add(map);
+					// Getting adapter
+					
+				}
+			} catch (ParseException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			
 			return null;
 		}
 	}
@@ -413,11 +413,11 @@ public class TimelineActivity extends Activity {
 									// adding HashList to ArrayList
 									menuItems.add(map);
 									// Getting adapter
-									adapter = new TimelineRowAdapter(TimelineActivity.this,
-											menuItems);
-									lv.setAdapter(adapter);
+									
 								}
-
+//								adapter = new TimelineRowAdapter(TimelineActivity.this,
+//										menuItems);
+//								lv.setAdapter(adapter);
 							} else {
 								Log.d("score", "Error: " + e.getMessage());
 							}

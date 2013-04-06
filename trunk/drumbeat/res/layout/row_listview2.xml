@@ -27,14 +27,16 @@
         android:text="Audio1"
         android:textColor="@android:color/white"/>
 
-    <ImageButton
-        android:id="@+id/row_listview1_favorites"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/row_listview2_favorites"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="10dp"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:scaleType="fitCenter"
         android:background="@null"
+        android:clickable="true"
         android:src="@drawable/fav_star_off" />
 
 </RelativeLayout>

@@ -9,6 +9,7 @@ import android.app.LocalActivityManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 
 public class ActivityStack extends ActivityGroup {
@@ -43,10 +44,15 @@ public class ActivityStack extends ActivityGroup {
 	  }
 
 	  public void pop() {
-	    if (stack.size() == 1) 
+	    if (stack.size() == 1 ) 
 	    	{
 	    		openQuitDialog();
+	    		return;
 	    	}
+	    if (stack.size() == 2 ) 
+    	{
+    		ListviewLevel2.stopMusic();
+    	}
 	    LocalActivityManager manager = getLocalActivityManager();
 	    manager.destroyActivity(stack.pop(), true);
 	    if (stack.size() > 0) {
@@ -64,6 +70,8 @@ public class ActivityStack extends ActivityGroup {
 				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
+					ListviewLevel2.stopMusic();
+					FavoritesActivity.stopMusic();
 					finish();
 					
 				}
@@ -77,4 +85,17 @@ public class ActivityStack extends ActivityGroup {
 	  	  
 	  	  quitDialog.show();
 	  	 }
+	  @Override
+	public void startActivityFromChild(Activity child, Intent intent,
+			int requestCode) {
+		// TODO Auto-generated method stub
+		  Log.d("test","vao day khong nhi");
+		super.startActivityFromChild(child, intent, requestCode);
+	}
+	  @Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stu
+		 Log.d("test","vao day moi dau");
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 	}

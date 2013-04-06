@@ -14,6 +14,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
@@ -175,9 +176,37 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 //		db.insert(TABLE_CONTACTS, null, values);
 //		db.close(); // Closing database connection
 //	}
-
+	public void addfavorite(String id)
+	{
+		ContentValues values = new ContentValues();
+		values.put(KEY_ID, id); // Contact Name
+//		values.put(KEY_PH_NO, contact.getPhoneNumber()); // Contact Phone
+		myDataBase.insert(TABLE_FAVORITES, null, values);
+	}
+	public void removefavorite(String id)
+	{
+		ContentValues values = new ContentValues();
+		values.put(KEY_ID, id); // Contact Name
+//		values.put(KEY_PH_NO, contact.getPhoneNumber()); // Contact Phone
+		myDataBase.delete(TABLE_FAVORITES, KEY_ID + " = ?",
+				new String[] { id });
+	}
+	public boolean getfavorite(String id)
+	{
+		Cursor cursor = myDataBase.query(TABLE_FAVORITES, new String[] { KEY_ID}, KEY_ID + "=?",
+				new String[] { String.valueOf(id) }, null, null, null, null);
+		if (cursor != null)
+		{
+			if (cursor.getCount()>0)
+				return true;
+			else
+				return false;
+		}
+		else
+			return false;
+	}
 	// Getting single contact
-	Song getSong(String id) {
+	public Song getSong(String id) {
 		//SQLiteDatabase db = this.getReadableDatabase();
 
 		Cursor cursor = myDataBase.query(TABLE_SONGS, new String[] { KEY_ID,
@@ -190,6 +219,34 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				cursor.getString(1), cursor.getString(2));
 		// return contact
 		return song;
+	}
+	public List<Song> getFavariteSong() {
+		//SQLiteDatabase db = this.getReadableDatabase();
+		List<Song> songList = new ArrayList<Song>();
+		String selectQuery = "select Songs.id, Songs.name, Songs.folder from Songs, Favorites where Songs.id = Favorites.id";
+		Cursor cursor = myDataBase.rawQuery(selectQuery, null);
+		if (cursor != null)
+		{
+			if (cursor.getCount()>0)
+			{
+				if (cursor.moveToFirst()) {
+					do {
+						Song song = new Song();
+						song.setID(cursor.getString(0));
+						song.setName(cursor.getString(1));
+						song.setFolder(cursor.getString(2));
+						songList.add(song);
+						
+					} while (cursor.moveToNext());
+				}
+				return songList;
+			}
+			else
+				return null;
+		}
+		else
+			return null;
+		
 	}
 	
 	public String[] getListFolder ()
