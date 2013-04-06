@@ -7,6 +7,93 @@
      <ListView
         android:id="@+id/listview_favorites_activity"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/favorite_footer"
+        android:cacheColorHint="#00000000"
+        android:clickable="true"  />
+      <LinearLayout
+            android:id="@+id/favorite_footer"
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/console"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/favorite_control_footer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/favorite_bt_tempo"
+                    android:layout_width="80dp"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/btn_tempo"
+                    android:text="150" 
+                    android:textColor="@android:color/white"/>
+
+                <Button
+                    android:id="@+id/favorite_bt_play"
+                    android:layout_width="120dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="fitXY"
+                    android:background="@drawable/play_button" />
+
+                <Button
+                    android:id="@+id/favorite_bt_random"
+                    android:layout_width="80dp"
+                    android:layout_height="45dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/btn_dice" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" >
+
+                <ImageButton
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_alignParentLeft="true"
+                    android:src="@drawable/volume_down" 
+                    android:scaleType="fitCenter"
+                    android:background="@null"/>
+
+                <!-- Progress Bar/Seek bar -->
+
+                <SeekBar
+                    android:id="@+id/favorite_volumeProgressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginBottom="20dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:progressDrawable="@drawable/seekbar_progress"
+                    android:thumb="@drawable/seek_handler" />
+
+                <ImageButton
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/volume_up"
+                    android:layout_marginTop="5dp"
+                    android:scaleType="fitCenter" 
+                    android:background="@null"/>
+            </RelativeLayout>
+        </LinearLayout>
 
 </RelativeLayout>

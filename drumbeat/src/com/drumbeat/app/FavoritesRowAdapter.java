@@ -44,6 +44,7 @@ public class FavoritesRowAdapter extends BaseAdapter {
 	            vi = inflater.inflate(R.layout.row_favorites, null);
 
 	        TextView name = (TextView)vi.findViewById(R.id.row_favorites_name); // title
+	        TextView folder = (TextView)vi.findViewById(R.id.row_favorites_folder);
 	        
 	        
 	        HashMap<String, String> item = new HashMap<String, String>();
@@ -51,6 +52,7 @@ public class FavoritesRowAdapter extends BaseAdapter {
 	        
 	        //Setting all values in listview
 	        name.setText(item.get(FavoritesActivity.KEY_NAME));
+	        folder.setText(item.get(FavoritesActivity.KEY_FOLDER));
 	        
 	        return vi;
 	    }

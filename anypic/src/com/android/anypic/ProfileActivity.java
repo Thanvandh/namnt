@@ -171,9 +171,10 @@ public class ProfileActivity extends Activity {
 						// adding HashList to ArrayList
 						menuItems.add(map);
 						// Getting adapter
-						adapter = new ProfileRowAdapter(ProfileActivity.this, menuItems);
-						lv.setAdapter(adapter);
+						
 					}
+		            adapter = new ProfileRowAdapter(ProfileActivity.this, menuItems);
+					lv.setAdapter(adapter);
 		            
 		        } else {
 		            Log.d("score", "Error: " + e.getMessage());
@@ -312,47 +313,11 @@ public class ProfileActivity extends Activity {
 
         @Override
         protected void onPostExecute(String[] result) {
-        	HashMap<String, String> map = new HashMap<String, String>();
         	//map.put(OBJECT_ID, "100"); // id not using any where
 			//map.put(KEY_NAME, "Thanh Nam");
 
-			// adding HashList to ArrayList
-			menuItems.clear();
-			current_page = 0;
-			update_home_header();
-            // Call onRefreshComplete when the list has been refreshed.
-        	ParseQuery query_photo = new ParseQuery("photo");
-    		query_photo.whereEqualTo("user", parse_user);
-    		query_photo.addDescendingOrder("createdAt");
-    		query_photo.setLimit(LIMIT_PHOTO);
-    		query_photo.findInBackground(new FindCallback() {
-    		    public void done(List<ParseObject> photoList, ParseException e) {
-    		        if (e == null) {
-    		            Log.d("test", "Retrieved " + photoList.size() + " photos");
-    		            for (int i = 0; i < photoList.size(); i++) {
-    						// creating new HashMap
-    						HashMap<String, String> map = new HashMap<String, String>();
-    						// adding each child node to HashMap key => value
-    						Log.d("test", "objectid " + photoList.get(i).getObjectId());
-    						// id not using any where
-    						
-    						ParseFile res = (ParseFile) photoList.get(i).get("image");
-    						map.put(OBJECT_ID, photoList.get(i).getObjectId()); 
-    						map.put(PHOTO_URL, res.getUrl()); 
-    						map.put(MY_NAME, displayname);
-    						map.put(AVATAR_URL, avatar_url);
-    						// adding HashList to ArrayList
-    						menuItems.add(map);
-    						// Getting adapter
-    						adapter = new ProfileRowAdapter(ProfileActivity.this, menuItems);
-    						lv.setAdapter(adapter);
-    					}
-    		            
-    		        } else {
-    		            Log.d("score", "Error: " + e.getMessage());
-    		        }
-    		    }
-    		});
+        	adapter = new ProfileRowAdapter(ProfileActivity.this, menuItems);
+			lv.setAdapter(adapter);
             lv.onRefreshComplete();
 
             super.onPostExecute(result);
@@ -361,6 +326,39 @@ public class ProfileActivity extends Activity {
 		@Override
 		protected String[] doInBackground(Void... arg0) {
 			// TODO Auto-generated method stub
+			// adding HashList to ArrayList
+						menuItems.clear();
+						current_page = 0;
+						update_home_header();
+			            // Call onRefreshComplete when the list has been refreshed.
+			        	ParseQuery query_photo = new ParseQuery("photo");
+			    		query_photo.whereEqualTo("user", parse_user);
+			    		query_photo.addDescendingOrder("createdAt");
+			    		query_photo.setLimit(LIMIT_PHOTO);
+			    		try {
+							List<ParseObject> photoList = query_photo.find();
+							 for (int i = 0; i < photoList.size(); i++) {
+		    						// creating new HashMap
+		    						HashMap<String, String> map = new HashMap<String, String>();
+		    						// adding each child node to HashMap key => value
+		    						Log.d("test", "objectid " + photoList.get(i).getObjectId());
+		    						// id not using any where
+		    						
+		    						ParseFile res = (ParseFile) photoList.get(i).get("image");
+		    						map.put(OBJECT_ID, photoList.get(i).getObjectId()); 
+		    						map.put(PHOTO_URL, res.getUrl()); 
+		    						map.put(MY_NAME, displayname);
+		    						map.put(AVATAR_URL, avatar_url);
+		    						// adding HashList to ArrayList
+		    						menuItems.add(map);
+		    						// Getting adapter
+		    						
+		    					}
+						} catch (ParseException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+			    		
 			return null;
 		}
     }
@@ -429,18 +427,19 @@ public class ProfileActivity extends Activity {
 
 									// adding HashList to ArrayList
 									menuItems.add(map);
-									// get listview current position - used to maintain scroll position
-									int currentPosition = lv.getFirstVisiblePosition();
 									
-									// Appending new data to menuItems ArrayList
-									adapter = new ProfileRowAdapter(
-											ProfileActivity.this,
-											menuItems);
-									lv.setAdapter(adapter);
-									
-									// Setting new scroll position
-									lv.setSelectionFromTop(currentPosition + 1, 0);
 								}
+					         // get listview current position - used to maintain scroll position
+								int currentPosition = lv.getFirstVisiblePosition();
+								
+								// Appending new data to menuItems ArrayList
+								adapter = new ProfileRowAdapter(
+										ProfileActivity.this,
+										menuItems);
+								lv.setAdapter(adapter);
+								
+								// Setting new scroll position
+								lv.setSelectionFromTop(currentPosition + 1, 0);
 					            
 					        } else {
 					            Log.d("score", "Error: " + e.getMessage());

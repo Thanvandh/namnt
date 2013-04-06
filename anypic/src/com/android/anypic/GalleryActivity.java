@@ -183,8 +183,7 @@ public class GalleryActivity extends Activity {
 								// adding HashList to ArrayList
 								menuItems.add(map);
 								// Getting adapter
-								adapter = new GalleryRowAdapter(GalleryActivity.this, menuItems);
-								lv.setAdapter(adapter);	
+								
 			            	} else if (type.equalsIgnoreCase("liked"))
 			            	{
 			            		ParseUser fromuser = new ParseUser();
@@ -211,11 +210,14 @@ public class GalleryActivity extends Activity {
 								else
 									bt_liked.setImageResource(R.drawable.icon_liked);
 							    //bt_liked.setEnabled(true);
-							    likedpeople.setAdapter(new ImageAdapter(GalleryActivity.this));
+							    
 			            		
 			            	}
 						}
+			            likedpeople.setAdapter(new ImageAdapter(GalleryActivity.this));
 			            bt_liked.setEnabled(true);
+			            adapter = new GalleryRowAdapter(GalleryActivity.this, menuItems);
+						lv.setAdapter(adapter);	
 			            
 			        } else {
 			            Log.d("score", "Error: " + e.getMessage());
@@ -380,30 +382,38 @@ public class GalleryActivity extends Activity {
 
       @Override
       protected void onPostExecute(String[] result) {
-      	HashMap<String, String> map = new HashMap<String, String>();
       	//map.put(OBJECT_ID, "100"); // id not using any where
 			//map.put(KEY_NAME, "Thanh Nam");
 
-			// adding HashList to ArrayList
-			menuItems.clear();
-			pictureUrl.clear();
-			current_page = 0;
+    	  adapter = new GalleryRowAdapter(GalleryActivity.this, menuItems);
+			lv.setAdapter(adapter);
+			likedpeople.setAdapter(new ImageAdapter(GalleryActivity.this));
+          bt_liked.setEnabled(true);	
+          lv.onRefreshComplete();
 
-          // Call onRefreshComplete when the list has been refreshed.
-			
-			ParseQuery query_activity = new ParseQuery("activity");
-			ParseQuery query_photo = new ParseQuery("photo");
-			ParseObject photo;
-			try {
-				photo = query_photo.get(object_id);
-				query_activity.whereEqualTo("photo", photo);
-				query_activity.addDescendingOrder("createdAt");
-				query_activity.setLimit(LIMIT_COMMENT);
-				query_activity.findInBackground(new FindCallback() {
-				    public void done(List<ParseObject> List, ParseException e) {
-				        if (e == null) {
-				            Log.d("test", "Retrieved " + List.size() + " photos");
-				            for (int i = 0; i < List.size(); i++) {
+          super.onPostExecute(result);
+      }
+
+		@Override
+		protected String[] doInBackground(Void... arg0) {
+			// TODO Auto-generated method stub
+			// adding HashList to ArrayList
+						menuItems.clear();
+						pictureUrl.clear();
+						current_page = 0;
+
+			          // Call onRefreshComplete when the list has been refreshed.
+						
+						ParseQuery query_activity = new ParseQuery("activity");
+						ParseQuery query_photo = new ParseQuery("photo");
+						ParseObject photo;
+						try {
+							photo = query_photo.get(object_id);
+							query_activity.whereEqualTo("photo", photo);
+							query_activity.addDescendingOrder("createdAt");
+							query_activity.setLimit(LIMIT_COMMENT);
+							List<ParseObject> List = query_activity.find();
+							for (int i = 0; i < List.size(); i++) {
 				            	String type = List.get(i).getString("type");
 				            	if (type.equalsIgnoreCase("comment"))
 				            	{
@@ -437,8 +447,7 @@ public class GalleryActivity extends Activity {
 									// adding HashList to ArrayList
 									menuItems.add(map);
 									// Getting adapter
-									adapter = new GalleryRowAdapter(GalleryActivity.this, menuItems);
-									lv.setAdapter(adapter);	
+										
 				            	} else if (type.equalsIgnoreCase("liked"))
 				            	{
 				            		ParseUser fromuser = new ParseUser();
@@ -464,29 +473,15 @@ public class GalleryActivity extends Activity {
 										bt_liked.setImageResource(R.drawable.icon_like);
 									else
 										bt_liked.setImageResource(R.drawable.icon_liked);
-								    likedpeople.setAdapter(new ImageAdapter(GalleryActivity.this));
+								    
 				            		
 				            	}
 							}
-				            bt_liked.setEnabled(true);
-				            
-				        } else {
-				            Log.d("score", "Error: " + e.getMessage());
-				        }
-				    }
-				});
-			} catch (ParseException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			}
-          lv.onRefreshComplete();
-
-          super.onPostExecute(result);
-      }
-
-		@Override
-		protected String[] doInBackground(Void... arg0) {
-			// TODO Auto-generated method stub
+							
+						} catch (ParseException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
 			return null;
 		}
   }
@@ -583,8 +578,7 @@ public class GalleryActivity extends Activity {
 											// adding HashList to ArrayList
 											menuItems.add(map);
 											// Getting adapter
-											adapter = new GalleryRowAdapter(GalleryActivity.this, menuItems);
-											lv.setAdapter(adapter);	
+											
 						            	} else if (type.equalsIgnoreCase("liked"))
 						            	{
 						            		ParseUser fromuser = new ParseUser();
@@ -611,10 +605,13 @@ public class GalleryActivity extends Activity {
 											else
 												bt_liked.setImageResource(R.drawable.icon_liked);
 										    //bt_liked.setEnabled(true);
-										    likedpeople.setAdapter(new ImageAdapter(GalleryActivity.this));
+										    
 						            		
 						            	}
 									}
+						            adapter = new GalleryRowAdapter(GalleryActivity.this, menuItems);
+									lv.setAdapter(adapter);	
+									likedpeople.setAdapter(new ImageAdapter(GalleryActivity.this));
 						            bt_liked.setEnabled(true);
 						            
 						        } else {
