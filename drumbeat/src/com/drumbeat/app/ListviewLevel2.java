@@ -32,6 +32,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -45,6 +46,7 @@ public class ListviewLevel2 extends Activity {
 	Button bt_tempo;
 	Button bt_random;
 	static Button bt_play;
+	static TextView playsong;
 	SeekBar volumeprogress;
 	ArrayList<HashMap<String, String>> array_name;
 	String[] values = new String[] {"Started Pack", "Break Beats", "Hit Songs 1", "Pop-rock 1" };
@@ -57,7 +59,6 @@ public class ListviewLevel2 extends Activity {
 	static String KEY_NAME = "name";
 	static String KEY_ID = "id";
 	String folder;
-	static boolean bplay = false;
 
 
 	// Flag for current page
@@ -69,7 +70,7 @@ public class ListviewLevel2 extends Activity {
 
 	private int soundID;
 	String srate;
-	int REQUEST_TEMPO = 2;
+	static int REQUEST_TEMPO = 2;
 	float rate;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -104,9 +105,10 @@ public class ListviewLevel2 extends Activity {
 		bt_random = (Button) findViewById(R.id.bt_random);
 		bt_play = (Button) findViewById(R.id.bt_play);
 		volumeprogress = (SeekBar) findViewById(R.id.volumeProgressBar);
+		playsong = (TextView) findViewById(R.id.listview_playsong);
 		
 		initControlsvolume();
-		setIconPlayButton(bplay);
+		setIconPlayButton(SoundpoolState.getState(),SoundpoolState.getplaysong());
 		
 		array_name = new ArrayList<HashMap<String, String>>();
 		
@@ -157,8 +159,9 @@ public class ListviewLevel2 extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent i = new Intent(getParent(),TempoActivity.class);
+				Intent i = new Intent(ListviewLevel2.this,ActivityStack.class);
 				i.putExtra("rate", srate);
+				//i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivityForResult(i, REQUEST_TEMPO);
 				//setrandomrate();
 				
@@ -182,7 +185,7 @@ public class ListviewLevel2 extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (bplay)
+				if (SoundpoolState.getState())
 				{
 					stopMusic();
 					
@@ -198,12 +201,51 @@ public class ListviewLevel2 extends Activity {
 			}
 		});
 	}
-	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		DatabaseHandler myDbHelper = new DatabaseHandler(this);
+		  
+
+		 try {
+			 
+			 myDbHelper.openDataBase();
+			 List<Song> songs = myDbHelper.getListSongbyFolder(folder);
+			 name = new String[songs.size()];
+			 id = new String[songs.size()];
+			 for(int i=0; i<songs.size(); i++)
+			 {
+				 name[i] = songs.get(i).getName();
+				 id[i] = songs.get(i).getID();
+			 }
+			  
+			 }catch(SQLException sqle){
+			  
+			 throw sqle;
+			  
+			 }
+		 myDbHelper.close();
+		 array_name = new ArrayList<HashMap<String, String>>();
+			
+			for (int i=0; i<name.length; i++){
+				HashMap<String, String> map = new HashMap<String, String>();
+				map.put(KEY_NAME,name[i]);
+				map.put(KEY_ID, id[i]);
+				array_name.add(map);
+			}
+			
+
+			// Getting adapter
+			adapter = new ListviewLevel2RowAdapter(this, array_name);
+			lv.setAdapter(adapter);
+			setIconPlayButton(SoundpoolState.getState(),SoundpoolState.getplaysong());
+		super.onResume();
+	}
 	public void playMusic(int postion)
 	{
-		bplay = true;
-		setIconPlayButton(bplay);
-		FavoritesActivity.stopMusic();
+//		SoundpoolState.setStateList(true);
+//		setIconPlayButton(SoundpoolState.getState());
+		
 		if (soundPool != null)
 			soundPool.release();
 
@@ -216,10 +258,10 @@ public class ListviewLevel2 extends Activity {
 							int sampleId, int status) {
 						//loaded = true;
 						//
-						bplay = true;
-						setIconPlayButton(bplay);
+						SoundpoolState.setStateList(true);
+						setIconPlayButton(SoundpoolState.getState(),SoundpoolState.getplaysong());
 						streamid = soundPool.play(soundID, volume,
-								volume, 1, -1, 1);
+								volume, 1, -1, rate);
 //						Toast.makeText(ListviewLevel2.this,
 //								"Loop forever " + streamid,
 //								Toast.LENGTH_LONG).show();
@@ -228,26 +270,35 @@ public class ListviewLevel2 extends Activity {
 					}
 				});
 		int songId = getResources().getIdentifier("song" + id[postion], "raw", getApplicationContext().getPackageName());
+		SoundpoolState.setplaysong(name[postion]);
 		soundID = soundPool.load(ListviewLevel2.this,
 				songId, 1);
 	}
 	
 	public static void stopMusic()
 	{
-		bplay = false;
-		setIconPlayButton(bplay);
+		if (SoundpoolState.getStateFav())
+			FavoritesActivity.stopMusic();
+		SoundpoolState.setStateList(false);
+		SoundpoolState.setplaysong("");
+		setIconPlayButton(SoundpoolState.getState(),"");
+		
 		if (soundPool != null)
 			soundPool.release();
 	}
 	
-	public static void setIconPlayButton(boolean play)
+	public static void setIconPlayButton(boolean play, String splaysong)
 	{
 		if (bt_play != null){
-		if (play)
-			bt_play.setBackgroundResource(R.drawable.stop_button);
-		else
-			bt_play.setBackgroundResource(R.drawable.play_button);
-		}
+			if (play)
+				bt_play.setBackgroundResource(R.drawable.stop_button);
+			else
+				bt_play.setBackgroundResource(R.drawable.play_button);
+			}
+		if ( playsong != null){
+				playsong.setText(splaysong);
+			
+			}
 	}
 	public void setrandomrate()
 	{

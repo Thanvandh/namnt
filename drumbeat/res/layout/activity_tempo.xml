@@ -29,7 +29,9 @@
             android:columnWidth="76dp"
             android:gravity="center"
             android:numColumns="auto_fit"
-            android:stretchMode="none" >
+            android:stretchMode="none" 
+            android:isScrollContainer="false"
+            android:smoothScrollbar="false">
         </GridView>
     </LinearLayout>
 

@@ -8,11 +8,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -92,6 +95,20 @@ public class TempoActivity extends Activity {
 //				i.putExtra("id", position);
 //				startActivity(i);
 			}
+		});
+		
+		gridView.setOnTouchListener(new OnTouchListener(){
+
+		@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				 if(event.getAction() == MotionEvent.ACTION_MOVE){
+					 
+			            return true;
+			        }
+			        return false;
+			}
+
 		});
 		setdefaultpostion();
     }
