@@ -135,6 +135,7 @@ public class SettingsActivity extends Activity {
 		quitDialog.show();
 	}
 
+
 	@Override
 	public void onBackPressed() {
 		openQuitDialog();

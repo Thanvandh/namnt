@@ -89,13 +89,17 @@ public class ActivityStack extends ActivityGroup {
 	public void startActivityFromChild(Activity child, Intent intent,
 			int requestCode) {
 		// TODO Auto-generated method stub
-		  Log.d("test","vao day khong nhi");
-		super.startActivityFromChild(child, intent, requestCode);
+		  Bundle bundle = intent.getExtras();
+		  Intent i = new Intent(child,TempoActivity.class);
+		  i.putExtra("rate", bundle.getString("rate"));
+			//i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		  startActivityForResult(i, ListviewLevel2.REQUEST_TEMPO);
+		//super.startActivityFromChild(child, intent, requestCode);
 	}
 	  @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stu
-		 Log.d("test","vao day moi dau");
-		super.onActivityResult(requestCode, resultCode, data);
+		 ListviewLevel2 activity = (ListviewLevel2)getLocalActivityManager().getCurrentActivity();
+		 activity.onActivityResult(requestCode, resultCode, data);
 	}
 	}

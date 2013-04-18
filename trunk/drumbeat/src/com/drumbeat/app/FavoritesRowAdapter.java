@@ -3,6 +3,8 @@ package com.drumbeat.app;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.drumbeat.utils.DatabaseHandler;
+
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
@@ -37,6 +39,7 @@ public class FavoritesRowAdapter extends BaseAdapter {
 	    public long getItemId(int position) {
 	        return position;
 	    }
+	    
 	    
 	    public View getView(int position, View convertView, ViewGroup parent) {
 	        View vi=convertView;

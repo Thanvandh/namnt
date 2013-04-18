@@ -20,9 +20,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -50,11 +52,11 @@ public class FavoritesActivity extends Activity {
 	Button bt_tempo;
 	Button bt_random;
 	static Button bt_play;
+	static TextView playsong;
 	SeekBar volumeprogress;
 	float volume;
 	int streamid = 1;
 	private static SoundPool soundPool;
-	static boolean bplay = false;
 	private int soundID;
 	// Flag for current page
 	int current_page = 1;
@@ -128,13 +130,30 @@ public class FavoritesActivity extends Activity {
 				
 			}
 		});
+		lv.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+	        @Override
+	        public boolean onItemLongClick(AdapterView<?> parent, View view,
+	                int arg2, long arg3) {
+
+	                           // Can't manage to remove an item here
+	        	openRemoveDialog(arg2);
+	            return false;
+	        }
+
+	    });
+		
+		
+		
+		
 		bt_tempo = (Button) findViewById(R.id.favorite_bt_tempo);
 		bt_random = (Button) findViewById(R.id.favorite_bt_random);
 		bt_play = (Button) findViewById(R.id.favorite_bt_play);
 		volumeprogress = (SeekBar) findViewById(R.id.favorite_volumeProgressBar);
+		playsong = (TextView) findViewById(R.id.favorite_playsong);
 		
 		initControlsvolume();
-		setIconPlayButton(bplay);
+		setIconPlayButton(SoundpoolState.getState(),SoundpoolState.getplaysong());
 		bt_tempo.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -165,7 +184,7 @@ public class FavoritesActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (bplay)
+				if (SoundpoolState.getState())
 				{
 					stopMusic();
 					
@@ -184,9 +203,10 @@ public class FavoritesActivity extends Activity {
 	}
 	public void playMusic(int postion)
 	{
-		bplay = true;
-		setIconPlayButton(bplay);
-		ListviewLevel2.stopMusic();
+//		SoundpoolState.setStateFav(true);
+//		SoundpoolState.
+//		setIconPlayButton(SoundpoolState.getState());
+		
 		if (soundPool != null)
 			soundPool.release();
 
@@ -199,8 +219,8 @@ public class FavoritesActivity extends Activity {
 							int sampleId, int status) {
 						//loaded = true;
 						//
-						bplay = true;
-						setIconPlayButton(bplay);
+						SoundpoolState.setStateFav(true);
+						setIconPlayButton(SoundpoolState.getState(),SoundpoolState.getplaysong());
 						streamid = soundPool.play(soundID, volume,
 								volume, 1, -1, rate);
 //						Toast.makeText(ListviewLevel2.this,
@@ -211,25 +231,34 @@ public class FavoritesActivity extends Activity {
 					}
 				});
 		int songId = getResources().getIdentifier("song" + id[postion], "raw", getApplicationContext().getPackageName());
+		SoundpoolState.setplaysong(name[postion]);
 		soundID = soundPool.load(FavoritesActivity.this,
 				songId, 1);
 	}
 	
 	public static void stopMusic()
 	{
-		bplay = false;
-		setIconPlayButton(bplay);
+		if(SoundpoolState.getStateList())
+			ListviewLevel2.stopMusic();
+		SoundpoolState.setStateFav(false);
+		SoundpoolState.setplaysong("");
+		setIconPlayButton(SoundpoolState.getState(),"");
+		
 		if (soundPool != null)
 			soundPool.release();
 	}
 	
-	public static void setIconPlayButton(boolean play)
+	public static void setIconPlayButton(boolean play, String splaysong)
 	{
 		if (bt_play != null){
 			if (play)
 				bt_play.setBackgroundResource(R.drawable.stop_button);
 			else
 				bt_play.setBackgroundResource(R.drawable.play_button);
+			}
+		if ( playsong != null){
+				playsong.setText(splaysong);
+			
 			}
 	}
 	public void setrandomrate()
@@ -286,7 +315,7 @@ public class FavoritesActivity extends Activity {
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
-		
+//		MainActivity.setNameHomeSpec("Favorites");
 		DatabaseHandler myDbHelper = new DatabaseHandler(this);
 		  
 
@@ -325,6 +354,7 @@ public class FavoritesActivity extends Activity {
 		// Getting adapter
 		adapter = new FavoritesRowAdapter(this, array_name);
 		lv.setAdapter(adapter);
+		setIconPlayButton(SoundpoolState.getState(),SoundpoolState.getplaysong());
 		super.onResume();
 	}
 
@@ -358,6 +388,40 @@ public class FavoritesActivity extends Activity {
 	  public void onBackPressed() {
 		openQuitDialog(); 
 	  }
+	
+	private void openRemoveDialog(final int position){
+	  	  AlertDialog.Builder RemoveDialog 
+	  	   = new AlertDialog.Builder(FavoritesActivity.this);
+	  	RemoveDialog.setTitle("Do you remove this song from favorite list?");
+	  	  
+	  	RemoveDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					array_name.remove(position);
+					removefavorite(position);
+					adapter.notifyDataSetChanged();
+					
+					
+				}
+	  	  });   	  
+	  	RemoveDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+	  		  public void onClick(DialogInterface dialog, int which) {
+	  	    // TODO Auto-generated method stub
+	  	    
+	  	   }});
+	  	  
+	  	RemoveDialog.show();
+	  	 }
+	public void removefavorite(int position) {
+        String sid = id[position];
+		DatabaseHandler myDbHelper = new DatabaseHandler(this);
+		myDbHelper.openDataBase();
+		myDbHelper.removefavorite(sid);
+		myDbHelper.close();
+	}
+    
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 		  if (requestCode == REQUEST_TEMPO) {
