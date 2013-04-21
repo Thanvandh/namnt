@@ -21,6 +21,7 @@ public class ListviewLevel2RowAdapter extends BaseAdapter {
 	private Activity activity;
 	private ArrayList<HashMap<String, String>> data;
 	private static LayoutInflater inflater = null;
+	boolean [] favorites;
 
 	public ListviewLevel2RowAdapter(Activity a,
 			ArrayList<HashMap<String, String>> d) {
@@ -28,6 +29,7 @@ public class ListviewLevel2RowAdapter extends BaseAdapter {
 		data = d;
 		inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		favorites = new boolean[getCount()];
 	}
 
 	public int getCount() {
@@ -79,8 +81,9 @@ public class ListviewLevel2RowAdapter extends BaseAdapter {
 		HashMap<String, String> item = new HashMap<String, String>();
 		item = data.get(position);
 		final String id = item.get(ListviewLevel2.KEY_ID);
-		final boolean bfavorite = getfavorite(id);
-		if (bfavorite)
+		final int fposistion = position;
+		favorites[fposistion] = getfavorite(id);
+		if (favorites[position])
 			bt_favorite.setImageResource(R.drawable.fav_star_on);
 		else
 			bt_favorite.setImageResource(R.drawable.fav_star_off);
@@ -89,11 +92,16 @@ public class ListviewLevel2RowAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (bfavorite) {
+				if (favorites[fposistion]) {
+					//Log.d("test", "off" + bfavorite );
 					bt_favorite.setImageResource(R.drawable.fav_star_off);
+					//bfavorite = false;
+					favorites[fposistion] = false;
 					removefavorite(id);
 				} else {
 					bt_favorite.setImageResource(R.drawable.fav_star_on);
+					favorites[fposistion] = true;
+					//bfavorite = true;
 					addfavorite(id);
 				}
 			}

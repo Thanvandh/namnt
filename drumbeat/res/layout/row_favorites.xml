@@ -4,15 +4,22 @@
     android:layout_height="wrap_content" >
 
     <!-- ListRow Left sied Thumbnail image -->
+    	<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:text="  "
+        android:textColor="@android:color/white"/>
 
     <TextView
         android:id="@+id/row_favorites_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="15dp"
         android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
         android:text="Audio 1"
-        android:textSize="16dip"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@android:color/white"/>
 
@@ -22,10 +29,13 @@
         android:id="@+id/row_favorites_folder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="15dp"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:text="Break Beats"
-        android:textColor="@android:color/white"/>
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/gray_text"/>
 
 
 </RelativeLayout>

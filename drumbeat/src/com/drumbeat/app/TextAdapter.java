@@ -47,8 +47,8 @@ public class TextAdapter extends BaseAdapter {
         textview.setTextColor(Color.WHITE);
         textview.setTextSize(16);
         textview.setTypeface(null, Typeface.BOLD);
-        textview.setHeight(62);
-        //textview.setBackgroundResource(R.drawable.grid_selector);
+        textview.setHeight(65);
+        textview.setBackgroundResource(R.color.blue_item_grid);
         return textview;
 	}
 
