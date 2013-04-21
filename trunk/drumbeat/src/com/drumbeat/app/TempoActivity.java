@@ -107,6 +107,38 @@ public class TempoActivity extends Activity {
 			            return true;
 			        }
 			        return false;
+//			  int x=(int)event.getX();  
+//              int y=(int)event.getY();  
+//              Log.d("x-value",""+x);  
+//              Log.d("Y-value",""+y);  
+              //image = new ImageView(DockitControllerActivity.this);  
+              //image.setImageBitmap(im.imageView.getDrawingCache());  
+              //image.setImageResource(R.drawable.a_1);  
+              //Layout.addView(image, params);  
+//            Toast.makeText(DockitControllerActivity.this,""+x+" "+y, Toast.LENGTH_SHORT);  
+//              if (event.getAction() == MotionEvent.ACTION_DOWN) {  
+//                    
+//                  image = new ImageView(TempoActivity.this);  
+//                  //Bitmap bp=btn.getDrawingCache();  
+//                  //Log.d("bitmap in dragme",""+bp);  
+//                  image.setImageResource(R.drawable.a_1);  
+//                  Layout.addView(image, params);  
+//                  System.out.println("start Dragging");  
+//              }  
+//              if (event.getAction() == MotionEvent.ACTION_UP) {  
+//                  //status = STOP_DRAGGING;  
+//                  Log.i("Drag", "Stopped Dragging");  
+//              if (event.getAction() == MotionEvent.ACTION_DOWN) {  
+//                  //if (status == START_DRAGGING) {  
+//                      //TextView txt = (TextView) v;
+//                      v.setBackgroundResource(R.color.white);
+//                     // String tmp = txt.getText().toString();
+//                      //Toast.makeText(TempoActivity.this, tmp, Toast.LENGTH_LONG).show();
+//                      return true;
+//                  //}  
+//              }  
+//            
+//          return false;  
 			}
 
 		});

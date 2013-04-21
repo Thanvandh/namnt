@@ -21,8 +21,10 @@ import android.content.Intent;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
@@ -42,7 +44,10 @@ public class ListviewLevel1 extends ActivityGroup  {
 	
 	static String KEY_NAME = "name";
 	static String KEY_FOLDER = "folder";
-	
+	static String KEY_FAVORITE_MODE = "favorite_mode";
+	ImageButton bt_settings;
+	ImageButton bt_more;
+	ImageButton bt_favorite;
 
 
 	// Flag for current page
@@ -104,52 +109,90 @@ public class ListviewLevel1 extends ActivityGroup  {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int postion,
 					long arg3) {
 				// TODO Auto-generated method stub
-				MainActivity.setNameHomeSpec(values[postion]);
-				Intent intent = new Intent();
+				//MainActivity.setNameHomeSpec(values[postion]);
+				Intent intent = new Intent(ListviewLevel1.this, ListviewLevel2.class);
 				intent.putExtra(KEY_FOLDER, values[postion]);
-		        intent.setClass(getParent(), ListviewLevel2 .class);
-		        ActivityStack activityStack = (ActivityStack) getParent();
-		        activityStack.push("SecondStackActivity", intent);
+				intent.putExtra(KEY_FAVORITE_MODE, false);
+		        //intent.setClass(getParent(), ListviewLevel2 .class);
+		        //ActivityStack activityStack = (ActivityStack) getParent();
+		        //activityStack.push("SecondStackActivity", intent);
+				startActivity(intent);
 				
 				
 			}
 		});
+		
+		bt_settings = (ImageButton) findViewById(R.id.listview1_bt_settings);
+		bt_settings.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(ListviewLevel1.this, SettingsActivity.class);
+				startActivity(i);
+			}
+		});
+		
+		bt_more = (ImageButton) findViewById(R.id.listview1_bt_more_edit);
+		bt_more.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(ListviewLevel1.this, MoreActivity.class);
+				startActivity(i);
+			}
+		});
+		bt_favorite = (ImageButton) findViewById(R.id.listview1_bt_favorites);
+		bt_favorite.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+//				Intent i = new Intent(ListviewLevel1.this, FavoritesActivity.class);
+//				startActivity(i);
+				Intent intent = new Intent(ListviewLevel1.this, ListviewLevel2.class);
+				intent.putExtra(KEY_FOLDER, "");
+				intent.putExtra(KEY_FAVORITE_MODE, true);
+				startActivity(intent);
+			}
+		});
 	}
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		MainActivity.setNameHomeSpec("Drum Beats");
-		super.onResume();
-	}
-	
-	
-//	private void openQuitDialog(){
-//	  	  AlertDialog.Builder quitDialog 
-//	  	   = new AlertDialog.Builder(ListviewLevel1.this);
-//	  	  quitDialog.setTitle("Confirm to Quit?");
-//	  	  
-//	  	  quitDialog.setPositiveButton("OK, Quit!", new DialogInterface.OnClickListener() {
-//				
-//				@Override
-//				public void onClick(DialogInterface dialog, int which) {
-//					finish();
-//					
-//				}
-//	  	  });   	  
-//	  	  quitDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-//
-//	  		  public void onClick(DialogInterface dialog, int which) {
-//	  	    // TODO Auto-generated method stub
-//	  	    
-//	  	   }});
-//	  	  
-//	  	  quitDialog.show();
-//	  	 }
-//
 //	@Override
-//	  public void onBackPressed() {
-//		openQuitDialog(); 
-//	  }
+//	protected void onResume() {
+//		// TODO Auto-generated method stub
+//		MainActivity.setNameHomeSpec("Drum Beats");
+//		super.onResume();
+//	}
+	
+	
+	private void openQuitDialog(){
+	  	  AlertDialog.Builder quitDialog 
+	  	   = new AlertDialog.Builder(ListviewLevel1.this);
+	  	  quitDialog.setTitle("Confirm to Quit?");
+	  	  
+	  	  quitDialog.setPositiveButton("OK, Quit!", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					finish();
+					
+				}
+	  	  });   	  
+	  	  quitDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+	  		  public void onClick(DialogInterface dialog, int which) {
+	  	    // TODO Auto-generated method stub
+	  	    
+	  	   }});
+	  	  
+	  	  quitDialog.show();
+	  	 }
+
+	@Override
+	  public void onBackPressed() {
+		openQuitDialog(); 
+	  }
 ////	@Override
 //	public boolean onCreateOptionsMenu(Menu menu) {
 //		// Inflate the menu; this adds items to the action bar if it is present.

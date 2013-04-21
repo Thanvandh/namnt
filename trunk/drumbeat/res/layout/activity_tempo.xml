@@ -1,47 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/top_bar"
-    android:orientation="vertical" >
+    android:layout_height="fill_parent">
 
     <!-- ListRow Left sied Thumbnail image -->
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/tempo_top"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
         android:background="@drawable/top_bar" >
-    </LinearLayout>
+        <TextView
+            android:id="@+id/tempo_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tempo"
+            android:textSize="24dp"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true" />
 
-    <LinearLayout
-        android:id="@+id/tempo_grid"
-        android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:background="@drawable/bg" >
+        <ImageButton
+            android:id="@+id/tempo_increase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/tempo_text"
+            android:background="@android:color/transparent"
+            android:src="@drawable/tempo_up" />
+        <ImageButton
+            android:id="@+id/tempo_decrease"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:layout_toLeftOf="@+id/tempo_text"
+            android:background="@android:color/transparent"
+            android:src="@drawable/tempo_down" />
+    </RelativeLayout>
 
         <GridView
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/grid_view"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="@drawable/tempo_grid"
-            android:columnWidth="76dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tempo_top"
+        	android:layout_above="@+id/tempo_footer"
+            android:columnWidth="75dp"
+            android:verticalSpacing="4dp"
+			android:horizontalSpacing="4dp"
             android:gravity="center"
             android:numColumns="auto_fit"
-            android:stretchMode="none" 
+            android:stretchMode="columnWidth" 
             android:isScrollContainer="false"
             android:smoothScrollbar="false">
         </GridView>
-    </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/favorite_footer"
+        android:id="@+id/tempo_footer"
         android:layout_width="fill_parent"
-        android:layout_height="150dp"
-        android:background="@drawable/console"
+        android:layout_height="110dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/console2"
         android:orientation="vertical" >
-
         <RelativeLayout
             android:id="@+id/tempo_bottom"
             android:layout_width="match_parent"
@@ -77,4 +98,4 @@
         </RelativeLayout>
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

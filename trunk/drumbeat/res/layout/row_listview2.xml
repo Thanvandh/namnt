@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="50dp" >
 
     <!-- ListRow Left sied Thumbnail image -->
 
@@ -11,9 +11,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="10dp"
         android:text="1"
-        android:textColor="@android:color/white"/>
+        android:textSize = "16sp"
+        android:textColor="@color/gray_text"/>
 
     <!-- Displayname -->
 
@@ -22,19 +23,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="25dp"
         android:layout_toRightOf="@+id/row_listview2_number"
         android:text="Audio1"
+        android:textSize = "18sp"
+        android:textStyle="bold"
         android:textColor="@android:color/white"/>
 
     <ImageView
         android:id="@+id/row_listview2_favorites"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginRight="10dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="5dp"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:scaleType="fitCenter"
+        android:scaleType="center"
         android:background="@null"
         android:clickable="true"
         android:src="@drawable/fav_star_off" />

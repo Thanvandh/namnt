@@ -3,11 +3,14 @@ package com.drumbeat.app;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class SettingsActivity extends Activity {
 	Button bt_countoff_off;
@@ -15,6 +18,9 @@ public class SettingsActivity extends Activity {
 	Button bt_countoff_twobar;
 	int countoff = 1;
 	
+	ImageButton bt_more;
+	ImageButton bt_favorite;
+	Button bt_back;
 	Button bt_random_off;
 	Button bt_random_on;
 	int random = 1;
@@ -25,6 +31,53 @@ public class SettingsActivity extends Activity {
 		bt_countoff_off = (Button) findViewById(R.id.bt_countoff);
 		bt_countoff_onebar = (Button) findViewById(R.id.bt_onebar);
 		bt_countoff_twobar = (Button) findViewById(R.id.bt_twobar);
+		
+		bt_favorite = (ImageButton) findViewById(R.id.settings_bt_favorites);
+		bt_favorite.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(SettingsActivity.this, ListviewLevel2.class);
+				intent.putExtra(ListviewLevel1.KEY_FOLDER, "");
+				intent.putExtra(ListviewLevel1.KEY_FAVORITE_MODE, true);
+				startActivity(intent);
+			}
+		});
+		bt_back = (Button) findViewById(R.id.settings_bt_logo);
+		Typeface font = Typeface.createFromAsset(getAssets(), "fonts/MYRIADPRO-BOLD.OTF");  
+		bt_back.setTypeface(font);
+		
+		bt_back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (ListviewLevel2.folder.length() > 0){
+					//Log.d("test","test|" + folder);
+					Intent intent = new Intent(SettingsActivity.this, ListviewLevel2.class);
+					intent.putExtra(ListviewLevel1.KEY_FOLDER, ListviewLevel2.folder);
+					intent.putExtra(ListviewLevel1.KEY_FAVORITE_MODE, false);
+					startActivity(intent);
+				} else {
+					Intent i = new Intent(SettingsActivity.this, ListviewLevel1.class);
+					startActivity(i);
+				}
+			}
+		});
+		
+		bt_more = (ImageButton) findViewById(R.id.settings_bt_more_edit);
+		
+		bt_more.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(SettingsActivity.this, MoreActivity.class);
+				startActivity(i);
+			}
+		});
+		
 
 		bt_countoff_off.setOnClickListener(new OnClickListener() {
 
@@ -107,37 +160,37 @@ public class SettingsActivity extends Activity {
 		bt_random_on.setBackgroundResource(R.color.blue);
 	}
 
-	private void openQuitDialog() {
-		AlertDialog.Builder quitDialog = new AlertDialog.Builder(
-				SettingsActivity.this);
-		quitDialog.setTitle("Confirm to Quit?");
-
-		quitDialog.setPositiveButton("OK, Quit!",
-				new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						ListviewLevel2.stopMusic();
-						FavoritesActivity.stopMusic();
-						finish();
-
-					}
-				});
-		quitDialog.setNegativeButton("NO",
-				new DialogInterface.OnClickListener() {
-
-					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
-
-					}
-				});
-
-		quitDialog.show();
-	}
-
-
-	@Override
-	public void onBackPressed() {
-		openQuitDialog();
-	}
+//	private void openQuitDialog() {
+//		AlertDialog.Builder quitDialog = new AlertDialog.Builder(
+//				SettingsActivity.this);
+//		quitDialog.setTitle("Confirm to Quit?");
+//
+//		quitDialog.setPositiveButton("OK, Quit!",
+//				new DialogInterface.OnClickListener() {
+//
+//					@Override
+//					public void onClick(DialogInterface dialog, int which) {
+//						ListviewLevel2.stopMusic();
+//						FavoritesActivity.stopMusic();
+//						finish();
+//
+//					}
+//				});
+//		quitDialog.setNegativeButton("NO",
+//				new DialogInterface.OnClickListener() {
+//
+//					public void onClick(DialogInterface dialog, int which) {
+//						// TODO Auto-generated method stub
+//
+//					}
+//				});
+//
+//		quitDialog.show();
+//	}
+//
+//
+//	@Override
+//	public void onBackPressed() {
+//		openQuitDialog();
+//	}
 }

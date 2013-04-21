@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
 
     <!-- ListRow Left sied Thumbnail image -->
 
+	<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:text="  "
+        android:textColor="@android:color/white"/>
     <ImageView
         android:id="@+id/row_listview1_folder"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
         android:scaleType="fitCenter"
         android:src="@drawable/folder" />
 
@@ -20,17 +27,21 @@
         android:id="@+id/row_listview1_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="20dp"
         android:layout_toRightOf="@+id/row_listview1_folder"
         android:text="Drum beats"
+        android:textSize="18sp"
+        android:textStyle="bold"
         android:textColor="@android:color/white"/>
 
     <ImageView
         android:id="@+id/row_listview1_folder_arrow"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginRight="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:src="@drawable/folder_arrow" />
 
 </RelativeLayout>

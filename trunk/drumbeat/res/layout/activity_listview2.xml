@@ -2,18 +2,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TimelineActivity" >
+    android:background="@drawable/bg" >
 
-     <ListView
-        android:id="@+id/listview2_activity"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:cacheColorHint="#00000000" 
-        android:layout_above="@+id/footer"
-        android:layout_alignParentTop="true"
-        android:clickable="true" />
-      <LinearLayout
-            android:id="@+id/footer"
+    <RelativeLayout
+        android:id="@+id/listview2_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <RelativeLayout
+            android:id="@+id/listview2_header"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/top_bar" >
+
+            <Button
+                android:id="@+id/listview2_bt_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/red_back_arrow"
+                android:text="   Folder name"
+                android:textColor="@color/white"
+                android:textSize="24dp" />
+
+            <ImageButton
+                android:id="@+id/listview2_bt_favorites"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/listview2_bt_settings"
+                android:background="@android:color/transparent"
+                android:src="@drawable/favoritesbutton_white" />
+
+            <ImageButton
+                android:id="@+id/listview2_bt_settings"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/listview2_bt_more_edit"
+                android:background="@android:color/transparent"
+                android:src="@drawable/settingsbutton_white" />
+
+            <ImageButton
+                android:id="@+id/listview2_bt_more_edit"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="@android:color/transparent"
+                android:src="@drawable/morebutton_white" />
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/listview2_activity"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/listivew2_footer"
+            android:layout_below="@+id/listview2_header"
+            android:cacheColorHint="#00000000"
+            android:clickable="true" />
+
+        <LinearLayout
+            android:id="@+id/listivew2_footer"
             android:layout_width="fill_parent"
             android:layout_height="150dp"
             android:layout_alignParentBottom="true"
@@ -29,29 +79,29 @@
                     android:id="@+id/bt_tempo"
                     android:layout_width="80dp"
                     android:layout_height="45dp"
+                    android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="25dp"
-                    android:layout_alignParentLeft="true"
                     android:background="@drawable/btn_tempo"
-                    android:text="150" 
-                    android:textColor="@android:color/white"/>
+                    android:text="150"
+                    android:textColor="@android:color/white" />
 
                 <Button
                     android:id="@+id/bt_play"
                     android:layout_width="120dp"
                     android:layout_height="70dp"
-                    android:layout_marginTop="20dp"
                     android:layout_centerHorizontal="true"
-                    android:scaleType="fitXY"
-                    android:background="@drawable/play_button" />
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/play_button"
+                    android:scaleType="fitXY" />
 
                 <Button
                     android:id="@+id/bt_random"
                     android:layout_width="80dp"
                     android:layout_height="45dp"
+                    android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="25dp"
-                    android:layout_alignParentRight="true"
                     android:background="@drawable/btn_dice" />
             </RelativeLayout>
 
@@ -63,12 +113,12 @@
                 <ImageButton
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
                     android:layout_alignParentLeft="true"
-                    android:src="@drawable/volume_down" 
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@null"
                     android:scaleType="fitCenter"
-                    android:background="@null"/>
+                    android:src="@drawable/volume_down" />
 
                 <!-- Progress Bar/Seek bar -->
 
@@ -76,9 +126,9 @@
                     android:id="@+id/volumeProgressBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
                     android:layout_marginLeft="40dp"
                     android:layout_marginRight="40dp"
-                    android:layout_marginBottom="20dp"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:progressDrawable="@drawable/seekbar_progress"
@@ -87,17 +137,127 @@
                 <ImageButton
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginRight="10dp"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/volume_up"
-                    android:layout_marginTop="5dp"
-                    android:scaleType="fitCenter" 
-                    android:background="@null"/>
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/volume_up" />
             </RelativeLayout>
+
             <TextView
-                android:id="@+id/listview_playsong" 
+                android:id="@+id/listview_playsong"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"/>
+                android:text="abc"
+                android:layout_gravity="center" />
         </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/listview2_tempo_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone">
+
+        <!-- ListRow Left sied Thumbnail image -->
+
+        <RelativeLayout
+            android:id="@+id/listview2_tempo_view_top"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/top_bar" >
+
+            <TextView
+                android:id="@+id/listview2_tempo_view_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Tempo"
+                android:textColor="@color/white"
+                android:textSize="24dp" />
+
+            <ImageButton
+                android:id="@+id/listview2_tempo_view_increase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@+id/listview2_tempo_view_text"
+                android:background="@android:color/transparent"
+                android:src="@drawable/tempo_up" />
+
+            <ImageButton
+                android:id="@+id/listview2_tempo_view_decrease"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:layout_toLeftOf="@+id/listview2_tempo_view_text"
+                android:background="@android:color/transparent"
+                android:src="@drawable/tempo_down" />
+        </RelativeLayout>
+
+        <GridView
+            android:id="@+id/listview2_tempo_view_grid_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/listview2_tempo_view_footer"
+            android:layout_below="@+id/listview2_tempo_view_top"
+            android:columnWidth="75dp"
+            android:gravity="center"
+            android:horizontalSpacing="4dp"
+            android:isScrollContainer="false"
+            android:numColumns="auto_fit"
+            android:smoothScrollbar="false"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="4dp" >
+        </GridView>
+
+        <LinearLayout
+            android:id="@+id/listview2_tempo_view_footer"
+            android:layout_width="fill_parent"
+            android:layout_height="110dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/console2"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/listview2_tempo_view_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/listview2_tempo_view_bt_done"
+                    android:layout_width="80dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/done_button"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/listview2_tempo_view_bt_playrate"
+                    android:layout_width="120dp"
+                    android:layout_height="70dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/play_button"
+                    android:scaleType="fitXY" />
+
+                <Button
+                    android:id="@+id/listview2_tempo_view_bt_randomrate"
+                    android:layout_width="80dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/btn_dice" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
 </RelativeLayout>

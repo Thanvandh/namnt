@@ -13,6 +13,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.SQLException;
+import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.media.SoundPool.OnLoadCompleteListener;
@@ -22,6 +23,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -49,6 +51,10 @@ public class FavoritesActivity extends Activity {
 	String[] id;
 	String[] folder;
 
+	ImageButton bt_settings;
+	ImageButton bt_more;
+	Button bt_back;
+	
 	Button bt_tempo;
 	Button bt_random;
 	static Button bt_play;
@@ -145,6 +151,35 @@ public class FavoritesActivity extends Activity {
 		
 		
 		
+		bt_settings = (ImageButton) findViewById(R.id.favorite_bt_settings);
+		
+		bt_settings.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(FavoritesActivity.this, SettingsActivity.class);
+				startActivity(i);
+			}
+		});
+		
+	  
+		
+		bt_more = (ImageButton) findViewById(R.id.favorite_bt_more_edit);
+		bt_back = (Button) findViewById(R.id.favorite_bt_logo);
+		Typeface font = Typeface.createFromAsset(getAssets(), "fonts/MYRIADPRO-BOLD.OTF");  
+		bt_back.setTypeface(font);
+		
+		bt_back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				onBackPressed();
+			}
+		});
+		
+
 		
 		bt_tempo = (Button) findViewById(R.id.favorite_bt_tempo);
 		bt_random = (Button) findViewById(R.id.favorite_bt_random);
@@ -359,35 +394,35 @@ public class FavoritesActivity extends Activity {
 	}
 
 	
-	private void openQuitDialog(){
-	  	  AlertDialog.Builder quitDialog 
-	  	   = new AlertDialog.Builder(FavoritesActivity.this);
-	  	  quitDialog.setTitle("Confirm to Quit?");
-	  	  
-	  	  quitDialog.setPositiveButton("OK, Quit!", new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					ListviewLevel2.stopMusic();
-					FavoritesActivity.stopMusic();
-					finish();
-					
-				}
-	  	  });   	  
-	  	  quitDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-	  		  public void onClick(DialogInterface dialog, int which) {
-	  	    // TODO Auto-generated method stub
-	  	    
-	  	   }});
-	  	  
-	  	  quitDialog.show();
-	  	 }
-
-	@Override
-	  public void onBackPressed() {
-		openQuitDialog(); 
-	  }
+//	private void openQuitDialog(){
+//	  	  AlertDialog.Builder quitDialog 
+//	  	   = new AlertDialog.Builder(FavoritesActivity.this);
+//	  	  quitDialog.setTitle("Confirm to Quit?");
+//	  	  
+//	  	  quitDialog.setPositiveButton("OK, Quit!", new DialogInterface.OnClickListener() {
+//				
+//				@Override
+//				public void onClick(DialogInterface dialog, int which) {
+//					ListviewLevel2.stopMusic();
+//					FavoritesActivity.stopMusic();
+//					finish();
+//					
+//				}
+//	  	  });   	  
+//	  	  quitDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+//
+//	  		  public void onClick(DialogInterface dialog, int which) {
+//	  	    // TODO Auto-generated method stub
+//	  	    
+//	  	   }});
+//	  	  
+//	  	  quitDialog.show();
+//	  	 }
+//
+//	@Override
+//	  public void onBackPressed() {
+//		openQuitDialog(); 
+//	  }
 	
 	private void openRemoveDialog(final int position){
 	  	  AlertDialog.Builder RemoveDialog 

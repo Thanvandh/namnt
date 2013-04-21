@@ -3,8 +3,47 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
-  
+  android:layout_height="match_parent"
+  android:background="@drawable/bg">
+  <RelativeLayout 
+	     android:id="@+id/more_header"
+	     android:layout_width="match_parent"
+	     android:layout_height="60dp"
+	     android:background="@drawable/top_bar">
+	     <Button
+                    android:id="@+id/more_bt_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="   More Beats"
+                    android:textSize="24dp"
+                    android:textColor="@color/white"
+                    android:drawableLeft="@drawable/red_back_arrow"
+                    android:background="@android:color/transparent" />
+	     <ImageButton
+                    android:id="@+id/more_bt_favorites"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@+id/more_bt_settings"
+                    android:src="@drawable/favoritesbutton_white" 
+                    android:background="@android:color/transparent"/>
+	     <ImageButton
+                    android:id="@+id/more_bt_settings"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@+id/more_bt_more_edit"
+                    android:src="@drawable/settingsbutton_white" 
+                    android:background="@android:color/transparent"/>
+	     <ImageButton
+                    android:id="@+id/more_bt_more_edit"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/morebutton_white_pressed"
+                    android:background="@android:color/transparent" />
+	 </RelativeLayout> 
   <!--  Screen Design for VIDEOS -->
   <TextView android:text="More Activity"
   			android:padding="15dip"

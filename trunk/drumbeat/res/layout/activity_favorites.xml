@@ -2,13 +2,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TimelineActivity" >
-
+    tools:context=".TimelineActivity" 
+    android:background="@drawable/bg">
+	 <RelativeLayout 
+	     android:id="@+id/favorite_header"
+	     android:layout_width="match_parent"
+	     android:layout_height="60dp"
+	     android:background="@drawable/top_bar">
+	     <Button
+                    android:id="@+id/favorite_bt_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentLeft="true"
+                    android:text="   Favorites"
+                    android:textSize="24sp"
+                    android:textColor="@color/white"
+                    android:drawableLeft="@drawable/red_back_arrow"
+                    android:background="@android:color/transparent" />
+	     <ImageButton
+                    android:id="@+id/favorite_bt_favorites"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@+id/favorite_bt_settings"
+                    android:src="@drawable/favoritesbutton_white_pressed" 
+                    android:background="@android:color/transparent"/>
+	     <ImageButton
+                    android:id="@+id/favorite_bt_settings"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@+id/favorite_bt_more_edit"
+                    android:src="@drawable/settingsbutton_white" 
+                    android:background="@android:color/transparent"/>
+	     <ImageButton
+                    android:id="@+id/favorite_bt_more_edit"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/edit_button"
+                    android:background="@android:color/transparent" />
+	 </RelativeLayout>     
      <ListView
         android:id="@+id/listview_favorites_activity"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/favorite_header"
         android:layout_above="@+id/favorite_footer"
         android:cacheColorHint="#00000000"
         android:clickable="true"  />
