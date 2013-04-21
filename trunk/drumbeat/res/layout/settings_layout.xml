@@ -62,21 +62,18 @@
       android:layout_width="95dp"
       android:layout_height="wrap_content"
       android:layout_alignParentLeft="true"
-      android:layout_marginLeft="15dp"
-      android:text="OFF"/>
+      android:layout_marginLeft="15dp"/>
   <Button
       android:id="@+id/bt_onebar"
       android:layout_width="95dp"
       android:layout_height="wrap_content"
-      android:layout_centerInParent="true"
-      android:text="One Bar"/>
+      android:layout_centerInParent="true"/>
   <Button
       android:id="@+id/bt_twobar"
       android:layout_width="95dp"
       android:layout_height="wrap_content"
       android:layout_alignParentRight="true"
-      android:layout_marginRight="15dp"
-      android:text="Two Bar"/>
+      android:layout_marginRight="15dp"/>
   </RelativeLayout>
   <TextView android:text="Turning this on will play a count-off before the beat starts. (Count-off will not play if a beat is already playing)"
   			android:layout_marginLeft="15dp"
@@ -97,20 +94,18 @@
   <RelativeLayout 
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
-  <Button
-      android:id="@+id/bt_randomoff"
-      android:layout_width="145dp"
-      android:layout_height="wrap_content"
-      android:layout_alignParentLeft="true"
-      android:layout_marginLeft="15dp"
-      android:text="OFF"/>
-  <Button
-      android:id="@+id/bt_randomon"
-      android:layout_width="145dp"
-      android:layout_height="wrap_content"
-      android:layout_alignParentRight="true"
-      android:layout_marginRight="15dp"
-      android:text="ON"/>
+  <ToggleButton
+        android:id="@+id/toggleButton1"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/bgtoggle"
+        android:button="@null"
+        android:textOff=""
+        android:textOn="" />
   </RelativeLayout>
   <TextView android:text="Turning this on if you'd like the randomizer also change the tempo"
   			android:layout_marginLeft="15dp"
@@ -127,6 +122,7 @@
       android:layout_height="wrap_content"
       android:layout_marginLeft="15dp"
       android:layout_marginRight="15dp"
+      android:background="@drawable/btn_settings_top"
       android:text="Rate this Apllication"/>
   <Button
       android:id="@+id/bt_tellafriend"
@@ -134,6 +130,7 @@
       android:layout_height="wrap_content"
       android:layout_marginLeft="15dp"
       android:layout_marginRight="15dp"
+      android:background="@drawable/btn_settings_mid"
       android:text="Tell a Friend"/>
   <Button
       android:id="@+id/bt_sendfeeback"
@@ -141,5 +138,6 @@
       android:layout_height="wrap_content"
       android:layout_marginLeft="15dp"
       android:layout_marginRight="15dp"
+      android:background="@drawable/btn_settings_bottom"
       android:text="Send Feedback"/>
 </LinearLayout>

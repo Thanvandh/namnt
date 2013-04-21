@@ -61,6 +61,7 @@ public class SettingsActivity extends Activity {
 					startActivity(intent);
 				} else {
 					Intent i = new Intent(SettingsActivity.this, ListviewLevel1.class);
+					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(i);
 				}
 			}
@@ -104,61 +105,61 @@ public class SettingsActivity extends Activity {
 			}
 		});
 		
-		bt_random_off = (Button) findViewById(R.id.bt_randomoff);
-		bt_random_on = (Button) findViewById(R.id.bt_randomon);
+//		bt_random_off = (Button) findViewById(R.id.bt_randomoff);
+//		bt_random_on = (Button) findViewById(R.id.bt_randomon);
 
-		bt_random_off.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				setrandom_off();
-			}
-		});
-		bt_random_on.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				setrandom_on();
-			}
-		});
+//		bt_random_off.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				// TODO Auto-generated method stub
+//				setrandom_off();
+//			}
+//		});
+//		bt_random_on.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				// TODO Auto-generated method stub
+//				setrandom_on();
+//			}
+//		});
 		setcountoff_off();
-		setrandom_off();
+//		setrandom_off();
 	}
 
 	public void setcountoff_off() {
 		countoff = 1;
-		bt_countoff_off.setBackgroundResource(R.color.blue);
-		bt_countoff_onebar.setBackgroundResource(R.color.white);
-		bt_countoff_twobar.setBackgroundResource(R.color.white);
+		bt_countoff_off.setBackgroundResource(R.drawable.off_button_pressed);
+		bt_countoff_onebar.setBackgroundResource(R.drawable.onebar_button);
+		bt_countoff_twobar.setBackgroundResource(R.drawable.twobars_button);
 	}
 
 	public void setcountoff_onebar() {
 		countoff = 2;
-		bt_countoff_off.setBackgroundResource(R.color.white);
-		bt_countoff_onebar.setBackgroundResource(R.color.blue);
-		bt_countoff_twobar.setBackgroundResource(R.color.white);
+		bt_countoff_off.setBackgroundResource(R.drawable.off_button);
+		bt_countoff_onebar.setBackgroundResource(R.drawable.onebar_button_pressed);
+		bt_countoff_twobar.setBackgroundResource(R.drawable.twobars_button);
 	}
 
 	public void setcountoff_twobar() {
 		countoff = 3;
-		bt_countoff_off.setBackgroundResource(R.color.white);
-		bt_countoff_onebar.setBackgroundResource(R.color.white);
-		bt_countoff_twobar.setBackgroundResource(R.color.blue);
+		bt_countoff_off.setBackgroundResource(R.drawable.off_button);
+		bt_countoff_onebar.setBackgroundResource(R.drawable.onebar_button);
+		bt_countoff_twobar.setBackgroundResource(R.drawable.twobars_button_pressed);
 	}
 	
-	public void setrandom_off() {
-		random = 1;
-		bt_random_off.setBackgroundResource(R.color.blue);
-		bt_random_on.setBackgroundResource(R.color.white);
-	}
-
-	public void setrandom_on() {
-		random = 2;
-		bt_random_off.setBackgroundResource(R.color.white);
-		bt_random_on.setBackgroundResource(R.color.blue);
-	}
+//	public void setrandom_off() {
+//		random = 1;
+//		bt_random_off.setBackgroundResource(R.color.blue);
+//		bt_random_on.setBackgroundResource(R.color.white);
+//	}
+//
+//	public void setrandom_on() {
+//		random = 2;
+//		bt_random_off.setBackgroundResource(R.color.white);
+//		bt_random_on.setBackgroundResource(R.color.blue);
+//	}
 
 //	private void openQuitDialog() {
 //		AlertDialog.Builder quitDialog = new AlertDialog.Builder(
