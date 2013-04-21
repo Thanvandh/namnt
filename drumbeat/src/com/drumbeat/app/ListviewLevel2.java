@@ -339,7 +339,8 @@ public class ListviewLevel2 extends Activity {
 		     	{
 		     		if (TextAdapter.arrayrate[i].equalsIgnoreCase(srate))
 		     		{
-		     			rate = (float) (0.5 + i*0.05);
+		     			float step = (float)5/120;
+		     			rate = (float) (0.5 + i*step);
 		     			if (soundPool != null)
 		     			soundPool.setRate(streamid, rate);
 		     			setbuttonrate(srate);
@@ -441,6 +442,7 @@ public class ListviewLevel2 extends Activity {
 						onResume();
 					} else {
 						Intent i = new Intent(ListviewLevel2.this, ListviewLevel1.class);
+						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 						startActivity(i);
 					}
 				}
@@ -449,6 +451,8 @@ public class ListviewLevel2 extends Activity {
 				 
 				 myDbHelper.openDataBase();
 				 List<Song> songs = myDbHelper.getFavariteSong();
+				 if (songs != null)
+				 {
 				 name_favortie = new String[songs.size()];
 				 id_favorite = new String[songs.size()];
 				 folder_favorite = new String[songs.size()];
@@ -458,6 +462,7 @@ public class ListviewLevel2 extends Activity {
 					 id_favorite[i] = songs.get(i).getID();
 					 folder_favorite[i] = songs.get(i).getFolder();
 				 }
+				 }
 				  
 				 }catch(SQLException sqle){
 				  
@@ -466,6 +471,7 @@ public class ListviewLevel2 extends Activity {
 				 }
 			 myDbHelper.close();
 			array_name_favorite = new ArrayList<HashMap<String, String>>();
+			if (name_favortie != null){
 			
 			for (int i=0; i<name_favortie.length; i++){
 				HashMap<String, String> map = new HashMap<String, String>();
@@ -479,6 +485,7 @@ public class ListviewLevel2 extends Activity {
 			// Getting adapter
 			adapter_favorite = new FavoritesRowAdapter(this, array_name_favorite);
 			lv.setAdapter(adapter_favorite);
+			}
 		} else {
 			
 			bt_more.setImageResource(R.drawable.morebutton_white);
@@ -512,6 +519,7 @@ public class ListviewLevel2 extends Activity {
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					Intent i = new Intent(ListviewLevel2.this, ListviewLevel1.class);
+					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(i);
 				}
 			});
@@ -627,7 +635,8 @@ public class ListviewLevel2 extends Activity {
 	{
 		Random random = new Random();
 		int i =  random.nextInt(26);
-		rate = (float) (0.5 + i*0.05);
+		float step = (float)5/120;
+		rate = (float) (0.5 + i*step);
 		srate = TextAdapter.arrayrate[i];
 		if (soundPool != null)
 		soundPool.setRate(streamid, rate);
@@ -637,12 +646,24 @@ public class ListviewLevel2 extends Activity {
 	{
 		Random random = new Random();
 		int i =  random.nextInt(26);
-		lastPos = i;
+		
+		float step = (float)5/120;
+		rate = (float) (0.5 + i*step);
+		
+		srate = TextAdapter.arrayrate[i];
+		//Log.d("test","rate|" +  i + "|" +  rate + "|" + srate);
+        for (int j=0; i<TextAdapter.mTemporary.length; j++)
+    	{
+    		if (TextAdapter.mTemporary[j].equalsIgnoreCase(srate))
+    		{
+    			lastPos = j;
+				break;
+    		}
+    	}
+        
 		gridView.setSelection(lastPos);
 		gridView.requestFocusFromTouch();
 		gridView.setSelection(lastPos);
-		rate = (float) (0.5 + i*0.05);
-		srate = TextAdapter.arrayrate[i];
 		setbuttonrate(srate);
 		if (soundPool != null)
 		soundPool.setRate(streamid, rate);

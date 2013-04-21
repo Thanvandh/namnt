@@ -49,6 +49,7 @@ public class MoreActivity extends Activity {
 					startActivity(intent);
 				} else {
 					Intent i = new Intent(MoreActivity.this, ListviewLevel1.class);
+					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(i);
 				}
 			}
