@@ -8,6 +8,9 @@
     <string name="settings">Settings</string>
     <string name="more">More</string>
     
+    <string name="volumnDown"></string>
+    <string name="volumnUp"></string>
+    
     <string name="main_body_settings_text_count_off">Count-off</string>
     <string name="main_body_settings_text_description_countoff">Turning this on will play a count-off before the beat starts. (Count-off will not play if a beat is already playing)</string>
     

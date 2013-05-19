@@ -216,15 +216,17 @@ public final class R {
         public static final int app_name=0x7f060000;
         public static final int favorite=0x7f060003;
         public static final int hello_world=0x7f060002;
-        public static final int main_body_settings_bt_ratethisapp=0x7f06000a;
-        public static final int main_body_settings_bt_sendfeeback=0x7f06000c;
-        public static final int main_body_settings_bt_tellafriend=0x7f06000b;
-        public static final int main_body_settings_text_count_off=0x7f060006;
-        public static final int main_body_settings_text_description_countoff=0x7f060007;
-        public static final int main_body_settings_text_description_random_tempo=0x7f060009;
-        public static final int main_body_settings_text_random_tempo=0x7f060008;
+        public static final int main_body_settings_bt_ratethisapp=0x7f06000c;
+        public static final int main_body_settings_bt_sendfeeback=0x7f06000e;
+        public static final int main_body_settings_bt_tellafriend=0x7f06000d;
+        public static final int main_body_settings_text_count_off=0x7f060008;
+        public static final int main_body_settings_text_description_countoff=0x7f060009;
+        public static final int main_body_settings_text_description_random_tempo=0x7f06000b;
+        public static final int main_body_settings_text_random_tempo=0x7f06000a;
         public static final int more=0x7f060005;
         public static final int settings=0x7f060004;
+        public static final int volumnDown=0x7f060006;
+        public static final int volumnUp=0x7f060007;
     }
     public static final class style {
         /** 
