@@ -18,6 +18,7 @@ import android.app.ActivityGroup;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.view.View;
@@ -57,28 +58,29 @@ public class ListviewLevel1 extends ActivityGroup  {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_listview1);
-		 DatabaseHandler myDbHelper = new DatabaseHandler(this);
-		  
-		 try {
-		  
-		 myDbHelper.createDataBase();
-		  
-		 } catch (IOException ioe) {
-		  
-		 throw new Error("Unable to create database");
-		  
-		 }
-		 try {
-			 
-			 myDbHelper.openDataBase();
-			 values = myDbHelper.getListFolder();
-			  
-			 }catch(SQLException sqle){
-			  
-			 throw sqle;
-			  
-			 }
-		 myDbHelper.close();
+//		 DatabaseHandler myDbHelper = new DatabaseHandler(this);
+//		  
+//		 try {
+//		  
+//		 myDbHelper.createDataBase();
+//		  
+//		 } catch (IOException ioe) {
+//		  
+//		 throw new Error("Unable to create database");
+//		  
+//		 }
+//		 try {
+//			 
+//			 myDbHelper.openDataBase();
+//			 values = myDbHelper.getListFolder();
+//			  
+//			 }catch(SQLException sqle){
+//			  
+//			 throw sqle;
+//			  
+//			 }
+//		 myDbHelper.close();
+		values =getFolder();
 		  
 		 
 		lv = (ListView) findViewById(R.id.listview1_activity);
@@ -164,7 +166,16 @@ public class ListviewLevel1 extends ActivityGroup  {
 //		MainActivity.setNameHomeSpec("Drum Beats");
 //		super.onResume();
 //	}
-	
+	private String[] getFolder(){
+		 AssetManager assetManager = getAssets();
+		    String[] files = null;
+		    try {
+		        files = assetManager.list("music");
+		    } catch (IOException e) {
+		    	return null;
+		    }
+		    return files;
+		} 
 	
 	private void openQuitDialog(){
 	  	  AlertDialog.Builder quitDialog 
@@ -175,7 +186,10 @@ public class ListviewLevel1 extends ActivityGroup  {
 				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
+					ListviewLevel2.stopAllMedia();
 					finish();
+					
+					
 					
 				}
 	  	  });   	  
@@ -199,5 +213,10 @@ public class ListviewLevel1 extends ActivityGroup  {
 //		getMenuInflater().inflate(R.menu.activity_timeline, menu);
 //		return true;
 //	}
+	@Override
+	public void finish() {
+		// TODO Auto-generated method stub
+		super.finish();
+	}
 
 }

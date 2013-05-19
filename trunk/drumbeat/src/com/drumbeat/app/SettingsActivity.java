@@ -4,30 +4,37 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ToggleButton;
 
 public class SettingsActivity extends Activity {
 	Button bt_countoff_off;
 	Button bt_countoff_onebar;
 	Button bt_countoff_twobar;
-	int countoff = 1;
+	int countoff;
 	
 	ImageButton bt_more;
 	ImageButton bt_favorite;
 	Button bt_back;
-	Button bt_random_off;
-	Button bt_random_on;
-	int random = 1;
+	ToggleButton bt_random;
+	boolean random;
+	SharedPreferences preferences;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.settings_layout);
+		preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		countoff = preferences.getInt("countoff", 0);
+		random = preferences.getBoolean("random", false);
+		//preferences.edit().putString("passwordKey", editText.getText().toString()).commit();
 		bt_countoff_off = (Button) findViewById(R.id.bt_countoff);
 		bt_countoff_onebar = (Button) findViewById(R.id.bt_onebar);
 		bt_countoff_twobar = (Button) findViewById(R.id.bt_twobar);
@@ -105,17 +112,18 @@ public class SettingsActivity extends Activity {
 			}
 		});
 		
-//		bt_random_off = (Button) findViewById(R.id.bt_randomoff);
+		bt_random = (ToggleButton) findViewById(R.id.toggleButton_random);
+		bt_random.setChecked(random);
 //		bt_random_on = (Button) findViewById(R.id.bt_randomon);
 
-//		bt_random_off.setOnClickListener(new OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//				// TODO Auto-generated method stub
-//				setrandom_off();
-//			}
-//		});
+		bt_random.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				preferences.edit().putBoolean("random", bt_random.isChecked()).commit();
+			}
+		});
 //		bt_random_on.setOnClickListener(new OnClickListener() {
 //
 //			@Override
@@ -124,26 +132,43 @@ public class SettingsActivity extends Activity {
 //				setrandom_on();
 //			}
 //		});
-		setcountoff_off();
+		switch (countoff) {
+		case 0:
+			setcountoff_off();
+			break;
+		case 1:
+			setcountoff_onebar();
+			break;
+		case 2:
+			setcountoff_twobar();
+			break;
+
+		default:
+			break;
+		}
+		
 //		setrandom_off();
 	}
 
 	public void setcountoff_off() {
-		countoff = 1;
+		//countoff = 1;
+		preferences.edit().putInt("countoff", 0).commit();
 		bt_countoff_off.setBackgroundResource(R.drawable.off_button_pressed);
 		bt_countoff_onebar.setBackgroundResource(R.drawable.onebar_button);
 		bt_countoff_twobar.setBackgroundResource(R.drawable.twobars_button);
 	}
 
 	public void setcountoff_onebar() {
-		countoff = 2;
+		//countoff = 2;
+		preferences.edit().putInt("countoff", 1).commit();
 		bt_countoff_off.setBackgroundResource(R.drawable.off_button);
 		bt_countoff_onebar.setBackgroundResource(R.drawable.onebar_button_pressed);
 		bt_countoff_twobar.setBackgroundResource(R.drawable.twobars_button);
 	}
 
 	public void setcountoff_twobar() {
-		countoff = 3;
+		//countoff = 3;
+		preferences.edit().putInt("countoff", 2).commit();
 		bt_countoff_off.setBackgroundResource(R.drawable.off_button);
 		bt_countoff_onebar.setBackgroundResource(R.drawable.onebar_button);
 		bt_countoff_twobar.setBackgroundResource(R.drawable.twobars_button_pressed);

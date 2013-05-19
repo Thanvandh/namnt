@@ -18,12 +18,18 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
 import android.database.SQLException;
 import android.graphics.Typeface;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.media.SoundPool;
 import android.media.SoundPool.OnLoadCompleteListener;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -58,9 +64,6 @@ public class ListviewLevel2 extends Activity {
 	String[] values = new String[] {"Started Pack", "Break Beats", "Hit Songs 1", "Pop-rock 1" };
 	String[] name;
 	String[] id;
-	String[] values2 = new String[] {"Audio1", "Audio2", "Audio3"};
-	String[] values3 = new String[] {"Audio1", "Audio2", "Audio3"};
-	String[] values4 = new String[] {"Audio1", "Audio2", "Audio3"};
 	
 	ListviewLevel2RowAdapter adapter;
 	ArrayList<HashMap<String, String>> array_name;
@@ -83,9 +86,8 @@ public class ListviewLevel2 extends Activity {
 	private static SoundPool soundPool;
 
 	private int soundID;
-	String srate;
 	static int REQUEST_TEMPO = 2;
-	float rate;
+	int rate;
 	
 	ImageButton bt_settings;
 	ImageButton bt_more;
@@ -94,20 +96,29 @@ public class ListviewLevel2 extends Activity {
 	
 	RelativeLayout tempo_view;
 	GridView gridView;
-	int lastPos;
+	TextView text_on_top;
+	static int lastPos;
+	static int lastPosition = 0;
 	Button bt_tempo_view_play;
 	RelativeLayout listview2_view;
 	
 	boolean favorite_mode = false;
 	boolean tempo_view_mode = false;
 	DatabaseHandler myDbHelper;
-	
+	static MediaPlayer mp;
+
+	static boolean bplay = false;
+	static String mplaysong = "";
+	static String srate = "120";
+	SharedPreferences preferences;
+	int maxCount;
+	AssetFileDescriptor file;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_listview2);
-		listview2_view = (RelativeLayout) findViewById(R.id.listview2_view); 
+		listview2_view = (RelativeLayout) findViewById(R.id.listview2_view);
 		Intent in = getIntent();
 		Bundle bundle = in.getExtras();
 		favorite_mode = bundle.getBoolean(ListviewLevel1.KEY_FAVORITE_MODE);
@@ -115,10 +126,17 @@ public class ListviewLevel2 extends Activity {
 		folder = bundle.getString(ListviewLevel1.KEY_FOLDER);
 		
 		myDbHelper = new DatabaseHandler(this);
-		  
+		try {
+			myDbHelper.createDataBase();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		preferences = PreferenceManager.getDefaultSharedPreferences(this);  
 
 		
 		lv = (ListView) findViewById(R.id.listview2_activity);
+		
 		bt_tempo = (Button) findViewById(R.id.bt_tempo);
 		bt_random = (Button) findViewById(R.id.bt_random);
 		bt_play = (Button) findViewById(R.id.bt_play);
@@ -147,7 +165,7 @@ public class ListviewLevel2 extends Activity {
 		loadUI(favorite_mode);
 		
 		initControlsvolume();
-		setIconPlayButton(SoundpoolState.getState(),SoundpoolState.getplaysong());
+		setIconPlayButton(bplay,mplaysong);
 		
 		
 
@@ -162,8 +180,6 @@ public class ListviewLevel2 extends Activity {
 //				.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 		//volume = actualVolume / maxVolume;
 		volume = 1;
-		srate = "150";
-		rate = 1;
 		/**
 		 * Listening to listview single row selected
 		 * **/
@@ -175,7 +191,20 @@ public class ListviewLevel2 extends Activity {
 					long arg3) {
 				// TODO Auto-generated method stub
 				//Log.d("Test","Sao khong vao day");
-				playMusic(postion);
+				lastPosition = postion;
+				//playMusic();
+				for (int i=0; i<TextAdapter.arrayrate.length; i++)
+		     	{
+		     		if (TextAdapter.arrayrate[i].equalsIgnoreCase(srate))
+		     		{
+		     			rate = i;
+		     			//playMusic();
+		     			playMediaPlayer();
+		     			
+		 				break;
+		     		}
+		     	}
+				playMediaPlayer();
 				
 				
 			}
@@ -207,7 +236,7 @@ public class ListviewLevel2 extends Activity {
 				tempo_view.setVisibility(View.VISIBLE);
 				tempo_view_mode = true;
 				listview2_view.setVisibility(View.GONE);
-				if (SoundpoolState.getState())
+				if (bplay)
 				{
 					bt_tempo_view_play.setBackgroundResource(R.drawable.stop_button);
 					
@@ -239,17 +268,28 @@ public class ListviewLevel2 extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (SoundpoolState.getState())
+				if (bplay)
 				{
-					stopMusic();
+					//stopMusic();
+					stopMediaPlayer();
 					
 				}
 				else
 				{
-					int id = 0;
 					if (lv.getCheckedItemPosition() >= 0)
-						id = lv.getCheckedItemPosition();
-					playMusic(id);
+						lastPosition = lv.getCheckedItemPosition();
+					//playMusic();
+					 for (int i=0; i<TextAdapter.arrayrate.length; i++)
+				     	{
+				     		if (TextAdapter.arrayrate[i].equalsIgnoreCase(srate))
+				     		{
+				     			rate = i;
+				     			//playMusic();
+				     			playMediaPlayer();
+				     			
+				 				break;
+				     		}
+				     	}
 					
 				}
 			}
@@ -261,6 +301,7 @@ public class ListviewLevel2 extends Activity {
 		//Tempo View
 		tempo_view = (RelativeLayout) findViewById(R.id.listview2_tempo_view);
 		tempo_view.setVisibility(View.GONE);
+		text_on_top = (TextView) findViewById(R.id.listview2_tempo_text_on_top);
 		gridView = (GridView) findViewById(R.id.listview2_tempo_view_grid_view);
 		Button bt_tempo_view_random = (Button) findViewById(R.id.listview2_tempo_view_bt_randomrate);
         Button bt_tempo_view_done = (Button) findViewById(R.id.listview2_tempo_view_bt_done);
@@ -273,19 +314,30 @@ public class ListviewLevel2 extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (SoundpoolState.getState())
+				if (bplay)
 				{
-					stopMusic();
+					//stopMusic();
+					stopMediaPlayer();
 					bt_tempo_view_play.setBackgroundResource(R.drawable.play_button);
 					
 				}
 				else
 				{
-					int id = 0;
 					if (lv.getCheckedItemPosition() >= 0)
-						id = lv.getCheckedItemPosition();
-					playMusic(id);
-					bt_tempo_view_play.setBackgroundResource(R.drawable.stop_button);
+						lastPosition = lv.getCheckedItemPosition();
+					 for (int i=0; i<TextAdapter.arrayrate.length; i++)
+				     	{
+				     		if (TextAdapter.arrayrate[i].equalsIgnoreCase(srate))
+				     		{
+				     			rate = i;
+				     			//playMusic();
+								playMediaPlayer();
+								bt_tempo_view_play.setBackgroundResource(R.drawable.stop_button);
+				     			
+				 				break;
+				     		}
+				     	}
+					
 					
 				}
 			}
@@ -316,49 +368,53 @@ public class ListviewLevel2 extends Activity {
 		
 		// Instance of ImageAdapter Class
 		//gridView.setAdapter(new ImageAdapter(this));
-		gridView.setAdapter(new TextAdapter(this));
-		//gridView.setDrawSelectorOnTop(true);
 		
-		gridView.setSelected(true);
-		gridView.setFocusable(true);
+//		//gridView.setDrawSelectorOnTop(true);
+//		
+//		gridView.setSelected(true);
+//		gridView.setFocusable(true);
 		/**
 		 * On Click event for Single Gridview Item
 		 * */
-		gridView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View v,
-					int position, long id) {
-				
-				// Sending image id to FullScreenActivity
-				lastPos = position;
-				gridView.setSelection(lastPos);
-				gridView.requestFocusFromTouch();
-				gridView.setSelection(lastPos);
-				srate = TextAdapter.mTemporary[lastPos];
-		         for (int i=0; i<TextAdapter.arrayrate.length; i++)
-		     	{
-		     		if (TextAdapter.arrayrate[i].equalsIgnoreCase(srate))
-		     		{
-		     			float step = (float)5/120;
-		     			rate = (float) (0.5 + i*step);
-		     			if (soundPool != null)
-		     			soundPool.setRate(streamid, rate);
-		     			setbuttonrate(srate);
-		 				return;
-		     		}
-		     	}
-//				gridView.setSelection((int)(gridView.getAdapter()).getItemId(lastPos));
-//				gridView.requestFocus();
-				
-				//v.setBackgroundResource(R.drawable.pressedback);
-//				v.setSelected(true);
-				
-//				Intent i = new Intent(getApplicationContext(), FullImageActivity.class);
-//				// passing array index
-//				i.putExtra("id", position);
-//				startActivity(i);
-			}
-		});
+//		gridView.setOnItemClickListener(new OnItemClickListener() {
+//			@Override
+//			public void onItemClick(AdapterView<?> parent, View v,
+//					int position, long id) {
+//				
+//				// Sending image id to FullScreenActivity
+//				lastPos = position;
+////				if (lastPos == 27)
+////					lastPos = 26;
+//				Log.d("location onItemClick",""+lastPos);
+//				gridView.setSelection(lastPos);
+//				gridView.requestFocusFromTouch();
+//				gridView.setSelection(lastPos);
+//				srate = TextAdapter.mTemporary[lastPos];
+//		         for (int i=0; i<TextAdapter.arrayrate.length; i++)
+//		     	{
+//		     		if (TextAdapter.arrayrate[i].equalsIgnoreCase(srate))
+//		     		{
+//		     			float step = (float)5/120;
+//		     			rate = (float) (0.5 + i*step);
+//		     			if (soundPool != null)
+//		     			soundPool.setRate(streamid, rate);
+//		     			setbuttonrate(srate);
+//		 				return;
+//		     		}
+//		     	}
+////				gridView.setSelection((int)(gridView.getAdapter()).getItemId(lastPos));
+////				gridView.requestFocus();
+//				
+//				//v.setBackgroundResource(R.drawable.pressedback);
+////				v.setSelected(true);
+//				
+////				Intent i = new Intent(getApplicationContext(), FullImageActivity.class);
+////				// passing array index
+////				i.putExtra("id", position);
+////				startActivity(i);
+//			}
+//		});
+		
 		
 		gridView.setOnTouchListener(new OnTouchListener(){
 
@@ -366,10 +422,81 @@ public class ListviewLevel2 extends Activity {
 			public boolean onTouch(View v, MotionEvent event) {
 				// TODO Auto-generated method stub
 				 if(event.getAction() == MotionEvent.ACTION_MOVE){
+					  int x=(int)event.getX();  
+		              int y=(int)event.getY();  
+		              int row = (y ) / (gridView.getHeight()/7);	
+		              if (row > 6)
+		            	  row = 6;
+		              int col =  x  / (gridView.getWidth()/4);
+		              Log.d("test", "width|" + gridView.getWidth() + "|height|" + gridView.getHeight());
+		              //Log.d("x-value",""+x);  
+		              lastPos = TextAdapter.matrix[row][col];
+		             // gridView.setSelection(lastPos);
+						gridView.requestFocusFromTouch();
+						gridView.setSelection(lastPos);
+						srate = TextAdapter.mTemporary[lastPos];
+						text_on_top.setVisibility(View.VISIBLE);
+						text_on_top.setText(srate);
+//						srate = TextAdapter.mTemporary[lastPos];
+//				         for (int i=0; i<TextAdapter.arrayrate.length; i++)
+//				     	{
+//				     		if (TextAdapter.arrayrate[i].equalsIgnoreCase(srate))
+//				     		{
+//				     			float step = (float)5/120;
+//				     			rate = i;
+//				     			//playMusic();
+//				     			playMediaPlayer();
+//				     			//setbuttonrate(srate);
+//				 				break;
+//				     		}
+//				     	}
 					 
 			            return true;
-			        }
+			        } else if(event.getAction() == MotionEvent.ACTION_DOWN){
+						  int x=(int)event.getX();  
+			              int y=(int)event.getY();  
+			              int row = (y ) / (gridView.getHeight()/7);	
+			              if (row > 6)
+			            	  row = 6;
+			              int col =  x  / (gridView.getWidth()/4);
+			              //Log.d("x-value",""+x);  
+			              //Log.d("Y-value",""+y);
+			             
+			              lastPos = TextAdapter.matrix[row][col];
+			              //gridView.setSelection(lastPos);
+							gridView.requestFocusFromTouch();
+							gridView.setSelection(lastPos);
+							srate = TextAdapter.mTemporary[lastPos];
+							text_on_top.setVisibility(View.VISIBLE);
+							text_on_top.setText(srate);
+							Log.d("test", "width|" + gridView.getWidth() + "|height|" + gridView.getHeight());
+				            return true;
+				        } 
+				 else if (event.getAction() == MotionEvent.ACTION_UP) {  
+		            	  gridView.setSelection(lastPos);
+							gridView.requestFocusFromTouch();
+							gridView.setSelection(lastPos);
+							srate = TextAdapter.mTemporary[lastPos];
+							text_on_top.setVisibility(View.GONE);
+							setbuttonrate(srate);
+							if (bplay){
+							
+					         for (int i=0; i<TextAdapter.arrayrate.length; i++)
+					     	{
+					     		if (TextAdapter.arrayrate[i].equalsIgnoreCase(srate))
+					     		{
+					     			rate = i;
+					     			//playMusic();
+					     			playMediaPlayer();
+					     			
+					 				break;
+					     		}
+					     	}
+							}
+							return true;
+		              }
 			        return false;
+			        
 //			  int x=(int)event.getX();  
 //              int y=(int)event.getY();  
 //              Log.d("x-value",""+x);  
@@ -388,9 +515,7 @@ public class ListviewLevel2 extends Activity {
 //                  Layout.addView(image, params);  
 //                  System.out.println("start Dragging");  
 //              }  
-//              if (event.getAction() == MotionEvent.ACTION_UP) {  
-//                  //status = STOP_DRAGGING;  
-//                  Log.i("Drag", "Stopped Dragging");  
+              
 //              if (event.getAction() == MotionEvent.ACTION_DOWN) {  
 //                  //if (status == START_DRAGGING) {  
 //                      //TextView txt = (TextView) v;
@@ -406,6 +531,27 @@ public class ListviewLevel2 extends Activity {
 
 		});
 	}
+	private String[] getFolderFile(String folder){
+		 AssetManager assetManager = getAssets();
+		    String[] files = null;
+		    try {
+		        files = assetManager.list("music/" + folder);
+		    } catch (IOException e) {
+		    	return null;
+		    }
+		    return files;
+		} 
+	private String[] getFileName(String folder, String folderfile){
+		 AssetManager assetManager = getAssets();
+		    String[] files = null;
+		    try {
+		        files = assetManager.list("music/" + folder + "/" + folderfile);
+		    } catch (IOException e) {
+		    	return null;
+		    }
+		    return files;
+		} 
+
 	public void loadUI(boolean mode){
 		if (mode){
 			bt_more.setImageResource(R.drawable.edit_button);
@@ -448,18 +594,19 @@ public class ListviewLevel2 extends Activity {
 				}
 			});
 			try {
-				 
+				name_favortie = null;
+				folder_favorite = null;
 				 myDbHelper.openDataBase();
 				 List<Song> songs = myDbHelper.getFavariteSong();
 				 if (songs != null)
 				 {
 				 name_favortie = new String[songs.size()];
-				 id_favorite = new String[songs.size()];
+				 //id_favorite = new String[songs.size()];
 				 folder_favorite = new String[songs.size()];
 				 for(int i=0; i<songs.size(); i++)
 				 {
 					 name_favortie[i] = songs.get(i).getName();
-					 id_favorite[i] = songs.get(i).getID();
+					 //id_favorite[i] = songs.get(i).getID();
 					 folder_favorite[i] = songs.get(i).getFolder();
 				 }
 				 }
@@ -476,15 +623,24 @@ public class ListviewLevel2 extends Activity {
 			for (int i=0; i<name_favortie.length; i++){
 				HashMap<String, String> map = new HashMap<String, String>();
 				map.put(KEY_NAME,name_favortie[i]);
-				map.put(KEY_ID,id_favorite[i]);
+				//map.put(KEY_ID,id_favorite[i]);
 				map.put(KEY_FOLDER,folder_favorite[i]);
 				array_name_favorite.add(map);
 			}
 			
 
 			// Getting adapter
+			
 			adapter_favorite = new FavoritesRowAdapter(this, array_name_favorite);
+			if (adapter_favorite != null){
+				Log.d("test","vao day");
 			lv.setAdapter(adapter_favorite);
+			}
+			else{
+				Log.d("test","vao day 2");
+				lv.removeAllViewsInLayout();
+			}
+			
 			}
 		} else {
 			
@@ -523,28 +679,31 @@ public class ListviewLevel2 extends Activity {
 					startActivity(i);
 				}
 			});
-			 try {
-				 
-				 myDbHelper.openDataBase();
-				 List<Song> songs = myDbHelper.getListSongbyFolder(folder);
-				 name = new String[songs.size()];
-				 id = new String[songs.size()];
-				 for(int i=0; i<songs.size(); i++)
-				 {
-					 name[i] = songs.get(i).getName();
-					 id[i] = songs.get(i).getID();
-				 }
-				  
-				 }catch(SQLException sqle){
-				  
-				 throw sqle;
-				  
-				 }
-			 myDbHelper.close();
+//			 try {
+//				 
+//				 myDbHelper.openDataBase();
+//				 List<Song> songs = myDbHelper.getListSongbyFolder(folder);
+//				 name = new String[songs.size()];
+//				 id = new String[songs.size()];
+//				 for(int i=0; i<songs.size(); i++)
+//				 {
+//					 name[i] = songs.get(i).getName();
+//					 id[i] = songs.get(i).getID();
+//				 }
+//				  
+//				 }catch(SQLException sqle){
+//				  
+//				 throw sqle;
+//				  
+//				 }
+//			 myDbHelper.close();
+			name = getFolderFile(folder);
+			id = name;
 			 array_name = new ArrayList<HashMap<String, String>>();
 				
 				for (int i=0; i<name.length; i++){
 					HashMap<String, String> map = new HashMap<String, String>();
+					map.put(KEY_FOLDER,folder);
 					map.put(KEY_NAME,name[i]);
 					map.put(KEY_ID, id[i]);
 					array_name.add(map);
@@ -553,7 +712,9 @@ public class ListviewLevel2 extends Activity {
 
 				// Getting adapter
 				adapter = new ListviewLevel2RowAdapter(this, array_name);
+				lv.removeAllViewsInLayout();
 				lv.setAdapter(adapter);
+			//	lv.refreshDrawableState();
 			
 		}
 		
@@ -561,11 +722,211 @@ public class ListviewLevel2 extends Activity {
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
+		String gridheight = getResources().getString(R.string.griditemheight);
+		String lastgridheight = getResources().getString(R.string.lasttitemheight);
+		gridView.setAdapter(new TextAdapter(this,Integer.parseInt(gridheight),Integer.parseInt(lastgridheight)));
+		setbuttonrate(srate);
 		loadUI(favorite_mode);
-			setIconPlayButton(SoundpoolState.getState(),SoundpoolState.getplaysong());
+			setIconPlayButton(bplay,mplaysong);
 		super.onResume();
 	}
-	public void playMusic(int postion)
+	public void playMediaPlayer()
+	{
+		if (mp != null){
+			if (mp.isPlaying()){
+				mp.stop();
+				//mp.release();
+				
+			}
+			}
+		else 
+			mp = new MediaPlayer();
+		
+		try {
+			if (favorite_mode){
+			  if (lastPosition >= folder_favorite.length)
+				  lastPosition = 0;
+			  final String filename[] = getFileName(folder_favorite[lastPosition],  name_favortie[lastPosition]);
+			  String precount = filename[lastPosition].substring(filename[lastPosition].length() - 10);
+			  maxCount = preferences.getInt("countoff", 0);
+				if (maxCount > 0 && !bplay){
+				file = getResources().getAssets().openFd("precount/" + precount);
+				mp.reset();
+				mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+				mp.prepare();
+				mp.start();
+				bplay = true;
+				setIconPlayButton(bplay,mplaysong);
+				mp.setOnCompletionListener(new OnCompletionListener(){
+					  int count = 0; // initialize somewhere before, not sure if this will work here
+					  
+
+					  @Override
+					  public void onCompletion(MediaPlayer mediaPlayer) {
+					    if(count < maxCount -1) {
+					      count++;
+					      mediaPlayer.seekTo(0);
+					      mediaPlayer.start();
+					    } else {
+					    	try {
+					    		file = getResources().getAssets().openFd("music/" + folder_favorite[lastPosition] + "/" + name_favortie[lastPosition] + "/" + filename[rate]);
+								  mplaysong = folder_favorite[lastPosition] + " - " + name_favortie[lastPosition];
+								mp.reset();
+								try {
+									mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+									mp.prepare();
+									mp.setLooping(true);
+									mp.start();
+									
+								} catch (IllegalArgumentException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IllegalStateException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
+														
+					    	
+					    }
+					}});
+				} else {
+					file = getResources().getAssets().openFd("music/" + folder_favorite[lastPosition] + "/" + name_favortie[lastPosition] + "/" + filename[rate]);
+					  mplaysong = folder_favorite[lastPosition] + " - " + name_favortie[lastPosition];
+				mp.reset();
+				mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+				mp.prepare();
+				mp.setLooping(true);
+				mp.start();
+				bplay = true;
+				setIconPlayButton(bplay,mplaysong);
+				}
+			  
+			  file = getResources().getAssets().openFd("music/" + folder_favorite[lastPosition] + "/" + name_favortie[lastPosition] + "/" + filename[rate]);
+			  mplaysong = folder_favorite[lastPosition] + " - " + name_favortie[lastPosition];
+			  mp.reset();
+			  mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+			} else {
+				final String filename[] = getFileName(folder,  name[lastPosition]);
+				String precount = filename[lastPosition].substring(filename[lastPosition].length() - 10);
+				maxCount = preferences.getInt("countoff", 0);
+				if (maxCount > 0 && !bplay){
+				file = getResources().getAssets().openFd("precount/" + precount);
+				mp.reset();
+				mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+				mp.prepare();
+				mp.start();
+				bplay = true;
+				setIconPlayButton(bplay,mplaysong);
+				mp.setOnCompletionListener(new OnCompletionListener(){
+					  int count = 0; // initialize somewhere before, not sure if this will work here
+					  
+
+					  @Override
+					  public void onCompletion(MediaPlayer mediaPlayer) {
+					    if(count < maxCount -1) {
+					      count++;
+					      mediaPlayer.seekTo(0);
+					      mediaPlayer.start();
+					    } else {
+					    	try {
+								file = getResources().getAssets().openFd("music/" + folder + "/" + name[lastPosition] + "/" + filename[rate]);
+								mplaysong = folder + " - " + name[lastPosition];
+								mp.reset();
+								try {
+									mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+									mp.prepare();
+									mp.setLooping(true);
+									mp.start();
+									
+								} catch (IllegalArgumentException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IllegalStateException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
+														
+					    	
+					    }
+					}});
+				} else {
+				file = getResources().getAssets().openFd("music/" + folder + "/" + name[lastPosition] + "/" + filename[rate]);
+				mplaysong = folder + " - " + name[lastPosition];
+				mp.reset();
+				mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+				mp.prepare();
+				mp.setLooping(true);
+				mp.start();
+				bplay = true;
+				setIconPlayButton(bplay,mplaysong);
+				}
+			}
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+//		if (mp.isPlaying())
+//			mp.stop();
+		//mp.se
+		
+		
+	}
+	public static void stopMediaPlayer()
+	{
+		if (mp != null){
+			if (mp.isPlaying()){
+				mp.stop();
+				//mp.release();
+				
+			}
+			}
+		
+		bplay = false;
+		mplaysong = "";
+		setIconPlayButton(false,"");
+	}
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+	}
+	public static void stopAllMedia()
+	{
+		bplay = false;
+		mplaysong = "";
+		srate = "120";
+		setIconPlayButton(false,"");
+		if (mp != null) {
+			if (mp.isPlaying()){
+				mp.stop();
+				mp.release();
+				mp = null;
+				
+			} else 
+				mp.release();
+				mp = null;
+		}
+	}
+	public void playMusic()
 	{
 //		SoundpoolState.setStateList(true);
 //		setIconPlayButton(SoundpoolState.getState());
@@ -573,7 +934,7 @@ public class ListviewLevel2 extends Activity {
 		if (soundPool != null)
 			soundPool.release();
 
-		soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+		soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
 		soundPool
 				.setOnLoadCompleteListener(new OnLoadCompleteListener() {
 
@@ -582,10 +943,10 @@ public class ListviewLevel2 extends Activity {
 							int sampleId, int status) {
 						//loaded = true;
 						//
-						SoundpoolState.setStateList(true);
-						setIconPlayButton(SoundpoolState.getState(),SoundpoolState.getplaysong());
+						bplay = true;
+						setIconPlayButton(true,mplaysong);
 						streamid = soundPool.play(soundID, volume,
-								volume, 1, -1, rate);
+								volume, 1, -1, 1);
 //						Toast.makeText(ListviewLevel2.this,
 //								"Loop forever " + streamid,
 //								Toast.LENGTH_LONG).show();
@@ -593,26 +954,36 @@ public class ListviewLevel2 extends Activity {
 
 					}
 				});
+		
 		if (favorite_mode){
-			int songId = getResources().getIdentifier("song" + id_favorite[postion], "raw", getApplicationContext().getPackageName());
-			SoundpoolState.setplaysong(name_favortie[postion]);
+			int songId = getResources().getIdentifier("song" + id_favorite[lastPosition], "raw", getApplicationContext().getPackageName());
+			mplaysong = folder_favorite[lastPosition] + " - " + name_favortie[lastPosition];
 			soundID = soundPool.load(ListviewLevel2.this,
 				songId, 1);
 		} else {
-			int songId = getResources().getIdentifier("song" + id[postion], "raw", getApplicationContext().getPackageName());
-			SoundpoolState.setplaysong(name[postion]);
-			soundID = soundPool.load(ListviewLevel2.this,
-					songId, 1);
+			AssetFileDescriptor file;
+			try {
+				String filename[] = getFileName(folder,  name[lastPosition]);
+				file = getResources().getAssets().openFd("music/" + folder + "/" + name[lastPosition] + "/" + filename[rate]);
+				mplaysong = folder + " - " + name[lastPosition];
+				soundID = soundPool.load(file, 1);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+//			soundID = soundPool.load(ListviewLevel2.this,
+//					songId, 1);
 		}
 	}
 	
 	public static void stopMusic()
 	{
-		if (SoundpoolState.getStateFav())
-			FavoritesActivity.stopMusic();
-		SoundpoolState.setStateList(false);
-		SoundpoolState.setplaysong("");
-		setIconPlayButton(SoundpoolState.getState(),"");
+//		if (state.getStateFav())
+//			FavoritesActivity.stopMusic();
+		bplay = false;
+		mplaysong = "";
+		setIconPlayButton(false,"");
 		
 		if (soundPool != null)
 			soundPool.release();
@@ -635,12 +1006,23 @@ public class ListviewLevel2 extends Activity {
 	{
 		Random random = new Random();
 		int i =  random.nextInt(26);
-		float step = (float)5/120;
-		rate = (float) (0.5 + i*step);
+		rate = i;
 		srate = TextAdapter.arrayrate[i];
-		if (soundPool != null)
-		soundPool.setRate(streamid, rate);
+		//playMusic();
 		setbuttonrate(srate);
+		boolean brandom = preferences.getBoolean("random", false);
+		if (brandom){
+			if (favorite_mode){
+				lastPosition = random.nextInt(name_favortie.length);
+			} else {
+				lastPosition = random.nextInt(name.length);
+			}
+			playMediaPlayer();
+		} else {
+			playMediaPlayer();
+		}
+		
+		
 	}
 	public void setTemporandomrate()
 	{
@@ -648,7 +1030,7 @@ public class ListviewLevel2 extends Activity {
 		int i =  random.nextInt(26);
 		
 		float step = (float)5/120;
-		rate = (float) (0.5 + i*step);
+		rate = i;
 		
 		srate = TextAdapter.arrayrate[i];
 		//Log.d("test","rate|" +  i + "|" +  rate + "|" + srate);
@@ -665,8 +1047,8 @@ public class ListviewLevel2 extends Activity {
 		gridView.requestFocusFromTouch();
 		gridView.setSelection(lastPos);
 		setbuttonrate(srate);
-		if (soundPool != null)
-		soundPool.setRate(streamid, rate);
+		//playMusic();
+		playMediaPlayer();
 	}
 	public void setbuttonrate(String input)
 	{
@@ -709,34 +1091,34 @@ public class ListviewLevel2 extends Activity {
         }
     }
 	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-			Log.d("test","vao day moi dauafadf");
-			  if (requestCode == REQUEST_TEMPO) {
-
-			     if(resultCode == RESULT_OK){      
-			         srate = data.getStringExtra("result");   
-			         Toast.makeText(this, srate, Toast.LENGTH_LONG).show();
-			         for (int i=0; i<TextAdapter.arrayrate.length; i++)
-			     	{
-			     		if (TextAdapter.arrayrate[i].equalsIgnoreCase(srate))
-			     		{
-			     			rate = (float) (0.5 + i*0.05);
-			     			if (soundPool != null)
-			     			soundPool.setRate(streamid, rate);
-			     			setbuttonrate(srate);
-			 				return;
-			     		}
-			     	}
-			     }
-			     if (resultCode == RESULT_CANCELED) {    
-			         //Write your code on no result return 
-			     }
-			  }
-
-		super.onActivityResult(requestCode, resultCode, data);
-	}
+//	@Override
+//	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//		// TODO Auto-generated method stub
+//			Log.d("test","vao day moi dauafadf");
+//			  if (requestCode == REQUEST_TEMPO) {
+//
+//			     if(resultCode == RESULT_OK){      
+//			         srate = data.getStringExtra("result");   
+//			         Toast.makeText(this, srate, Toast.LENGTH_LONG).show();
+//			         for (int i=0; i<TextAdapter.arrayrate.length; i++)
+//			     	{
+//			     		if (TextAdapter.arrayrate[i].equalsIgnoreCase(srate))
+//			     		{
+//			     			rate = (float) (0.5 + i*0.05);
+//			     			if (soundPool != null)
+//			     			soundPool.setRate(streamid, rate);
+//			     			setbuttonrate(srate);
+//			 				return;
+//			     		}
+//			     	}
+//			     }
+//			     if (resultCode == RESULT_CANCELED) {    
+//			         //Write your code on no result return 
+//			     }
+//			  }
+//
+//		super.onActivityResult(requestCode, resultCode, data);
+//	}
 	private void openRemoveDialog(final int position){
 	  	  AlertDialog.Builder RemoveDialog 
 	  	   = new AlertDialog.Builder(ListviewLevel2.this);
@@ -766,7 +1148,7 @@ public class ListviewLevel2 extends Activity {
       String sid = id[position];
 		DatabaseHandler myDbHelper = new DatabaseHandler(this);
 		myDbHelper.openDataBase();
-		myDbHelper.removefavorite(sid);
+		myDbHelper.removefavorite(folder_favorite[position], name_favortie[position]);
 		myDbHelper.close();
 	}
 	@Override
@@ -780,7 +1162,12 @@ public class ListviewLevel2 extends Activity {
 			super.onBackPressed();
 		}
 	}
-  
+//	@Override
+//	public void finish() {
+//		// TODO Auto-generated method stub
+//		mp.release();
+//		super.finish();
+//	}
 //	private void openQuitDialog(){
 //	  	  AlertDialog.Builder quitDialog 
 //	  	   = new AlertDialog.Builder(ListviewLevel2.this);
@@ -814,5 +1201,10 @@ public class ListviewLevel2 extends Activity {
 //		getMenuInflater().inflate(R.menu.activity_timeline, menu);
 //		return true;
 //	}
+//	@Override
+//	 public void onDestroy(){
+//	 super.onDestroy();
+//	    mp.release();
+//	 }
 
 }

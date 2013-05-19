@@ -83,13 +83,13 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="25dp"
                     android:background="@drawable/btn_tempo"
-                    android:text="150"
+                    android:text="120"
                     android:textColor="@android:color/white" />
 
                 <Button
                     android:id="@+id/bt_play"
                     android:layout_width="120dp"
-                    android:layout_height="70dp"
+                    android:layout_height="60dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/play_button"
@@ -199,21 +199,29 @@
                 android:background="@android:color/transparent"
                 android:src="@drawable/tempo_down" />
         </RelativeLayout>
-
+		<TextView
+		    android:id="@+id/listview2_tempo_text_on_top" 
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="150"
+		    android:textSize="40sp"
+		    android:textColor="@android:color/white"
+		    android:textStyle="bold"
+		    android:visibility="gone"
+		    android:layout_centerInParent="true"/>
         <GridView
             android:id="@+id/listview2_tempo_view_grid_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/listview2_tempo_view_footer"
+            android:layout_width="match_parent"
+            android:layout_height="335dp"
             android:layout_below="@+id/listview2_tempo_view_top"
-            android:columnWidth="75dp"
             android:gravity="center"
             android:horizontalSpacing="4dp"
             android:isScrollContainer="false"
-            android:numColumns="auto_fit"
+            android:numColumns="4"
             android:smoothScrollbar="false"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="4dp" >
+            android:verticalSpacing="4dp" 
+            android:background="@drawable/tempo_grid">
         </GridView>
 
         <LinearLayout
@@ -242,7 +250,7 @@
                 <Button
                     android:id="@+id/listview2_tempo_view_bt_playrate"
                     android:layout_width="120dp"
-                    android:layout_height="70dp"
+                    android:layout_height="60dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/play_button"

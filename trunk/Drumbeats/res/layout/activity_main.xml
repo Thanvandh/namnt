@@ -1,0 +1,303 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_main"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <RelativeLayout
+        android:id="@+id/main_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_header_height"
+        android:background="@drawable/background_main_header" >
+
+        <Button
+            android:id="@+id/main_header_bt_logo"
+            android:layout_width="@dimen/main_header_bt_logo_width"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/main_header_bt_logo_margin_left"
+            android:layout_marginRight="@dimen/main_header_bt_logo_margin_right"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/logo_button"
+            android:textColor="@color/white"
+            android:textSize="@dimen/main_header_bt_logo_text_size" />
+
+        <ImageButton
+            android:id="@+id/main_header_bt_favorites"
+            android:layout_width="@dimen/main_header_bt_button_width"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/main_header_bt_settings"
+            android:background="@android:color/transparent"
+            android:src="@drawable/favoritesbutton_white" />
+
+        <ImageButton
+            android:id="@+id/main_header_bt_settings"
+            android:layout_width="@dimen/main_header_bt_button_width"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/main_header_bt_more_edit"
+            android:background="@android:color/transparent"
+            android:src="@drawable/settingsbutton_white" />
+
+        <ImageButton
+            android:id="@+id/main_header_bt_more_edit"
+            android:layout_width="@dimen/main_header_bt_button_width"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/morebutton_white" />
+    </RelativeLayout>
+	
+    <ListView
+        android:id="@+id/main_body_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/main_body_margin_top"
+        android:layout_above="@+id/main_footer"
+        android:cacheColorHint="#00000000"
+        android:clickable="true" />
+    <com.android.drumbeat.DraggableListView
+        android:id="@+id/main_body_listview_favorite"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/main_body_margin_top"
+        android:layout_above="@+id/main_footer"
+        android:cacheColorHint="#00000000"
+        android:clickable="true" 
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:id="@+id/main_body_more"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/main_body_margin_top"
+        android:visibility="gone" >
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/more"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/main_body_settings"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/main_body_margin_top"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/main_body_settings_text_count_off"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/main_body_settings_text_count_off_margin_left"
+            android:layout_marginTop="@dimen/main_body_settings_text_count_off_margin_top"
+            android:text="@string/main_body_settings_text_count_off"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/main_body_settings_text_count_off_text_size"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:id="@+id/main_body_settings_layout_bt_countoff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/main_body_settings_text_count_off" >
+
+            <Button
+                android:id="@+id/main_body_settings_bt_countoff"
+                android:layout_width="@dimen/main_body_settings_layout_bt_count_off_bt_width"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/main_body_settings_layout_bt_count_off_bt_margin_left_right" />
+
+            <Button
+                android:id="@+id/main_body_settings_bt_onebar"
+                android:layout_width="@dimen/main_body_settings_layout_bt_count_off_bt_width"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+            <Button
+                android:id="@+id/main_body_settings_bt_twobar"
+                android:layout_width="@dimen/main_body_settings_layout_bt_count_off_bt_width"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/main_body_settings_layout_bt_count_off_bt_margin_left_right" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/main_body_settings_text_description_countoff"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/main_body_settings_text_description_countoff_margin_left"
+            android:layout_marginRight="@dimen/main_body_settings_text_description_countoff_margin_right"
+            android:layout_marginTop="@dimen/main_body_settings_text_description_countoff_margin_top"
+            android:text="@string/main_body_settings_text_description_countoff"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/main_body_settings_text_description_countoff_text_size" 
+            android:layout_below="@+id/main_body_settings_layout_bt_countoff"/>
+
+        <TextView
+            android:id="@+id/main_body_settings_text_random_tempo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/main_body_settings_text_random_tempo_margin_left"
+            android:layout_marginTop="@dimen/main_body_settings_text_random_tempo_margin_top"
+            android:text="@string/main_body_settings_text_random_tempo"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/main_body_settings_text_random_tempo_text_size"
+            android:textStyle="bold"
+            android:layout_below="@+id/main_body_settings_text_description_countoff" />
+
+        <RelativeLayout
+            android:id="@+id/main_body_settings_layout_bt_random_tempo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:layout_below="@+id/main_body_settings_text_random_tempo">
+
+            <ToggleButton
+                android:id="@+id/main_body_settings_bt_random_tempo"
+                android:layout_width="@dimen/main_body_settings_layout_bt_random_tempo_bt_width"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/main_body_settings_layout_bt_random_tempo_bt_margin_left_right"
+                android:layout_marginRight="@dimen/main_body_settings_layout_bt_random_tempo_bt_margin_left_right"
+                android:background="@drawable/btn_random_off"
+                android:button="@null"
+                android:textOff=""
+                android:textOn="" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/main_body_settings_text_description_random_tempo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/main_body_settings_text_description_random_tempo_margin_left"
+            android:layout_marginRight="@dimen/main_body_settings_text_description_random_tempo_margin_right"
+            android:layout_marginTop="@dimen/main_body_settings_text_description_random_tempo_margin_top"
+            android:text="@string/main_body_settings_text_description_random_tempo"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/main_body_settings_text_description_random_tempo_text_size"
+            android:layout_below="@+id/main_body_settings_layout_bt_random_tempo" />
+
+        <Button
+            android:id="@+id/main_body_settings_bt_ratethisapp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
+            android:layout_marginRight="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
+            android:background="@drawable/btn_settings_top"
+            android:text="@string/main_body_settings_bt_ratethisapp"
+            android:layout_below="@+id/main_body_settings_text_description_random_tempo" />
+
+        <Button
+            android:id="@+id/main_body_settings_bt_tellafriend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
+            android:layout_marginRight="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
+            android:background="@drawable/btn_settings_mid"
+            android:text="@string/main_body_settings_bt_tellafriend"
+            android:layout_below="@+id/main_body_settings_bt_ratethisapp"  />
+
+        <Button
+            android:id="@+id/main_body_settings_bt_sendfeeback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
+            android:layout_marginRight="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
+            android:background="@drawable/btn_settings_bottom"
+            android:text="@string/main_body_settings_bt_sendfeeback" 
+            android:layout_below="@+id/main_body_settings_bt_tellafriend"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/main_footer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_footer_height"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/background_main_footer_console" 
+        >
+
+        <Button
+            android:id="@+id/main_footer_bt_tempo"
+            android:layout_width="@dimen/main_footer_bt_tempo_width"
+            android:layout_height="@dimen/main_footer_bt_tempo_height"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/main_footer_bt_tempo_margin_left"
+            android:layout_marginTop="@dimen/main_footer_bt_tempo_margin_top"
+            android:background="@drawable/btn_tempo"
+            android:text="120"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/main_footer_bt_play"
+            android:layout_width="@dimen/main_footer_bt_play_width"
+            android:layout_height="@dimen/main_footer_bt_play_height"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/main_footer_bt_play_margin_top"
+            android:background="@drawable/btn_play"
+            android:scaleType="fitXY" />
+
+        <Button
+            android:id="@+id/main_footer_bt_random"
+            android:layout_width="@dimen/main_footer_bt_random_width"
+            android:layout_height="@dimen/main_footer_bt_random_height"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/main_footer_bt_random_margin_right"
+            android:layout_marginTop="@dimen/main_footer_bt_random_margin_top"
+            android:background="@drawable/btn_dice" />
+
+        <ImageButton
+            android:id="@+id/main_footer_volume_down"
+            android:layout_width="@dimen/main_footer_volume_down_width"
+            android:layout_height="@dimen/main_footer_volume_down_height"
+            android:layout_above="@+id/main_footer_song_name"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="@dimen/main_footer_volume_down_margin_bottom"
+            android:layout_marginLeft="@dimen/main_footer_volume_down_margin_left"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/volume_down" />
+
+        <!-- Progress Bar/Seek bar -->
+
+        <SeekBar
+            android:id="@+id/main_footer_volumeProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/main_footer_song_name"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="@dimen/main_footer_volumeProgressBar_margin_bottom"
+            android:layout_marginLeft="@dimen/main_footer_volumeProgressBar_margin_left"
+            android:layout_marginRight="@dimen/main_footer_volumeProgressBar_margin_right"
+            android:paddingLeft="@dimen/main_footer_volumeProgressBar_padding_left"
+            android:paddingRight="@dimen/main_footer_volumeProgressBar_padding_right"
+            android:progressDrawable="@drawable/seekbar_progress"
+            android:thumb="@drawable/seek_handler" />
+
+        <ImageButton
+            android:id="@+id/main_footer_volume_up"
+            android:layout_width="@dimen/main_footer_volume_up_width"
+            android:layout_height="@dimen/main_footer_volume_up_height"
+            android:layout_above="@+id/main_footer_song_name"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/main_footer_volume_up_margin_bottom"
+            android:layout_marginRight="@dimen/main_footer_volume_up_margin_right"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/volume_up" />
+
+        <TextView
+            android:id="@+id/main_footer_song_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="abc" />
+    </RelativeLayout>
+
+</RelativeLayout>
