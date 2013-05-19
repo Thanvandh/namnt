@@ -44,26 +44,26 @@ public class ListviewLevel2RowAdapter extends BaseAdapter {
 		return position;
 	}
 
-	public boolean getfavorite(String id) {
+	public boolean getfavorite(String folder, String file) {
 		boolean res = false;
 		DatabaseHandler myDbHelper = new DatabaseHandler(activity.getApplicationContext());
 		myDbHelper.openDataBase();
-		res = myDbHelper.getfavorite(id);
+		res = myDbHelper.getfavorite(folder, file);
 		myDbHelper.close();
 		return res;
 	}
 
-	public void addfavorite(String id) {
+	public void addfavorite(String folder, String file) {
 		DatabaseHandler myDbHelper = new DatabaseHandler(activity.getApplicationContext());
 		myDbHelper.openDataBase();
-		myDbHelper.addfavorite(id);
+		myDbHelper.addfavorite(folder, file);
 		myDbHelper.close();
 	}
 
-	public void removefavorite(String id) {
+	public void removefavorite(String folder, String file) {
 		DatabaseHandler myDbHelper = new DatabaseHandler(activity.getApplicationContext());
 		myDbHelper.openDataBase();
-		myDbHelper.removefavorite(id);
+		myDbHelper.removefavorite(folder, file);
 		myDbHelper.close();
 	}
 
@@ -80,9 +80,10 @@ public class ListviewLevel2RowAdapter extends BaseAdapter {
 
 		HashMap<String, String> item = new HashMap<String, String>();
 		item = data.get(position);
-		final String id = item.get(ListviewLevel2.KEY_ID);
+		final String folder = item.get(ListviewLevel2.KEY_FOLDER);
+		final String file = item.get(ListviewLevel2.KEY_NAME);
 		final int fposistion = position;
-		favorites[fposistion] = getfavorite(id);
+		favorites[fposistion] = getfavorite(folder, file);
 		if (favorites[position])
 			bt_favorite.setImageResource(R.drawable.fav_star_on);
 		else
@@ -97,12 +98,12 @@ public class ListviewLevel2RowAdapter extends BaseAdapter {
 					bt_favorite.setImageResource(R.drawable.fav_star_off);
 					//bfavorite = false;
 					favorites[fposistion] = false;
-					removefavorite(id);
+					removefavorite(folder, file);
 				} else {
 					bt_favorite.setImageResource(R.drawable.fav_star_on);
 					favorites[fposistion] = true;
 					//bfavorite = true;
-					addfavorite(id);
+					addfavorite(folder, file);
 				}
 			}
 		});

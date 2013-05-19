@@ -71,7 +71,7 @@ public class ActivityStack extends ActivityGroup {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					ListviewLevel2.stopMusic();
-					FavoritesActivity.stopMusic();
+					//FavoritesActivity.stopMusic();
 					finish();
 					
 				}
@@ -96,10 +96,10 @@ public class ActivityStack extends ActivityGroup {
 		  startActivityForResult(i, ListviewLevel2.REQUEST_TEMPO);
 		//super.startActivityFromChild(child, intent, requestCode);
 	}
-	  @Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stu
-		 ListviewLevel2 activity = (ListviewLevel2)getLocalActivityManager().getCurrentActivity();
-		 activity.onActivityResult(requestCode, resultCode, data);
-	}
+//	  @Override
+//	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//		// TODO Auto-generated method stu
+//		 ListviewLevel2 activity = (ListviewLevel2)getLocalActivityManager().getCurrentActivity();
+//		 activity.onActivityResult(requestCode, resultCode, data);
+//	}
 	}

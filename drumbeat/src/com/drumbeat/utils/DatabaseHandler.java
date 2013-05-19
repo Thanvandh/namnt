@@ -39,6 +39,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	private static final String KEY_ID = "id";
 	private static final String KEY_NAME = "name";
 	private static final String KEY_FOLDER = "folder";
+	private static final String KEY_FILE = "file";
 
 	public DatabaseHandler(Context context) {
 		super(context, DB_NAME, null, DATABASE_VERSION);
@@ -153,7 +154,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// Drop older table if existed
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_SONGS);
+		//db.execSQL("DROP TABLE IF EXISTS " + TABLE_SONGS);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVORITES);
 
 		// Create tables again
@@ -176,25 +177,28 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 //		db.insert(TABLE_CONTACTS, null, values);
 //		db.close(); // Closing database connection
 //	}
-	public void addfavorite(String id)
+	public void addfavorite(String folder, String file)
 	{
 		ContentValues values = new ContentValues();
-		values.put(KEY_ID, id); // Contact Name
+		values.put(KEY_FOLDER, folder); 
+		values.put(KEY_FILE, file);
 //		values.put(KEY_PH_NO, contact.getPhoneNumber()); // Contact Phone
 		myDataBase.insert(TABLE_FAVORITES, null, values);
 	}
-	public void removefavorite(String id)
+	public void removefavorite(String folder, String file)
 	{
 		ContentValues values = new ContentValues();
-		values.put(KEY_ID, id); // Contact Name
+		//values.put(KEY_ID, id); // Contact Name
 //		values.put(KEY_PH_NO, contact.getPhoneNumber()); // Contact Phone
-		myDataBase.delete(TABLE_FAVORITES, KEY_ID + " = ?",
-				new String[] { id });
+		myDataBase.delete(TABLE_FAVORITES, KEY_FOLDER + " = ? and " + KEY_FILE + " = ?",
+				new String[] {folder, file });
 	}
-	public boolean getfavorite(String id)
+	public boolean getfavorite(String folder, String file)
 	{
-		Cursor cursor = myDataBase.query(TABLE_FAVORITES, new String[] { KEY_ID}, KEY_ID + "=?",
-				new String[] { String.valueOf(id) }, null, null, null, null);
+	//	String selectQuery = "select * from Favorites where folder ='" + folder + "' and file ='" + file + "'";
+	//	Cursor cursor = myDataBase.rawQuery(selectQuery, null);
+		Cursor cursor = myDataBase.query(TABLE_FAVORITES, new String[] { KEY_FOLDER, KEY_FILE}, KEY_FOLDER + " = ? and " + KEY_FILE + " = ?",
+				new String[] { folder, file }, null, null, null, null);
 		if (cursor != null)
 		{
 			if (cursor.getCount()>0)
@@ -223,7 +227,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public List<Song> getFavariteSong() {
 		//SQLiteDatabase db = this.getReadableDatabase();
 		List<Song> songList = new ArrayList<Song>();
-		String selectQuery = "select Songs.id, Songs.name, Songs.folder from Songs, Favorites where Songs.id = Favorites.id";
+		String selectQuery = "select folder, file from Favorites";
 		Cursor cursor = myDataBase.rawQuery(selectQuery, null);
 		if (cursor != null)
 		{
@@ -232,9 +236,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				if (cursor.moveToFirst()) {
 					do {
 						Song song = new Song();
-						song.setID(cursor.getString(0));
+						song.setID("1");
 						song.setName(cursor.getString(1));
-						song.setFolder(cursor.getString(2));
+						song.setFolder(cursor.getString(0));
 						songList.add(song);
 						
 					} while (cursor.moveToNext());

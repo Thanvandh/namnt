@@ -95,7 +95,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
   <ToggleButton
-        android:id="@+id/toggleButton1"
+        android:id="@+id/toggleButton_random"
         android:layout_width="290dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

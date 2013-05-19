@@ -2,29 +2,37 @@ package com.drumbeat.app;
 
 public class SoundpoolState {
 
-	static boolean bplaylist = false;
-	static boolean bplayfav = false;
-	static String playsong = "";
-	public static void setStateList(boolean b){
-		bplaylist = b;
+	boolean bplay = false;
+	String playsong = "";
+	String srate = "120";
+	public SoundpoolState() {
+		// TODO Auto-generated constructor stub
+		bplay = false;
+		playsong = "";
+		srate = "120";
 	}
-	public static boolean getStateList(){
-		return bplaylist;
+	@Override
+	protected void finalize() throws Throwable {
+		// TODO Auto-generated method stub
+		super.finalize();
 	}
-	public static void setStateFav(boolean b){
-		bplayfav = b;
+	public  void setState(boolean b){
+		bplay = b;
 	}
-	public static boolean getStateFav(){
-		return bplayfav;
+	public  boolean getState(){
+		return bplay;
 	}
-	public static boolean getState(){
-		boolean res = bplayfav || bplaylist;
-		return res;
-	}
-	public static void setplaysong(String song){
+
+	public void setplaysong(String song){
 		playsong = song;
 	}
-	public static String getplaysong(){
+	public String getplaysong(){
 		return playsong;
+	}
+	public void setrate(String rate){
+		srate = rate;
+	}
+	public String getrate(){
+		return srate;
 	}
 }

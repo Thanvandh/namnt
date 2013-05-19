@@ -54,8 +54,8 @@ public class FavoritesRowAdapter extends BaseAdapter {
 	        item = data.get(position);
 	        
 	        //Setting all values in listview
-	        name.setText(item.get(FavoritesActivity.KEY_NAME));
-	        folder.setText(item.get(FavoritesActivity.KEY_FOLDER));
+	        name.setText(item.get(ListviewLevel2.KEY_NAME));
+	        folder.setText(item.get(ListviewLevel2.KEY_FOLDER));
 	        
 	        return vi;
 	    }

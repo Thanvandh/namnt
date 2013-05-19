@@ -66,7 +66,7 @@ public class TempoActivity extends Activity {
 		
 		// Instance of ImageAdapter Class
 		//gridView.setAdapter(new ImageAdapter(this));
-		gridView.setAdapter(new TextAdapter(this));
+		//gridView.setAdapter(new TextAdapter(this));
 		//gridView.setDrawSelectorOnTop(true);
 		
 		gridView.setSelected(true);
