@@ -20,5 +20,10 @@
     <string name="main_body_settings_bt_ratethisapp">Rate this Apllication</string>
     <string name="main_body_settings_bt_tellafriend">Tell a Friend</string>
     <string name="main_body_settings_bt_sendfeeback">Send Feedback</string>
+    
+    <string name="tempo_view_header_text">Tempo</string>
+    
+    <string name="string_default_rate">120</string>
+    <string name="string_default_item_selected">13</string>
 
 </resources>

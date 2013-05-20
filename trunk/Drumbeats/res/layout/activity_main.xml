@@ -232,7 +232,7 @@
             android:layout_marginLeft="@dimen/main_footer_bt_tempo_margin_left"
             android:layout_marginTop="@dimen/main_footer_bt_tempo_margin_top"
             android:background="@drawable/btn_tempo"
-            android:text="120"
+            android:text="@string/string_default_rate"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
 
@@ -302,7 +302,115 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:text="abc" />
+            android:layout_marginBottom="@dimen/main_footer_song_name_margin_bottom" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/tempo_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone">
+
+        <!-- ListRow Left sied Thumbnail image -->
+
+        <RelativeLayout
+            android:id="@+id/tempo_view_header"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_header_height"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/background_main_header" >
+
+            <TextView
+                android:id="@+id/tempo_view_header_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/tempo_view_header_text"
+                android:textColor="@color/white"
+                android:textSize="@dimen/tempo_view_header_text_text_size" />
+
+            <ImageButton
+                android:id="@+id/tempo_view_header_increase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/tempo_view_header_increase_margin_left"
+                android:layout_toRightOf="@+id/tempo_view_header_text"
+                android:background="@android:color/transparent"
+                android:src="@drawable/btn_tempo_up" />
+
+            <ImageButton
+                android:id="@+id/tempo_view_header_decrease"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/tempo_view_header_decrease_margin_right"
+                android:layout_toLeftOf="@+id/tempo_view_header_text"
+                android:background="@android:color/transparent"
+                android:src="@drawable/btn_tempo_down" />
+        </RelativeLayout>
+		
+        <GridView
+            android:id="@+id/tempo_view_grid_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tempo_view_grid_view_height"
+        	android:layout_marginTop="@dimen/main_body_margin_top"
+            android:gravity="center"
+            android:horizontalSpacing="@dimen/tempo_view_grid_view_horizontalSpacing"
+            android:isScrollContainer="false"
+            android:numColumns="4"
+            android:smoothScrollbar="false"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="@dimen/tempo_view_grid_view_verticalSpacing" 
+            android:background="@drawable/tempo_grid"
+            android:listSelector="@drawable/grid_selector">
+        </GridView>
+
+
+            <RelativeLayout
+                android:id="@+id/tempo_view_footer"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/tempo_view_footer_height"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/background_tempo_footer" >
+
+                <Button
+                    android:id="@+id/tempo_view_footer_bt_done"
+                    android:layout_width="@dimen/tempo_view_footer_bt_done_width"
+                    android:layout_height="@dimen/tempo_view_footer_bt_done_height"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/tempo_view_footer_bt_done_margin_left"
+                    android:layout_marginTop="@dimen/tempo_view_footer_bt_done_margin_top"
+                    android:background="@drawable/done_button"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/tempo_view_footer_bt_playrate"
+                    android:layout_width="@dimen/tempo_view_footer_bt_playrate_width"
+                    android:layout_height="@dimen/tempo_view_footer_bt_playrate_height"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/tempo_view_footer_bt_playrate_margin_top"
+                    android:background="@drawable/btn_play"
+                    android:scaleType="fitXY" />
+
+                <Button
+                    android:id="@+id/tempo_view_footer_bt_randomrate"
+                    android:layout_width="@dimen/tempo_view_footer_bt_randomrate_width"
+                    android:layout_height="@dimen/tempo_view_footer_bt_randomrate_height"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/tempo_view_footer_bt_randomrate_margin_right"
+                    android:layout_marginTop="@dimen/tempo_view_footer_bt_randomrate_margin_top"
+                    android:background="@drawable/btn_dice" />
+            </RelativeLayout>
+        <TextView
+		    android:id="@+id/tempo_view_text_on_top" 
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:textSize="@dimen/tempo_view_text_on_top_text_size"
+		    android:textColor="@android:color/white"
+		    android:textStyle="bold"
+		    android:layout_centerInParent="true"
+		    android:visibility="gone"/>
     </RelativeLayout>
 
 </RelativeLayout>
