@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import com.android.drumbeat.utils.DatabaseHandler;
 import com.android.drumbeat.utils.Song;
 
 
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.Activity;
@@ -30,15 +32,20 @@ import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 public class MainActivity extends Activity {
 
+	RelativeLayout main_header;
 	ImageButton bt_settings;
 	ImageButton bt_more;
 	ImageButton bt_favorite;
@@ -48,6 +55,7 @@ public class MainActivity extends Activity {
 	final int state_main_body_favorite = 3;
 	final int state_main_body_settings = 4;
 	final int state_main_body_more = 5;
+	
 	int state_main_body = state_main_body_home;
 	static String KEY_FOLDER = "folder";
 	static String KEY_NAME = "name";
@@ -56,9 +64,28 @@ public class MainActivity extends Activity {
 	RelativeLayout main_body_settings;
 	RelativeLayout main_body_more;
 	DraggableListView main_body_favorite;
-
+	
+	//main footer
 	RelativeLayout main_footer;
-
+	Button bt_tempo;
+	Button bt_random_console;
+	Button bt_play;
+	SeekBar volumeProgress;
+	TextView playsong;
+	
+	//tempo view
+	RelativeLayout tempo_view;
+	Button bt_tempo_view_done;
+	Button bt_tempo_view_play;
+	Button bt_tempo_view_random;
+	GridView tempo_view_grid;
+	int lastPos;
+	int item_selected;
+	String srate;
+	TextView tempo_view_text_on_top;
+	ImageButton bt_tempo_up;
+	ImageButton bt_tempo_down;
+	
 	// settings body
 	Button bt_countoff_off;
 	Button bt_countoff_onebar;
@@ -79,6 +106,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		main_header = (RelativeLayout) findViewById(R.id.main_header);
 		bt_settings = (ImageButton) findViewById(R.id.main_header_bt_settings);
 		bt_favorite = (ImageButton) findViewById(R.id.main_header_bt_favorites);
 		bt_more = (ImageButton) findViewById(R.id.main_header_bt_more_edit);
@@ -89,8 +117,245 @@ public class MainActivity extends Activity {
 		main_body_more = (RelativeLayout) findViewById(R.id.main_body_more);
 		main_body_favorite = (DraggableListView) findViewById(R.id.main_body_listview_favorite);
 
+		// main footer
+		srate = getResources().getString(R.string.string_default_rate);
 		main_footer = (RelativeLayout) findViewById(R.id.main_footer);
+		bt_play = (Button) findViewById(R.id.main_footer_bt_play);
+		bt_random_console = (Button) findViewById(R.id.main_footer_bt_random);
+		bt_tempo = (Button) findViewById(R.id.main_footer_bt_tempo);
+		playsong = (TextView) findViewById(R.id.main_footer_song_name);
+		
+		bt_tempo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				showTempoView();
+				
+			}
+		});
+		
+		//tempo view
+		tempo_view = (RelativeLayout) findViewById(R.id.tempo_view);
+		bt_tempo_view_done = (Button) findViewById(R.id.tempo_view_footer_bt_done);
+		bt_tempo_view_play = (Button) findViewById(R.id.tempo_view_footer_bt_playrate);
+		bt_tempo_view_random = (Button) findViewById(R.id.tempo_view_footer_bt_randomrate);
+		tempo_view_grid = (GridView) findViewById(R.id.tempo_view_grid_view);
+		tempo_view_text_on_top = (TextView) findViewById(R.id.tempo_view_text_on_top);
+		
+		bt_tempo_down = (ImageButton) findViewById(R.id.tempo_view_header_decrease);
+		bt_tempo_up = (ImageButton) findViewById(R.id.tempo_view_header_increase);
+		
+		bt_tempo_down.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Log.d("test", "selecteddown|" + item_selected);
+				if (item_selected != 24){
+				tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_grid_selector);
+				int number = 0;
+				for (int i= 0; i<TextAdapter.arrayrate.length; i++){
+			 		if(srate == TextAdapter.arrayrate[i]){
+			 			number = i;
+			 			break;
+			 		}
+			 	}
+				srate = TextAdapter.arrayrate[number-1];
+			 	Log.d("test", "selecteddownrate|" + srate);
+			 	for (int i= 0; i<TextAdapter.mTemporary.length; i++){
+			 		if(srate == TextAdapter.mTemporary[i]){
+			 			item_selected = i;
+			 			break;
+			 		}
+			 	}
+			 	Log.d("test", "selecteddown|" + item_selected);
+			 	tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_press);
+			 	
+			 	
+			 	if (item_selected == 24){
+			 		bt_tempo_down.setEnabled(false);
+			 		bt_tempo_up.setEnabled(true);
+			 	} else if (item_selected == 3)
+			 	{
+			 		bt_tempo_down.setEnabled(true);
+			 		bt_tempo_up.setEnabled(false);
+			 	}						 		
+			 	else{
+			 		bt_tempo_down.setEnabled(true);
+			 		bt_tempo_up.setEnabled(true);
+			 	}
+				} 
+				
+				
+			}
+		});
+		bt_tempo_up.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Log.d("test", "selectedup|" + item_selected);
+				if (item_selected != 3){
+				tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_grid_selector);
+				int number = 0;
+				for (int i= 0; i<TextAdapter.arrayrate.length; i++){
+			 		if(srate == TextAdapter.arrayrate[i]){
+			 			number = i;
+			 			break;
+			 		}
+			 	}
+				srate = TextAdapter.arrayrate[number+1];
+			 	Log.d("test", "selecteduprate|" + srate);
+			 	for (int i= 0; i<TextAdapter.mTemporary.length; i++){
+			 		if(srate == TextAdapter.mTemporary[i]){
+			 			item_selected = i;
+			 			break;
+			 		}
+			 	}
+			 	Log.d("test", "selectedup|" + item_selected);
+			 	tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_press);
+			 	if (item_selected == 24){
+			 		bt_tempo_down.setEnabled(false);
+			 		bt_tempo_up.setEnabled(true);
+			 	} else if (item_selected == 3)
+			 	{
+			 		bt_tempo_down.setEnabled(true);
+			 		bt_tempo_up.setEnabled(false);
+			 	}						 		
+			 	else{
+			 		bt_tempo_down.setEnabled(true);
+			 		bt_tempo_up.setEnabled(true);
+			 	}
+				} 
+				
+				
+			}
+		});
+		
+		bt_tempo_view_random.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Random random = new Random();
+				int j =  random.nextInt(26);
+				srate = TextAdapter.arrayrate[j];
+				tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_grid_selector);
+				//Log.d("test","rate|" +  i + "|" +  rate + "|" + srate);
+				for (int i= 0; i<TextAdapter.mTemporary.length; i++){
+			 		if(srate == TextAdapter.mTemporary[i]){
+			 			item_selected = i;
+			 			break;
+			 		}
+			 	}
+				tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_press);
+				if (item_selected == 24){
+			 		bt_tempo_down.setEnabled(false);
+			 		bt_tempo_up.setEnabled(true);
+			 	} else if (item_selected == 3)
+			 	{
+			 		bt_tempo_down.setEnabled(true);
+			 		bt_tempo_up.setEnabled(false);
+			 	}						 		
+			 	else{
+			 		bt_tempo_down.setEnabled(true);
+			 		bt_tempo_up.setEnabled(true);
+			 	}
+				
+			}
+		});
+		
+		bt_tempo_view_done.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				tempo_view.setVisibility(View.GONE);
+				main_header.setVisibility(View.VISIBLE);
+				showMainBody(state_main_body);
+				setRate();
+			}
+		});
+		
+		int gridheight = getResources().getDimensionPixelSize(R.dimen.tempo_view_grid_item_height);
+		int lastgridheight = getResources().getDimensionPixelSize(R.dimen.tempo_view_grid_item_height);
+		item_selected = Integer.valueOf(getResources().getString(R.string.string_default_item_selected));
+		tempo_view_grid.setAdapter(new TextAdapter(this,gridheight,lastgridheight,item_selected));
+		
+		
+		tempo_view_grid.setOnTouchListener(new OnTouchListener(){
 
+			@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					// TODO Auto-generated method stub
+					 if(event.getAction() == MotionEvent.ACTION_MOVE){
+						  int x=(int)event.getX();  
+			              int y=(int)event.getY();  
+			              int row = (y ) / (tempo_view_grid.getHeight()/7);	
+			              if (row > 6)
+			            	  row = 6;
+			              int col =  x  / (tempo_view_grid.getWidth()/4);
+			              //Log.d("test", "width|" + tempo_view_grid.getWidth() + "|height|" + tempo_view_grid.getHeight());
+			              //Log.d("x-value",""+x);  
+			              lastPos = TextAdapter.matrix[row][col];
+			              tempo_view_grid.requestFocusFromTouch();
+			              tempo_view_grid.setSelection(lastPos);
+			              //tempo_view_grid.setSelection(lastPos);
+						  srate = TextAdapter.mTemporary[lastPos];
+						tempo_view_text_on_top.setVisibility(View.VISIBLE);
+							tempo_view_text_on_top.setText(srate);
+				            return true;
+				        } else if(event.getAction() == MotionEvent.ACTION_DOWN){
+							  int x=(int)event.getX();  
+				              int y=(int)event.getY();  
+				              int row = (y ) / (tempo_view_grid.getHeight()/7);	
+				              if (row > 6)
+				            	  row = 6;
+				              int col =  x  / (tempo_view_grid.getWidth()/4);
+				              //Log.d("x-value",""+x);  
+				              //Log.d("Y-value",""+y);
+				             
+				              lastPos = TextAdapter.matrix[row][col];
+				              //gridView.setSelection(lastPos);
+				              
+				              tempo_view_grid.requestFocusFromTouch();
+				              tempo_view_grid.setSelection(lastPos);
+				              srate = TextAdapter.mTemporary[lastPos];
+				              tempo_view_text_on_top.setVisibility(View.VISIBLE);
+				              tempo_view_text_on_top.setText(srate);
+							
+					            return true;
+					        } 
+					 else if (event.getAction() == MotionEvent.ACTION_UP) {  
+//						 	tempo_view_grid.setSelection(lastPos);
+//						 	tempo_view_grid.requestFocusFromTouch();
+						 	//tempo_view_grid.getChildAt(pos).setBackgroundResource(R.drawable.item_press);
+						 	tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_grid_selector);
+						 	item_selected = lastPos;
+						 	tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_press);
+						 	if (item_selected == 24){
+						 		bt_tempo_down.setEnabled(false);
+						 		bt_tempo_up.setEnabled(true);
+						 	} else if (item_selected == 3)
+						 	{
+						 		bt_tempo_down.setEnabled(true);
+						 		bt_tempo_up.setEnabled(false);
+						 	}						 		
+						 	else{
+						 		bt_tempo_down.setEnabled(true);
+						 		bt_tempo_up.setEnabled(true);
+						 	}
+							//srate = TextAdapter.mTemporary[lastPos];
+							tempo_view_text_on_top.setVisibility(View.GONE);
+
+								return true;
+			              }
+				        return false;
+				}
+
+			});
+		
 		// settings body
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		
@@ -197,6 +462,8 @@ public class MainActivity extends Activity {
 		});
 
 		showMainBody(state_main_body);
+		setRate();
+		initControlsvolume();
 
 	}
 
@@ -218,6 +485,45 @@ public class MainActivity extends Activity {
 			break;
 		}
 	}
+	public void setRate(){
+		bt_tempo.setText(srate);
+	}
+	private void initControlsvolume()
+    {
+        try
+        {
+        	final AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+        	volumeProgress.setMax(audioManager
+                    .getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+        	volumeProgress.setProgress(audioManager
+                    .getStreamVolume(AudioManager.STREAM_MUSIC));   
+
+
+        	volumeProgress.setOnSeekBarChangeListener(new OnSeekBarChangeListener() 
+            {
+                @Override
+                public void onStopTrackingTouch(SeekBar arg0) 
+                {
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar arg0) 
+                {
+                }
+
+                @Override
+                public void onProgressChanged(SeekBar arg0, int progress, boolean arg2) 
+                {
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
+                            progress, 0);
+                }
+            });
+        }
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+        }
+    }
 
 	public void showMainBodyHome() {
 		bt_settings.setImageResource(R.drawable.settingsbutton_white);
@@ -571,6 +877,18 @@ public class MainActivity extends Activity {
 		main_footer.setVisibility(View.GONE);
 		main_body_more.setVisibility(View.VISIBLE);
 
+	}
+	
+	public void showTempoView() {
+	
+		main_header.setVisibility(View.GONE);
+		main_body_list.setVisibility(View.GONE);
+		main_body_settings.setVisibility(View.GONE);
+		main_body_favorite.setVisibility(View.GONE);
+		main_footer.setVisibility(View.GONE);
+		main_body_more.setVisibility(View.GONE);
+		tempo_view.setVisibility(View.VISIBLE);
+		
 	}
 
 	@Override

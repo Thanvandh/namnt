@@ -45,6 +45,8 @@
     <dimen name="main_footer_volumeProgressBar_padding_left">15dp</dimen>
     <dimen name="main_footer_volumeProgressBar_padding_right">15dp</dimen>
     
+    <dimen name="main_footer_song_name_margin_bottom">5dp</dimen>
+    
     <dimen name="main_body_margin_top">57dp</dimen>
     
     <dimen name="main_body_settings_text_count_off_margin_left">15dp</dimen>
@@ -104,5 +106,34 @@
     <dimen name="row_main_body_list_favorite_file_bt_sort_width">40dp</dimen>
     <dimen name="row_main_body_list_favorite_file_bt_sort_height">40dp</dimen>
     <dimen name="row_main_body_list_favorite_file_bt_sort_margin_right">5dp</dimen>
+    
+    <dimen name="tempo_view_header_text_text_size">24sp</dimen>
+    <dimen name="tempo_view_header_increase_margin_left">30dp</dimen>
+    <dimen name="tempo_view_header_decrease_margin_right">30dp</dimen>
+    
+    <dimen name="tempo_view_grid_view_height">350dp</dimen>
+    <dimen name="tempo_view_grid_view_horizontalSpacing">0dp</dimen>
+    <dimen name="tempo_view_grid_view_verticalSpacing">0dp</dimen>
+    
+    <dimen name="tempo_view_footer_height">97dp</dimen>
+    
+    <dimen name="tempo_view_footer_bt_done_width">80dp</dimen>
+    <dimen name="tempo_view_footer_bt_done_height">45dp</dimen>
+    <dimen name="tempo_view_footer_bt_done_margin_left">10dp</dimen>
+    <dimen name="tempo_view_footer_bt_done_margin_top">25dp</dimen>
+    
+    <dimen name="tempo_view_footer_bt_playrate_width">120dp</dimen>
+    <dimen name="tempo_view_footer_bt_playrate_height">60dp</dimen>
+    <dimen name="tempo_view_footer_bt_playrate_margin_top">20dp</dimen>
+    
+    <dimen name="tempo_view_footer_bt_randomrate_width">80dp</dimen>
+    <dimen name="tempo_view_footer_bt_randomrate_height">45dp</dimen>
+    <dimen name="tempo_view_footer_bt_randomrate_margin_right">10dp</dimen>
+    <dimen name="tempo_view_footer_bt_randomrate_margin_top">25dp</dimen>
+    
+    <dimen name="tempo_view_text_on_top_text_size">60sp</dimen>
+    
+    <dimen name="tempo_view_grid_item_height">75px</dimen>
+    <dimen name="tempo_view_grid_last_item_height">70px</dimen>
     
 </resources>
