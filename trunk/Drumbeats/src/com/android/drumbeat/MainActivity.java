@@ -11,6 +11,8 @@ import com.android.drumbeat.utils.Song;
 
 
 import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.Activity;
@@ -890,14 +892,175 @@ public class MainActivity extends Activity {
 		tempo_view.setVisibility(View.VISIBLE);
 		
 	}
+	
+//	public void playMediaPlayer()
+//	{
+//		if (mp != null){
+//			if (mp.isPlaying()){
+//				mp.stop();
+//				//mp.release();
+//				
+//			}
+//			}
+//		else 
+//			mp = new MediaPlayer();
+//		
+//		try {
+//			if (favorite_mode){
+//			  if (lastPosition >= folder_favorite.length)
+//				  lastPosition = 0;
+//			  final String filename[] = getFileName(folder_favorite[lastPosition],  name_favortie[lastPosition]);
+//			  String precount = filename[lastPosition].substring(filename[lastPosition].length() - 10);
+//			  maxCount = preferences.getInt("countoff", 0);
+//				if (maxCount > 0 && !bplay){
+//				file = getResources().getAssets().openFd("precount/" + precount);
+//				mp.reset();
+//				mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+//				mp.prepare();
+//				mp.start();
+//				bplay = true;
+//				setIconPlayButton(bplay,mplaysong);
+//				mp.setOnCompletionListener(new OnCompletionListener(){
+//					  int count = 0; // initialize somewhere before, not sure if this will work here
+//					  
+//
+//					  @Override
+//					  public void onCompletion(MediaPlayer mediaPlayer) {
+//					    if(count < maxCount -1) {
+//					      count++;
+//					      mediaPlayer.seekTo(0);
+//					      mediaPlayer.start();
+//					    } else {
+//					    	try {
+//					    		file = getResources().getAssets().openFd("music/" + folder_favorite[lastPosition] + "/" + name_favortie[lastPosition] + "/" + filename[rate]);
+//								  mplaysong = folder_favorite[lastPosition] + " - " + name_favortie[lastPosition];
+//								mp.reset();
+//								try {
+//									mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+//									mp.prepare();
+//									mp.setLooping(true);
+//									mp.start();
+//									
+//								} catch (IllegalArgumentException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								} catch (IllegalStateException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								} catch (IOException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								}
+//							} catch (IOException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+//							
+//														
+//					    	
+//					    }
+//					}});
+//				} else {
+//					file = getResources().getAssets().openFd("music/" + folder_favorite[lastPosition] + "/" + name_favortie[lastPosition] + "/" + filename[rate]);
+//					  mplaysong = folder_favorite[lastPosition] + " - " + name_favortie[lastPosition];
+//				mp.reset();
+//				mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+//				mp.prepare();
+//				mp.setLooping(true);
+//				mp.start();
+//				bplay = true;
+//				setIconPlayButton(bplay,mplaysong);
+//				}
+//			  
+//			  file = getResources().getAssets().openFd("music/" + folder_favorite[lastPosition] + "/" + name_favortie[lastPosition] + "/" + filename[rate]);
+//			  mplaysong = folder_favorite[lastPosition] + " - " + name_favortie[lastPosition];
+//			  mp.reset();
+//			  mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+//			} else {
+//				final String filename[] = getFileName(folder,  name[lastPosition]);
+//				String precount = filename[lastPosition].substring(filename[lastPosition].length() - 10);
+//				maxCount = preferences.getInt("countoff", 0);
+//				if (maxCount > 0 && !bplay){
+//				file = getResources().getAssets().openFd("precount/" + precount);
+//				mp.reset();
+//				mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+//				mp.prepare();
+//				mp.start();
+//				bplay = true;
+//				setIconPlayButton(bplay,mplaysong);
+//				mp.setOnCompletionListener(new OnCompletionListener(){
+//					  int count = 0; // initialize somewhere before, not sure if this will work here
+//					  
+//
+//					  @Override
+//					  public void onCompletion(MediaPlayer mediaPlayer) {
+//					    if(count < maxCount -1) {
+//					      count++;
+//					      mediaPlayer.seekTo(0);
+//					      mediaPlayer.start();
+//					    } else {
+//					    	try {
+//								file = getResources().getAssets().openFd("music/" + folder + "/" + name[lastPosition] + "/" + filename[rate]);
+//								mplaysong = folder + " - " + name[lastPosition];
+//								mp.reset();
+//								try {
+//									mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+//									mp.prepare();
+//									mp.setLooping(true);
+//									mp.start();
+//									
+//								} catch (IllegalArgumentException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								} catch (IllegalStateException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								} catch (IOException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								}
+//							} catch (IOException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+//							
+//														
+//					    	
+//					    }
+//					}});
+//				} else {
+//				file = getResources().getAssets().openFd("music/" + folder + "/" + name[lastPosition] + "/" + filename[rate]);
+//				mplaysong = folder + " - " + name[lastPosition];
+//				mp.reset();
+//				mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+//				mp.prepare();
+//				mp.setLooping(true);
+//				mp.start();
+//				bplay = true;
+//				setIconPlayButton(bplay,mplaysong);
+//				}
+//			}
+//			
+//			
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+////		if (mp.isPlaying())
+////			mp.stop();
+//		//mp.se
+//		
+//		
+//	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		// Inflate the menu; this adds items to the action bar if it is present.
+//		getMenuInflater().inflate(R.menu.main, menu);
+//		return true;
+//	}
+//
 
 
 }
