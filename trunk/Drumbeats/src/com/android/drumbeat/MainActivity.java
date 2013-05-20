@@ -533,6 +533,7 @@ public class MainActivity extends Activity {
 		bt_more.setImageResource(R.drawable.morebutton_white);
 		bt_back.setCompoundDrawablesWithIntrinsicBounds(this.getResources()
 				.getDrawable(R.drawable.logo_button), null, null, null);
+		bt_back.setText("");
 
 		main_body_settings.setVisibility(View.GONE);
 		main_body_more.setVisibility(View.GONE);
