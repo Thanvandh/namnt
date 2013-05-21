@@ -21,6 +21,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.database.SQLException;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
@@ -33,6 +34,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -281,15 +283,21 @@ public class MainActivity extends Activity {
 			}
 		});
 		
+		int statusBarHeight = 0;
+		  int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+		  if (resourceId > 0) {
+			  statusBarHeight = getResources().getDimensionPixelSize(resourceId);
+		  }
+		
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		tempo_view_grid.getLayoutParams().height = metrics.heightPixels - getResources().getDimensionPixelSize(R.dimen.window_status_bar_height) - getResources().getDimensionPixelSize(R.dimen.main_header_height) - getResources().getDimensionPixelSize(R.dimen.tempo_view_footer_height);
+		tempo_view_grid.getLayoutParams().height = metrics.heightPixels - statusBarHeight - getResources().getDimensionPixelSize(R.dimen.main_header_height) - getResources().getDimensionPixelSize(R.dimen.tempo_view_footer_height);
 		tempo_view_grid.setLayoutParams(tempo_view_grid.getLayoutParams());
 //		int itemHeight = tempo_view_grid.getHeight()/7;
 //		item_selected = Integer.valueOf(getResources().getString(R.string.string_default_item_selected));
 //		tempo_view_grid.setAdapter(new TextAdapter(this,itemHeight,itemHeight,item_selected));
-//		int h = getResources().getDimensionPixelSize(R.dimen.main_header_height);
-//		int h2 = getResources().getDimensionPixelSize(R.dimen.tempo_view_footer_height);
+//		int h = metrics.heightPixels;
+//		int h2 = metrics.widthPixels;
 		
 		int gridheight = tempo_view_grid.getLayoutParams().height/7;//getResources().getDimensionPixelSize(R.dimen.tempo_view_grid_item_height);
 		int lastgridheight = tempo_view_grid.getLayoutParams().height/7;//getResources().getDimensionPixelSize(R.dimen.tempo_view_grid_item_height);
