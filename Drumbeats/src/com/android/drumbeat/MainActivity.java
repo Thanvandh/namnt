@@ -23,6 +23,7 @@ import android.content.res.AssetManager;
 import android.database.SQLException;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.GestureDetector;
@@ -199,36 +200,36 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				Log.d("test", "selectedup|" + item_selected);
 				if (item_selected != 3){
-				tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_grid_selector);
-				int number = 0;
-				for (int i= 0; i<TextAdapter.arrayrate.length; i++){
-			 		if(srate == TextAdapter.arrayrate[i]){
-			 			number = i;
-			 			break;
-			 		}
-			 	}
-				srate = TextAdapter.arrayrate[number+1];
-			 	Log.d("test", "selecteduprate|" + srate);
-			 	for (int i= 0; i<TextAdapter.mTemporary.length; i++){
-			 		if(srate == TextAdapter.mTemporary[i]){
-			 			item_selected = i;
-			 			break;
-			 		}
-			 	}
-			 	Log.d("test", "selectedup|" + item_selected);
-			 	tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_press);
-			 	if (item_selected == 24){
-			 		bt_tempo_down.setEnabled(false);
-			 		bt_tempo_up.setEnabled(true);
-			 	} else if (item_selected == 3)
-			 	{
-			 		bt_tempo_down.setEnabled(true);
-			 		bt_tempo_up.setEnabled(false);
-			 	}						 		
-			 	else{
-			 		bt_tempo_down.setEnabled(true);
-			 		bt_tempo_up.setEnabled(true);
-			 	}
+					tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_grid_selector);
+					int number = 0;
+					for (int i= 0; i<TextAdapter.arrayrate.length; i++){
+						if(srate == TextAdapter.arrayrate[i]){
+							number = i;
+							break;
+						}
+					}
+					srate = TextAdapter.arrayrate[number+1];
+					Log.d("test", "selecteduprate|" + srate);
+					for (int i= 0; i<TextAdapter.mTemporary.length; i++){
+						if(srate == TextAdapter.mTemporary[i]){
+							item_selected = i;
+							break;
+						}
+					}
+					Log.d("test", "selectedup|" + item_selected);
+					tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_press);
+					if (item_selected == 24){
+						bt_tempo_down.setEnabled(false);
+						bt_tempo_up.setEnabled(true);
+					} else if (item_selected == 3)
+					{
+						bt_tempo_down.setEnabled(true);
+						bt_tempo_up.setEnabled(false);
+					}						 		
+					else{
+						bt_tempo_down.setEnabled(true);
+						bt_tempo_up.setEnabled(true);
+					}
 				} 
 				
 				
@@ -280,8 +281,18 @@ public class MainActivity extends Activity {
 			}
 		});
 		
-		int gridheight = getResources().getDimensionPixelSize(R.dimen.tempo_view_grid_item_height);
-		int lastgridheight = getResources().getDimensionPixelSize(R.dimen.tempo_view_grid_item_height);
+		DisplayMetrics metrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		tempo_view_grid.getLayoutParams().height = metrics.heightPixels - getResources().getDimensionPixelSize(R.dimen.window_status_bar_height) - getResources().getDimensionPixelSize(R.dimen.main_header_height) - getResources().getDimensionPixelSize(R.dimen.tempo_view_footer_height);
+		tempo_view_grid.setLayoutParams(tempo_view_grid.getLayoutParams());
+//		int itemHeight = tempo_view_grid.getHeight()/7;
+//		item_selected = Integer.valueOf(getResources().getString(R.string.string_default_item_selected));
+//		tempo_view_grid.setAdapter(new TextAdapter(this,itemHeight,itemHeight,item_selected));
+//		int h = getResources().getDimensionPixelSize(R.dimen.main_header_height);
+//		int h2 = getResources().getDimensionPixelSize(R.dimen.tempo_view_footer_height);
+		
+		int gridheight = tempo_view_grid.getLayoutParams().height/7;//getResources().getDimensionPixelSize(R.dimen.tempo_view_grid_item_height);
+		int lastgridheight = tempo_view_grid.getLayoutParams().height/7;//getResources().getDimensionPixelSize(R.dimen.tempo_view_grid_item_height);
 		item_selected = Integer.valueOf(getResources().getString(R.string.string_default_item_selected));
 		tempo_view_grid.setAdapter(new TextAdapter(this,gridheight,lastgridheight,item_selected));
 		
@@ -294,7 +305,7 @@ public class MainActivity extends Activity {
 					 if(event.getAction() == MotionEvent.ACTION_MOVE){
 						  int x=(int)event.getX();  
 			              int y=(int)event.getY();  
-			              int row = (y ) / (tempo_view_grid.getHeight()/7);	
+			              int row = (y ) / (tempo_view_grid.getLayoutParams().height/7);	
 			              if (row > 6)
 			            	  row = 6;
 			              int col =  x  / (tempo_view_grid.getWidth()/4);
@@ -305,19 +316,23 @@ public class MainActivity extends Activity {
 			              tempo_view_grid.setSelection(lastPos);
 			              //tempo_view_grid.setSelection(lastPos);
 						  srate = TextAdapter.mTemporary[lastPos];
-						tempo_view_text_on_top.setVisibility(View.VISIBLE);
-							tempo_view_text_on_top.setText(srate);
-				            return true;
+						  tempo_view_text_on_top.setVisibility(View.VISIBLE);
+					      tempo_view_text_on_top.setText(srate);
+				          return true;
 				        } else if(event.getAction() == MotionEvent.ACTION_DOWN){
 							  int x=(int)event.getX();  
 				              int y=(int)event.getY();  
-				              int row = (y ) / (tempo_view_grid.getHeight()/7);	
+				              int row = (y ) / (tempo_view_grid.getLayoutParams().height/7);	
 				              if (row > 6)
 				            	  row = 6;
 				              int col =  x  / (tempo_view_grid.getWidth()/4);
 				              //Log.d("x-value",""+x);  
 				              //Log.d("Y-value",""+y);
 				             
+//				              if (col == 3 && row == 6) {
+//				            	  return true;
+//				              }
+				              
 				              lastPos = TextAdapter.matrix[row][col];
 				              //gridView.setSelection(lastPos);
 				              
@@ -333,6 +348,11 @@ public class MainActivity extends Activity {
 //						 	tempo_view_grid.setSelection(lastPos);
 //						 	tempo_view_grid.requestFocusFromTouch();
 						 	//tempo_view_grid.getChildAt(pos).setBackgroundResource(R.drawable.item_press);
+//						 	if (item_selected == 3) {
+////						 		item_selected = lastPos;
+//						 		return true;
+//						 	}
+						 
 						 	tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_grid_selector);
 						 	item_selected = lastPos;
 						 	tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_press);
