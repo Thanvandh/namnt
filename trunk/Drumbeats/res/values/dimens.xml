@@ -116,6 +116,7 @@
     <dimen name="tempo_view_grid_view_verticalSpacing">0dp</dimen>
     
     <dimen name="tempo_view_footer_height">97dp</dimen>
+    <dimen name="window_status_bar_height">25dp</dimen>
     
     <dimen name="tempo_view_footer_bt_done_width">80dp</dimen>
     <dimen name="tempo_view_footer_bt_done_height">45dp</dimen>
