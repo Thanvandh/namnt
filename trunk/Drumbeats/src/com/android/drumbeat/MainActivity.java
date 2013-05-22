@@ -304,7 +304,7 @@ public class MainActivity extends Activity {
 		int h = tempo_view_layout_grid.getLayoutParams().height;
 		int gridheight = tempo_view_layout_grid.getLayoutParams().height/7;//getResources().getDimensionPixelSize(R.dimen.tempo_view_grid_item_height);
 		RelativeLayout tempo_footer = (RelativeLayout) findViewById(R.id.tempo_view_footer);
-		tempo_footer.getLayoutParams().height = getResources().getDimensionPixelSize(R.dimen.tempo_view_footer_height) + tempo_view_grid.getLayoutParams().height - gridheight*7;
+		tempo_footer.getLayoutParams().height = getResources().getDimensionPixelSize(R.dimen.tempo_view_footer_height) + tempo_view_layout_grid.getLayoutParams().height - gridheight*7;
 		tempo_footer.setLayoutParams(tempo_footer.getLayoutParams());
 		tempo_view_layout_grid.getLayoutParams().height = gridheight*7;
 		tempo_view_layout_grid.setLayoutParams(tempo_view_layout_grid.getLayoutParams());
