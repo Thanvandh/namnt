@@ -117,6 +117,7 @@
     
     <dimen name="tempo_view_footer_height">97dp</dimen>
     <dimen name="window_status_bar_height">25dp</dimen>
+    <dimen name="tempo_spacing_bottom">3dp</dimen>
     
     <dimen name="tempo_view_footer_bt_done_width">80dp</dimen>
     <dimen name="tempo_view_footer_bt_done_height">45dp</dimen>
@@ -132,7 +133,7 @@
     <dimen name="tempo_view_footer_bt_randomrate_margin_right">10dp</dimen>
     <dimen name="tempo_view_footer_bt_randomrate_margin_top">25dp</dimen>
     
-    <dimen name="tempo_view_text_on_top_text_size">80sp</dimen>
+    <dimen name="tempo_view_text_on_top_text_size">100sp</dimen>
     
     <dimen name="tempo_view_grid_item_height">75px</dimen>
     <dimen name="tempo_view_grid_last_item_height">70px</dimen>

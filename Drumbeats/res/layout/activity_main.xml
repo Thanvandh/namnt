@@ -234,7 +234,8 @@
             android:background="@drawable/btn_tempo"
             android:text="@string/string_default_rate"
             android:textColor="@android:color/white"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/main_footer_bt_play"
@@ -409,6 +410,10 @@
 		    android:textSize="@dimen/tempo_view_text_on_top_text_size"
 		    android:textColor="@android:color/white"
 		    android:textStyle="bold"
+		    android:shadowColor="#000000"
+			android:shadowDx="6"
+            android:shadowDy="6"
+            android:shadowRadius="8"
 		    android:layout_centerInParent="true"
 		    android:visibility="gone"/>
     </RelativeLayout>
