@@ -77,12 +77,14 @@ public class MainActivity extends Activity {
 	Button bt_play;
 	SeekBar volumeProgress;
 	TextView playsong;
+	MediaPlayer mp;
 	
 	//tempo view
 	RelativeLayout tempo_view;
 	Button bt_tempo_view_done;
 	Button bt_tempo_view_play;
 	Button bt_tempo_view_random;
+	RelativeLayout tempo_view_layout_grid;
 	GridView tempo_view_grid;
 	int lastPos;
 	int item_selected;
@@ -145,6 +147,7 @@ public class MainActivity extends Activity {
 		bt_tempo_view_done = (Button) findViewById(R.id.tempo_view_footer_bt_done);
 		bt_tempo_view_play = (Button) findViewById(R.id.tempo_view_footer_bt_playrate);
 		bt_tempo_view_random = (Button) findViewById(R.id.tempo_view_footer_bt_randomrate);
+		tempo_view_layout_grid = (RelativeLayout) findViewById(R.id.tempo_view_layout_grid_view);
 		tempo_view_grid = (GridView) findViewById(R.id.tempo_view_grid_view);
 		tempo_view_text_on_top = (TextView) findViewById(R.id.tempo_view_text_on_top);
 		
@@ -157,7 +160,7 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Log.d("test", "selecteddown|" + item_selected);
-				if (item_selected != 24){
+				if (item_selected != 24 && item_selected != 27){
 				tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_grid_selector);
 				int number = 0;
 				for (int i= 0; i<TextAdapter.arrayrate.length; i++){
@@ -201,7 +204,7 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Log.d("test", "selectedup|" + item_selected);
-				if (item_selected != 3){
+				if (item_selected != 3  && item_selected != 27){
 					tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_grid_selector);
 					int number = 0;
 					for (int i= 0; i<TextAdapter.arrayrate.length; i++){
@@ -291,20 +294,20 @@ public class MainActivity extends Activity {
 		
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		tempo_view_grid.getLayoutParams().height = metrics.heightPixels - statusBarHeight - getResources().getDimensionPixelSize(R.dimen.main_header_height) - getResources().getDimensionPixelSize(R.dimen.tempo_view_footer_height) + getResources().getDimensionPixelSize(R.dimen.tempo_spacing_bottom);;
-		tempo_view_grid.setLayoutParams(tempo_view_grid.getLayoutParams());
+		tempo_view_layout_grid.getLayoutParams().height = metrics.heightPixels - statusBarHeight - getResources().getDimensionPixelSize(R.dimen.main_header_height) - getResources().getDimensionPixelSize(R.dimen.tempo_view_footer_height) + getResources().getDimensionPixelSize(R.dimen.tempo_spacing_bottom);;
+		tempo_view_layout_grid.setLayoutParams(tempo_view_layout_grid.getLayoutParams());
 //		int itemHeight = tempo_view_grid.getHeight()/7;
 //		item_selected = Integer.valueOf(getResources().getString(R.string.string_default_item_selected));
 //		tempo_view_grid.setAdapter(new TextAdapter(this,itemHeight,itemHeight,item_selected));
 //		int h = metrics.heightPixels;
 //		int h2 = metrics.widthPixels;
-		int h = tempo_view_grid.getLayoutParams().height;
-		int gridheight = tempo_view_grid.getLayoutParams().height/7;//getResources().getDimensionPixelSize(R.dimen.tempo_view_grid_item_height);
+		int h = tempo_view_layout_grid.getLayoutParams().height;
+		int gridheight = tempo_view_layout_grid.getLayoutParams().height/7;//getResources().getDimensionPixelSize(R.dimen.tempo_view_grid_item_height);
 		RelativeLayout tempo_footer = (RelativeLayout) findViewById(R.id.tempo_view_footer);
 		tempo_footer.getLayoutParams().height = getResources().getDimensionPixelSize(R.dimen.tempo_view_footer_height) + tempo_view_grid.getLayoutParams().height - gridheight*7;
 		tempo_footer.setLayoutParams(tempo_footer.getLayoutParams());
-		tempo_view_grid.getLayoutParams().height = gridheight*7;
-		tempo_view_grid.setLayoutParams(tempo_view_grid.getLayoutParams());
+		tempo_view_layout_grid.getLayoutParams().height = gridheight*7;
+		tempo_view_layout_grid.setLayoutParams(tempo_view_layout_grid.getLayoutParams());
 		
 		item_selected = Integer.valueOf(getResources().getString(R.string.string_default_item_selected));
 		tempo_view_grid.setAdapter(new TextAdapter(this,gridheight,gridheight,item_selected));
@@ -318,27 +321,29 @@ public class MainActivity extends Activity {
 					 if(event.getAction() == MotionEvent.ACTION_MOVE){
 						  int x=(int)event.getX();  
 			              int y=(int)event.getY();  
-			              int row = (y ) / (tempo_view_grid.getLayoutParams().height/7);	
+			              int row = (y ) / (tempo_view_layout_grid.getLayoutParams().height/7);	
 			              if (row > 6)
 			            	  row = 6;
-			              int col =  x  / (tempo_view_grid.getWidth()/4);
+			              int col =  x  / (tempo_view_layout_grid.getWidth()/4);
 			              //Log.d("test", "width|" + tempo_view_grid.getWidth() + "|height|" + tempo_view_grid.getHeight());
 			              //Log.d("x-value",""+x);  
 			              lastPos = TextAdapter.matrix[row][col];
+			              if (lastPos != 27){
 			              tempo_view_grid.requestFocusFromTouch();
 			              tempo_view_grid.setSelection(lastPos);
 			              //tempo_view_grid.setSelection(lastPos);
 						  srate = TextAdapter.mTemporary[lastPos];
 						  tempo_view_text_on_top.setVisibility(View.VISIBLE);
 					      tempo_view_text_on_top.setText(srate);
+			              }
 				          return true;
 				        } else if(event.getAction() == MotionEvent.ACTION_DOWN){
 							  int x=(int)event.getX();  
 				              int y=(int)event.getY();  
-				              int row = (y ) / (tempo_view_grid.getLayoutParams().height/7);	
+				              int row = (y ) / (tempo_view_layout_grid.getLayoutParams().height/7);	
 				              if (row > 6)
 				            	  row = 6;
-				              int col =  x  / (tempo_view_grid.getWidth()/4);
+				              int col =  x  / (tempo_view_layout_grid.getWidth()/4);
 				              //Log.d("x-value",""+x);  
 				              //Log.d("Y-value",""+y);
 				             
@@ -348,14 +353,18 @@ public class MainActivity extends Activity {
 				              
 				              lastPos = TextAdapter.matrix[row][col];
 				              //gridView.setSelection(lastPos);
-				              
+				              if (lastPos !=  27){
 				              tempo_view_grid.requestFocusFromTouch();
 				              tempo_view_grid.setSelection(lastPos);
 				              srate = TextAdapter.mTemporary[lastPos];
 				              tempo_view_text_on_top.setVisibility(View.VISIBLE);
 				              tempo_view_text_on_top.setText(srate);
-							
-					            return true;
+				              return true;
+				              } else {
+				            	  tempo_view_grid.getChildAt(lastPos).setBackgroundResource(android.R.color.transparent);
+				            	  return true;
+				            	  }
+					            
 					        } 
 					 else if (event.getAction() == MotionEvent.ACTION_UP) {  
 //						 	tempo_view_grid.setSelection(lastPos);
@@ -365,7 +374,7 @@ public class MainActivity extends Activity {
 ////						 		item_selected = lastPos;
 //						 		return true;
 //						 	}
-						 
+						 	if (lastPos != 27){
 						 	tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_grid_selector);
 						 	item_selected = lastPos;
 						 	tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_press);
@@ -383,7 +392,7 @@ public class MainActivity extends Activity {
 						 	}
 							//srate = TextAdapter.mTemporary[lastPos];
 							tempo_view_text_on_top.setVisibility(View.GONE);
-
+						 	}
 								return true;
 			              }
 				        return false;
@@ -927,7 +936,7 @@ public class MainActivity extends Activity {
 		
 	}
 	
-//	public void playMediaPlayer()
+//	public void playMediaPlayer(String folder, String filename)
 //	{
 //		if (mp != null){
 //			if (mp.isPlaying()){
@@ -939,148 +948,14 @@ public class MainActivity extends Activity {
 //		else 
 //			mp = new MediaPlayer();
 //		
-//		try {
-//			if (favorite_mode){
-//			  if (lastPosition >= folder_favorite.length)
-//				  lastPosition = 0;
-//			  final String filename[] = getFileName(folder_favorite[lastPosition],  name_favortie[lastPosition]);
-//			  String precount = filename[lastPosition].substring(filename[lastPosition].length() - 10);
-//			  maxCount = preferences.getInt("countoff", 0);
-//				if (maxCount > 0 && !bplay){
-//				file = getResources().getAssets().openFd("precount/" + precount);
-//				mp.reset();
-//				mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
-//				mp.prepare();
-//				mp.start();
-//				bplay = true;
-//				setIconPlayButton(bplay,mplaysong);
-//				mp.setOnCompletionListener(new OnCompletionListener(){
-//					  int count = 0; // initialize somewhere before, not sure if this will work here
-//					  
-//
-//					  @Override
-//					  public void onCompletion(MediaPlayer mediaPlayer) {
-//					    if(count < maxCount -1) {
-//					      count++;
-//					      mediaPlayer.seekTo(0);
-//					      mediaPlayer.start();
-//					    } else {
-//					    	try {
-//					    		file = getResources().getAssets().openFd("music/" + folder_favorite[lastPosition] + "/" + name_favortie[lastPosition] + "/" + filename[rate]);
-//								  mplaysong = folder_favorite[lastPosition] + " - " + name_favortie[lastPosition];
-//								mp.reset();
-//								try {
-//									mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
-//									mp.prepare();
-//									mp.setLooping(true);
-//									mp.start();
-//									
-//								} catch (IllegalArgumentException e) {
-//									// TODO Auto-generated catch block
-//									e.printStackTrace();
-//								} catch (IllegalStateException e) {
-//									// TODO Auto-generated catch block
-//									e.printStackTrace();
-//								} catch (IOException e) {
-//									// TODO Auto-generated catch block
-//									e.printStackTrace();
-//								}
-//							} catch (IOException e) {
-//								// TODO Auto-generated catch block
-//								e.printStackTrace();
-//							}
-//							
-//														
-//					    	
-//					    }
-//					}});
-//				} else {
-//					file = getResources().getAssets().openFd("music/" + folder_favorite[lastPosition] + "/" + name_favortie[lastPosition] + "/" + filename[rate]);
-//					  mplaysong = folder_favorite[lastPosition] + " - " + name_favortie[lastPosition];
-//				mp.reset();
-//				mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
-//				mp.prepare();
-//				mp.setLooping(true);
-//				mp.start();
-//				bplay = true;
-//				setIconPlayButton(bplay,mplaysong);
-//				}
-//			  
-//			  file = getResources().getAssets().openFd("music/" + folder_favorite[lastPosition] + "/" + name_favortie[lastPosition] + "/" + filename[rate]);
-//			  mplaysong = folder_favorite[lastPosition] + " - " + name_favortie[lastPosition];
-//			  mp.reset();
-//			  mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
-//			} else {
-//				final String filename[] = getFileName(folder,  name[lastPosition]);
-//				String precount = filename[lastPosition].substring(filename[lastPosition].length() - 10);
-//				maxCount = preferences.getInt("countoff", 0);
-//				if (maxCount > 0 && !bplay){
-//				file = getResources().getAssets().openFd("precount/" + precount);
-//				mp.reset();
-//				mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
-//				mp.prepare();
-//				mp.start();
-//				bplay = true;
-//				setIconPlayButton(bplay,mplaysong);
-//				mp.setOnCompletionListener(new OnCompletionListener(){
-//					  int count = 0; // initialize somewhere before, not sure if this will work here
-//					  
-//
-//					  @Override
-//					  public void onCompletion(MediaPlayer mediaPlayer) {
-//					    if(count < maxCount -1) {
-//					      count++;
-//					      mediaPlayer.seekTo(0);
-//					      mediaPlayer.start();
-//					    } else {
-//					    	try {
-//								file = getResources().getAssets().openFd("music/" + folder + "/" + name[lastPosition] + "/" + filename[rate]);
-//								mplaysong = folder + " - " + name[lastPosition];
-//								mp.reset();
-//								try {
-//									mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
-//									mp.prepare();
-//									mp.setLooping(true);
-//									mp.start();
-//									
-//								} catch (IllegalArgumentException e) {
-//									// TODO Auto-generated catch block
-//									e.printStackTrace();
-//								} catch (IllegalStateException e) {
-//									// TODO Auto-generated catch block
-//									e.printStackTrace();
-//								} catch (IOException e) {
-//									// TODO Auto-generated catch block
-//									e.printStackTrace();
-//								}
-//							} catch (IOException e) {
-//								// TODO Auto-generated catch block
-//								e.printStackTrace();
-//							}
-//							
-//														
-//					    	
-//					    }
-//					}});
-//				} else {
-//				file = getResources().getAssets().openFd("music/" + folder + "/" + name[lastPosition] + "/" + filename[rate]);
-//				mplaysong = folder + " - " + name[lastPosition];
-//				mp.reset();
-//				mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
-//				mp.prepare();
-//				mp.setLooping(true);
-//				mp.start();
-//				bplay = true;
-//				setIconPlayButton(bplay,mplaysong);
-//				}
-//			}
-//			
-//			
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
+//		AssetFileDescriptor file = getResources().getAssets().openFd("music/" + folder + "/" + filename + "/" + filename[rate]);
+//		mplaysong = folder_favorite[lastPosition] + " - " + name_favortie[lastPosition];
+//		mp.reset();
+//		mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+//		mp.prepare();
+//		mp.setLooping(true);
+//		mp.start();
+//		bplay = true;
 ////		if (mp.isPlaying())
 ////			mp.stop();
 //		//mp.se
