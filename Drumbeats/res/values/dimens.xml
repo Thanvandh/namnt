@@ -7,7 +7,7 @@
     <dimen name="main_header_height">60dp</dimen>
     
     <dimen name="main_header_bt_logo_width">180dp</dimen>
-    <dimen name="main_header_bt_logo_margin_left">10dp</dimen>
+    <dimen name="main_header_bt_logo_margin_left">13dp</dimen>
     <dimen name="main_header_bt_logo_margin_right">0dp</dimen>
     <dimen name="main_header_bt_logo_text_size">24sp</dimen>
     
@@ -29,19 +29,19 @@
     <dimen name="main_footer_bt_random_margin_right">10dp</dimen>
     <dimen name="main_footer_bt_random_margin_top">25dp</dimen>
     
-    <dimen name="main_footer_volume_down_width">20dp</dimen>
-    <dimen name="main_footer_volume_down_height">20dp</dimen>
-    <dimen name="main_footer_volume_down_margin_left">10dp</dimen>
-    <dimen name="main_footer_volume_down_margin_bottom">20dp</dimen>
+    <dimen name="main_footer_volume_down_width">12dp</dimen>
+    <dimen name="main_footer_volume_down_height">16dp</dimen>
+    <dimen name="main_footer_volume_down_margin_left">20dp</dimen>
+    <dimen name="main_footer_volume_down_margin_bottom">17dp</dimen>
     
-    <dimen name="main_footer_volume_up_width">20dp</dimen>
+    <dimen name="main_footer_volume_up_width">24dp</dimen>
     <dimen name="main_footer_volume_up_height">20dp</dimen>
-    <dimen name="main_footer_volume_up_margin_right">10dp</dimen>
-    <dimen name="main_footer_volume_up_margin_bottom">20dp</dimen>
+    <dimen name="main_footer_volume_up_margin_right">18dp</dimen>
+    <dimen name="main_footer_volume_up_margin_bottom">14dp</dimen>
     
-    <dimen name="main_footer_volumeProgressBar_margin_left">40dp</dimen>
+    <dimen name="main_footer_volumeProgressBar_margin_left">38dp</dimen>
     <dimen name="main_footer_volumeProgressBar_margin_right">40dp</dimen>
-    <dimen name="main_footer_volumeProgressBar_margin_bottom">20dp</dimen>
+    <dimen name="main_footer_volumeProgressBar_margin_bottom">15dp</dimen>
     <dimen name="main_footer_volumeProgressBar_padding_left">15dp</dimen>
     <dimen name="main_footer_volumeProgressBar_padding_right">15dp</dimen>
     
@@ -79,12 +79,12 @@
     
     <dimen name="list_view_row_height">44dp</dimen>
     
-    <dimen name="row_main_body_list_home_folder_margin_left">5dp</dimen>
+    <dimen name="row_main_body_list_home_folder_margin_left">13dp</dimen>
     <dimen name="row_main_body_list_home_name_margin_left">20dp</dimen>
     <dimen name="row_main_body_list_home_name_text_size">18sp</dimen>
     <dimen name="row_main_body_list_home_folder_arrow_margin_right">20dp</dimen>
     
-    <dimen name="row_main_body_list_file_number_margin_left">10dp</dimen>
+    <dimen name="row_main_body_list_file_number_margin_left">13dp</dimen>
     <dimen name="row_main_body_list_file_number_text_size">16sp</dimen>
     <dimen name="row_main_body_list_file_name_margin_left">25dp</dimen>
     <dimen name="row_main_body_list_file_name_text_size">18sp</dimen>
