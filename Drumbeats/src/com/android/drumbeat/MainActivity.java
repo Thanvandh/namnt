@@ -291,19 +291,24 @@ public class MainActivity extends Activity {
 		
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		tempo_view_grid.getLayoutParams().height = metrics.heightPixels - statusBarHeight - getResources().getDimensionPixelSize(R.dimen.main_header_height) - getResources().getDimensionPixelSize(R.dimen.tempo_view_footer_height);
+		tempo_view_grid.getLayoutParams().height = metrics.heightPixels - statusBarHeight - getResources().getDimensionPixelSize(R.dimen.main_header_height) - getResources().getDimensionPixelSize(R.dimen.tempo_view_footer_height) + getResources().getDimensionPixelSize(R.dimen.tempo_spacing_bottom);;
 		tempo_view_grid.setLayoutParams(tempo_view_grid.getLayoutParams());
 //		int itemHeight = tempo_view_grid.getHeight()/7;
 //		item_selected = Integer.valueOf(getResources().getString(R.string.string_default_item_selected));
 //		tempo_view_grid.setAdapter(new TextAdapter(this,itemHeight,itemHeight,item_selected));
 //		int h = metrics.heightPixels;
 //		int h2 = metrics.widthPixels;
-		
+		int h = tempo_view_grid.getLayoutParams().height;
 		int gridheight = tempo_view_grid.getLayoutParams().height/7;//getResources().getDimensionPixelSize(R.dimen.tempo_view_grid_item_height);
-		int lastgridheight = tempo_view_grid.getLayoutParams().height/7;//getResources().getDimensionPixelSize(R.dimen.tempo_view_grid_item_height);
-		item_selected = Integer.valueOf(getResources().getString(R.string.string_default_item_selected));
-		tempo_view_grid.setAdapter(new TextAdapter(this,gridheight,lastgridheight,item_selected));
+		RelativeLayout tempo_footer = (RelativeLayout) findViewById(R.id.tempo_view_footer);
+		tempo_footer.getLayoutParams().height = getResources().getDimensionPixelSize(R.dimen.tempo_view_footer_height) + tempo_view_grid.getLayoutParams().height - gridheight*7;
+		tempo_footer.setLayoutParams(tempo_footer.getLayoutParams());
+		tempo_view_grid.getLayoutParams().height = gridheight*7;
+		tempo_view_grid.setLayoutParams(tempo_view_grid.getLayoutParams());
 		
+		item_selected = Integer.valueOf(getResources().getString(R.string.string_default_item_selected));
+		tempo_view_grid.setAdapter(new TextAdapter(this,gridheight,gridheight,item_selected));
+//		tempo_view_text_on_top.setLayoutParams(new AbsoluteLayout.LayoutParams(200,200, 200,200));
 		
 		tempo_view_grid.setOnTouchListener(new OnTouchListener(){
 

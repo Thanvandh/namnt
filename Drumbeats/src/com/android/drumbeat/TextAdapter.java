@@ -52,7 +52,7 @@ public class TextAdapter extends BaseAdapter {
         textview.setText(mTemporary[position]);
         textview.setGravity(Gravity.CENTER);
         textview.setTextColor(Color.WHITE);
-        textview.setTextSize(16);
+        textview.setTextSize(20);
         if (position == mitem_selected)
         	textview.setBackgroundResource(R.drawable.item_press);
         else 
