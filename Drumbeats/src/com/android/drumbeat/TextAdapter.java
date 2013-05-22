@@ -53,16 +53,18 @@ public class TextAdapter extends BaseAdapter {
         textview.setGravity(Gravity.CENTER);
         textview.setTextColor(Color.WHITE);
         textview.setTextSize(20);
+        
+        if (position == 24 || position == 25 || position == 26 || position == 27){
+        	textview.setHeight(mlastheight);
+        } else 
+        	textview.setHeight(mheight);
+        
         if (position == mitem_selected)
         	textview.setBackgroundResource(R.drawable.item_press);
         else 
         	textview.setBackgroundResource(R.drawable.item_grid_selector);
         textview.setTypeface(null, Typeface.BOLD);
         
-        if (position == 24 || position == 25 || position == 26 || position == 27){
-        	textview.setHeight(mlastheight);
-        } else 
-        	textview.setHeight(mheight);
         //textview.setBackgroundResource(R.color.blue_item_grid);
         return textview;
 	}
