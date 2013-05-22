@@ -201,7 +201,7 @@ public final class R {
         public static final int volume_up=0x7f020048;
     }
     public static final class id {
-        public static final int action_settings=0x7f090033;
+        public static final int action_settings=0x7f090034;
         public static final int main_body_listview=0x7f090005;
         public static final int main_body_listview_favorite=0x7f090007;
         public static final int main_body_more=0x7f090008;
@@ -232,27 +232,28 @@ public final class R {
         public static final int main_header_bt_logo=0x7f090001;
         public static final int main_header_bt_more_edit=0x7f090004;
         public static final int main_header_bt_settings=0x7f090003;
-        public static final int row_main_body_list_favorite_file_bt_delete=0x7f090029;
-        public static final int row_main_body_list_favorite_file_bt_sort=0x7f09002c;
-        public static final int row_main_body_list_favorite_file_folder=0x7f09002b;
-        public static final int row_main_body_list_favorite_file_name=0x7f09002a;
-        public static final int row_main_body_list_file_favorite_bt=0x7f09002f;
-        public static final int row_main_body_list_file_name=0x7f09002e;
-        public static final int row_main_body_list_file_number=0x7f09002d;
-        public static final int row_main_body_list_home_folder=0x7f090030;
-        public static final int row_main_body_list_home_folder_arrow=0x7f090032;
-        public static final int row_main_body_list_home_name=0x7f090031;
+        public static final int row_main_body_list_favorite_file_bt_delete=0x7f09002a;
+        public static final int row_main_body_list_favorite_file_bt_sort=0x7f09002d;
+        public static final int row_main_body_list_favorite_file_folder=0x7f09002c;
+        public static final int row_main_body_list_favorite_file_name=0x7f09002b;
+        public static final int row_main_body_list_file_favorite_bt=0x7f090030;
+        public static final int row_main_body_list_file_name=0x7f09002f;
+        public static final int row_main_body_list_file_number=0x7f09002e;
+        public static final int row_main_body_list_home_folder=0x7f090031;
+        public static final int row_main_body_list_home_folder_arrow=0x7f090033;
+        public static final int row_main_body_list_home_name=0x7f090032;
         public static final int tempo_view=0x7f09001e;
-        public static final int tempo_view_footer=0x7f090024;
-        public static final int tempo_view_footer_bt_done=0x7f090025;
-        public static final int tempo_view_footer_bt_playrate=0x7f090026;
-        public static final int tempo_view_footer_bt_randomrate=0x7f090027;
-        public static final int tempo_view_grid_view=0x7f090023;
+        public static final int tempo_view_footer=0x7f090026;
+        public static final int tempo_view_footer_bt_done=0x7f090027;
+        public static final int tempo_view_footer_bt_playrate=0x7f090028;
+        public static final int tempo_view_footer_bt_randomrate=0x7f090029;
+        public static final int tempo_view_grid_view=0x7f090024;
         public static final int tempo_view_header=0x7f09001f;
         public static final int tempo_view_header_decrease=0x7f090022;
         public static final int tempo_view_header_increase=0x7f090021;
         public static final int tempo_view_header_text=0x7f090020;
-        public static final int tempo_view_text_on_top=0x7f090028;
+        public static final int tempo_view_layout_grid_view=0x7f090023;
+        public static final int tempo_view_text_on_top=0x7f090025;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;

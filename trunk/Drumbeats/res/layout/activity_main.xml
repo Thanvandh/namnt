@@ -350,12 +350,16 @@
                 android:background="@android:color/transparent"
                 android:src="@drawable/btn_tempo_down" />
         </RelativeLayout>
-		
+        
+		<RelativeLayout
+		    android:id="@+id/tempo_view_layout_grid_view" 
+		    android:layout_width="wrap_content"
+		    android:layout_height="@dimen/tempo_view_grid_view_height"
+		    android:layout_marginTop="@dimen/main_body_margin_top">
         <GridView
             android:id="@+id/tempo_view_grid_view"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/tempo_view_grid_view_height"
-        	android:layout_marginTop="@dimen/main_body_margin_top"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:horizontalSpacing="@dimen/tempo_view_grid_view_horizontalSpacing"
             android:isScrollContainer="false"
@@ -366,7 +370,20 @@
             android:background="@drawable/tempo_grid"
             android:listSelector="@drawable/grid_selector">
         </GridView>
-
+        <TextView
+		    android:id="@+id/tempo_view_text_on_top" 
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:textSize="@dimen/tempo_view_text_on_top_text_size"
+		    android:textColor="@android:color/white"
+		    android:textStyle="bold"
+		    android:shadowColor="#000000"
+			android:shadowDx="6"
+            android:shadowDy="6"
+            android:shadowRadius="8"
+		    android:layout_centerInParent="true"
+		    android:visibility="gone"/>
+		</RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/tempo_view_footer"
@@ -403,19 +420,7 @@
                     android:layout_marginTop="@dimen/tempo_view_footer_bt_randomrate_margin_top"
                     android:background="@drawable/btn_dice" />
             </RelativeLayout>
-        <TextView
-		    android:id="@+id/tempo_view_text_on_top" 
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:textSize="@dimen/tempo_view_text_on_top_text_size"
-		    android:textColor="@android:color/white"
-		    android:textStyle="bold"
-		    android:shadowColor="#000000"
-			android:shadowDx="6"
-            android:shadowDy="6"
-            android:shadowRadius="8"
-		    android:layout_centerInParent="true"
-		    android:visibility="gone"/>
+        
     </RelativeLayout>
 
 </RelativeLayout>
