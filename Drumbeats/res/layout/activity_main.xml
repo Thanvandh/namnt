@@ -361,6 +361,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:textAlignment="center"
             android:horizontalSpacing="@dimen/tempo_view_grid_view_horizontalSpacing"
             android:isScrollContainer="false"
             android:numColumns="4"
@@ -372,7 +373,7 @@
         </GridView>
         <TextView
 		    android:id="@+id/tempo_view_text_on_top" 
-		    android:layout_width="wrap_content"
+		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    android:textSize="@dimen/tempo_view_text_on_top_text_size"
 		    android:textColor="@android:color/white"
