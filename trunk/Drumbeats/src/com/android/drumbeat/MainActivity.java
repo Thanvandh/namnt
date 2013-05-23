@@ -78,6 +78,9 @@ public class MainActivity extends Activity {
 	SeekBar volumeProgress;
 	TextView playsong;
 	MediaPlayer mp;
+	boolean bplay = false;
+	String mfolder = "";
+	String mfilename = "";
 	
 	//tempo view
 	RelativeLayout tempo_view;
@@ -141,6 +144,16 @@ public class MainActivity extends Activity {
 				
 			}
 		});
+		bt_play.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (bplay)
+					stopMusic();
+				else playMusic();
+			}
+		});
 		
 		//tempo view
 		tempo_view = (RelativeLayout) findViewById(R.id.tempo_view);
@@ -154,6 +167,16 @@ public class MainActivity extends Activity {
 		bt_tempo_down = (ImageButton) findViewById(R.id.tempo_view_header_decrease);
 		bt_tempo_up = (ImageButton) findViewById(R.id.tempo_view_header_increase);
 		
+		bt_tempo_view_play.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (bplay)
+					stopMusic();
+				else playMusic();
+			}
+		});
 		bt_tempo_down.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -584,6 +607,9 @@ public class MainActivity extends Activity {
 		main_footer.setVisibility(View.VISIBLE);
 
 		final String array_folder[] = getFolder();
+		mfolder = array_folder[0];
+		String[] array_file = getFolderFile(mfolder);
+		mfilename = array_file[0];
 		ArrayList<HashMap<String, String>> array_list_folder = new ArrayList<HashMap<String, String>>();
 
 		for (int i = 0; i < array_folder.length; i++) {
@@ -601,8 +627,8 @@ public class MainActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int postion, long arg3) {
 				// TODO Auto-generated method stub
-				String folder = array_folder[postion];
-				showMainBodyFile(folder);
+				mfolder = array_folder[postion];
+				showMainBodyFile(mfolder);
 
 			}
 		});
@@ -630,7 +656,7 @@ public class MainActivity extends Activity {
 				"fonts/MYRIADPRO-BOLD.OTF");
 		bt_back.setTypeface(font);
 
-		String[] array_file = getFolderFile(folder);
+		final String[] array_file = getFolderFile(folder);
 		ArrayList<HashMap<String, String>> array_list_file = new ArrayList<HashMap<String, String>>();
 
 		for (int i = 0; i < array_file.length; i++) {
@@ -643,6 +669,17 @@ public class MainActivity extends Activity {
 		// Getting adapter
 		FileRowAdapter adapter = new FileRowAdapter(this, array_list_file);
 		main_body_list.setAdapter(adapter);
+		main_body_list.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int postion, long arg3) {
+				// TODO Auto-generated method stub
+				mfilename = array_file[postion];
+				playMusic();
+
+			}
+		});
 	}
 
 	private String[] getFolderFile(String folder) {
@@ -699,6 +736,19 @@ public class MainActivity extends Activity {
 			 } else{
 				 main_body_favorite.setAdapter(null);
 			 }
+			 main_body_favorite.setOnItemClickListener(new OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> arg0, View arg1,
+							int postion, long arg3) {
+						// TODO Auto-generated method stub
+						mfolder = favorite_songs.get(postion).getFolder();
+						mfilename = favorite_songs.get(postion).getName();
+						playMusic();
+
+					}
+				});
+			 
 			 
 			 }catch(SQLException sqle){
 			  
@@ -735,6 +785,16 @@ public class MainActivity extends Activity {
 			 } else{
 				 main_body_favorite.setAdapter(null);
 			 }
+			 main_body_favorite.setOnItemClickListener(new OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> arg0, View arg1,
+							int postion, long arg3) {
+						// TODO Auto-generated method stub
+						
+
+					}
+				});
 			 
 			 }catch(SQLException sqle){
 			  
@@ -936,8 +996,11 @@ public class MainActivity extends Activity {
 		
 	}
 	
-//	public void playMediaPlayer(String folder, String filename)
-//	{
+	public void playMusic()
+	{
+		bplay = true;
+		setButtonPlay(bplay);
+		playsong.setText(mfolder + " - " + mfilename);
 //		if (mp != null){
 //			if (mp.isPlaying()){
 //				mp.stop();
@@ -955,13 +1018,53 @@ public class MainActivity extends Activity {
 //		mp.prepare();
 //		mp.setLooping(true);
 //		mp.start();
-//		bplay = true;
-////		if (mp.isPlaying())
-////			mp.stop();
-//		//mp.se
+//		if (mp.isPlaying())
+//			mp.stop();
+		//mp.se
+		
+		
+	}
+	public void stopMusic()
+	{
+		bplay = false;
+		setButtonPlay(bplay);
+		playsong.setText("");
+//		if (mp != null){
+//			if (mp.isPlaying()){
+//				mp.stop();
+//				//mp.release();
+//				
+//			}
+//			}
+//		else 
+//			mp = new MediaPlayer();
 //		
-//		
-//	}
+//		AssetFileDescriptor file = getResources().getAssets().openFd("music/" + folder + "/" + filename + "/" + filename[rate]);
+//		mplaysong = folder_favorite[lastPosition] + " - " + name_favortie[lastPosition];
+//		mp.reset();
+//		mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+//		mp.prepare();
+//		mp.setLooping(true);
+//		mp.start();
+//		if (mp.isPlaying())
+//			mp.stop();
+		//mp.se
+		
+		
+	}
+	
+	public void setButtonPlay(boolean b){
+		if (b){
+			bt_play.setBackgroundResource(R.drawable.btn_stop);
+			bt_tempo_view_play.setBackgroundResource(R.drawable.btn_stop);
+		} else {
+			bt_play.setBackgroundResource(R.drawable.btn_play);
+			bt_tempo_view_play.setBackgroundResource(R.drawable.btn_play);
+		}
+			
+			
+	}
+
 
 //	@Override
 //	public boolean onCreateOptionsMenu(Menu menu) {
