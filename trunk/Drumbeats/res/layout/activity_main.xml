@@ -281,14 +281,18 @@
             android:layout_marginRight="@dimen/main_footer_bt_random_margin_right"
             android:layout_marginTop="@dimen/main_footer_bt_random_margin_top"
             android:background="@drawable/btn_dice" />
-
+		<RelativeLayout 
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:layout_below="@+id/main_footer_bt_play"
+		    android:layout_above="@+id/main_footer_song_name">
         <ImageButton
             android:id="@+id/main_footer_volume_down"
             android:layout_width="@dimen/main_footer_volume_down_width"
             android:layout_height="@dimen/main_footer_volume_down_height"
             android:layout_above="@+id/main_footer_song_name"
             android:layout_alignParentLeft="true"
-            android:layout_marginBottom="@dimen/main_footer_volume_down_margin_bottom"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/main_footer_volume_down_margin_left"
             android:background="@null"
             android:contentDescription="@string/volumnDown"
@@ -303,7 +307,6 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/main_footer_song_name"
             android:layout_centerVertical="true"
-            android:layout_marginBottom="@dimen/main_footer_volumeProgressBar_margin_bottom"
             android:layout_marginLeft="@dimen/main_footer_volumeProgressBar_margin_left"
             android:layout_marginRight="@dimen/main_footer_volumeProgressBar_margin_right"
             android:paddingLeft="@dimen/main_footer_volumeProgressBar_padding_left"
@@ -317,13 +320,13 @@
             android:layout_height="@dimen/main_footer_volume_up_height"
             android:layout_above="@+id/main_footer_song_name"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="@dimen/main_footer_volume_up_margin_bottom"
+            android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/main_footer_volume_up_margin_right"
             android:background="@null"
             android:contentDescription="@string/volumnUp"
             android:scaleType="fitCenter"
             android:src="@drawable/volume_up" />
-
+        </RelativeLayout>
         <TextView
             android:id="@+id/main_footer_song_name"
             android:layout_width="wrap_content"
