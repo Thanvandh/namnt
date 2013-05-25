@@ -15,17 +15,42 @@
         android:layout_height="@dimen/main_header_height"
         android:background="@drawable/background_main_header" >
 
-        <Button
-            android:id="@+id/main_header_bt_logo"
-            android:layout_width="@dimen/main_header_bt_logo_width"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/main_header_bt_logo_margin_left"
-            android:layout_marginRight="@dimen/main_header_bt_logo_margin_right"
-            android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/logo_button"
-            android:textColor="@color/white"
-            android:textSize="@dimen/main_header_bt_logo_text_size" />
+            android:layout_toLeftOf="@+id/main_header_bt_favorites" >
+
+            <ImageButton
+                android:id="@+id/main_header_bt_back"
+                android:visibility="gone"
+                android:layout_width="@dimen/main_header_bt_back_width"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:background="@android:color/transparent"
+                android:src="@drawable/red_back_arrow" />
+
+            <Button
+                android:id="@+id/main_header_bt_logo"
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/main_header_bt_logo_margin_left"
+                android:layout_marginRight="@dimen/main_header_bt_logo_margin_right"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/logo_button" />
+
+            <TextView
+                android:id="@+id/main_header_logo_text"
+                android:visibility="gone"
+                android:text="thu xem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/main_header_bt_logo_text_size" />
+        </RelativeLayout>
 
         <ImageButton
             android:id="@+id/main_header_bt_favorites"
@@ -33,8 +58,8 @@
             android:layout_height="match_parent"
             android:layout_toLeftOf="@+id/main_header_bt_settings"
             android:background="@android:color/transparent"
-            android:src="@drawable/favoritesbutton_white"
-            android:contentDescription="@string/favorite" />
+            android:contentDescription="@string/favorite"
+            android:src="@drawable/favoritesbutton_white" />
 
         <ImageButton
             android:id="@+id/main_header_bt_settings"
@@ -42,8 +67,8 @@
             android:layout_height="match_parent"
             android:layout_toLeftOf="@+id/main_header_bt_more_edit"
             android:background="@android:color/transparent"
-            android:src="@drawable/settingsbutton_white" 
-            android:contentDescription="@string/settings" />
+            android:contentDescription="@string/settings"
+            android:src="@drawable/settingsbutton_white" />
 
         <ImageButton
             android:id="@+id/main_header_bt_more_edit"
@@ -51,27 +76,28 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:background="@android:color/transparent"
-            android:src="@drawable/morebutton_white" 
-            android:contentDescription="@string/more" />
+            android:contentDescription="@string/more"
+            android:src="@drawable/morebutton_white" />
     </RelativeLayout>
-	
+
     <ListView
         android:id="@+id/main_body_listview"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/main_body_margin_top"
         android:layout_above="@+id/main_footer"
+        android:layout_marginTop="@dimen/main_body_margin_top"
         android:cacheColorHint="#00000000"
         android:clickable="true" />
+
     <com.android.drumbeat.DraggableListView
         android:id="@+id/main_body_listview_favorite"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/main_body_margin_top"
         android:layout_above="@+id/main_footer"
+        android:layout_marginTop="@dimen/main_body_margin_top"
         android:cacheColorHint="#00000000"
-        android:clickable="true" 
-        android:visibility="gone"/>
+        android:clickable="true"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/main_body_more"
@@ -79,11 +105,13 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/main_body_margin_top"
         android:visibility="gone" >
-        <TextView 
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/more"/>
+            android:text="@string/more" />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/main_body_settings"
         android:layout_width="match_parent"
@@ -133,31 +161,31 @@
             android:id="@+id/main_body_settings_text_description_countoff"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/main_body_settings_layout_bt_countoff"
             android:layout_marginLeft="@dimen/main_body_settings_text_description_countoff_margin_left"
             android:layout_marginRight="@dimen/main_body_settings_text_description_countoff_margin_right"
             android:layout_marginTop="@dimen/main_body_settings_text_description_countoff_margin_top"
             android:text="@string/main_body_settings_text_description_countoff"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/main_body_settings_text_description_countoff_text_size" 
-            android:layout_below="@+id/main_body_settings_layout_bt_countoff"/>
+            android:textSize="@dimen/main_body_settings_text_description_countoff_text_size" />
 
         <TextView
             android:id="@+id/main_body_settings_text_random_tempo"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/main_body_settings_text_description_countoff"
             android:layout_marginLeft="@dimen/main_body_settings_text_random_tempo_margin_left"
             android:layout_marginTop="@dimen/main_body_settings_text_random_tempo_margin_top"
             android:text="@string/main_body_settings_text_random_tempo"
             android:textColor="@android:color/white"
             android:textSize="@dimen/main_body_settings_text_random_tempo_text_size"
-            android:textStyle="bold"
-            android:layout_below="@+id/main_body_settings_text_description_countoff" />
+            android:textStyle="bold" />
 
         <RelativeLayout
             android:id="@+id/main_body_settings_layout_bt_random_tempo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" 
-            android:layout_below="@+id/main_body_settings_text_random_tempo">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/main_body_settings_text_random_tempo" >
 
             <ToggleButton
                 android:id="@+id/main_body_settings_bt_random_tempo"
@@ -177,43 +205,43 @@
             android:id="@+id/main_body_settings_text_description_random_tempo"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/main_body_settings_layout_bt_random_tempo"
             android:layout_marginLeft="@dimen/main_body_settings_text_description_random_tempo_margin_left"
             android:layout_marginRight="@dimen/main_body_settings_text_description_random_tempo_margin_right"
             android:layout_marginTop="@dimen/main_body_settings_text_description_random_tempo_margin_top"
             android:text="@string/main_body_settings_text_description_random_tempo"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/main_body_settings_text_description_random_tempo_text_size"
-            android:layout_below="@+id/main_body_settings_layout_bt_random_tempo" />
+            android:textSize="@dimen/main_body_settings_text_description_random_tempo_text_size" />
 
         <Button
             android:id="@+id/main_body_settings_bt_ratethisapp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/main_body_settings_text_description_random_tempo"
             android:layout_marginLeft="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
             android:layout_marginRight="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
             android:background="@drawable/btn_settings_top"
-            android:text="@string/main_body_settings_bt_ratethisapp"
-            android:layout_below="@+id/main_body_settings_text_description_random_tempo" />
+            android:text="@string/main_body_settings_bt_ratethisapp" />
 
         <Button
             android:id="@+id/main_body_settings_bt_tellafriend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/main_body_settings_bt_ratethisapp"
             android:layout_marginLeft="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
             android:layout_marginRight="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
             android:background="@drawable/btn_settings_mid"
-            android:text="@string/main_body_settings_bt_tellafriend"
-            android:layout_below="@+id/main_body_settings_bt_ratethisapp"  />
+            android:text="@string/main_body_settings_bt_tellafriend" />
 
         <Button
             android:id="@+id/main_body_settings_bt_sendfeeback"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/main_body_settings_bt_tellafriend"
             android:layout_marginLeft="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
             android:layout_marginRight="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
             android:background="@drawable/btn_settings_bottom"
-            android:text="@string/main_body_settings_bt_sendfeeback" 
-            android:layout_below="@+id/main_body_settings_bt_tellafriend"/>
+            android:text="@string/main_body_settings_bt_sendfeeback" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -221,8 +249,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_footer_height"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/background_main_footer_console" 
-        >
+        android:background="@drawable/background_main_footer_console" >
 
         <Button
             android:id="@+id/main_footer_bt_tempo"
@@ -234,8 +261,8 @@
             android:background="@drawable/btn_tempo"
             android:text="@string/string_default_rate"
             android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/main_footer_bt_play"
@@ -264,9 +291,9 @@
             android:layout_marginBottom="@dimen/main_footer_volume_down_margin_bottom"
             android:layout_marginLeft="@dimen/main_footer_volume_down_margin_left"
             android:background="@null"
+            android:contentDescription="@string/volumnDown"
             android:scaleType="fitCenter"
-            android:src="@drawable/volume_down"
-            android:contentDescription="@string/volumnDown"/>
+            android:src="@drawable/volume_down" />
 
         <!-- Progress Bar/Seek bar -->
 
@@ -293,9 +320,9 @@
             android:layout_marginBottom="@dimen/main_footer_volume_up_margin_bottom"
             android:layout_marginRight="@dimen/main_footer_volume_up_margin_right"
             android:background="@null"
+            android:contentDescription="@string/volumnUp"
             android:scaleType="fitCenter"
-            android:src="@drawable/volume_up"
-            android:contentDescription="@string/volumnUp"/>
+            android:src="@drawable/volume_up" />
 
         <TextView
             android:id="@+id/main_footer_song_name"
@@ -305,12 +332,13 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/main_footer_song_name_margin_bottom" />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/tempo_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:visibility="gone">
+        android:visibility="gone" >
 
         <!-- ListRow Left sied Thumbnail image -->
 
@@ -350,78 +378,79 @@
                 android:background="@android:color/transparent"
                 android:src="@drawable/btn_tempo_down" />
         </RelativeLayout>
-        
-		<RelativeLayout
-		    android:id="@+id/tempo_view_layout_grid_view" 
-		    android:layout_width="wrap_content"
-		    android:layout_height="@dimen/tempo_view_grid_view_height"
-		    android:layout_marginTop="@dimen/main_body_margin_top">
-        <GridView
-            android:id="@+id/tempo_view_grid_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:horizontalSpacing="@dimen/tempo_view_grid_view_horizontalSpacing"
-            android:isScrollContainer="false"
-            android:numColumns="4"
-            android:smoothScrollbar="false"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="@dimen/tempo_view_grid_view_verticalSpacing" 
-            android:background="@drawable/tempo_grid"
-            android:listSelector="@drawable/grid_selector">
-        </GridView>
-        <TextView
-		    android:id="@+id/tempo_view_text_on_top" 
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:textSize="@dimen/tempo_view_text_on_top_text_size"
-		    android:textColor="@android:color/white"
-		    android:textStyle="bold"
-		    android:shadowColor="#000000"
-			android:shadowDx="6"
-            android:shadowDy="6"
-            android:shadowRadius="8"
-		    android:layout_centerInParent="true"
-		    android:visibility="gone"/>
-		</RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/tempo_view_footer"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/tempo_view_footer_height"
-                android:layout_alignParentBottom="true"
-                android:background="@drawable/background_tempo_footer" >
+        <RelativeLayout
+            android:id="@+id/tempo_view_layout_grid_view"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/tempo_view_grid_view_height"
+            android:layout_marginTop="@dimen/main_body_margin_top" >
 
-                <Button
-                    android:id="@+id/tempo_view_footer_bt_done"
-                    android:layout_width="@dimen/tempo_view_footer_bt_done_width"
-                    android:layout_height="@dimen/tempo_view_footer_bt_done_height"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="@dimen/tempo_view_footer_bt_done_margin_left"
-                    android:layout_marginTop="@dimen/tempo_view_footer_bt_done_margin_top"
-                    android:background="@drawable/done_button"
-                    android:textColor="@android:color/white" />
+            <GridView
+                android:id="@+id/tempo_view_grid_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/tempo_grid"
+                android:gravity="center"
+                android:horizontalSpacing="@dimen/tempo_view_grid_view_horizontalSpacing"
+                android:isScrollContainer="false"
+                android:listSelector="@drawable/grid_selector"
+                android:numColumns="4"
+                android:smoothScrollbar="false"
+                android:stretchMode="columnWidth"
+                android:textAlignment="center"
+                android:verticalSpacing="@dimen/tempo_view_grid_view_verticalSpacing" >
+            </GridView>
 
-                <Button
-                    android:id="@+id/tempo_view_footer_bt_playrate"
-                    android:layout_width="@dimen/tempo_view_footer_bt_playrate_width"
-                    android:layout_height="@dimen/tempo_view_footer_bt_playrate_height"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/tempo_view_footer_bt_playrate_margin_top"
-                    android:background="@drawable/btn_play"
-                    android:scaleType="fitXY" />
+            <TextView
+                android:id="@+id/tempo_view_text_on_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:shadowColor="#000000"
+                android:shadowDx="6"
+                android:shadowDy="6"
+                android:shadowRadius="8"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/tempo_view_text_on_top_text_size"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </RelativeLayout>
 
-                <Button
-                    android:id="@+id/tempo_view_footer_bt_randomrate"
-                    android:layout_width="@dimen/tempo_view_footer_bt_randomrate_width"
-                    android:layout_height="@dimen/tempo_view_footer_bt_randomrate_height"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/tempo_view_footer_bt_randomrate_margin_right"
-                    android:layout_marginTop="@dimen/tempo_view_footer_bt_randomrate_margin_top"
-                    android:background="@drawable/btn_dice" />
-            </RelativeLayout>
-        
+        <RelativeLayout
+            android:id="@+id/tempo_view_footer"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/tempo_view_footer_height"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/background_tempo_footer" >
+
+            <Button
+                android:id="@+id/tempo_view_footer_bt_done"
+                android:layout_width="@dimen/tempo_view_footer_bt_done_width"
+                android:layout_height="@dimen/tempo_view_footer_bt_done_height"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/tempo_view_footer_bt_done_margin_left"
+                android:layout_marginTop="@dimen/tempo_view_footer_bt_done_margin_top"
+                android:background="@drawable/done_button"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/tempo_view_footer_bt_playrate"
+                android:layout_width="@dimen/tempo_view_footer_bt_playrate_width"
+                android:layout_height="@dimen/tempo_view_footer_bt_playrate_height"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/tempo_view_footer_bt_playrate_margin_top"
+                android:background="@drawable/btn_play"
+                android:scaleType="fitXY" />
+
+            <Button
+                android:id="@+id/tempo_view_footer_bt_randomrate"
+                android:layout_width="@dimen/tempo_view_footer_bt_randomrate_width"
+                android:layout_height="@dimen/tempo_view_footer_bt_randomrate_height"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/tempo_view_footer_bt_randomrate_margin_right"
+                android:layout_marginTop="@dimen/tempo_view_footer_bt_randomrate_margin_top"
+                android:background="@drawable/btn_dice" />
+        </RelativeLayout>
     </RelativeLayout>
 
 </RelativeLayout>
