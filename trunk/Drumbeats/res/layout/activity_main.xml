@@ -13,7 +13,8 @@
         android:id="@+id/main_header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_header_height"
-        android:background="@drawable/background_main_header" >
+        android:background="@drawable/background_main_header"
+        android:visibility="visible" >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -30,16 +31,16 @@
                 android:background="@android:color/transparent"
                 android:src="@drawable/red_back_arrow" />
 
-            <Button
+            <ImageView
                 android:id="@+id/main_header_bt_logo"
                 android:visibility="visible"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/main_header_bt_logo_width"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="@dimen/main_header_bt_logo_margin_left"
                 android:layout_marginRight="@dimen/main_header_bt_logo_margin_right"
                 android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/logo_button" />
+                android:src="@drawable/logo_button" />
 
             <TextView
                 android:id="@+id/main_header_logo_text"
@@ -87,7 +88,10 @@
         android:layout_above="@+id/main_footer"
         android:layout_marginTop="@dimen/main_body_margin_top"
         android:cacheColorHint="#00000000"
-        android:clickable="true" />
+        android:clickable="true" 
+        android:listSelector="@drawable/list_view_selector"
+        android:choiceMode="singleChoice"
+        android:visibility="visible"/>
 
     <com.android.drumbeat.DraggableListView
         android:id="@+id/main_body_listview_favorite"
@@ -97,7 +101,9 @@
         android:layout_marginTop="@dimen/main_body_margin_top"
         android:cacheColorHint="#00000000"
         android:clickable="true"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:listSelector="@drawable/list_view_selector" 
+        android:choiceMode="singleChoice"/>
 
     <RelativeLayout
         android:id="@+id/main_body_more"
@@ -117,7 +123,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/main_body_margin_top"
-        android:visibility="gone" >
+        android:visibility="visible" >
 
         <TextView
             android:id="@+id/main_body_settings_text_count_off"
@@ -140,7 +146,6 @@
                 android:id="@+id/main_body_settings_bt_countoff"
                 android:layout_width="@dimen/main_body_settings_layout_bt_count_off_bt_width"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
                 android:layout_marginLeft="@dimen/main_body_settings_layout_bt_count_off_bt_margin_left_right" />
 
             <Button
@@ -159,7 +164,7 @@
 
         <TextView
             android:id="@+id/main_body_settings_text_description_countoff"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/main_body_settings_layout_bt_countoff"
             android:layout_marginLeft="@dimen/main_body_settings_text_description_countoff_margin_left"
@@ -171,7 +176,7 @@
 
         <TextView
             android:id="@+id/main_body_settings_text_random_tempo"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/main_body_settings_text_description_countoff"
             android:layout_marginLeft="@dimen/main_body_settings_text_random_tempo_margin_left"
@@ -189,7 +194,7 @@
 
             <ToggleButton
                 android:id="@+id/main_body_settings_bt_random_tempo"
-                android:layout_width="@dimen/main_body_settings_layout_bt_random_tempo_bt_width"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
@@ -218,6 +223,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/main_body_settings_text_description_random_tempo"
+            android:layout_marginTop="@dimen/main_body_settings_bt_ratethisapp_margin_top"
             android:layout_marginLeft="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
             android:layout_marginRight="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
             android:background="@drawable/btn_settings_top"
@@ -249,7 +255,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_footer_height"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/background_main_footer_console" >
+        android:background="@drawable/background_main_footer_console" 
+        android:visibility="visible">
 
         <Button
             android:id="@+id/main_footer_bt_tempo"

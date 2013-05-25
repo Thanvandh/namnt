@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.database.SQLException;
 import android.graphics.Rect;
@@ -55,7 +56,7 @@ public class MainActivity extends Activity {
 	ImageButton bt_more;
 	ImageButton bt_favorite;
 	ImageButton bt_back;
-	Button bt_logo;
+	ImageView img_logo;
 	TextView main_header_text;
 	final int state_main_body_home = 1;
 	final int state_main_body_file = 2;
@@ -123,7 +124,7 @@ public class MainActivity extends Activity {
 		bt_favorite = (ImageButton) findViewById(R.id.main_header_bt_favorites);
 		bt_more = (ImageButton) findViewById(R.id.main_header_bt_more_edit);
 		bt_back = (ImageButton) findViewById(R.id.main_header_bt_back);
-		bt_logo = (Button) findViewById(R.id.main_header_bt_logo);
+		img_logo = (ImageView) findViewById(R.id.main_header_bt_logo);
 		main_header_text = (TextView) findViewById(R.id.main_header_logo_text);
 
 		main_body_list = (ListView) findViewById(R.id.main_body_listview);
@@ -601,7 +602,7 @@ public class MainActivity extends Activity {
 		bt_settings.setImageResource(R.drawable.settingsbutton_white);
 		bt_favorite.setImageResource(R.drawable.favoritesbutton_white);
 		bt_more.setImageResource(R.drawable.morebutton_white);
-		bt_logo.setVisibility(View.VISIBLE);
+		img_logo.setVisibility(View.VISIBLE);
 		bt_back.setVisibility(View.GONE);
 		main_header_text.setVisibility(View.GONE);
 
@@ -654,7 +655,7 @@ public class MainActivity extends Activity {
 		bt_settings.setImageResource(R.drawable.settingsbutton_white);
 		bt_favorite.setImageResource(R.drawable.favoritesbutton_white);
 		bt_more.setImageResource(R.drawable.morebutton_white);
-		bt_logo.setVisibility(View.GONE);
+		img_logo.setVisibility(View.GONE);
 		bt_back.setVisibility(View.VISIBLE);
 		main_header_text.setVisibility(View.VISIBLE);
 		main_header_text.setText(folder);
@@ -703,7 +704,7 @@ public class MainActivity extends Activity {
 		bt_settings.setImageResource(R.drawable.settingsbutton_white);
 		bt_favorite.setImageResource(R.drawable.favoritesbutton_white_pressed);
 		bt_more.setImageResource(R.drawable.edit_button);
-		bt_logo.setVisibility(View.GONE);
+		img_logo.setVisibility(View.GONE);
 		bt_back.setVisibility(View.VISIBLE);
 		main_header_text.setVisibility(View.VISIBLE);
 		main_header_text.setText(R.string.favorite);
@@ -915,7 +916,7 @@ public class MainActivity extends Activity {
 		bt_settings.setImageResource(R.drawable.settingsbutton_white_pressed);
 		bt_favorite.setImageResource(R.drawable.favoritesbutton_white);
 		bt_more.setImageResource(R.drawable.morebutton_white);
-		bt_logo.setVisibility(View.GONE);
+		img_logo.setVisibility(View.GONE);
 		bt_back.setVisibility(View.VISIBLE);
 		main_header_text.setVisibility(View.VISIBLE);
 		main_header_text.setText(R.string.settings);
@@ -980,7 +981,7 @@ public class MainActivity extends Activity {
 		bt_settings.setImageResource(R.drawable.settingsbutton_white);
 		bt_favorite.setImageResource(R.drawable.favoritesbutton_white);
 		bt_more.setImageResource(R.drawable.morebutton_white_pressed);
-		bt_logo.setVisibility(View.GONE);
+		img_logo.setVisibility(View.GONE);
 		bt_back.setVisibility(View.VISIBLE);
 		main_header_text.setVisibility(View.VISIBLE);
 		main_header_text.setText(R.string.more);
@@ -1013,27 +1014,54 @@ public class MainActivity extends Activity {
 		bplay = true;
 		setButtonPlay(bplay);
 		playsong.setText(mfolder + " - " + mfilename);
-//		if (mp != null){
-//			if (mp.isPlaying()){
-//				mp.stop();
-//				//mp.release();
-//				
-//			}
-//			}
-//		else 
-//			mp = new MediaPlayer();
-//		
-//		AssetFileDescriptor file = getResources().getAssets().openFd("music/" + folder + "/" + filename + "/" + filename[rate]);
-//		mplaysong = folder_favorite[lastPosition] + " - " + name_favortie[lastPosition];
-//		mp.reset();
-//		mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
-//		mp.prepare();
-//		mp.setLooping(true);
-//		mp.start();
-//		if (mp.isPlaying())
-//			mp.stop();
-		//mp.se
 		
+		//playMusic(mfolder, mfilename);
+		
+		
+	}
+	
+	private String[] getFileName(String folder, String folderfile){
+		 AssetManager assetManager = getAssets();
+		    String[] files = null;
+		    try {
+		        files = assetManager.list("music/" + folder + "/" + folderfile);
+		    } catch (IOException e) {
+		    	return null;
+		    }
+		    return files;
+		}
+	
+	public void playMusic(String folder, String file){
+		if (mp != null){
+			if (mp.isPlaying()){
+				mp.stop();
+				//mp.release();
+				
+			}
+			}
+		else 
+			mp = new MediaPlayer();
+		final String filename[] = getFileName(folder,  file);
+		int rate = 0;
+		for (int i= 0; i<TextAdapter.arrayrate.length; i++){
+	 		if(srate == TextAdapter.arrayrate[i]){
+	 			rate = i;
+	 			break;
+	 		}
+	 	}
+		AssetFileDescriptor fileplay;
+		try {
+			fileplay = getResources().getAssets().openFd("music/" + folder + "/" + file + "/" + filename[rate]);
+			mp.reset();
+			mp.setDataSource(fileplay.getFileDescriptor(), fileplay.getStartOffset(), fileplay.getLength());
+			mp.prepare();
+			mp.setLooping(true);
+			mp.start();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		
 	}
 	public void stopMusic()
@@ -1048,20 +1076,7 @@ public class MainActivity extends Activity {
 //				
 //			}
 //			}
-//		else 
-//			mp = new MediaPlayer();
 //		
-//		AssetFileDescriptor file = getResources().getAssets().openFd("music/" + folder + "/" + filename + "/" + filename[rate]);
-//		mplaysong = folder_favorite[lastPosition] + " - " + name_favortie[lastPosition];
-//		mp.reset();
-//		mp.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
-//		mp.prepare();
-//		mp.setLooping(true);
-//		mp.start();
-//		if (mp.isPlaying())
-//			mp.stop();
-		//mp.se
-		
 		
 	}
 	

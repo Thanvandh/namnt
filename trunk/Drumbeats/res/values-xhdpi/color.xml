@@ -2,7 +2,6 @@
 <resources>
  <color name="white">#f8f8f8</color>
  <color name="blue">#3f7ee5</color>
- <color name="list_view_item_selected">#1fa9ef</color>
  <color name="blue_item_grid">#003656</color>
  <color name="gray_text">#a4c0d1</color>
 </resources>
