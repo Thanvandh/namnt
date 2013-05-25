@@ -1013,7 +1013,7 @@ public class MainActivity extends Activity {
 	{
 		bplay = true;
 		setButtonPlay(bplay);
-		playsong.setText(mfolder + " - " + mfilename);
+		playsong.setText("･" + mfolder.toUpperCase() + " - " + mfilename.toUpperCase() + " ･");
 		
 		//playMusic(mfolder, mfilename);
 		
