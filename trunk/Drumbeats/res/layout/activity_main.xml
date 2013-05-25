@@ -227,7 +227,8 @@
             android:layout_marginLeft="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
             android:layout_marginRight="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
             android:background="@drawable/btn_settings_top"
-            android:text="@string/main_body_settings_bt_ratethisapp" />
+            android:text="@string/main_body_settings_bt_ratethisapp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/main_body_settings_bt_tellafriend"
@@ -237,7 +238,8 @@
             android:layout_marginLeft="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
             android:layout_marginRight="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
             android:background="@drawable/btn_settings_mid"
-            android:text="@string/main_body_settings_bt_tellafriend" />
+            android:text="@string/main_body_settings_bt_tellafriend"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/main_body_settings_bt_sendfeeback"
@@ -247,7 +249,8 @@
             android:layout_marginLeft="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
             android:layout_marginRight="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
             android:background="@drawable/btn_settings_bottom"
-            android:text="@string/main_body_settings_bt_sendfeeback" />
+            android:text="@string/main_body_settings_bt_sendfeeback"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -297,7 +300,7 @@
             android:id="@+id/main_footer_volume_down"
             android:layout_width="@dimen/main_footer_volume_down_width"
             android:layout_height="@dimen/main_footer_volume_down_height"
-            android:layout_above="@+id/main_footer_song_name"
+            
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/main_footer_volume_down_margin_left"
@@ -312,7 +315,7 @@
             android:id="@+id/main_footer_volumeProgressBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/main_footer_song_name"
+            
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/main_footer_volumeProgressBar_margin_left"
             android:layout_marginRight="@dimen/main_footer_volumeProgressBar_margin_right"
@@ -325,7 +328,7 @@
             android:id="@+id/main_footer_volume_up"
             android:layout_width="@dimen/main_footer_volume_up_width"
             android:layout_height="@dimen/main_footer_volume_up_height"
-            android:layout_above="@+id/main_footer_song_name"
+            
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/main_footer_volume_up_margin_right"
