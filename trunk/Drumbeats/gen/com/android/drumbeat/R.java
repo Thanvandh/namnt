@@ -12,12 +12,15 @@ public final class R {
     }
     public static final class color {
         public static final int blue=0x7f040001;
-        public static final int blue_item_grid=0x7f040002;
-        public static final int gray_text=0x7f040003;
+        public static final int blue_item_grid=0x7f040003;
+        public static final int gray_text=0x7f040004;
+        public static final int list_view_item_selected=0x7f040002;
         public static final int white=0x7f040000;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
+ Default screen margins, per the Android Design guidelines. 
+ Default screen margins, per the Android Design guidelines. 
 
          Customize dimensions originally defined in res/values/dimens.xml (such as
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
@@ -25,105 +28,107 @@ public final class R {
          */
         public static final int activity_horizontal_margin=0x7f050000;
         public static final int activity_vertical_margin=0x7f050001;
-        public static final int list_view_row_height=0x7f050038;
-        public static final int main_body_margin_top=0x7f050022;
-        public static final int main_body_settings_bt_ratethisapp_margin_left_right=0x7f050035;
-        public static final int main_body_settings_bt_sendfeedback_margin_left_right=0x7f050037;
-        public static final int main_body_settings_bt_tellafriend_margin_left_right=0x7f050036;
-        public static final int main_body_settings_layout_bt_count_off_bt_margin_left_right=0x7f050027;
-        public static final int main_body_settings_layout_bt_count_off_bt_width=0x7f050026;
-        public static final int main_body_settings_layout_bt_random_tempo_bt_margin_left_right=0x7f050030;
-        public static final int main_body_settings_layout_bt_random_tempo_bt_width=0x7f05002f;
-        public static final int main_body_settings_text_count_off_margin_left=0x7f050023;
-        public static final int main_body_settings_text_count_off_margin_top=0x7f050024;
-        public static final int main_body_settings_text_count_off_text_size=0x7f050025;
-        public static final int main_body_settings_text_description_countoff_margin_left=0x7f050028;
-        public static final int main_body_settings_text_description_countoff_margin_right=0x7f050029;
-        public static final int main_body_settings_text_description_countoff_margin_top=0x7f05002a;
-        public static final int main_body_settings_text_description_countoff_text_size=0x7f05002b;
-        public static final int main_body_settings_text_description_random_tempo_margin_left=0x7f050031;
-        public static final int main_body_settings_text_description_random_tempo_margin_right=0x7f050032;
-        public static final int main_body_settings_text_description_random_tempo_margin_top=0x7f050033;
-        public static final int main_body_settings_text_description_random_tempo_text_size=0x7f050034;
-        public static final int main_body_settings_text_random_tempo_margin_left=0x7f05002c;
-        public static final int main_body_settings_text_random_tempo_margin_top=0x7f05002d;
-        public static final int main_body_settings_text_random_tempo_text_size=0x7f05002e;
-        public static final int main_footer_bt_play_height=0x7f05000e;
-        public static final int main_footer_bt_play_margin_top=0x7f05000f;
-        public static final int main_footer_bt_play_width=0x7f05000d;
-        public static final int main_footer_bt_random_height=0x7f050011;
-        public static final int main_footer_bt_random_margin_right=0x7f050012;
-        public static final int main_footer_bt_random_margin_top=0x7f050013;
-        public static final int main_footer_bt_random_width=0x7f050010;
-        public static final int main_footer_bt_tempo_height=0x7f05000a;
-        public static final int main_footer_bt_tempo_margin_left=0x7f05000b;
-        public static final int main_footer_bt_tempo_margin_top=0x7f05000c;
-        public static final int main_footer_bt_tempo_width=0x7f050009;
-        public static final int main_footer_height=0x7f050008;
-        public static final int main_footer_song_name_margin_bottom=0x7f050021;
-        public static final int main_footer_volumeProgressBar_margin_bottom=0x7f05001e;
-        public static final int main_footer_volumeProgressBar_margin_left=0x7f05001c;
-        public static final int main_footer_volumeProgressBar_margin_right=0x7f05001d;
-        public static final int main_footer_volumeProgressBar_padding_left=0x7f05001f;
-        public static final int main_footer_volumeProgressBar_padding_right=0x7f050020;
-        public static final int main_footer_volume_down_height=0x7f050015;
-        public static final int main_footer_volume_down_margin_bottom=0x7f050017;
-        public static final int main_footer_volume_down_margin_left=0x7f050016;
-        public static final int main_footer_volume_down_width=0x7f050014;
-        public static final int main_footer_volume_up_height=0x7f050019;
-        public static final int main_footer_volume_up_margin_bottom=0x7f05001b;
-        public static final int main_footer_volume_up_margin_right=0x7f05001a;
-        public static final int main_footer_volume_up_width=0x7f050018;
-        public static final int main_header_bt_button_width=0x7f050007;
-        public static final int main_header_bt_logo_margin_left=0x7f050004;
-        public static final int main_header_bt_logo_margin_right=0x7f050005;
-        public static final int main_header_bt_logo_text_size=0x7f050006;
-        public static final int main_header_bt_logo_width=0x7f050003;
+        public static final int list_view_row_height=0x7f05003a;
+        public static final int main_body_margin_top=0x7f050023;
+        public static final int main_body_settings_bt_ratethisapp_margin_left_right=0x7f050037;
+        public static final int main_body_settings_bt_ratethisapp_margin_top=0x7f050036;
+        public static final int main_body_settings_bt_sendfeedback_margin_left_right=0x7f050039;
+        public static final int main_body_settings_bt_tellafriend_margin_left_right=0x7f050038;
+        public static final int main_body_settings_layout_bt_count_off_bt_margin_left_right=0x7f050028;
+        public static final int main_body_settings_layout_bt_count_off_bt_width=0x7f050027;
+        public static final int main_body_settings_layout_bt_random_tempo_bt_margin_left_right=0x7f050031;
+        public static final int main_body_settings_layout_bt_random_tempo_bt_width=0x7f050030;
+        public static final int main_body_settings_text_count_off_margin_left=0x7f050024;
+        public static final int main_body_settings_text_count_off_margin_top=0x7f050025;
+        public static final int main_body_settings_text_count_off_text_size=0x7f050026;
+        public static final int main_body_settings_text_description_countoff_margin_left=0x7f050029;
+        public static final int main_body_settings_text_description_countoff_margin_right=0x7f05002a;
+        public static final int main_body_settings_text_description_countoff_margin_top=0x7f05002b;
+        public static final int main_body_settings_text_description_countoff_text_size=0x7f05002c;
+        public static final int main_body_settings_text_description_random_tempo_margin_left=0x7f050032;
+        public static final int main_body_settings_text_description_random_tempo_margin_right=0x7f050033;
+        public static final int main_body_settings_text_description_random_tempo_margin_top=0x7f050034;
+        public static final int main_body_settings_text_description_random_tempo_text_size=0x7f050035;
+        public static final int main_body_settings_text_random_tempo_margin_left=0x7f05002d;
+        public static final int main_body_settings_text_random_tempo_margin_top=0x7f05002e;
+        public static final int main_body_settings_text_random_tempo_text_size=0x7f05002f;
+        public static final int main_footer_bt_play_height=0x7f05000f;
+        public static final int main_footer_bt_play_margin_top=0x7f050010;
+        public static final int main_footer_bt_play_width=0x7f05000e;
+        public static final int main_footer_bt_random_height=0x7f050012;
+        public static final int main_footer_bt_random_margin_right=0x7f050013;
+        public static final int main_footer_bt_random_margin_top=0x7f050014;
+        public static final int main_footer_bt_random_width=0x7f050011;
+        public static final int main_footer_bt_tempo_height=0x7f05000b;
+        public static final int main_footer_bt_tempo_margin_left=0x7f05000c;
+        public static final int main_footer_bt_tempo_margin_top=0x7f05000d;
+        public static final int main_footer_bt_tempo_width=0x7f05000a;
+        public static final int main_footer_height=0x7f050009;
+        public static final int main_footer_song_name_margin_bottom=0x7f050022;
+        public static final int main_footer_volumeProgressBar_margin_bottom=0x7f05001f;
+        public static final int main_footer_volumeProgressBar_margin_left=0x7f05001d;
+        public static final int main_footer_volumeProgressBar_margin_right=0x7f05001e;
+        public static final int main_footer_volumeProgressBar_padding_left=0x7f050020;
+        public static final int main_footer_volumeProgressBar_padding_right=0x7f050021;
+        public static final int main_footer_volume_down_height=0x7f050016;
+        public static final int main_footer_volume_down_margin_bottom=0x7f050018;
+        public static final int main_footer_volume_down_margin_left=0x7f050017;
+        public static final int main_footer_volume_down_width=0x7f050015;
+        public static final int main_footer_volume_up_height=0x7f05001a;
+        public static final int main_footer_volume_up_margin_bottom=0x7f05001c;
+        public static final int main_footer_volume_up_margin_right=0x7f05001b;
+        public static final int main_footer_volume_up_width=0x7f050019;
+        public static final int main_header_bt_back_width=0x7f050003;
+        public static final int main_header_bt_button_width=0x7f050008;
+        public static final int main_header_bt_logo_margin_left=0x7f050005;
+        public static final int main_header_bt_logo_margin_right=0x7f050006;
+        public static final int main_header_bt_logo_text_size=0x7f050007;
+        public static final int main_header_bt_logo_width=0x7f050004;
         public static final int main_header_height=0x7f050002;
-        public static final int row_main_body_list_favorite_file_bt_delete_height=0x7f050045;
-        public static final int row_main_body_list_favorite_file_bt_delete_margin_left=0x7f050046;
-        public static final int row_main_body_list_favorite_file_bt_delete_width=0x7f050044;
-        public static final int row_main_body_list_favorite_file_bt_sort_height=0x7f05004c;
-        public static final int row_main_body_list_favorite_file_bt_sort_margin_right=0x7f05004d;
-        public static final int row_main_body_list_favorite_file_bt_sort_width=0x7f05004b;
-        public static final int row_main_body_list_favorite_file_folder_margin_left=0x7f050049;
-        public static final int row_main_body_list_favorite_file_folder_text_size=0x7f05004a;
-        public static final int row_main_body_list_favorite_file_name_margin_left=0x7f050047;
-        public static final int row_main_body_list_favorite_file_name_text_size=0x7f050048;
-        public static final int row_main_body_list_file_favorite_bt_height=0x7f050042;
-        public static final int row_main_body_list_file_favorite_bt_margin_right=0x7f050043;
-        public static final int row_main_body_list_file_favorite_bt_width=0x7f050041;
-        public static final int row_main_body_list_file_name_margin_left=0x7f05003f;
-        public static final int row_main_body_list_file_name_text_size=0x7f050040;
-        public static final int row_main_body_list_file_number_margin_left=0x7f05003d;
-        public static final int row_main_body_list_file_number_text_size=0x7f05003e;
-        public static final int row_main_body_list_home_folder_arrow_margin_right=0x7f05003c;
-        public static final int row_main_body_list_home_folder_margin_left=0x7f050039;
-        public static final int row_main_body_list_home_name_margin_left=0x7f05003a;
-        public static final int row_main_body_list_home_name_text_size=0x7f05003b;
-        public static final int tempo_spacing_bottom=0x7f050056;
-        public static final int tempo_view_footer_bt_done_height=0x7f050058;
-        public static final int tempo_view_footer_bt_done_margin_left=0x7f050059;
-        public static final int tempo_view_footer_bt_done_margin_top=0x7f05005a;
-        public static final int tempo_view_footer_bt_done_width=0x7f050057;
-        public static final int tempo_view_footer_bt_playrate_height=0x7f05005c;
-        public static final int tempo_view_footer_bt_playrate_margin_top=0x7f05005d;
-        public static final int tempo_view_footer_bt_playrate_width=0x7f05005b;
-        public static final int tempo_view_footer_bt_randomrate_height=0x7f05005f;
-        public static final int tempo_view_footer_bt_randomrate_margin_right=0x7f050060;
-        public static final int tempo_view_footer_bt_randomrate_margin_top=0x7f050061;
-        public static final int tempo_view_footer_bt_randomrate_width=0x7f05005e;
-        public static final int tempo_view_footer_height=0x7f050054;
-        public static final int tempo_view_grid_item_height=0x7f050063;
-        public static final int tempo_view_grid_last_item_height=0x7f050064;
-        public static final int tempo_view_grid_view_height=0x7f050051;
-        public static final int tempo_view_grid_view_horizontalSpacing=0x7f050052;
-        public static final int tempo_view_grid_view_verticalSpacing=0x7f050053;
-        public static final int tempo_view_header_decrease_margin_right=0x7f050050;
-        public static final int tempo_view_header_increase_margin_left=0x7f05004f;
-        public static final int tempo_view_header_text_text_size=0x7f05004e;
-        public static final int tempo_view_text_on_top_text_size=0x7f050062;
-        public static final int window_status_bar_height=0x7f050055;
+        public static final int row_main_body_list_favorite_file_bt_delete_height=0x7f050047;
+        public static final int row_main_body_list_favorite_file_bt_delete_margin_left=0x7f050048;
+        public static final int row_main_body_list_favorite_file_bt_delete_width=0x7f050046;
+        public static final int row_main_body_list_favorite_file_bt_sort_height=0x7f05004e;
+        public static final int row_main_body_list_favorite_file_bt_sort_margin_right=0x7f05004f;
+        public static final int row_main_body_list_favorite_file_bt_sort_width=0x7f05004d;
+        public static final int row_main_body_list_favorite_file_folder_margin_left=0x7f05004b;
+        public static final int row_main_body_list_favorite_file_folder_text_size=0x7f05004c;
+        public static final int row_main_body_list_favorite_file_name_margin_left=0x7f050049;
+        public static final int row_main_body_list_favorite_file_name_text_size=0x7f05004a;
+        public static final int row_main_body_list_file_favorite_bt_height=0x7f050044;
+        public static final int row_main_body_list_file_favorite_bt_margin_right=0x7f050045;
+        public static final int row_main_body_list_file_favorite_bt_width=0x7f050043;
+        public static final int row_main_body_list_file_name_margin_left=0x7f050041;
+        public static final int row_main_body_list_file_name_text_size=0x7f050042;
+        public static final int row_main_body_list_file_number_margin_left=0x7f05003f;
+        public static final int row_main_body_list_file_number_text_size=0x7f050040;
+        public static final int row_main_body_list_home_folder_arrow_margin_right=0x7f05003e;
+        public static final int row_main_body_list_home_folder_margin_left=0x7f05003b;
+        public static final int row_main_body_list_home_name_margin_left=0x7f05003c;
+        public static final int row_main_body_list_home_name_text_size=0x7f05003d;
+        public static final int tempo_spacing_bottom=0x7f050058;
+        public static final int tempo_view_footer_bt_done_height=0x7f05005a;
+        public static final int tempo_view_footer_bt_done_margin_left=0x7f05005b;
+        public static final int tempo_view_footer_bt_done_margin_top=0x7f05005c;
+        public static final int tempo_view_footer_bt_done_width=0x7f050059;
+        public static final int tempo_view_footer_bt_playrate_height=0x7f05005e;
+        public static final int tempo_view_footer_bt_playrate_margin_top=0x7f05005f;
+        public static final int tempo_view_footer_bt_playrate_width=0x7f05005d;
+        public static final int tempo_view_footer_bt_randomrate_height=0x7f050061;
+        public static final int tempo_view_footer_bt_randomrate_margin_right=0x7f050062;
+        public static final int tempo_view_footer_bt_randomrate_margin_top=0x7f050063;
+        public static final int tempo_view_footer_bt_randomrate_width=0x7f050060;
+        public static final int tempo_view_footer_height=0x7f050056;
+        public static final int tempo_view_grid_item_height=0x7f050065;
+        public static final int tempo_view_grid_last_item_height=0x7f050066;
+        public static final int tempo_view_grid_view_height=0x7f050053;
+        public static final int tempo_view_grid_view_horizontalSpacing=0x7f050054;
+        public static final int tempo_view_grid_view_verticalSpacing=0x7f050055;
+        public static final int tempo_view_header_decrease_margin_right=0x7f050052;
+        public static final int tempo_view_header_increase_margin_left=0x7f050051;
+        public static final int tempo_view_header_text_text_size=0x7f050050;
+        public static final int tempo_view_text_on_top_text_size=0x7f050064;
+        public static final int window_status_bar_height=0x7f050057;
     }
     public static final class drawable {
         public static final int background_main=0x7f020000;
@@ -161,100 +166,103 @@ public final class R {
         public static final int item_grid_selector=0x7f020020;
         public static final int item_highlight=0x7f020021;
         public static final int item_press=0x7f020022;
-        public static final int logo_button=0x7f020023;
-        public static final int morebutton_white=0x7f020024;
-        public static final int morebutton_white_pressed=0x7f020025;
-        public static final int off_button=0x7f020026;
-        public static final int off_button_pressed=0x7f020027;
-        public static final int onebar_button=0x7f020028;
-        public static final int onebar_button_pressed=0x7f020029;
-        public static final int play_button=0x7f02002a;
-        public static final int play_button_pressed=0x7f02002b;
-        public static final int red_back_arrow=0x7f02002c;
-        public static final int row_highlight=0x7f02002d;
-        public static final int seek_handler=0x7f02002e;
-        public static final int seekbar_progress=0x7f02002f;
-        public static final int seekbar_progress_bg=0x7f020030;
-        public static final int settings_bottom_button=0x7f020031;
-        public static final int settings_bottom_button_pressed=0x7f020032;
-        public static final int settings_mid_button=0x7f020033;
-        public static final int settings_mid_button_pressed=0x7f020034;
-        public static final int settings_top_button=0x7f020035;
-        public static final int settings_top_button_pressed=0x7f020036;
-        public static final int settingsbutton_white=0x7f020037;
-        public static final int settingsbutton_white_pressed=0x7f020038;
-        public static final int sort_favorite_button=0x7f020039;
-        public static final int splash=0x7f02003a;
-        public static final int stop_button=0x7f02003b;
-        public static final int stop_button_pressed=0x7f02003c;
-        public static final int switch_button_off=0x7f02003d;
-        public static final int switch_button_on=0x7f02003e;
-        public static final int tempo_button=0x7f02003f;
-        public static final int tempo_button_pressed=0x7f020040;
-        public static final int tempo_down=0x7f020041;
-        public static final int tempo_down_pressed=0x7f020042;
-        public static final int tempo_grid=0x7f020043;
-        public static final int tempo_up=0x7f020044;
-        public static final int tempo_up_pressed=0x7f020045;
-        public static final int twobars_button=0x7f020046;
-        public static final int twobars_button_pressed=0x7f020047;
-        public static final int volume_down=0x7f020048;
-        public static final int volume_up=0x7f020049;
+        public static final int list_view_selector=0x7f020023;
+        public static final int logo_button=0x7f020024;
+        public static final int morebutton_white=0x7f020025;
+        public static final int morebutton_white_pressed=0x7f020026;
+        public static final int off_button=0x7f020027;
+        public static final int off_button_pressed=0x7f020028;
+        public static final int onebar_button=0x7f020029;
+        public static final int onebar_button_pressed=0x7f02002a;
+        public static final int play_button=0x7f02002b;
+        public static final int play_button_pressed=0x7f02002c;
+        public static final int red_back_arrow=0x7f02002d;
+        public static final int row_highlight=0x7f02002e;
+        public static final int seek_handler=0x7f02002f;
+        public static final int seekbar_progress=0x7f020030;
+        public static final int seekbar_progress_bg=0x7f020031;
+        public static final int settings_bottom_button=0x7f020032;
+        public static final int settings_bottom_button_pressed=0x7f020033;
+        public static final int settings_mid_button=0x7f020034;
+        public static final int settings_mid_button_pressed=0x7f020035;
+        public static final int settings_top_button=0x7f020036;
+        public static final int settings_top_button_pressed=0x7f020037;
+        public static final int settingsbutton_white=0x7f020038;
+        public static final int settingsbutton_white_pressed=0x7f020039;
+        public static final int sort_favorite_button=0x7f02003a;
+        public static final int splash=0x7f02003b;
+        public static final int stop_button=0x7f02003c;
+        public static final int stop_button_pressed=0x7f02003d;
+        public static final int switch_button_off=0x7f02003e;
+        public static final int switch_button_on=0x7f02003f;
+        public static final int tempo_button=0x7f020040;
+        public static final int tempo_button_pressed=0x7f020041;
+        public static final int tempo_down=0x7f020042;
+        public static final int tempo_down_pressed=0x7f020043;
+        public static final int tempo_grid=0x7f020044;
+        public static final int tempo_up=0x7f020045;
+        public static final int tempo_up_pressed=0x7f020046;
+        public static final int twobars_button=0x7f020047;
+        public static final int twobars_button_pressed=0x7f020048;
+        public static final int volume_down=0x7f020049;
+        public static final int volume_up=0x7f02004a;
     }
     public static final class id {
-        public static final int action_settings=0x7f090034;
-        public static final int main_body_listview=0x7f090005;
-        public static final int main_body_listview_favorite=0x7f090007;
-        public static final int main_body_more=0x7f090008;
-        public static final int main_body_settings=0x7f090009;
-        public static final int main_body_settings_bt_countoff=0x7f09000c;
-        public static final int main_body_settings_bt_onebar=0x7f09000d;
-        public static final int main_body_settings_bt_random_tempo=0x7f090012;
-        public static final int main_body_settings_bt_ratethisapp=0x7f090014;
-        public static final int main_body_settings_bt_sendfeeback=0x7f090016;
-        public static final int main_body_settings_bt_tellafriend=0x7f090015;
-        public static final int main_body_settings_bt_twobar=0x7f09000e;
-        public static final int main_body_settings_layout_bt_countoff=0x7f09000b;
-        public static final int main_body_settings_layout_bt_random_tempo=0x7f090011;
-        public static final int main_body_settings_text_count_off=0x7f09000a;
-        public static final int main_body_settings_text_description_countoff=0x7f09000f;
-        public static final int main_body_settings_text_description_random_tempo=0x7f090013;
-        public static final int main_body_settings_text_random_tempo=0x7f090010;
-        public static final int main_footer=0x7f090006;
-        public static final int main_footer_bt_play=0x7f090018;
-        public static final int main_footer_bt_random=0x7f090019;
-        public static final int main_footer_bt_tempo=0x7f090017;
-        public static final int main_footer_song_name=0x7f09001b;
-        public static final int main_footer_volumeProgressBar=0x7f09001c;
-        public static final int main_footer_volume_down=0x7f09001a;
-        public static final int main_footer_volume_up=0x7f09001d;
+        public static final int action_settings=0x7f090036;
+        public static final int main_body_listview=0x7f090007;
+        public static final int main_body_listview_favorite=0x7f090009;
+        public static final int main_body_more=0x7f09000a;
+        public static final int main_body_settings=0x7f09000b;
+        public static final int main_body_settings_bt_countoff=0x7f09000e;
+        public static final int main_body_settings_bt_onebar=0x7f09000f;
+        public static final int main_body_settings_bt_random_tempo=0x7f090014;
+        public static final int main_body_settings_bt_ratethisapp=0x7f090016;
+        public static final int main_body_settings_bt_sendfeeback=0x7f090018;
+        public static final int main_body_settings_bt_tellafriend=0x7f090017;
+        public static final int main_body_settings_bt_twobar=0x7f090010;
+        public static final int main_body_settings_layout_bt_countoff=0x7f09000d;
+        public static final int main_body_settings_layout_bt_random_tempo=0x7f090013;
+        public static final int main_body_settings_text_count_off=0x7f09000c;
+        public static final int main_body_settings_text_description_countoff=0x7f090011;
+        public static final int main_body_settings_text_description_random_tempo=0x7f090015;
+        public static final int main_body_settings_text_random_tempo=0x7f090012;
+        public static final int main_footer=0x7f090008;
+        public static final int main_footer_bt_play=0x7f09001a;
+        public static final int main_footer_bt_random=0x7f09001b;
+        public static final int main_footer_bt_tempo=0x7f090019;
+        public static final int main_footer_song_name=0x7f09001c;
+        public static final int main_footer_volumeProgressBar=0x7f09001e;
+        public static final int main_footer_volume_down=0x7f09001d;
+        public static final int main_footer_volume_up=0x7f09001f;
         public static final int main_header=0x7f090000;
-        public static final int main_header_bt_favorites=0x7f090002;
-        public static final int main_header_bt_logo=0x7f090001;
-        public static final int main_header_bt_more_edit=0x7f090004;
-        public static final int main_header_bt_settings=0x7f090003;
-        public static final int row_main_body_list_favorite_file_bt_delete=0x7f09002a;
-        public static final int row_main_body_list_favorite_file_bt_sort=0x7f09002d;
-        public static final int row_main_body_list_favorite_file_folder=0x7f09002c;
-        public static final int row_main_body_list_favorite_file_name=0x7f09002b;
-        public static final int row_main_body_list_file_favorite_bt=0x7f090030;
-        public static final int row_main_body_list_file_name=0x7f09002f;
-        public static final int row_main_body_list_file_number=0x7f09002e;
-        public static final int row_main_body_list_home_folder=0x7f090031;
-        public static final int row_main_body_list_home_folder_arrow=0x7f090033;
-        public static final int row_main_body_list_home_name=0x7f090032;
-        public static final int tempo_view=0x7f09001e;
-        public static final int tempo_view_footer=0x7f090026;
-        public static final int tempo_view_footer_bt_done=0x7f090027;
-        public static final int tempo_view_footer_bt_playrate=0x7f090028;
-        public static final int tempo_view_footer_bt_randomrate=0x7f090029;
-        public static final int tempo_view_grid_view=0x7f090024;
-        public static final int tempo_view_header=0x7f09001f;
-        public static final int tempo_view_header_decrease=0x7f090022;
-        public static final int tempo_view_header_increase=0x7f090021;
-        public static final int tempo_view_header_text=0x7f090020;
-        public static final int tempo_view_layout_grid_view=0x7f090023;
-        public static final int tempo_view_text_on_top=0x7f090025;
+        public static final int main_header_bt_back=0x7f090002;
+        public static final int main_header_bt_favorites=0x7f090001;
+        public static final int main_header_bt_logo=0x7f090003;
+        public static final int main_header_bt_more_edit=0x7f090006;
+        public static final int main_header_bt_settings=0x7f090005;
+        public static final int main_header_logo_text=0x7f090004;
+        public static final int row_main_body_list_favorite_file_bt_delete=0x7f09002c;
+        public static final int row_main_body_list_favorite_file_bt_sort=0x7f09002f;
+        public static final int row_main_body_list_favorite_file_folder=0x7f09002e;
+        public static final int row_main_body_list_favorite_file_name=0x7f09002d;
+        public static final int row_main_body_list_file_favorite_bt=0x7f090032;
+        public static final int row_main_body_list_file_name=0x7f090031;
+        public static final int row_main_body_list_file_number=0x7f090030;
+        public static final int row_main_body_list_home_folder=0x7f090033;
+        public static final int row_main_body_list_home_folder_arrow=0x7f090035;
+        public static final int row_main_body_list_home_name=0x7f090034;
+        public static final int tempo_view=0x7f090020;
+        public static final int tempo_view_footer=0x7f090028;
+        public static final int tempo_view_footer_bt_done=0x7f090029;
+        public static final int tempo_view_footer_bt_playrate=0x7f09002a;
+        public static final int tempo_view_footer_bt_randomrate=0x7f09002b;
+        public static final int tempo_view_grid_view=0x7f090026;
+        public static final int tempo_view_header=0x7f090021;
+        public static final int tempo_view_header_decrease=0x7f090024;
+        public static final int tempo_view_header_increase=0x7f090023;
+        public static final int tempo_view_header_text=0x7f090022;
+        public static final int tempo_view_layout_grid_view=0x7f090025;
+        public static final int tempo_view_text_on_top=0x7f090027;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -306,9 +314,31 @@ public final class R {
         res/values-v11/styles.xml on API 14+ devices.
     
  API 14 theme customizations can go here. 
+
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    
+
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        
+
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    
+
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        
          */
         public static final int AppBaseTheme=0x7f070000;
         /**  Application theme. 
+ All customizations that are NOT specific to a particular API-level can go here. 
+ Application theme. 
+ All customizations that are NOT specific to a particular API-level can go here. 
+ Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f070001;
