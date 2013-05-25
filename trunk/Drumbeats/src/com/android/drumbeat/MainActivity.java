@@ -54,7 +54,9 @@ public class MainActivity extends Activity {
 	ImageButton bt_settings;
 	ImageButton bt_more;
 	ImageButton bt_favorite;
-	Button bt_back;
+	ImageButton bt_back;
+	Button bt_logo;
+	TextView main_header_text;
 	final int state_main_body_home = 1;
 	final int state_main_body_file = 2;
 	final int state_main_body_favorite = 3;
@@ -120,7 +122,9 @@ public class MainActivity extends Activity {
 		bt_settings = (ImageButton) findViewById(R.id.main_header_bt_settings);
 		bt_favorite = (ImageButton) findViewById(R.id.main_header_bt_favorites);
 		bt_more = (ImageButton) findViewById(R.id.main_header_bt_more_edit);
-		bt_back = (Button) findViewById(R.id.main_header_bt_logo);
+		bt_back = (ImageButton) findViewById(R.id.main_header_bt_back);
+		bt_logo = (Button) findViewById(R.id.main_header_bt_logo);
+		main_header_text = (TextView) findViewById(R.id.main_header_logo_text);
 
 		main_body_list = (ListView) findViewById(R.id.main_body_listview);
 		main_body_settings = (RelativeLayout) findViewById(R.id.main_body_settings);
@@ -134,6 +138,7 @@ public class MainActivity extends Activity {
 		bt_random_console = (Button) findViewById(R.id.main_footer_bt_random);
 		bt_tempo = (Button) findViewById(R.id.main_footer_bt_tempo);
 		playsong = (TextView) findViewById(R.id.main_footer_song_name);
+		volumeProgress = (SeekBar) findViewById(R.id.main_footer_volumeProgressBar); 
 		
 		bt_tempo.setOnClickListener(new OnClickListener() {
 			
@@ -596,9 +601,9 @@ public class MainActivity extends Activity {
 		bt_settings.setImageResource(R.drawable.settingsbutton_white);
 		bt_favorite.setImageResource(R.drawable.favoritesbutton_white);
 		bt_more.setImageResource(R.drawable.morebutton_white);
-		bt_back.setCompoundDrawablesWithIntrinsicBounds(this.getResources()
-				.getDrawable(R.drawable.logo_button), null, null, null);
-		bt_back.setText("");
+		bt_logo.setVisibility(View.VISIBLE);
+		bt_back.setVisibility(View.GONE);
+		main_header_text.setVisibility(View.GONE);
 
 		main_body_settings.setVisibility(View.GONE);
 		main_body_more.setVisibility(View.GONE);
@@ -649,12 +654,13 @@ public class MainActivity extends Activity {
 		bt_settings.setImageResource(R.drawable.settingsbutton_white);
 		bt_favorite.setImageResource(R.drawable.favoritesbutton_white);
 		bt_more.setImageResource(R.drawable.morebutton_white);
-		bt_back.setCompoundDrawablesWithIntrinsicBounds(this.getResources()
-				.getDrawable(R.drawable.red_back_arrow), null, null, null);
-		bt_back.setText(folder);
+		bt_logo.setVisibility(View.GONE);
+		bt_back.setVisibility(View.VISIBLE);
+		main_header_text.setVisibility(View.VISIBLE);
+		main_header_text.setText(folder);
 		Typeface font = Typeface.createFromAsset(getAssets(),
 				"fonts/MYRIADPRO-BOLD.OTF");
-		bt_back.setTypeface(font);
+		main_header_text.setTypeface(font);
 
 		final String[] array_file = getFolderFile(folder);
 		ArrayList<HashMap<String, String>> array_list_file = new ArrayList<HashMap<String, String>>();
@@ -697,12 +703,13 @@ public class MainActivity extends Activity {
 		bt_settings.setImageResource(R.drawable.settingsbutton_white);
 		bt_favorite.setImageResource(R.drawable.favoritesbutton_white_pressed);
 		bt_more.setImageResource(R.drawable.edit_button);
-		bt_back.setCompoundDrawablesWithIntrinsicBounds(this.getResources()
-				.getDrawable(R.drawable.red_back_arrow), null, null, null);
-		bt_back.setText(R.string.favorite);
+		bt_logo.setVisibility(View.GONE);
+		bt_back.setVisibility(View.VISIBLE);
+		main_header_text.setVisibility(View.VISIBLE);
+		main_header_text.setText(R.string.favorite);
 		Typeface font = Typeface.createFromAsset(getAssets(),
 				"fonts/MYRIADPRO-BOLD.OTF");
-		bt_back.setTypeface(font);
+		main_header_text.setTypeface(font);
 
 		main_body_settings.setVisibility(View.GONE);
 		main_body_more.setVisibility(View.GONE);
@@ -908,12 +915,13 @@ public class MainActivity extends Activity {
 		bt_settings.setImageResource(R.drawable.settingsbutton_white_pressed);
 		bt_favorite.setImageResource(R.drawable.favoritesbutton_white);
 		bt_more.setImageResource(R.drawable.morebutton_white);
-		bt_back.setCompoundDrawablesWithIntrinsicBounds(this.getResources()
-				.getDrawable(R.drawable.red_back_arrow), null, null, null);
-		bt_back.setText(R.string.settings);
+		bt_logo.setVisibility(View.GONE);
+		bt_back.setVisibility(View.VISIBLE);
+		main_header_text.setVisibility(View.VISIBLE);
+		main_header_text.setText(R.string.settings);
 		Typeface font = Typeface.createFromAsset(getAssets(),
 				"fonts/MYRIADPRO-BOLD.OTF");
-		bt_back.setTypeface(font);
+		main_header_text.setTypeface(font);
 
 		main_body_list.setVisibility(View.GONE);
 		main_body_more.setVisibility(View.GONE);
@@ -972,9 +980,13 @@ public class MainActivity extends Activity {
 		bt_settings.setImageResource(R.drawable.settingsbutton_white);
 		bt_favorite.setImageResource(R.drawable.favoritesbutton_white);
 		bt_more.setImageResource(R.drawable.morebutton_white_pressed);
-		bt_back.setText(R.string.more);
-		bt_back.setCompoundDrawablesWithIntrinsicBounds(this.getResources()
-				.getDrawable(R.drawable.red_back_arrow), null, null, null);
+		bt_logo.setVisibility(View.GONE);
+		bt_back.setVisibility(View.VISIBLE);
+		main_header_text.setVisibility(View.VISIBLE);
+		main_header_text.setText(R.string.more);
+		Typeface font = Typeface.createFromAsset(getAssets(),
+				"fonts/MYRIADPRO-BOLD.OTF");
+		main_header_text.setTypeface(font);
 
 		main_body_list.setVisibility(View.GONE);
 		main_body_settings.setVisibility(View.GONE);
