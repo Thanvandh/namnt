@@ -36,9 +36,10 @@
                 android:visibility="visible"
                 android:layout_width="@dimen/main_header_bt_logo_width"
                 android:layout_height="match_parent"
-                android:layout_centerInParent="true"
+                android:layout_centerInParent="false"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/main_header_bt_logo_margin_left"
-                android:layout_marginRight="@dimen/main_header_bt_logo_margin_right"
+                
                 android:background="@android:color/transparent"
                 android:src="@drawable/logo_button" />
 
@@ -48,7 +49,9 @@
                 android:text="thu xem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_centerInParent="false"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/main_header_bt_logo_text_margin_left"
                 android:textColor="@color/white"
                 android:textSize="@dimen/main_header_bt_logo_text_size" />
         </RelativeLayout>
