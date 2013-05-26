@@ -54,8 +54,8 @@
     <dimen name="main_body_margin_top">57dp</dimen>
     
     <dimen name="main_body_settings_text_count_off_margin_left">15dp</dimen>
-    <dimen name="main_body_settings_text_count_off_margin_top">5dp</dimen>
-    <dimen name="main_body_settings_text_count_off_text_size">18sp</dimen>
+    <dimen name="main_body_settings_text_count_off_margin_top">10dp</dimen>
+    <dimen name="main_body_settings_text_count_off_text_size">20sp</dimen>
 
     <dimen name="main_body_settings_layout_bt_count_off_bt_width">95dp</dimen>
     <dimen name="main_body_settings_layout_bt_count_off_bt_margin_left_right">15dp</dimen>
@@ -67,7 +67,7 @@
     
     <dimen name="main_body_settings_text_random_tempo_margin_left">15dp</dimen>
     <dimen name="main_body_settings_text_random_tempo_margin_top">5dp</dimen>
-    <dimen name="main_body_settings_text_random_tempo_text_size">18sp</dimen>
+    <dimen name="main_body_settings_text_random_tempo_text_size">20sp</dimen>
 
     <dimen name="main_body_settings_layout_bt_random_tempo_bt_width">290dp</dimen>
     <dimen name="main_body_settings_layout_bt_random_tempo_bt_margin_left_right">15dp</dimen>
@@ -77,7 +77,10 @@
     <dimen name="main_body_settings_text_description_random_tempo_margin_top">5dp</dimen>
     <dimen name="main_body_settings_text_description_random_tempo_text_size">14sp</dimen>
     
-    <dimen name="main_body_settings_bt_ratethisapp_margin_top">5dp</dimen>
+    <dimen name="main_body_settings_text_description_padding">10dp</dimen>
+    <dimen name="main_body_settings_button_text_size">18sp</dimen>
+    
+    <dimen name="main_body_settings_bt_ratethisapp_margin_top">15dp</dimen>
     <dimen name="main_body_settings_bt_ratethisapp_margin_left_right">15dp</dimen>
     <dimen name="main_body_settings_bt_tellafriend_margin_left_right">15dp</dimen>
     <dimen name="main_body_settings_bt_sendfeedback_margin_left_right">15dp</dimen>
