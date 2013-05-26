@@ -11,7 +11,7 @@
         android:id="@+id/row_main_body_list_favorite_file_bt_delete"
         android:layout_width="@dimen/row_main_body_list_favorite_file_bt_delete_width"
         android:layout_height="@dimen/row_main_body_list_favorite_file_bt_delete_height"
-        android:layout_marginRight="@dimen/row_main_body_list_favorite_file_bt_delete_margin_left"
+        android:layout_marginLeft="@dimen/row_main_body_list_favorite_file_bt_delete_margin_left"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:scaleType="center"
@@ -36,7 +36,7 @@
         android:id="@+id/row_main_body_list_favorite_file_folder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/row_main_body_list_favorite_file_folder_margin_left"
+        android:layout_marginRight="@dimen/row_main_body_list_favorite_file_name_margin_left"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:textSize="@dimen/row_main_body_list_favorite_file_folder_text_size"
@@ -54,7 +54,7 @@
         android:background="@null"
         android:clickable="false"
         android:src="@drawable/sort_favorite_button" 
-        android:visibility="gone"/>
+        />
 
 
 </RelativeLayout>

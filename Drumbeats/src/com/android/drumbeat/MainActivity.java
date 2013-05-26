@@ -764,7 +764,7 @@ public class MainActivity extends Activity {
 
 				// Getting adapter
 				FavoritesRowAdapter adapter = new FavoritesRowAdapter(this,
-						array_list_favorite_file, false);
+						array_list_favorite_file, false, 0);
 				main_body_favorite.setAdapter(adapter);
 				main_body_favorite.setmove(false);
 				main_body_favorite.setSmoothScrollbarEnabled(true);
@@ -810,8 +810,9 @@ public class MainActivity extends Activity {
 				}
 
 				// Getting adapter
+				int marginRight = getResources().getDimensionPixelSize(R.dimen.row_main_body_list_favorite_file_folder_margin_right_editmode);
 				row_favorite_adapter = new FavoritesRowAdapter(this,
-						array_list_favorite_file, true);
+						array_list_favorite_file, true, marginRight);
 				main_body_favorite.setDropListener(mDropListener);
 				// main_body_favorite.setRemoveListener(mRemoveListener);
 				main_body_favorite.setDragListener(mDragListener);

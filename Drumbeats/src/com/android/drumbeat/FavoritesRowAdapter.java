@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 
@@ -26,12 +28,14 @@ public class FavoritesRowAdapter extends BaseAdapter {
 	    private ArrayList<HashMap<String, String>> data;
 	    private static LayoutInflater inflater=null;
 	    private boolean meditable;
+	    private int marginRight;
 	    
 		    
-	    public FavoritesRowAdapter(MainActivity a, ArrayList<HashMap<String, String>> d, boolean editable) {
+	    public FavoritesRowAdapter(MainActivity a, ArrayList<HashMap<String, String>> d, boolean editable, int marginR) {
 	        activity = a;
 	        data=d;
 	        meditable = editable;
+	        marginRight = marginR;
 	        inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    }
 
@@ -64,6 +68,10 @@ public class FavoritesRowAdapter extends BaseAdapter {
 	        if (meditable){
 	        	bt_delete.setVisibility(View.VISIBLE);
 	        	bt_sort.setVisibility(View.VISIBLE);
+	        	
+	        	RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)folder.getLayoutParams();
+	        	params.rightMargin = marginRight;//getResources().getDimensionPixelSize(R.dimen.row_main_body_list_favorite_file_folder_margin_right_editmode);
+	        	folder.setLayoutParams(params);
 	        } else {
 	        	bt_delete.setVisibility(View.GONE);
 	        	bt_sort.setVisibility(View.GONE);
