@@ -9,7 +9,6 @@ import java.util.Random;
 import com.android.drumbeat.utils.DatabaseHandler;
 import com.android.drumbeat.utils.Song;
 
-
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -63,7 +62,7 @@ public class MainActivity extends Activity {
 	final int state_main_body_favorite = 3;
 	final int state_main_body_settings = 4;
 	final int state_main_body_more = 5;
-	
+
 	int state_main_body = state_main_body_home;
 	static String KEY_FOLDER = "folder";
 	static String KEY_NAME = "name";
@@ -72,8 +71,8 @@ public class MainActivity extends Activity {
 	RelativeLayout main_body_settings;
 	RelativeLayout main_body_more;
 	DraggableListView main_body_favorite;
-	
-	//main footer
+
+	// main footer
 	RelativeLayout main_footer;
 	Button bt_tempo;
 	Button bt_random_console;
@@ -84,8 +83,8 @@ public class MainActivity extends Activity {
 	boolean bplay = false;
 	String mfolder = "";
 	String mfilename = "";
-	
-	//tempo view
+
+	// tempo view
 	RelativeLayout tempo_view;
 	Button bt_tempo_view_done;
 	Button bt_tempo_view_play;
@@ -98,7 +97,7 @@ public class MainActivity extends Activity {
 	TextView tempo_view_text_on_top;
 	ImageButton bt_tempo_up;
 	ImageButton bt_tempo_down;
-	
+
 	// settings body
 	Button bt_countoff_off;
 	Button bt_countoff_onebar;
@@ -107,7 +106,7 @@ public class MainActivity extends Activity {
 	ToggleButton bt_random;
 	boolean random;
 	SharedPreferences preferences;
-	
+
 	// favorite body
 	ArrayList<HashMap<String, String>> array_list_favorite_file;
 	FavoritesRowAdapter row_favorite_adapter;
@@ -139,29 +138,30 @@ public class MainActivity extends Activity {
 		bt_random_console = (Button) findViewById(R.id.main_footer_bt_random);
 		bt_tempo = (Button) findViewById(R.id.main_footer_bt_tempo);
 		playsong = (TextView) findViewById(R.id.main_footer_song_name);
-		volumeProgress = (SeekBar) findViewById(R.id.main_footer_volumeProgressBar); 
-		
+		volumeProgress = (SeekBar) findViewById(R.id.main_footer_volumeProgressBar);
+
 		bt_tempo.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				showTempoView();
-				
+
 			}
 		});
 		bt_play.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				if (bplay)
 					stopMusic();
-				else playMusic();
+				else
+					playMusic();
 			}
 		});
-		
-		//tempo view
+
+		// tempo view
 		tempo_view = (RelativeLayout) findViewById(R.id.tempo_view);
 		bt_tempo_view_done = (Button) findViewById(R.id.tempo_view_footer_bt_done);
 		bt_tempo_view_play = (Button) findViewById(R.id.tempo_view_footer_bt_playrate);
@@ -169,142 +169,147 @@ public class MainActivity extends Activity {
 		tempo_view_layout_grid = (RelativeLayout) findViewById(R.id.tempo_view_layout_grid_view);
 		tempo_view_grid = (GridView) findViewById(R.id.tempo_view_grid_view);
 		tempo_view_text_on_top = (TextView) findViewById(R.id.tempo_view_text_on_top);
-		
+
 		bt_tempo_down = (ImageButton) findViewById(R.id.tempo_view_header_decrease);
 		bt_tempo_up = (ImageButton) findViewById(R.id.tempo_view_header_increase);
-		
+
 		bt_tempo_view_play.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				if (bplay)
 					stopMusic();
-				else playMusic();
+				else
+					playMusic();
 			}
 		});
 		bt_tempo_down.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Log.d("test", "selecteddown|" + item_selected);
-				if (item_selected != 24 && item_selected != 27){
-				tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_grid_selector);
-				int number = 0;
-				for (int i= 0; i<TextAdapter.arrayrate.length; i++){
-			 		if(srate == TextAdapter.arrayrate[i]){
-			 			number = i;
-			 			break;
-			 		}
-			 	}
-				srate = TextAdapter.arrayrate[number-1];
-			 	Log.d("test", "selecteddownrate|" + srate);
-			 	for (int i= 0; i<TextAdapter.mTemporary.length; i++){
-			 		if(srate == TextAdapter.mTemporary[i]){
-			 			item_selected = i;
-			 			break;
-			 		}
-			 	}
-			 	Log.d("test", "selecteddown|" + item_selected);
-			 	tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_press);
-			 	
-			 	
-			 	if (item_selected == 24){
-			 		bt_tempo_down.setEnabled(false);
-			 		bt_tempo_up.setEnabled(true);
-			 	} else if (item_selected == 3)
-			 	{
-			 		bt_tempo_down.setEnabled(true);
-			 		bt_tempo_up.setEnabled(false);
-			 	}						 		
-			 	else{
-			 		bt_tempo_down.setEnabled(true);
-			 		bt_tempo_up.setEnabled(true);
-			 	}
-				} 
-				
-				
-			}
-		});
-		bt_tempo_up.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Log.d("test", "selectedup|" + item_selected);
-				if (item_selected != 3  && item_selected != 27){
-					tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_grid_selector);
+				if (item_selected != 24 && item_selected != 27) {
+					tempo_view_grid.getChildAt(item_selected)
+							.setBackgroundResource(
+									R.drawable.item_grid_selector);
 					int number = 0;
-					for (int i= 0; i<TextAdapter.arrayrate.length; i++){
-						if(srate == TextAdapter.arrayrate[i]){
+					for (int i = 0; i < TextAdapter.arrayrate.length; i++) {
+						if (srate.equalsIgnoreCase(TextAdapter.arrayrate[i])) {
 							number = i;
 							break;
 						}
 					}
-					srate = TextAdapter.arrayrate[number+1];
+					srate = TextAdapter.arrayrate[number - 1];
+					Log.d("test", "selecteddownrate|" + srate);
+					for (int i = 0; i < TextAdapter.mTemporary.length; i++) {
+						if (srate.equalsIgnoreCase(TextAdapter.mTemporary[i])) {
+							item_selected = i;
+							break;
+						}
+					}
+					Log.d("test", "selecteddown|" + item_selected);
+					tempo_view_grid.getChildAt(item_selected)
+							.setBackgroundResource(R.drawable.item_press);
+
+					if (item_selected == 24) {
+						bt_tempo_down.setEnabled(false);
+						bt_tempo_up.setEnabled(true);
+					} else if (item_selected == 3) {
+						bt_tempo_down.setEnabled(true);
+						bt_tempo_up.setEnabled(false);
+					} else {
+						bt_tempo_down.setEnabled(true);
+						bt_tempo_up.setEnabled(true);
+					}
+					if (bplay)
+						playMusic();
+				}
+
+			}
+		});
+		bt_tempo_up.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Log.d("test", "selectedup|" + item_selected);
+				if (item_selected != 3 && item_selected != 27) {
+					tempo_view_grid.getChildAt(item_selected)
+							.setBackgroundResource(
+									R.drawable.item_grid_selector);
+					int number = 0;
+					for (int i = 0; i < TextAdapter.arrayrate.length; i++) {
+						if (srate.equalsIgnoreCase(TextAdapter.arrayrate[i])) {
+							number = i;
+							break;
+						}
+					}
+					srate = TextAdapter.arrayrate[number + 1];
 					Log.d("test", "selecteduprate|" + srate);
-					for (int i= 0; i<TextAdapter.mTemporary.length; i++){
-						if(srate == TextAdapter.mTemporary[i]){
+					for (int i = 0; i < TextAdapter.mTemporary.length; i++) {
+						if (srate.equalsIgnoreCase(TextAdapter.mTemporary[i])) {
 							item_selected = i;
 							break;
 						}
 					}
 					Log.d("test", "selectedup|" + item_selected);
-					tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_press);
-					if (item_selected == 24){
+					tempo_view_grid.getChildAt(item_selected)
+							.setBackgroundResource(R.drawable.item_press);
+					if (item_selected == 24) {
 						bt_tempo_down.setEnabled(false);
 						bt_tempo_up.setEnabled(true);
-					} else if (item_selected == 3)
-					{
+					} else if (item_selected == 3) {
 						bt_tempo_down.setEnabled(true);
 						bt_tempo_up.setEnabled(false);
-					}						 		
-					else{
+					} else {
 						bt_tempo_down.setEnabled(true);
 						bt_tempo_up.setEnabled(true);
 					}
-				} 
-				
-				
+					if (bplay)
+						playMusic();
+				}
+
 			}
 		});
-		
+
 		bt_tempo_view_random.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Random random = new Random();
-				int j =  random.nextInt(26);
+				int j = random.nextInt(26);
 				srate = TextAdapter.arrayrate[j];
-				tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_grid_selector);
-				//Log.d("test","rate|" +  i + "|" +  rate + "|" + srate);
-				for (int i= 0; i<TextAdapter.mTemporary.length; i++){
-			 		if(srate == TextAdapter.mTemporary[i]){
-			 			item_selected = i;
-			 			break;
-			 		}
-			 	}
-				tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_press);
-				if (item_selected == 24){
-			 		bt_tempo_down.setEnabled(false);
-			 		bt_tempo_up.setEnabled(true);
-			 	} else if (item_selected == 3)
-			 	{
-			 		bt_tempo_down.setEnabled(true);
-			 		bt_tempo_up.setEnabled(false);
-			 	}						 		
-			 	else{
-			 		bt_tempo_down.setEnabled(true);
-			 		bt_tempo_up.setEnabled(true);
-			 	}
-				
+				tempo_view_grid.getChildAt(item_selected)
+						.setBackgroundResource(R.drawable.item_grid_selector);
+				// Log.d("test","rate|" + i + "|" + rate + "|" + srate);
+				for (int i = 0; i < TextAdapter.mTemporary.length; i++) {
+					if (srate.equalsIgnoreCase(TextAdapter.mTemporary[i])) {
+						item_selected = i;
+						break;
+					}
+				}
+				tempo_view_grid.getChildAt(item_selected)
+						.setBackgroundResource(R.drawable.item_press);
+				if (item_selected == 24) {
+					bt_tempo_down.setEnabled(false);
+					bt_tempo_up.setEnabled(true);
+				} else if (item_selected == 3) {
+					bt_tempo_down.setEnabled(true);
+					bt_tempo_up.setEnabled(false);
+				} else {
+					bt_tempo_down.setEnabled(true);
+					bt_tempo_up.setEnabled(true);
+				}
+				if (bplay)
+					playMusic();
 			}
 		});
-		
+
 		bt_tempo_view_done.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -314,125 +319,152 @@ public class MainActivity extends Activity {
 				setRate();
 			}
 		});
-		
+
 		int statusBarHeight = 0;
-		  int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-		  if (resourceId > 0) {
-			  statusBarHeight = getResources().getDimensionPixelSize(resourceId);
-		  }
-		
+		int resourceId = getResources().getIdentifier("status_bar_height",
+				"dimen", "android");
+		if (resourceId > 0) {
+			statusBarHeight = getResources().getDimensionPixelSize(resourceId);
+		}
+
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		tempo_view_layout_grid.getLayoutParams().height = metrics.heightPixels - statusBarHeight - getResources().getDimensionPixelSize(R.dimen.main_header_height) - getResources().getDimensionPixelSize(R.dimen.tempo_view_footer_height) + getResources().getDimensionPixelSize(R.dimen.tempo_spacing_bottom);;
-		tempo_view_layout_grid.setLayoutParams(tempo_view_layout_grid.getLayoutParams());
-//		int itemHeight = tempo_view_grid.getHeight()/7;
-//		item_selected = Integer.valueOf(getResources().getString(R.string.string_default_item_selected));
-//		tempo_view_grid.setAdapter(new TextAdapter(this,itemHeight,itemHeight,item_selected));
-//		int h = metrics.heightPixels;
-//		int h2 = metrics.widthPixels;
+		tempo_view_layout_grid.getLayoutParams().height = metrics.heightPixels
+				- statusBarHeight
+				- getResources().getDimensionPixelSize(
+						R.dimen.main_header_height)
+				- getResources().getDimensionPixelSize(
+						R.dimen.tempo_view_footer_height)
+				+ getResources().getDimensionPixelSize(
+						R.dimen.tempo_spacing_bottom);
+		;
+		tempo_view_layout_grid.setLayoutParams(tempo_view_layout_grid
+				.getLayoutParams());
+		// int itemHeight = tempo_view_grid.getHeight()/7;
+		// item_selected =
+		// Integer.valueOf(getResources().getString(R.string.string_default_item_selected));
+		// tempo_view_grid.setAdapter(new
+		// TextAdapter(this,itemHeight,itemHeight,item_selected));
+		// int h = metrics.heightPixels;
+		// int h2 = metrics.widthPixels;
 		int h = tempo_view_layout_grid.getLayoutParams().height;
-		int gridheight = tempo_view_layout_grid.getLayoutParams().height/7;//getResources().getDimensionPixelSize(R.dimen.tempo_view_grid_item_height);
+		int gridheight = tempo_view_layout_grid.getLayoutParams().height / 7;// getResources().getDimensionPixelSize(R.dimen.tempo_view_grid_item_height);
 		RelativeLayout tempo_footer = (RelativeLayout) findViewById(R.id.tempo_view_footer);
-		tempo_footer.getLayoutParams().height = getResources().getDimensionPixelSize(R.dimen.tempo_view_footer_height) + tempo_view_layout_grid.getLayoutParams().height - gridheight*7;
+		tempo_footer.getLayoutParams().height = getResources()
+				.getDimensionPixelSize(R.dimen.tempo_view_footer_height)
+				+ tempo_view_layout_grid.getLayoutParams().height
+				- gridheight
+				* 7;
 		tempo_footer.setLayoutParams(tempo_footer.getLayoutParams());
-		tempo_view_layout_grid.getLayoutParams().height = gridheight*7;
-		tempo_view_layout_grid.setLayoutParams(tempo_view_layout_grid.getLayoutParams());
-		
-		item_selected = Integer.valueOf(getResources().getString(R.string.string_default_item_selected));
-		tempo_view_grid.setAdapter(new TextAdapter(this,gridheight,gridheight,item_selected));
-//		tempo_view_text_on_top.setLayoutParams(new AbsoluteLayout.LayoutParams(200,200, 200,200));
-		
-		tempo_view_grid.setOnTouchListener(new OnTouchListener(){
+		tempo_view_layout_grid.getLayoutParams().height = gridheight * 7;
+		tempo_view_layout_grid.setLayoutParams(tempo_view_layout_grid
+				.getLayoutParams());
+
+		item_selected = Integer.valueOf(getResources().getString(
+				R.string.string_default_item_selected));
+		tempo_view_grid.setAdapter(new TextAdapter(this, gridheight,
+				gridheight, item_selected));
+		// tempo_view_text_on_top.setLayoutParams(new
+		// AbsoluteLayout.LayoutParams(200,200, 200,200));
+
+		tempo_view_grid.setOnTouchListener(new OnTouchListener() {
 
 			@Override
-				public boolean onTouch(View v, MotionEvent event) {
-					// TODO Auto-generated method stub
-					 if(event.getAction() == MotionEvent.ACTION_MOVE){
-						  int x=(int)event.getX();  
-			              int y=(int)event.getY();  
-			              int row = (y ) / (tempo_view_layout_grid.getLayoutParams().height/7);	
-			              if (row > 6)
-			            	  row = 6;
-			              int col =  x  / (tempo_view_layout_grid.getWidth()/4);
-			              //Log.d("test", "width|" + tempo_view_grid.getWidth() + "|height|" + tempo_view_grid.getHeight());
-			              //Log.d("x-value",""+x);  
-			              lastPos = TextAdapter.matrix[row][col];
-			              if (lastPos != 27){
-			              tempo_view_grid.requestFocusFromTouch();
-			              tempo_view_grid.setSelection(lastPos);
-			              //tempo_view_grid.setSelection(lastPos);
-						  srate = TextAdapter.mTemporary[lastPos];
-						  tempo_view_text_on_top.setVisibility(View.VISIBLE);
-					      tempo_view_text_on_top.setText(srate);
-			              }
-				          return true;
-				        } else if(event.getAction() == MotionEvent.ACTION_DOWN){
-							  int x=(int)event.getX();  
-				              int y=(int)event.getY();  
-				              int row = (y ) / (tempo_view_layout_grid.getLayoutParams().height/7);	
-				              if (row > 6)
-				            	  row = 6;
-				              int col =  x  / (tempo_view_layout_grid.getWidth()/4);
-				              //Log.d("x-value",""+x);  
-				              //Log.d("Y-value",""+y);
-				             
-//				              if (col == 3 && row == 6) {
-//				            	  return true;
-//				              }
-				              
-				              lastPos = TextAdapter.matrix[row][col];
-				              //gridView.setSelection(lastPos);
-				              if (lastPos !=  27){
-				              tempo_view_grid.requestFocusFromTouch();
-				              tempo_view_grid.setSelection(lastPos);
-				              srate = TextAdapter.mTemporary[lastPos];
-				              tempo_view_text_on_top.setVisibility(View.VISIBLE);
-				              tempo_view_text_on_top.setText(srate);
-				              return true;
-				              } else {
-				            	  tempo_view_grid.getChildAt(lastPos).setBackgroundResource(android.R.color.transparent);
-				            	  return true;
-				            	  }
-					            
-					        } 
-					 else if (event.getAction() == MotionEvent.ACTION_UP) {  
-//						 	tempo_view_grid.setSelection(lastPos);
-//						 	tempo_view_grid.requestFocusFromTouch();
-						 	//tempo_view_grid.getChildAt(pos).setBackgroundResource(R.drawable.item_press);
-//						 	if (item_selected == 3) {
-////						 		item_selected = lastPos;
-//						 		return true;
-//						 	}
-						 	if (lastPos != 27){
-						 	tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_grid_selector);
-						 	item_selected = lastPos;
-						 	tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_press);
-						 	if (item_selected == 24){
-						 		bt_tempo_down.setEnabled(false);
-						 		bt_tempo_up.setEnabled(true);
-						 	} else if (item_selected == 3)
-						 	{
-						 		bt_tempo_down.setEnabled(true);
-						 		bt_tempo_up.setEnabled(false);
-						 	}						 		
-						 	else{
-						 		bt_tempo_down.setEnabled(true);
-						 		bt_tempo_up.setEnabled(true);
-						 	}
-							//srate = TextAdapter.mTemporary[lastPos];
-							tempo_view_text_on_top.setVisibility(View.GONE);
-						 	}
-								return true;
-			              }
-				        return false;
-				}
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				if (event.getAction() == MotionEvent.ACTION_MOVE) {
+					int x = (int) event.getX();
+					int y = (int) event.getY();
+					int row = (y)
+							/ (tempo_view_layout_grid.getLayoutParams().height / 7);
+					if (row > 6)
+						row = 6;
+					int col = x / (tempo_view_layout_grid.getWidth() / 4);
+					// Log.d("test", "width|" + tempo_view_grid.getWidth() +
+					// "|height|" + tempo_view_grid.getHeight());
+					// Log.d("x-value",""+x);
+					lastPos = TextAdapter.matrix[row][col];
+					if (lastPos != 27) {
+						tempo_view_grid.requestFocusFromTouch();
+						tempo_view_grid.setSelection(lastPos);
+						// tempo_view_grid.setSelection(lastPos);
+						srate = TextAdapter.mTemporary[lastPos];
+						tempo_view_text_on_top.setVisibility(View.VISIBLE);
+						tempo_view_text_on_top.setText(srate);
+					}
+					return true;
+				} else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					int x = (int) event.getX();
+					int y = (int) event.getY();
+					int row = (y)
+							/ (tempo_view_layout_grid.getLayoutParams().height / 7);
+					if (row > 6)
+						row = 6;
+					int col = x / (tempo_view_layout_grid.getWidth() / 4);
+					// Log.d("x-value",""+x);
+					// Log.d("Y-value",""+y);
 
-			});
-		
+					// if (col == 3 && row == 6) {
+					// return true;
+					// }
+
+					lastPos = TextAdapter.matrix[row][col];
+					// gridView.setSelection(lastPos);
+					if (lastPos != 27) {
+						tempo_view_grid.requestFocusFromTouch();
+						tempo_view_grid.setSelection(lastPos);
+						srate = TextAdapter.mTemporary[lastPos];
+						tempo_view_text_on_top.setVisibility(View.VISIBLE);
+						tempo_view_text_on_top.setText(srate);
+						return true;
+					} else {
+						tempo_view_grid.getChildAt(lastPos)
+								.setBackgroundResource(
+										android.R.color.transparent);
+						return true;
+					}
+
+				} else if (event.getAction() == MotionEvent.ACTION_UP) {
+					// tempo_view_grid.setSelection(lastPos);
+					// tempo_view_grid.requestFocusFromTouch();
+					// tempo_view_grid.getChildAt(pos).setBackgroundResource(R.drawable.item_press);
+					// if (item_selected == 3) {
+					// // item_selected = lastPos;
+					// return true;
+					// }
+					if (lastPos != 27) {
+						tempo_view_grid.getChildAt(item_selected)
+								.setBackgroundResource(
+										R.drawable.item_grid_selector);
+						item_selected = lastPos;
+						tempo_view_grid.getChildAt(item_selected)
+								.setBackgroundResource(R.drawable.item_press);
+						if (item_selected == 24) {
+							bt_tempo_down.setEnabled(false);
+							bt_tempo_up.setEnabled(true);
+						} else if (item_selected == 3) {
+							bt_tempo_down.setEnabled(true);
+							bt_tempo_up.setEnabled(false);
+						} else {
+							bt_tempo_down.setEnabled(true);
+							bt_tempo_up.setEnabled(true);
+						}
+						// srate = TextAdapter.mTemporary[lastPos];
+						tempo_view_text_on_top.setVisibility(View.GONE);
+						if (bplay)
+							playMusic();
+					}
+					return true;
+				}
+				return false;
+			}
+
+		});
+
 		// settings body
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		
-		//favorite body
+
+		// favorite body
 		myDbHelper = new DatabaseHandler(this);
 		try {
 			myDbHelper.createDataBase();
@@ -511,7 +543,7 @@ public class MainActivity extends Activity {
 					state_main_body = state_main_body_more;
 					showMainBody(state_main_body);
 				} else {
-					if (!state_edit){
+					if (!state_edit) {
 						state_edit = true;
 						bt_more.setImageResource(R.drawable.edit_done_button);
 						showMainBodyFavoriteEdit();
@@ -520,7 +552,7 @@ public class MainActivity extends Activity {
 						bt_more.setImageResource(R.drawable.edit_button);
 						showMainBodyFavorite();
 					}
-					
+
 				}
 			}
 		});
@@ -558,45 +590,40 @@ public class MainActivity extends Activity {
 			break;
 		}
 	}
-	public void setRate(){
+
+	public void setRate() {
 		bt_tempo.setText(srate);
 	}
-	private void initControlsvolume()
-    {
-        try
-        {
-        	final AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
-        	volumeProgress.setMax(audioManager
-                    .getStreamMaxVolume(AudioManager.STREAM_MUSIC));
-        	volumeProgress.setProgress(audioManager
-                    .getStreamVolume(AudioManager.STREAM_MUSIC));   
 
+	private void initControlsvolume() {
+		try {
+			final AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+			volumeProgress.setMax(audioManager
+					.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+			volumeProgress.setProgress(audioManager
+					.getStreamVolume(AudioManager.STREAM_MUSIC));
 
-        	volumeProgress.setOnSeekBarChangeListener(new OnSeekBarChangeListener() 
-            {
-                @Override
-                public void onStopTrackingTouch(SeekBar arg0) 
-                {
-                }
+			volumeProgress
+					.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+						@Override
+						public void onStopTrackingTouch(SeekBar arg0) {
+						}
 
-                @Override
-                public void onStartTrackingTouch(SeekBar arg0) 
-                {
-                }
+						@Override
+						public void onStartTrackingTouch(SeekBar arg0) {
+						}
 
-                @Override
-                public void onProgressChanged(SeekBar arg0, int progress, boolean arg2) 
-                {
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
-                            progress, 0);
-                }
-            });
-        }
-        catch (Exception e) 
-        {
-            e.printStackTrace();
-        }
-    }
+						@Override
+						public void onProgressChanged(SeekBar arg0,
+								int progress, boolean arg2) {
+							audioManager.setStreamVolume(
+									AudioManager.STREAM_MUSIC, progress, 0);
+						}
+					});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void showMainBodyHome() {
 		bt_settings.setImageResource(R.drawable.settingsbutton_white);
@@ -717,137 +744,144 @@ public class MainActivity extends Activity {
 		main_body_list.setVisibility(View.GONE);
 		main_body_favorite.setVisibility(View.VISIBLE);
 		main_footer.setVisibility(View.VISIBLE);
-		
+
 		state_edit = false;
 
 		try {
-			
-			 myDbHelper.openDataBase();
-			 favorite_songs = myDbHelper.getFavariteSong();
-			 myDbHelper.close();
-			 if (favorite_songs != null){
-				 array_list_favorite_file = new ArrayList<HashMap<String, String>>();
 
-					for (int i = 0; i < favorite_songs.size(); i++) {
-						HashMap<String, String> map = new HashMap<String, String>();
-						map.put(KEY_FOLDER, favorite_songs.get(i).getFolder());
-						map.put(KEY_NAME, favorite_songs.get(i).getName());
-						array_list_favorite_file.add(map);
-					}
+			myDbHelper.openDataBase();
+			favorite_songs = myDbHelper.getFavariteSong();
+			myDbHelper.close();
+			if (favorite_songs != null) {
+				array_list_favorite_file = new ArrayList<HashMap<String, String>>();
 
-					// Getting adapter
-					FavoritesRowAdapter adapter = new FavoritesRowAdapter(this,
-							array_list_favorite_file, false);
-					main_body_favorite.setAdapter(adapter);
-					main_body_favorite.setmove(false);
-					main_body_favorite.setSmoothScrollbarEnabled(true);
-			 } else{
-				 main_body_favorite.setAdapter(null);
-			 }
-			 main_body_favorite.setOnItemClickListener(new OnItemClickListener() {
+				for (int i = 0; i < favorite_songs.size(); i++) {
+					HashMap<String, String> map = new HashMap<String, String>();
+					map.put(KEY_FOLDER, favorite_songs.get(i).getFolder());
+					map.put(KEY_NAME, favorite_songs.get(i).getName());
+					array_list_favorite_file.add(map);
+				}
 
-					@Override
-					public void onItemClick(AdapterView<?> arg0, View arg1,
-							int postion, long arg3) {
-						// TODO Auto-generated method stub
-						mfolder = favorite_songs.get(postion).getFolder();
-						mfilename = favorite_songs.get(postion).getName();
-						playMusic();
+				// Getting adapter
+				FavoritesRowAdapter adapter = new FavoritesRowAdapter(this,
+						array_list_favorite_file, false);
+				main_body_favorite.setAdapter(adapter);
+				main_body_favorite.setmove(false);
+				main_body_favorite.setSmoothScrollbarEnabled(true);
+			} else {
+				main_body_favorite.setAdapter(null);
+			}
+			main_body_favorite
+					.setOnItemClickListener(new OnItemClickListener() {
 
-					}
-				});
-			 
-			 
-			 }catch(SQLException sqle){
-			  
-			 throw sqle;
-			  
-			 }
+						@Override
+						public void onItemClick(AdapterView<?> arg0, View arg1,
+								int postion, long arg3) {
+							// TODO Auto-generated method stub
+							mfolder = favorite_songs.get(postion).getFolder();
+							mfilename = favorite_songs.get(postion).getName();
+							playMusic();
+
+						}
+					});
+
+		} catch (SQLException sqle) {
+
+			throw sqle;
+
+		}
 
 	}
+
 	public void showMainBodyFavoriteEdit() {
 		try {
-			
-			 myDbHelper.openDataBase();
-			 favorite_songs = myDbHelper.getFavariteSong();
-			 myDbHelper.close();
-			 if (favorite_songs != null){
-				 array_list_favorite_file = new ArrayList<HashMap<String, String>>();
 
-					for (int i = 0; i < favorite_songs.size(); i++) {
-						HashMap<String, String> map = new HashMap<String, String>();
-						map.put(KEY_FOLDER, favorite_songs.get(i).getFolder());
-						map.put(KEY_NAME, favorite_songs.get(i).getName());
-						array_list_favorite_file.add(map);
-					}
+			myDbHelper.openDataBase();
+			favorite_songs = myDbHelper.getFavariteSong();
+			myDbHelper.close();
+			if (favorite_songs != null) {
+				array_list_favorite_file = new ArrayList<HashMap<String, String>>();
 
-					// Getting adapter
-					row_favorite_adapter = new FavoritesRowAdapter(this,
-							array_list_favorite_file, true);
-					main_body_favorite.setDropListener(mDropListener);
-					//main_body_favorite.setRemoveListener(mRemoveListener);
-					main_body_favorite.setDragListener(mDragListener);
-					main_body_favorite.setAdapter(row_favorite_adapter);
-					main_body_favorite.setmove(true);
-					main_body_favorite.setSmoothScrollbarEnabled(true);
-			 } else{
-				 main_body_favorite.setAdapter(null);
-			 }
-			 main_body_favorite.setOnItemClickListener(new OnItemClickListener() {
+				for (int i = 0; i < favorite_songs.size(); i++) {
+					HashMap<String, String> map = new HashMap<String, String>();
+					map.put(KEY_FOLDER, favorite_songs.get(i).getFolder());
+					map.put(KEY_NAME, favorite_songs.get(i).getName());
+					array_list_favorite_file.add(map);
+				}
+
+				// Getting adapter
+				row_favorite_adapter = new FavoritesRowAdapter(this,
+						array_list_favorite_file, true);
+				main_body_favorite.setDropListener(mDropListener);
+				// main_body_favorite.setRemoveListener(mRemoveListener);
+				main_body_favorite.setDragListener(mDragListener);
+				main_body_favorite.setAdapter(row_favorite_adapter);
+				main_body_favorite.setmove(true);
+				main_body_favorite.setSmoothScrollbarEnabled(true);
+			} else {
+				main_body_favorite.setAdapter(null);
+			}
+			main_body_favorite
+					.setOnItemClickListener(new OnItemClickListener() {
+
+						@Override
+						public void onItemClick(AdapterView<?> arg0, View arg1,
+								int postion, long arg3) {
+							// TODO Auto-generated method stub
+
+						}
+					});
+
+		} catch (SQLException sqle) {
+
+			throw sqle;
+
+		}
+
+	}
+
+	public void openRemoveDialog(final int position) {
+		AlertDialog.Builder RemoveDialog = new AlertDialog.Builder(
+				MainActivity.this);
+		RemoveDialog.setTitle("Do you remove this song from favorite list?");
+
+		RemoveDialog.setPositiveButton("Yes",
+				new DialogInterface.OnClickListener() {
 
 					@Override
-					public void onItemClick(AdapterView<?> arg0, View arg1,
-							int postion, long arg3) {
-						// TODO Auto-generated method stub
-						
+					public void onClick(DialogInterface dialog, int which) {
+						removefavorite(position);
+						favorite_songs.remove(position);
+						array_list_favorite_file.remove(position);
+						row_favorite_adapter.notifyDataSetChanged();
 
 					}
 				});
-			 
-			 }catch(SQLException sqle){
-			  
-			 throw sqle;
-			  
-			 }
-		 
-		
+		RemoveDialog.setNegativeButton("No",
+				new DialogInterface.OnClickListener() {
 
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
+		RemoveDialog.show();
 	}
-	public void openRemoveDialog(final int position){
-	  	  AlertDialog.Builder RemoveDialog 
-	  	   = new AlertDialog.Builder(MainActivity.this);
-	  	RemoveDialog.setTitle("Do you remove this song from favorite list?");
-	  	  
-	  	RemoveDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					removefavorite(position);
-					favorite_songs.remove(position);
-					array_list_favorite_file.remove(position);
-					row_favorite_adapter.notifyDataSetChanged();
-					
-					
-				}
-	  	  });   	  
-	  	RemoveDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
 
-	  		  public void onClick(DialogInterface dialog, int which) {
-	  	    // TODO Auto-generated method stub
-	  	    
-	  	   }});
-	  	  
-	  	RemoveDialog.show();
-	  	 }
 	public void removefavorite(int position) {
-			myDbHelper.openDataBase();
-			myDbHelper.removefavorite(favorite_songs.get(position).getFolder(), favorite_songs.get(position).getName());
-			myDbHelper.close();
-		}
+		myDbHelper.openDataBase();
+		myDbHelper.removefavorite(favorite_songs.get(position).getFolder(),
+				favorite_songs.get(position).getName());
+		myDbHelper.close();
+	}
+
 	private String[] getFavoriteFile() {
 
 		// String[] files = null;
-		String[] files = { "audio 1", " bai hay", "thu thoi", "the nhi", " bai hay", "thu thoi", "the nhi", " bai hay", "thu thoi", "the nhi" };
+		String[] files = { "audio 1", " bai hay", "thu thoi", "the nhi",
+				" bai hay", "thu thoi", "the nhi", " bai hay", "thu thoi",
+				"the nhi" };
 
 		return files;
 	}
@@ -876,18 +910,18 @@ public class MainActivity extends Activity {
 			// myListView.invalidateViews();
 		}
 	};
-//
-//	private RemoveListener mRemoveListener = new RemoveListener() {
-//		public void onRemove(int which) {
-//			 if (which < 0 || which > array_favorite_file.length) return;
-//			// iodernumber.remove(which);
-//			// myListView.invalidateViews();
-//		}
-//	};
+	//
+	// private RemoveListener mRemoveListener = new RemoveListener() {
+	// public void onRemove(int which) {
+	// if (which < 0 || which > array_favorite_file.length) return;
+	// // iodernumber.remove(which);
+	// // myListView.invalidateViews();
+	// }
+	// };
 
 	private DragListener mDragListener = new DragListener() {
 
-		//int backgroundColor;
+		// int backgroundColor;
 		int defaultBackgroundColor;
 
 		public void onDrag(int x, int y, ListView listView) {
@@ -996,9 +1030,9 @@ public class MainActivity extends Activity {
 		main_body_more.setVisibility(View.VISIBLE);
 
 	}
-	
+
 	public void showTempoView() {
-	
+
 		main_header.setVisibility(View.GONE);
 		main_body_list.setVisibility(View.GONE);
 		main_body_settings.setVisibility(View.GONE);
@@ -1006,54 +1040,53 @@ public class MainActivity extends Activity {
 		main_footer.setVisibility(View.GONE);
 		main_body_more.setVisibility(View.GONE);
 		tempo_view.setVisibility(View.VISIBLE);
-		
+
 	}
-	
-	public void playMusic()
-	{
+
+	public void playMusic() {
 		bplay = true;
 		setButtonPlay(bplay);
 		playsong.setText("･" + mfolder.toUpperCase() + " - " + mfilename.toUpperCase() + " ･");
-		
-		//playMusic(mfolder, mfilename);
-		
-		
+
+		playMusic(mfolder, mfilename);
+
 	}
-	
-	private String[] getFileName(String folder, String folderfile){
-		 AssetManager assetManager = getAssets();
-		    String[] files = null;
-		    try {
-		        files = assetManager.list("music/" + folder + "/" + folderfile);
-		    } catch (IOException e) {
-		    	return null;
-		    }
-		    return files;
+
+	private String[] getFileName(String folder, String folderfile) {
+		AssetManager assetManager = getAssets();
+		String[] files = null;
+		try {
+			files = assetManager.list("music/" + folder + "/" + folderfile);
+		} catch (IOException e) {
+			return null;
 		}
-	
-	public void playMusic(String folder, String file){
-		if (mp != null){
-			if (mp.isPlaying()){
+		return files;
+	}
+
+	public void playMusic(String folder, String file) {
+		if (mp != null) {
+			if (mp.isPlaying()) {
 				mp.stop();
-				//mp.release();
-				
+				// mp.release();
+
 			}
-			}
-		else 
+		} else
 			mp = new MediaPlayer();
-		final String filename[] = getFileName(folder,  file);
+		final String filename[] = getFileName(folder, file);
 		int rate = 0;
-		for (int i= 0; i<TextAdapter.arrayrate.length; i++){
-	 		if(srate == TextAdapter.arrayrate[i]){
-	 			rate = i;
-	 			break;
-	 		}
-	 	}
+		for (int i = 0; i < TextAdapter.arrayrate.length; i++) {
+			if (srate.equalsIgnoreCase(TextAdapter.arrayrate[i])) {
+				rate = i;
+				break;
+			}
+		}
 		AssetFileDescriptor fileplay;
 		try {
-			fileplay = getResources().getAssets().openFd("music/" + folder + "/" + file + "/" + filename[rate]);
+			fileplay = getResources().getAssets().openFd(
+					"music/" + folder + "/" + file + "/" + filename[rate]);
 			mp.reset();
-			mp.setDataSource(fileplay.getFileDescriptor(), fileplay.getStartOffset(), fileplay.getLength());
+			mp.setDataSource(fileplay.getFileDescriptor(),
+					fileplay.getStartOffset(), fileplay.getLength());
 			mp.prepare();
 			mp.setLooping(true);
 			mp.start();
@@ -1062,44 +1095,70 @@ public class MainActivity extends Activity {
 			e.printStackTrace();
 		}
 
-		
 	}
-	public void stopMusic()
-	{
+
+	public void stopMusic() {
 		bplay = false;
 		setButtonPlay(bplay);
 		playsong.setText("");
-//		if (mp != null){
-//			if (mp.isPlaying()){
-//				mp.stop();
-//				//mp.release();
-//				
-//			}
-//			}
-//		
+		 if (mp != null){
+		 if (mp.isPlaying()){
+		 mp.stop();
+		 //mp.release();
 		
+		 }
+		 }
+		
+
 	}
-	
-	public void setButtonPlay(boolean b){
-		if (b){
+
+	public void setButtonPlay(boolean b) {
+		if (b) {
 			bt_play.setBackgroundResource(R.drawable.btn_stop);
 			bt_tempo_view_play.setBackgroundResource(R.drawable.btn_stop);
 		} else {
 			bt_play.setBackgroundResource(R.drawable.btn_play);
 			bt_tempo_view_play.setBackgroundResource(R.drawable.btn_play);
 		}
-			
-			
+
 	}
+	private void openQuitDialog(){
+	  	  AlertDialog.Builder quitDialog 
+	  	   = new AlertDialog.Builder(MainActivity.this);
+	  	  quitDialog.setTitle("Confirm to Quit?");
+	  	  
+	  	  quitDialog.setPositiveButton("OK, Quit!", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					stopMusic();
+					finish();
+					
+					
+					
+				}
+	  	  });   	  
+	  	  quitDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
 
+	  		  public void onClick(DialogInterface dialog, int which) {
+	  	    // TODO Auto-generated method stub
+	  	    
+	  	   }});
+	  	  
+	  	  quitDialog.show();
+	  	 }
 
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		// Inflate the menu; this adds items to the action bar if it is present.
-//		getMenuInflater().inflate(R.menu.main, menu);
-//		return true;
-//	}
-//
+	@Override
+	  public void onBackPressed() {
+		openQuitDialog(); 
+	  }
 
+	// @Override
+	// public boolean onCreateOptionsMenu(Menu menu) {
+	// // Inflate the menu; this adds items to the action bar if it is present.
+	// getMenuInflater().inflate(R.menu.main, menu);
+	// return true;
+	// }
+	//
 
 }
