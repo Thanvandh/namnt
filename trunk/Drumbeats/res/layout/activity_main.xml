@@ -143,45 +143,51 @@
             android:id="@+id/main_body_settings_layout_bt_countoff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="5dp"
             android:layout_below="@+id/main_body_settings_text_count_off" >
 
             <Button
                 android:id="@+id/main_body_settings_bt_countoff"
-                android:layout_width="@dimen/main_body_settings_layout_bt_count_off_bt_width"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/main_body_settings_layout_bt_count_off_bt_margin_left_right" />
+                android:layout_alignTop="@+id/main_body_settings_bt_onebar" 
+                android:layout_toLeftOf="@+id/main_body_settings_bt_onebar" />
 
             <Button
                 android:id="@+id/main_body_settings_bt_onebar"
-                android:layout_width="@dimen/main_body_settings_layout_bt_count_off_bt_width"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true" />
+                android:layout_centerHorizontal="true" />
 
             <Button
                 android:id="@+id/main_body_settings_bt_twobar"
-                android:layout_width="@dimen/main_body_settings_layout_bt_count_off_bt_width"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/main_body_settings_layout_bt_count_off_bt_margin_left_right" />
-        </RelativeLayout>
-
-        <TextView
+                android:layout_alignTop="@+id/main_body_settings_bt_onebar"
+                android:layout_toRightOf="@+id/main_body_settings_bt_onebar" />
+            
+            <TextView
             android:id="@+id/main_body_settings_text_description_countoff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/main_body_settings_layout_bt_countoff"
-            android:layout_marginLeft="@dimen/main_body_settings_text_description_countoff_margin_left"
-            android:layout_marginRight="@dimen/main_body_settings_text_description_countoff_margin_right"
+            android:layout_below="@+id/main_body_settings_bt_onebar"
+            android:layout_alignLeft="@+id/main_body_settings_bt_countoff"
+            android:layout_alignRight="@+id/main_body_settings_bt_twobar"
             android:layout_marginTop="@dimen/main_body_settings_text_description_countoff_margin_top"
+            android:paddingLeft="@dimen/main_body_settings_text_description_padding"
+            android:paddingRight="@dimen/main_body_settings_text_description_padding"
             android:text="@string/main_body_settings_text_description_countoff"
             android:textColor="@android:color/white"
             android:textSize="@dimen/main_body_settings_text_description_countoff_text_size" />
+            
+        </RelativeLayout>
 
+        
         <TextView
             android:id="@+id/main_body_settings_text_random_tempo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/main_body_settings_text_description_countoff"
+            android:layout_below="@+id/main_body_settings_layout_bt_countoff"
             android:layout_marginLeft="@dimen/main_body_settings_text_random_tempo_margin_left"
             android:layout_marginTop="@dimen/main_body_settings_text_random_tempo_margin_top"
             android:text="@string/main_body_settings_text_random_tempo"
@@ -193,66 +199,67 @@
             android:id="@+id/main_body_settings_layout_bt_random_tempo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="5dp"
             android:layout_below="@+id/main_body_settings_text_random_tempo" >
 
             <ToggleButton
                 android:id="@+id/main_body_settings_bt_random_tempo"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/main_body_settings_layout_bt_random_tempo_bt_margin_left_right"
-                android:layout_marginRight="@dimen/main_body_settings_layout_bt_random_tempo_bt_margin_left_right"
                 android:background="@drawable/btn_random_off"
                 android:button="@null"
                 android:textOff=""
                 android:textOn="" />
-        </RelativeLayout>
-
-        <TextView
+            
+            <TextView
             android:id="@+id/main_body_settings_text_description_random_tempo"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/main_body_settings_layout_bt_random_tempo"
-            android:layout_marginLeft="@dimen/main_body_settings_text_description_random_tempo_margin_left"
-            android:layout_marginRight="@dimen/main_body_settings_text_description_random_tempo_margin_right"
+            android:layout_below="@+id/main_body_settings_bt_random_tempo"
+            android:layout_alignLeft="@+id/main_body_settings_bt_random_tempo"
+            android:layout_alignRight="@+id/main_body_settings_bt_random_tempo"
             android:layout_marginTop="@dimen/main_body_settings_text_description_random_tempo_margin_top"
+            android:paddingLeft="@dimen/main_body_settings_text_description_padding"
+            android:paddingRight="@dimen/main_body_settings_text_description_padding"
             android:text="@string/main_body_settings_text_description_random_tempo"
             android:textColor="@android:color/white"
             android:textSize="@dimen/main_body_settings_text_description_random_tempo_text_size" />
+            
+        </RelativeLayout>
 
         <Button
             android:id="@+id/main_body_settings_bt_ratethisapp"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/main_body_settings_text_description_random_tempo"
+            android:layout_below="@+id/main_body_settings_layout_bt_random_tempo"
             android:layout_marginTop="@dimen/main_body_settings_bt_ratethisapp_margin_top"
-            android:layout_marginLeft="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
-            android:layout_marginRight="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/btn_settings_top"
             android:text="@string/main_body_settings_bt_ratethisapp"
+            android:textSize="@dimen/main_body_settings_button_text_size"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/main_body_settings_bt_tellafriend"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/main_body_settings_bt_ratethisapp"
-            android:layout_marginLeft="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
-            android:layout_marginRight="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/btn_settings_mid"
             android:text="@string/main_body_settings_bt_tellafriend"
+            android:textSize="@dimen/main_body_settings_button_text_size"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/main_body_settings_bt_sendfeeback"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/main_body_settings_bt_tellafriend"
-            android:layout_marginLeft="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
-            android:layout_marginRight="@dimen/main_body_settings_bt_ratethisapp_margin_left_right"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/btn_settings_bottom"
             android:text="@string/main_body_settings_bt_sendfeeback"
+            android:textSize="@dimen/main_body_settings_button_text_size"
             android:textStyle="bold" />
     </RelativeLayout>
 
