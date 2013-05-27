@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/more_list_view_row_height"
+    >
+
+	<LinearLayout 
+	    android:layout_width="wrap_content"
+	    android:layout_height="@dimen/more_list_view_row_height"></LinearLayout>
+    <ImageView
+        android:id="@+id/row_main_body_more_listview_logo"
+        android:layout_width="@dimen/row_main_body_more_listview_logo_width"
+        android:layout_height="@dimen/row_main_body_more_listview_logo_height"
+        android:layout_marginLeft="@dimen/row_main_body_more_listview_logo_margin_left"
+        android:layout_marginTop="@dimen/row_main_body_more_listview_logo_margin_top"
+        android:layout_marginBottom="@dimen/row_main_body_more_listview_logo_margin_bottom"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:scaleType="fitCenter"
+        android:background="@null"
+        android:src="@drawable/rnb_essentials1_icon" />
+    
+    <TextView
+        android:id="@+id/row_main_body_more_listview_text_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/row_main_body_more_listview_text_header_margin_left"
+        android:layout_marginTop="@dimen/row_main_body_more_listview_text_header_margin_top"
+        android:layout_toRightOf="@+id/row_main_body_more_listview_logo"
+        android:text= "R B"
+        android:textSize="@dimen/row_main_body_more_listview_text_header_text_size"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/row_main_body_more_listview_text_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/row_main_body_more_listview_logo"
+        android:layout_below="@+id/row_main_body_more_listview_text_header"
+        android:layout_toLeftOf="@+id/row_main_body_more_listview_arrow"
+        android:layout_marginLeft="@dimen/row_main_body_more_listview_text_content_margin_left"
+ 		android:layout_marginBottom="@dimen/row_main_body_more_listview_text_content_margin_bottom"
+ 		android:lines="2"
+ 		android:ellipsize="end"
+        android:textSize="@dimen/row_main_body_list_favorite_file_folder_text_size"
+        android:textColor="@color/gray_text"/>
+    
+    <ImageView
+        android:id="@+id/row_main_body_more_listview_arrow"
+        android:layout_width="@dimen/row_main_body_more_listview_arrow_width"
+        android:layout_height="@dimen/row_main_body_more_listview_arrow_height"
+        android:layout_marginRight="@dimen/row_main_body_more_listview_arrow_margin_right"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:scaleType="center"
+        android:background="@null"
+        android:clickable="false"
+        android:src="@drawable/folder_arrow" 
+        />
+    <TextView
+        android:id="@+id/row_main_body_more_listview_text_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"      
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/row_main_body_more_listview_text_price_margin_top"
+        android:layout_marginRight="@dimen/row_main_body_more_listview_text_price_margin_right"
+        android:textSize="@dimen/row_main_body_more_listview_text_price_text_size"
+        android:textColor="@android:color/black"
+        android:background="@android:color/darker_gray"/>
+
+
+</RelativeLayout>

@@ -114,11 +114,15 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/main_body_margin_top"
         android:visibility="gone" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/more" />
+        <ListView
+        android:id="@+id/main_body_more_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="#00000000"
+        android:clickable="true" 
+        android:listSelector="@drawable/list_view_selector"
+        android:choiceMode="singleChoice"
+        android:visibility="visible"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -126,7 +130,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/main_body_margin_top"
-        android:visibility="visible" >
+        android:visibility="gone" >
 
         <TextView
             android:id="@+id/main_body_settings_text_count_off"
