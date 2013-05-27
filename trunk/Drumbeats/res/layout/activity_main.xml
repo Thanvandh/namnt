@@ -34,8 +34,8 @@
             <ImageView
                 android:id="@+id/main_header_bt_logo"
                 android:visibility="visible"
-                android:layout_width="@dimen/main_header_bt_logo_width"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerInParent="false"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/main_header_bt_logo_margin_left"
@@ -177,7 +177,7 @@
             android:paddingLeft="@dimen/main_body_settings_text_description_padding"
             android:paddingRight="@dimen/main_body_settings_text_description_padding"
             android:text="@string/main_body_settings_text_description_countoff"
-            android:textColor="@android:color/white"
+            android:textColor="#ddf8f8f8"
             android:textSize="@dimen/main_body_settings_text_description_countoff_text_size" />
             
         </RelativeLayout>
@@ -223,7 +223,7 @@
             android:paddingLeft="@dimen/main_body_settings_text_description_padding"
             android:paddingRight="@dimen/main_body_settings_text_description_padding"
             android:text="@string/main_body_settings_text_description_random_tempo"
-            android:textColor="@android:color/white"
+            android:textColor="#ddf8f8f8"
             android:textSize="@dimen/main_body_settings_text_description_random_tempo_text_size" />
             
         </RelativeLayout>
