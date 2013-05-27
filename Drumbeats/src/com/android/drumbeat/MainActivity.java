@@ -17,6 +17,7 @@ import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
@@ -46,6 +47,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class MainActivity extends Activity {
@@ -102,6 +104,10 @@ public class MainActivity extends Activity {
 	Button bt_countoff_off;
 	Button bt_countoff_onebar;
 	Button bt_countoff_twobar;
+	
+	Button bt_rate_app;
+	Button bt_tell_friend;
+	Button bt_feedback;
 	int countoff;
 	ToggleButton bt_random;
 	boolean random;
@@ -478,6 +484,9 @@ public class MainActivity extends Activity {
 		bt_countoff_off = (Button) findViewById(R.id.main_body_settings_bt_countoff);
 		bt_countoff_onebar = (Button) findViewById(R.id.main_body_settings_bt_onebar);
 		bt_countoff_twobar = (Button) findViewById(R.id.main_body_settings_bt_twobar);
+		bt_rate_app = (Button) findViewById(R.id.main_body_settings_bt_ratethisapp);
+		bt_tell_friend = (Button) findViewById(R.id.main_body_settings_bt_tellafriend);
+		bt_feedback = (Button) findViewById(R.id.main_body_settings_bt_sendfeeback);
 
 		bt_random = (ToggleButton) findViewById(R.id.main_body_settings_bt_random_tempo);
 
@@ -503,6 +512,32 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				setcountoff_twobar();
+			}
+		});
+		
+		bt_rate_app.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		bt_tell_friend.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(Intent.ACTION_SEND);
+				i.setType("message/rfc822");
+				i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
+				i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
+				i.putExtra(Intent.EXTRA_TEXT   , "body of email");
+				try {
+				    startActivity(Intent.createChooser(i, "Send mail..."));
+				} catch (android.content.ActivityNotFoundException ex) {
+				    Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 
