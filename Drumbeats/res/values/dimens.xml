@@ -160,7 +160,7 @@
     
     <dimen name="row_main_body_more_listview_text_content_margin_left">10dp</dimen>
     <dimen name="row_main_body_more_listview_text_content_margin_bottom">10dp</dimen>
-    <dimen name="row_main_body_more_listview_text_content_text_size">16sp</dimen>
+    <dimen name="row_main_body_more_listview_text_content_text_size">13sp</dimen>
     
     <dimen name="row_main_body_more_listview_arrow_width">30dp</dimen>
     <dimen name="row_main_body_more_listview_arrow_height">30dp</dimen>
