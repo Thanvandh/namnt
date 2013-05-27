@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MoreDetail" 
+    android:background="@drawable/background_main">
+
+    
+    <RelativeLayout
+        android:id="@+id/more_detail_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_header_height"
+        android:background="@drawable/background_main_header"
+        android:visibility="visible" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/more_detail_header_bt_download" >
+
+            <ImageButton
+                android:id="@+id/more_detail_header_bt_back"
+                android:layout_width="@dimen/main_header_bt_back_width"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:background="@android:color/transparent"
+                android:src="@drawable/red_back_arrow" />
+
+            <TextView
+                android:id="@+id/more_detail_header_text"
+                android:text="Details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="false"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/main_header_bt_logo_text_margin_left"
+                android:textColor="@color/white"
+                android:textSize="@dimen/main_header_bt_logo_text_size" />
+        </RelativeLayout>
+
+        <ImageButton
+            android:id="@+id/more_detail_header_bt_download"
+            android:layout_width="@dimen/more_detail_header_bt_download_width"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/favorite"
+            android:src="@drawable/download_button" />
+
+    </RelativeLayout>
+
+    
+
+    <RelativeLayout
+        android:id="@+id/more_detail_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/main_body_margin_top"
+        >
+    </RelativeLayout>
+
+</RelativeLayout>

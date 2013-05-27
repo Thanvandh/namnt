@@ -73,6 +73,7 @@ public class MainActivity extends Activity {
 	RelativeLayout main_body_settings;
 	RelativeLayout main_body_more;
 	DraggableListView main_body_favorite;
+	ListView main_body_more_listview;
 
 	// main footer
 	RelativeLayout main_footer;
@@ -136,6 +137,11 @@ public class MainActivity extends Activity {
 		main_body_settings = (RelativeLayout) findViewById(R.id.main_body_settings);
 		main_body_more = (RelativeLayout) findViewById(R.id.main_body_more);
 		main_body_favorite = (DraggableListView) findViewById(R.id.main_body_listview_favorite);
+		
+		// more
+		main_body_more_listview = (ListView) findViewById(R.id.main_body_more_listview);
+		MoreRowAdapter moreadapter = new MoreRowAdapter(this);
+		main_body_more_listview.setAdapter(moreadapter);
 
 		// main footer
 		srate = getResources().getString(R.string.string_default_rate);
