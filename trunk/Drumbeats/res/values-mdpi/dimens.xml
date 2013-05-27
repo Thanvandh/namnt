@@ -1,0 +1,151 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">0dp</dimen>
+    <dimen name="activity_vertical_margin">0dp</dimen>
+    
+    <dimen name="main_header_height">60dp</dimen>
+    
+    <dimen name="main_header_bt_back_width">30dp</dimen>
+    
+    <dimen name="main_header_bt_logo_width">180dp</dimen>
+    <dimen name="main_header_bt_logo_margin_left">15dp</dimen>
+    <dimen name="main_header_bt_logo_margin_right">0dp</dimen>
+    <dimen name="main_header_bt_logo_text_size">24sp</dimen>
+    
+    <dimen name="main_header_bt_button_width">45dp</dimen>
+    
+    <dimen name="main_header_bt_logo_text_margin_left">30dp</dimen>
+    
+    <dimen name="main_footer_height">150dp</dimen>
+    
+    <dimen name="main_footer_bt_tempo_width">80dp</dimen>
+    <dimen name="main_footer_bt_tempo_height">45dp</dimen>
+    <dimen name="main_footer_bt_tempo_margin_left">10dp</dimen>
+    <dimen name="main_footer_bt_tempo_margin_top">25dp</dimen>
+    
+    <dimen name="main_footer_bt_play_width">120dp</dimen>
+    <dimen name="main_footer_bt_play_height">60dp</dimen>
+    <dimen name="main_footer_bt_play_margin_top">20dp</dimen>
+    
+    <dimen name="main_footer_bt_random_width">80dp</dimen>
+    <dimen name="main_footer_bt_random_height">45dp</dimen>
+    <dimen name="main_footer_bt_random_margin_right">10dp</dimen>
+    <dimen name="main_footer_bt_random_margin_top">25dp</dimen>
+    
+    <dimen name="main_footer_volume_down_width">12dp</dimen>
+    <dimen name="main_footer_volume_down_height">16dp</dimen>
+    <dimen name="main_footer_volume_down_margin_left">20dp</dimen>
+    <dimen name="main_footer_volume_down_margin_bottom">17dp</dimen>
+    
+    <dimen name="main_footer_volume_up_width">24dp</dimen>
+    <dimen name="main_footer_volume_up_height">20dp</dimen>
+    <dimen name="main_footer_volume_up_margin_right">18dp</dimen>
+    <dimen name="main_footer_volume_up_margin_bottom">14dp</dimen>
+    
+    <dimen name="main_footer_volumeProgressBar_margin_left">38dp</dimen>
+    <dimen name="main_footer_volumeProgressBar_margin_right">40dp</dimen>
+    <dimen name="main_footer_volumeProgressBar_margin_bottom">15dp</dimen>
+    <dimen name="main_footer_volumeProgressBar_padding_left">15dp</dimen>
+    <dimen name="main_footer_volumeProgressBar_padding_right">15dp</dimen>
+    
+    <dimen name="main_footer_song_name_margin_bottom">5dp</dimen>
+    <dimen name="main_footer_song_name_text_size">12sp</dimen>
+    
+    <dimen name="main_body_margin_top">57dp</dimen>
+    
+    <dimen name="main_body_settings_text_count_off_margin_left">15dp</dimen>
+    <dimen name="main_body_settings_text_count_off_margin_top">5dp</dimen>
+    <dimen name="main_body_settings_text_count_off_text_size">20sp</dimen>
+
+    <dimen name="main_body_settings_layout_bt_count_off_bt_width">95dp</dimen>
+    <dimen name="main_body_settings_layout_bt_count_off_bt_margin_left_right">15dp</dimen>
+    
+    <dimen name="main_body_settings_text_description_countoff_margin_left">15dp</dimen>
+    <dimen name="main_body_settings_text_description_countoff_margin_right">15dp</dimen>
+    <dimen name="main_body_settings_text_description_countoff_margin_top">5dp</dimen>
+    <dimen name="main_body_settings_text_description_countoff_text_size">12sp</dimen>
+    
+    <dimen name="main_body_settings_text_random_tempo_margin_left">15dp</dimen>
+    <dimen name="main_body_settings_text_random_tempo_margin_top">5dp</dimen>
+    <dimen name="main_body_settings_text_random_tempo_text_size">20sp</dimen>
+
+    <dimen name="main_body_settings_layout_bt_random_tempo_bt_width">290dp</dimen>
+    <dimen name="main_body_settings_layout_bt_random_tempo_bt_margin_left_right">15dp</dimen>
+    
+    <dimen name="main_body_settings_text_description_random_tempo_margin_left">15dp</dimen>
+    <dimen name="main_body_settings_text_description_random_tempo_margin_right">15dp</dimen>
+    <dimen name="main_body_settings_text_description_random_tempo_margin_top">5dp</dimen>
+    <dimen name="main_body_settings_text_description_random_tempo_text_size">12sp</dimen>
+    
+    <dimen name="main_body_settings_text_description_padding">10dp</dimen>
+    <dimen name="main_body_settings_button_text_size">18sp</dimen>
+    
+    <dimen name="main_body_settings_bt_ratethisapp_margin_top">15dp</dimen>
+    <dimen name="main_body_settings_bt_ratethisapp_margin_left_right">15dp</dimen>
+    <dimen name="main_body_settings_bt_tellafriend_margin_left_right">15dp</dimen>
+    <dimen name="main_body_settings_bt_sendfeedback_margin_left_right">15dp</dimen>
+    
+    <dimen name="list_view_row_height">44dp</dimen>
+    
+    <dimen name="row_main_body_list_home_folder_margin_left">15dp</dimen>
+    <dimen name="row_main_body_list_home_name_margin_left">15dp</dimen>
+    <dimen name="row_main_body_list_home_name_text_size">18sp</dimen>
+    <dimen name="row_main_body_list_home_folder_arrow_margin_right">15dp</dimen>
+    
+    <dimen name="row_main_body_list_file_number_margin_left">15dp</dimen>
+    <dimen name="row_main_body_list_file_number_text_size">16sp</dimen>
+    <dimen name="row_main_body_list_file_name_margin_left">15dp</dimen>
+    <dimen name="row_main_body_list_file_name_text_size">18sp</dimen>
+    
+    <dimen name="row_main_body_list_file_favorite_bt_width">40dp</dimen>
+    <dimen name="row_main_body_list_file_favorite_bt_height">40dp</dimen>
+    <dimen name="row_main_body_list_file_favorite_bt_margin_right">5dp</dimen>
+    
+    <dimen name="row_main_body_list_favorite_file_bt_delete_width">40dp</dimen>
+    <dimen name="row_main_body_list_favorite_file_bt_delete_height">40dp</dimen>
+    <dimen name="row_main_body_list_favorite_file_bt_delete_margin_left">10dp</dimen>
+    
+    <dimen name="row_main_body_list_favorite_file_name_margin_left">15dp</dimen>
+    <dimen name="row_main_body_list_favorite_file_name_text_size">18sp</dimen>
+    
+    <dimen name="row_main_body_list_favorite_file_folder_margin_left">55dp</dimen>
+    <dimen name="row_main_body_list_favorite_file_folder_margin_right_editmode">50dp</dimen>
+    <dimen name="row_main_body_list_favorite_file_folder_text_size">16sp</dimen>
+    
+    <dimen name="row_main_body_list_favorite_file_bt_sort_width">40dp</dimen>
+    <dimen name="row_main_body_list_favorite_file_bt_sort_height">40dp</dimen>
+    <dimen name="row_main_body_list_favorite_file_bt_sort_margin_right">5dp</dimen>
+    
+    <dimen name="tempo_view_header_text_text_size">24sp</dimen>
+    <dimen name="tempo_view_header_increase_margin_left">30dp</dimen>
+    <dimen name="tempo_view_header_decrease_margin_right">30dp</dimen>
+    
+    <dimen name="tempo_view_grid_view_height">350dp</dimen>
+    <dimen name="tempo_view_grid_view_horizontalSpacing">0dp</dimen>
+    <dimen name="tempo_view_grid_view_verticalSpacing">0dp</dimen>
+    
+    <dimen name="tempo_view_footer_height">97dp</dimen>
+    <dimen name="window_status_bar_height">25dp</dimen>
+    <dimen name="tempo_spacing_bottom">3dp</dimen>
+    
+    <dimen name="tempo_view_footer_bt_done_width">80dp</dimen>
+    <dimen name="tempo_view_footer_bt_done_height">45dp</dimen>
+    <dimen name="tempo_view_footer_bt_done_margin_left">10dp</dimen>
+    <dimen name="tempo_view_footer_bt_done_margin_top">25dp</dimen>
+    
+    <dimen name="tempo_view_footer_bt_playrate_width">120dp</dimen>
+    <dimen name="tempo_view_footer_bt_playrate_height">60dp</dimen>
+    <dimen name="tempo_view_footer_bt_playrate_margin_top">20dp</dimen>
+    
+    <dimen name="tempo_view_footer_bt_randomrate_width">80dp</dimen>
+    <dimen name="tempo_view_footer_bt_randomrate_height">45dp</dimen>
+    <dimen name="tempo_view_footer_bt_randomrate_margin_right">10dp</dimen>
+    <dimen name="tempo_view_footer_bt_randomrate_margin_top">25dp</dimen>
+    
+    <dimen name="tempo_view_text_on_top_text_size">100sp</dimen>
+    
+    <dimen name="tempo_view_grid_item_height">75px</dimen>
+    <dimen name="tempo_view_grid_last_item_height">70px</dimen>
+    
+</resources>

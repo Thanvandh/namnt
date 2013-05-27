@@ -357,7 +357,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/main_footer_song_name_margin_bottom" />
+            android:layout_marginBottom="@dimen/main_footer_song_name_margin_bottom"
+            android:textSize="@dimen/main_footer_song_name_text_size" />
     </RelativeLayout>
 
     <RelativeLayout

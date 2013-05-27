@@ -22,6 +22,7 @@ public final class R {
         /**  Default screen margins, per the Android Design guidelines. 
  Default screen margins, per the Android Design guidelines. 
  Default screen margins, per the Android Design guidelines. 
+ Default screen margins, per the Android Design guidelines. 
 
          Customize dimensions originally defined in res/values/dimens.xml (such as
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
@@ -68,6 +69,7 @@ public final class R {
         public static final int main_footer_bt_tempo_width=0x7f05000b;
         public static final int main_footer_height=0x7f05000a;
         public static final int main_footer_song_name_margin_bottom=0x7f050023;
+        public static final int main_footer_song_name_text_size=0x7f05007e;
         public static final int main_footer_volumeProgressBar_margin_bottom=0x7f050020;
         public static final int main_footer_volumeProgressBar_margin_left=0x7f05001e;
         public static final int main_footer_volumeProgressBar_margin_right=0x7f05001f;
@@ -404,9 +406,20 @@ public final class R {
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         
+
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    
+
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        
          */
         public static final int AppBaseTheme=0x7f070000;
         /**  Application theme. 
+ All customizations that are NOT specific to a particular API-level can go here. 
+ Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
