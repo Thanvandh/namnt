@@ -9,8 +9,8 @@
 	    android:layout_height="@dimen/list_view_row_height"></LinearLayout>
     <ImageView
         android:id="@+id/row_main_body_list_favorite_file_bt_delete"
-        android:layout_width="@dimen/row_main_body_list_favorite_file_bt_delete_width"
-        android:layout_height="@dimen/row_main_body_list_favorite_file_bt_delete_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/row_main_body_list_favorite_file_bt_delete_margin_left"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"

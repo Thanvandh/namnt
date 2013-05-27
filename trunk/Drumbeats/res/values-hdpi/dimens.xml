@@ -103,7 +103,7 @@
     
     <dimen name="row_main_body_list_favorite_file_bt_delete_width">40dp</dimen>
     <dimen name="row_main_body_list_favorite_file_bt_delete_height">40dp</dimen>
-    <dimen name="row_main_body_list_favorite_file_bt_delete_margin_left">5dp</dimen>
+    <dimen name="row_main_body_list_favorite_file_bt_delete_margin_left">10dp</dimen>
     
     <dimen name="row_main_body_list_favorite_file_name_margin_left">15dp</dimen>
     <dimen name="row_main_body_list_favorite_file_name_text_size">18sp</dimen>

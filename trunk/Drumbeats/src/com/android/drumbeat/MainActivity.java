@@ -540,6 +540,24 @@ public class MainActivity extends Activity {
 				}
 			}
 		});
+		
+		bt_feedback.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(Intent.ACTION_SEND);
+				i.setType("message/rfc822");
+				i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
+				i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
+				i.putExtra(Intent.EXTRA_TEXT   , "body of email");
+				try {
+				    startActivity(Intent.createChooser(i, "Send mail..."));
+				} catch (android.content.ActivityNotFoundException ex) {
+				    Toast.makeText(MainActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
 
 		bt_random.setOnClickListener(new OnClickListener() {
 
