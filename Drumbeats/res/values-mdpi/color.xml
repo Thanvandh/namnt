@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+ <color name="white">#f8f8f8</color>
+ <color name="white_transparent">#08f8f8f8</color>
+ <color name="blue">#3f7ee5</color>
+ <color name="blue_item_grid">#003656</color>
+ <color name="gray_text">#a4c0d1</color>
+</resources>
