@@ -43,7 +43,7 @@
  		android:layout_marginBottom="@dimen/row_main_body_more_listview_text_content_margin_bottom"
  		android:lines="2"
  		android:ellipsize="end"
-        android:textSize="@dimen/row_main_body_list_favorite_file_folder_text_size"
+        android:textSize="@dimen/row_main_body_more_listview_text_content_text_size"
         android:textColor="@color/gray_text"/>
     
     <ImageView
