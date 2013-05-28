@@ -13,6 +13,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -52,6 +53,9 @@ import android.widget.ToggleButton;
 
 public class MainActivity extends Activity {
 
+	ImageView splash_screen;
+	RelativeLayout main_app;
+	
 	RelativeLayout main_header;
 	ImageButton bt_settings;
 	ImageButton bt_more;
@@ -151,6 +155,18 @@ public class MainActivity extends Activity {
 		bt_tempo = (Button) findViewById(R.id.main_footer_bt_tempo);
 		playsong = (TextView) findViewById(R.id.main_footer_song_name);
 		volumeProgress = (SeekBar) findViewById(R.id.main_footer_volumeProgressBar);
+		
+		//splash
+		splash_screen = (ImageView) findViewById(R.id.splashscreen);
+		main_app = (RelativeLayout) findViewById(R.id.main_app);
+		new Handler().postDelayed(new Runnable(){
+            @Override
+            public void run() {
+                /* Create an Intent that will start the Menu-Activity. */
+            	splash_screen.setVisibility(View.GONE);
+        		main_app.setVisibility(View.VISIBLE);
+            }
+        }, 5000);
 
 		bt_tempo.setOnClickListener(new OnClickListener() {
 
@@ -536,9 +552,9 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(Intent.ACTION_SEND);
 				i.setType("message/rfc822");
-				i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
-				i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
-				i.putExtra(Intent.EXTRA_TEXT   , "body of email");
+				i.putExtra(Intent.EXTRA_EMAIL  , new String[]{""});
+				i.putExtra(Intent.EXTRA_SUBJECT, "Beats+ App for Android");
+				i.putExtra(Intent.EXTRA_TEXT   , "Hey, check out this app.:\nhttp://bit.ly/GetBeatsPlus");
 				try {
 				    startActivity(Intent.createChooser(i, "Send mail..."));
 				} catch (android.content.ActivityNotFoundException ex) {
@@ -554,9 +570,9 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(Intent.ACTION_SEND);
 				i.setType("message/rfc822");
-				i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
-				i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
-				i.putExtra(Intent.EXTRA_TEXT   , "body of email");
+				i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"support@ninebuzz.com"});
+				i.putExtra(Intent.EXTRA_SUBJECT, "Drum Beats+ Support");
+				i.putExtra(Intent.EXTRA_TEXT   , "");
 				try {
 				    startActivity(Intent.createChooser(i, "Send mail..."));
 				} catch (android.content.ActivityNotFoundException ex) {
