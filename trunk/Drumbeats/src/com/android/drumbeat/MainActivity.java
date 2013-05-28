@@ -146,6 +146,18 @@ public class MainActivity extends Activity {
 		main_body_more_listview = (ListView) findViewById(R.id.main_body_more_listview);
 		MoreRowAdapter moreadapter = new MoreRowAdapter(this);
 		main_body_more_listview.setAdapter(moreadapter);
+		main_body_more_listview.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(MainActivity.this, MoreDetail.class);
+				i.putExtra("position", position);
+				startActivity(i);
+				
+			}
+		});
 
 		// main footer
 		srate = getResources().getString(R.string.string_default_rate);
