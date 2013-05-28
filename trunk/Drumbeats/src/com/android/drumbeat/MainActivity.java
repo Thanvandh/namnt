@@ -1176,7 +1176,7 @@ public class MainActivity extends Activity {
 	public void stopMusic() {
 		bplay = false;
 		setButtonPlay(bplay);
-		playsong.setText("");
+//		playsong.setText("");
 		 if (mp != null){
 		 if (mp.isPlaying()){
 		 mp.stop();
