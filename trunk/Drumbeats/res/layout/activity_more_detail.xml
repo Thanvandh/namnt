@@ -56,13 +56,16 @@
         android:id="@+id/more_detail_body"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/main_body_margin_top" >
+        android:layout_marginTop="@dimen/main_body_margin_top" 
+        android:background="@color/more_bg" >
 
         <RelativeLayout
             android:id="@+id/more_detail_body_top"
-            android:layout_width="match_parent"
-            android:background="@drawable/background_header_more_detail"
-            android:layout_height="@dimen/more_list_view_row_height" >
+            android:layout_width="@dimen/more_detail_body_width"
+            android:layout_height="@dimen/more_detail_body_height"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/more_detail_body_margin_top"
+            android:background="@drawable/background_header_more_detail" >
 
             <ImageView
                 android:id="@+id/more_detail_body_logo"
@@ -85,14 +88,14 @@
                 android:layout_marginTop="@dimen/row_main_body_more_listview_text_header_margin_top"
                 android:layout_toRightOf="@+id/more_detail_body_logo"
                 android:ellipsize="end"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/row_main_body_more_listview_text_header_text_size"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/more_detail_text_content"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/more_detail_body_text_header"
                 android:layout_marginBottom="@dimen/row_main_body_more_listview_text_content_margin_bottom"
                 android:layout_marginLeft="@dimen/row_main_body_more_listview_text_content_margin_left"
@@ -101,39 +104,44 @@
                 android:ellipsize="end"
                 android:lines="2"
                 android:text = "Version: 3\nFile Size: 80.15MB"
-                android:textColor="@color/gray_text"
+                android:textColor="@color/gray"
                 android:textSize="@dimen/row_main_body_more_listview_text_content_text_size" />
 
             <Button
                 android:id="@+id/more_detail_bt_play"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/row_main_body_more_listview_arrow_margin_right"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="@dimen/more_detail_header_bt_play_margin_top"
+                
+                android:layout_alignRight="@+id/more_detail_text_price"
                 android:layout_below="@+id/more_detail_text_price"
-                android:clickable="false"
                 android:scaleType="center"
-                android:text= "Play"/>
+                android:background="@drawable/btn_play_demo"
+                android:text= ""/>
 
             <TextView
                 android:id="@+id/more_detail_text_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:gravity="center"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/row_main_body_more_listview_text_price_margin_right"
+                android:layout_marginRight="@dimen/more_detail_text_price_margin_right"
                 android:layout_marginTop="@dimen/row_main_body_more_listview_text_price_margin_top"
-                android:background="@android:color/darker_gray"
+                android:background="@drawable/background_price_detail"
                 android:text= "FREE"
+                android:textStyle= "bold"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/row_main_body_more_listview_text_price_text_size" />
+            
         </RelativeLayout>
       	<RelativeLayout 
       	    android:id="@+id/more_detail_body_mid"
-      	    android:layout_width= "match_parent"
-      	    android:layout_height="match_parent"
-      	    android:layout_below="@+id/more_detail_body_top"
-      	    >
+      	    android:layout_width= "@dimen/more_detail_body_width"
+      	    android:layout_height="wrap_content"
+      	    android:layout_below="@+id/more_detail_body_top" 
+      	    android:layout_centerHorizontal="true"
+      	    android:background="@color/gray_bg" >
+            
             <TextView 
                 android:id="@+id/more_detail_body_mid_content"
                 android:layout_width="match_parent"
@@ -141,7 +149,8 @@
                 android:text="@string/string_more_text_content5"
                 android:layout_marginTop="@dimen/more_detail_body_mid_content_margin_top"
                 android:layout_marginLeft="@dimen/more_detail_body_mid_content_margin_left"
-                android:layout_marginRight="@dimen/more_detail_body_mid_content_margin_right"/>
+                android:layout_marginRight="@dimen/more_detail_body_mid_content_margin_right"
+                android:textColor="@android:color/black" />
             <ImageView 
                 android:id="@+id/more_detail_body_mid_img"
                 android:layout_width="match_parent" 

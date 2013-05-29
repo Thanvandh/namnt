@@ -5,4 +5,7 @@
  <color name="blue">#3f7ee5</color>
  <color name="blue_item_grid">#003656</color>
  <color name="gray_text">#a4c0d1</color>
+ <color name="gray">#bbb</color>
+ <color name="gray_bg">#f0f2f3</color>
+ <color name="more_bg">#ced5dd</color>
 </resources>
