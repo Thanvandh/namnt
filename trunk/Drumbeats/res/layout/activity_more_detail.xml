@@ -140,7 +140,8 @@
       	    android:layout_height="wrap_content"
       	    android:layout_below="@+id/more_detail_body_top" 
       	    android:layout_centerHorizontal="true"
-      	    android:background="@color/gray_bg" >
+      	    android:background="@color/gray_bg" 
+      	    android:layout_marginBottom="@dimen/row_main_body_more_listview_logo_margin_top" >
             
             <TextView 
                 android:id="@+id/more_detail_body_mid_content"
@@ -153,12 +154,14 @@
                 android:textColor="@android:color/black" />
             <ImageView 
                 android:id="@+id/more_detail_body_mid_img"
-                android:layout_width="match_parent" 
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/more_detail_body_mid_content"
-                android:scaleType="fitCenter"
+                android:layout_centerHorizontal="true"
+                android:scaleType="fitXY"
                 android:src="@drawable/world_beats_details"
-                android:layout_marginTop="@dimen/more_detail_body_mid_img_margin_top"/>
+                android:layout_marginTop="@dimen/more_detail_body_mid_img_margin_top"
+                android:layout_marginBottom="@dimen/more_detail_body_mid_img_margin_top" />
       	    
       	</RelativeLayout>
     </RelativeLayout>
