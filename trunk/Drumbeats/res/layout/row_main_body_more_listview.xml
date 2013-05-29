@@ -60,14 +60,15 @@
         />
     <TextView
         android:id="@+id/row_main_body_more_listview_text_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"      
+        android:layout_width="50dp"
+        android:layout_height="25dp"  
+        android:gravity="center"    
         android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/row_main_body_more_listview_text_price_margin_top"
         android:layout_marginRight="@dimen/row_main_body_more_listview_text_price_margin_right"
         android:textSize="@dimen/row_main_body_more_listview_text_price_text_size"
         android:textColor="@android:color/black"
-        android:background="@android:color/darker_gray"/>
+        android:background="@drawable/background_price_detail" />
 
 
 </RelativeLayout>

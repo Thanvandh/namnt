@@ -61,6 +61,7 @@
         <RelativeLayout
             android:id="@+id/more_detail_body_top"
             android:layout_width="match_parent"
+            android:background="@drawable/background_header_more_detail"
             android:layout_height="@dimen/more_list_view_row_height" >
 
             <ImageView
