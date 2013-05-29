@@ -148,8 +148,8 @@
     <dimen name="tempo_view_grid_last_item_height">70px</dimen>
     
     <dimen name="more_list_view_row_height">80dp</dimen>
-    <dimen name="row_main_body_more_listview_logo_width">44dp</dimen>
-    <dimen name="row_main_body_more_listview_logo_height">44dp</dimen>
+    <dimen name="row_main_body_more_listview_logo_width">50dp</dimen>
+    <dimen name="row_main_body_more_listview_logo_height">50dp</dimen>
     <dimen name="row_main_body_more_listview_logo_margin_left">10dp</dimen>
     <dimen name="row_main_body_more_listview_logo_margin_top">10dp</dimen>
     <dimen name="row_main_body_more_listview_logo_margin_bottom">10dp</dimen>
@@ -164,9 +164,9 @@
     
     <dimen name="row_main_body_more_listview_arrow_width">30dp</dimen>
     <dimen name="row_main_body_more_listview_arrow_height">30dp</dimen>
-    <dimen name="row_main_body_more_listview_arrow_margin_right">10dp</dimen>
+    <dimen name="row_main_body_more_listview_arrow_margin_right">0dp</dimen>
     
-    <dimen name="row_main_body_more_listview_text_price_margin_right">25dp</dimen>
+    <dimen name="row_main_body_more_listview_text_price_margin_right">15dp</dimen>
     <dimen name="row_main_body_more_listview_text_price_margin_top">5dp</dimen>
     <dimen name="row_main_body_more_listview_text_price_text_size">16sp</dimen>
     

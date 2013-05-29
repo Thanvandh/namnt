@@ -445,9 +445,10 @@
 	
 	            <TextView
 	                android:id="@+id/tempo_view_text_on_top"
-	                android:layout_width="wrap_content"
+	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
 	                android:layout_centerInParent="true"
+	                android:gravity="center"
 	                android:shadowColor="#000000"
 	                android:shadowDx="6"
 	                android:shadowDy="6"
