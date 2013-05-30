@@ -55,7 +55,7 @@ public class MainActivity extends Activity {
 
 	ImageView splash_screen;
 	RelativeLayout main_app;
-	
+
 	RelativeLayout main_header;
 	ImageButton bt_settings;
 	ImageButton bt_more;
@@ -68,6 +68,7 @@ public class MainActivity extends Activity {
 	final int state_main_body_favorite = 3;
 	final int state_main_body_settings = 4;
 	final int state_main_body_more = 5;
+	boolean state_main_body_file_active = false;
 
 	int state_main_body = state_main_body_home;
 	static String KEY_FOLDER = "folder";
@@ -109,7 +110,7 @@ public class MainActivity extends Activity {
 	Button bt_countoff_off;
 	Button bt_countoff_onebar;
 	Button bt_countoff_twobar;
-	
+
 	Button bt_rate_app;
 	Button bt_tell_friend;
 	Button bt_feedback;
@@ -141,23 +142,25 @@ public class MainActivity extends Activity {
 		main_body_settings = (RelativeLayout) findViewById(R.id.main_body_settings);
 		main_body_more = (RelativeLayout) findViewById(R.id.main_body_more);
 		main_body_favorite = (DraggableListView) findViewById(R.id.main_body_listview_favorite);
-		
+
 		// more
 		main_body_more_listview = (ListView) findViewById(R.id.main_body_more_listview);
 		MoreRowAdapter moreadapter = new MoreRowAdapter(this);
 		main_body_more_listview.setAdapter(moreadapter);
-		main_body_more_listview.setOnItemClickListener(new OnItemClickListener() {
+		main_body_more_listview
+				.setOnItemClickListener(new OnItemClickListener() {
 
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-					long arg3) {
-				// TODO Auto-generated method stub
-				Intent i = new Intent(MainActivity.this, MoreDetail.class);
-				i.putExtra("position", position);
-				startActivity(i);
-				
-			}
-		});
+					@Override
+					public void onItemClick(AdapterView<?> arg0, View arg1,
+							int position, long arg3) {
+						// TODO Auto-generated method stub
+						Intent i = new Intent(MainActivity.this,
+								MoreDetail.class);
+						i.putExtra("position", position);
+						startActivity(i);
+
+					}
+				});
 
 		// main footer
 		srate = getResources().getString(R.string.string_default_rate);
@@ -167,18 +170,18 @@ public class MainActivity extends Activity {
 		bt_tempo = (Button) findViewById(R.id.main_footer_bt_tempo);
 		playsong = (TextView) findViewById(R.id.main_footer_song_name);
 		volumeProgress = (SeekBar) findViewById(R.id.main_footer_volumeProgressBar);
-		
-		//splash
+
+		// splash
 		splash_screen = (ImageView) findViewById(R.id.splashscreen);
 		main_app = (RelativeLayout) findViewById(R.id.main_app);
-		new Handler().postDelayed(new Runnable(){
-            @Override
-            public void run() {
-                /* Create an Intent that will start the Menu-Activity. */
-            	splash_screen.setVisibility(View.GONE);
-        		main_app.setVisibility(View.VISIBLE);
-            }
-        }, 5000);
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				/* Create an Intent that will start the Menu-Activity. */
+				splash_screen.setVisibility(View.GONE);
+				main_app.setVisibility(View.VISIBLE);
+			}
+		}, 5000);
 
 		bt_tempo.setOnClickListener(new OnClickListener() {
 
@@ -198,6 +201,15 @@ public class MainActivity extends Activity {
 					stopMusic();
 				else
 					playMusic();
+			}
+		});
+		
+		bt_random_console.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				setrandom();
 			}
 		});
 
@@ -548,13 +560,13 @@ public class MainActivity extends Activity {
 				setcountoff_twobar();
 			}
 		});
-		
+
 		bt_rate_app.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 		bt_tell_friend.setOnClickListener(new OnClickListener() {
@@ -564,17 +576,20 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(Intent.ACTION_SEND);
 				i.setType("message/rfc822");
-				i.putExtra(Intent.EXTRA_EMAIL  , new String[]{""});
+				i.putExtra(Intent.EXTRA_EMAIL, new String[] { "" });
 				i.putExtra(Intent.EXTRA_SUBJECT, "Beats+ App for Android");
-				i.putExtra(Intent.EXTRA_TEXT   , "Hey, check out this app.:\nhttp://bit.ly/GetBeatsPlus");
+				i.putExtra(Intent.EXTRA_TEXT,
+						"Hey, check out this app.:\nhttp://bit.ly/GetBeatsPlus");
 				try {
-				    startActivity(Intent.createChooser(i, "Send mail..."));
+					startActivity(Intent.createChooser(i, "Send mail..."));
 				} catch (android.content.ActivityNotFoundException ex) {
-				    Toast.makeText(MainActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+					Toast.makeText(MainActivity.this,
+							"There are no email clients installed.",
+							Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
-		
+
 		bt_feedback.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -582,13 +597,16 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				Intent i = new Intent(Intent.ACTION_SEND);
 				i.setType("message/rfc822");
-				i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"support@ninebuzz.com"});
+				i.putExtra(Intent.EXTRA_EMAIL,
+						new String[] { "support@ninebuzz.com" });
 				i.putExtra(Intent.EXTRA_SUBJECT, "Drum Beats+ Support");
-				i.putExtra(Intent.EXTRA_TEXT   , "");
+				i.putExtra(Intent.EXTRA_TEXT, "");
 				try {
-				    startActivity(Intent.createChooser(i, "Send mail..."));
+					startActivity(Intent.createChooser(i, "Send mail..."));
 				} catch (android.content.ActivityNotFoundException ex) {
-				    Toast.makeText(MainActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+					Toast.makeText(MainActivity.this,
+							"There are no email clients installed.",
+							Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -648,8 +666,18 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				state_main_body = state_main_body_home;
-				showMainBody(state_main_body);
+				if (state_main_body == state_main_body_file) {
+					state_main_body = state_main_body_home;
+					showMainBody(state_main_body);
+				} else {
+					if (state_main_body_file_active) {
+						state_main_body = state_main_body_file;
+						showMainBodyFile(mfolder);
+					} else {
+						state_main_body = state_main_body_home;
+						showMainBody(state_main_body);
+					}
+				}
 			}
 		});
 
@@ -719,6 +747,7 @@ public class MainActivity extends Activity {
 		img_logo.setVisibility(View.VISIBLE);
 		bt_back.setVisibility(View.GONE);
 		main_header_text.setVisibility(View.GONE);
+		state_main_body_file_active = false;
 
 		main_body_settings.setVisibility(View.GONE);
 		main_body_more.setVisibility(View.GONE);
@@ -772,6 +801,12 @@ public class MainActivity extends Activity {
 		img_logo.setVisibility(View.GONE);
 		bt_back.setVisibility(View.VISIBLE);
 		main_header_text.setVisibility(View.VISIBLE);
+		main_body_settings.setVisibility(View.GONE);
+		main_body_more.setVisibility(View.GONE);
+		main_body_favorite.setVisibility(View.GONE);
+		main_body_list.setVisibility(View.VISIBLE);
+		main_footer.setVisibility(View.VISIBLE);
+		state_main_body_file_active = true;
 		main_header_text.setText(folder);
 		Typeface font = Typeface.createFromAsset(getAssets(),
 				"fonts/MYRIADPRO-BOLD.OTF");
@@ -897,7 +932,9 @@ public class MainActivity extends Activity {
 				}
 
 				// Getting adapter
-				int marginRight = getResources().getDimensionPixelSize(R.dimen.row_main_body_list_favorite_file_folder_margin_right_editmode);
+				int marginRight = getResources()
+						.getDimensionPixelSize(
+								R.dimen.row_main_body_list_favorite_file_folder_margin_right_editmode);
 				row_favorite_adapter = new FavoritesRowAdapter(this,
 						array_list_favorite_file, true, marginRight);
 				main_body_favorite.setDropListener(mDropListener);
@@ -1134,7 +1171,8 @@ public class MainActivity extends Activity {
 	public void playMusic() {
 		bplay = true;
 		setButtonPlay(bplay);
-		playsong.setText("･" + mfolder.toUpperCase() + " - " + mfilename.toUpperCase() + " ･");
+		playsong.setText("･" + mfolder.toUpperCase() + " - "
+				+ mfilename.toUpperCase() + " ･");
 
 		playMusic(mfolder, mfilename);
 
@@ -1188,15 +1226,14 @@ public class MainActivity extends Activity {
 	public void stopMusic() {
 		bplay = false;
 		setButtonPlay(bplay);
-//		playsong.setText("");
-		 if (mp != null){
-		 if (mp.isPlaying()){
-		 mp.stop();
-		 //mp.release();
-		
-		 }
-		 }
-		
+		// playsong.setText("");
+		if (mp != null) {
+			if (mp.isPlaying()) {
+				mp.stop();
+				// mp.release();
+
+			}
+		}
 
 	}
 
@@ -1210,36 +1247,56 @@ public class MainActivity extends Activity {
 		}
 
 	}
-	private void openQuitDialog(){
-	  	  AlertDialog.Builder quitDialog 
-	  	   = new AlertDialog.Builder(MainActivity.this);
-	  	  quitDialog.setTitle("Confirm to Quit?");
-	  	  
-	  	  quitDialog.setPositiveButton("OK, Quit!", new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					stopMusic();
-					finish();
-					
-					
-					
-				}
-	  	  });   	  
-	  	  quitDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
 
-	  		  public void onClick(DialogInterface dialog, int which) {
-	  	    // TODO Auto-generated method stub
-	  	    
-	  	   }});
-	  	  
-	  	  quitDialog.show();
-	  	 }
+	private void openQuitDialog() {
+		AlertDialog.Builder quitDialog = new AlertDialog.Builder(
+				MainActivity.this);
+		quitDialog.setTitle("Confirm to Quit?");
+
+		quitDialog.setPositiveButton("OK, Quit!",
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						stopMusic();
+						finish();
+
+					}
+				});
+		quitDialog.setNegativeButton("NO",
+				new DialogInterface.OnClickListener() {
+
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
+		quitDialog.show();
+	}
+
+	public void setrandom() {
+		boolean brandom = preferences.getBoolean("random", false);
+		if (brandom) {
+			Random random = new Random();
+			int i = random.nextInt(26);
+			srate = TextAdapter.arrayrate[i];
+			// playMusic();
+			setRate();
+		} else {
+			String file[] = getFolderFile(mfolder);
+			Random random = new Random();
+			int i = random.nextInt(file.length);
+			mfilename = file[i];
+			playMusic();
+		}
+
+	}
 
 	@Override
-	  public void onBackPressed() {
-		openQuitDialog(); 
-	  }
+	public void onBackPressed() {
+		openQuitDialog();
+	}
 
 	// @Override
 	// public boolean onCreateOptionsMenu(Menu menu) {

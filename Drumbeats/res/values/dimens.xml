@@ -166,6 +166,8 @@
     <dimen name="row_main_body_more_listview_arrow_height">30dp</dimen>
     <dimen name="row_main_body_more_listview_arrow_margin_right">0dp</dimen>
     
+    <dimen name="row_main_body_more_listview_text_price_width">50dp</dimen>
+    <dimen name="row_main_body_more_listview_text_price_height">25dp</dimen>
     <dimen name="row_main_body_more_listview_text_price_margin_right">15dp</dimen>
     <dimen name="row_main_body_more_listview_text_price_margin_top">5dp</dimen>
     <dimen name="row_main_body_more_listview_text_price_text_size">16sp</dimen>
@@ -174,8 +176,12 @@
     <dimen name="more_detail_body_height">78dp</dimen>
     <dimen name="more_detail_body_margin_top">10dp</dimen>
     
+	<dimen name="more_detail_header_bt_play_width">30dp</dimen>
+	<dimen name="more_detail_header_bt_play_height">30dp</dimen>
     <dimen name="more_detail_header_bt_play_margin_top">5dp</dimen>
     
+    <dimen name="more_detail_text_price_width">60dp</dimen>
+    <dimen name="more_detail_text_price_height">30dp</dimen>
     <dimen name="more_detail_text_price_margin_right">10dp</dimen>
     
     <dimen name="more_detail_header_bt_download_width">145dp</dimen>
