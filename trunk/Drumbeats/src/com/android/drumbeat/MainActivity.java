@@ -30,6 +30,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -1303,6 +1304,30 @@ public class MainActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		openQuitDialog();
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		final AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+		Log.d("test","volumn");
+	    switch (keyCode) {
+	    case KeyEvent.KEYCODE_VOLUME_UP: {
+	    	audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC,
+	                AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);
+			volumeProgress.setProgress(audioManager
+					.getStreamVolume(AudioManager.STREAM_MUSIC));
+			return super.onKeyDown(keyCode, event);
+	    }
+	    case KeyEvent.KEYCODE_VOLUME_DOWN: {
+	    	audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC,
+	                AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);
+			volumeProgress.setProgress(audioManager
+					.getStreamVolume(AudioManager.STREAM_MUSIC));
+			return super.onKeyDown(keyCode, event);
+	    }
+	    default:
+	    	return super.onKeyDown(keyCode, event);
+	    }
 	}
 
 	// @Override
