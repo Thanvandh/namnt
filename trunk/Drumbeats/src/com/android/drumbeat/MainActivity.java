@@ -158,6 +158,7 @@ public class MainActivity extends Activity {
 						Intent i = new Intent(MainActivity.this,
 								MoreDetail.class);
 						i.putExtra("position", position);
+						i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 						startActivity(i);
 
 					}
@@ -709,6 +710,12 @@ public class MainActivity extends Activity {
 
 	public void setRate() {
 		bt_tempo.setText(srate);
+	}
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		initControlsvolume();
+		super.onResume();
 	}
 
 	private void initControlsvolume() {
