@@ -27,7 +27,6 @@
         android:layout_marginLeft="@dimen/row_main_body_more_listview_text_header_margin_left"
         android:layout_marginTop="@dimen/row_main_body_more_listview_text_header_margin_top"
         android:layout_toRightOf="@+id/row_main_body_more_listview_logo"
-        android:text= "R B"
         android:textSize="@dimen/row_main_body_more_listview_text_header_text_size"
         android:textStyle="bold"
         android:textColor="@android:color/white"/>
@@ -60,8 +59,8 @@
         />
     <TextView
         android:id="@+id/row_main_body_more_listview_text_price"
-        android:layout_width="50dp"
-        android:layout_height="25dp"  
+        android:layout_width="@dimen/row_main_body_more_listview_text_price_width"
+        android:layout_height="@dimen/row_main_body_more_listview_text_price_height"  
         android:gravity="center"    
         android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/row_main_body_more_listview_text_price_margin_top"
