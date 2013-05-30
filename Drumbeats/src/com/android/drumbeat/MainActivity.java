@@ -1302,12 +1302,11 @@ public class MainActivity extends Activity {
 			mfilename = file[j];
 			playMusic();
 		} else {
-			
+			String file[] = getFolderFile(mfolder);
 			Random random = new Random();
-			int j = random.nextInt(26);
-			srate = TextAdapter.arrayrate[j];
-			// playMusic();
-			setRate();
+			int j = random.nextInt(file.length);
+			mfilename = file[j];
+			playMusic();
 			
 			
 		}
