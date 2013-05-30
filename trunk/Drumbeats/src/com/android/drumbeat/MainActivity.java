@@ -1278,17 +1278,24 @@ public class MainActivity extends Activity {
 	public void setrandom() {
 		boolean brandom = preferences.getBoolean("random", false);
 		if (brandom) {
+			String file[] = getFolderFile(mfolder);
 			Random random = new Random();
 			int i = random.nextInt(26);
 			srate = TextAdapter.arrayrate[i];
 			// playMusic();
 			setRate();
-		} else {
-			String file[] = getFolderFile(mfolder);
-			Random random = new Random();
-			int i = random.nextInt(file.length);
-			mfilename = file[i];
+			int j = random.nextInt(file.length);
+			mfilename = file[j];
 			playMusic();
+		} else {
+			
+			Random random = new Random();
+			int j = random.nextInt(26);
+			srate = TextAdapter.arrayrate[j];
+			// playMusic();
+			setRate();
+			
+			
 		}
 
 	}
