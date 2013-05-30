@@ -158,7 +158,7 @@ public class MainActivity extends Activity {
 						Intent i = new Intent(MainActivity.this,
 								MoreDetail.class);
 						i.putExtra("position", position);
-						i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+						//i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 						startActivity(i);
 
 					}
