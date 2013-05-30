@@ -369,6 +369,11 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				tempo_view.setVisibility(View.GONE);
 				main_header.setVisibility(View.VISIBLE);
+				if (state_main_body == state_main_body_file) {
+					showMainBodyFile(mfolder);
+				} else if (state_main_body == state_main_body_favorite) {
+					showMainBodyFavorite();
+				} else
 				showMainBody(state_main_body);
 				setRate();
 			}
@@ -785,6 +790,7 @@ public class MainActivity extends Activity {
 					int postion, long arg3) {
 				// TODO Auto-generated method stub
 				mfolder = array_folder[postion];
+				state_main_body = state_main_body_file;
 				showMainBodyFile(mfolder);
 
 			}
