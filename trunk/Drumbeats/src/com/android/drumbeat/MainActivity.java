@@ -88,7 +88,7 @@ public class MainActivity extends Activity {
 	Button bt_play;
 	SeekBar volumeProgress;
 	TextView playsong;
-	MediaPlayer mp;
+	//MediaPlayer mp;
 	boolean bplay = false;
 	String mfolder = "";
 	String mfilename = "";
@@ -1183,12 +1183,31 @@ public class MainActivity extends Activity {
 	}
 
 	public void playMusic() {
-		bplay = true;
-		setButtonPlay(bplay);
-		playsong.setText("･" + mfolder.toUpperCase() + " - "
-				+ mfilename.toUpperCase() + " ･");
-
-		playMusic(mfolder, mfilename);
+		
+		int maxCount = preferences.getInt("countoff", 0);
+		Log.d("test", "count " + maxCount);
+		if (maxCount > 0 && !bplay){
+			bplay = true;
+			setButtonPlay(bplay);
+			playsong.setText("･" + mfolder.toUpperCase() + " - "
+					+ mfilename.toUpperCase() + " ･");
+			String filename[] = getFileName(mfolder, mfilename);
+			int rate = 0;
+			for (int i = 0; i < TextAdapter.arrayrate.length; i++) {
+				if (srate.equalsIgnoreCase(TextAdapter.arrayrate[i])) {
+					rate = i;
+					break;
+				}
+			}
+			String precount = filename[rate].substring(filename[rate].length() - 10);
+			playPrecount(precount, maxCount);
+		} else {
+			bplay = true;
+			setButtonPlay(bplay);
+			playsong.setText("･" + mfolder.toUpperCase() + " - "
+					+ mfilename.toUpperCase() + " ･");
+			playMusic(mfolder, mfilename);
+		}
 
 	}
 
@@ -1203,15 +1222,59 @@ public class MainActivity extends Activity {
 		return files;
 	}
 
-	public void playMusic(String folder, String file) {
-		if (mp != null) {
-			if (mp.isPlaying()) {
-				mp.stop();
+	public void playPrecount(String file, final int maxCount) {
+		if (DrumbeatsMediaPlayer.mp != null) {
+			if (DrumbeatsMediaPlayer.mp.isPlaying()) {
+				DrumbeatsMediaPlayer.mp.stop();
 				// mp.release();
 
 			}
 		} else
-			mp = new MediaPlayer();
+			DrumbeatsMediaPlayer.mp = new MediaPlayer();
+		Log.d("test", "countmax " + maxCount);
+		AssetFileDescriptor fileplay;
+		try {
+			fileplay = getResources().getAssets().openFd(
+					"precount/" + file);
+			DrumbeatsMediaPlayer.mp.reset();
+			DrumbeatsMediaPlayer.mp.setDataSource(fileplay.getFileDescriptor(),
+					fileplay.getStartOffset(), fileplay.getLength());
+			DrumbeatsMediaPlayer.mp.prepare();
+			DrumbeatsMediaPlayer.mp.setLooping(false);
+			DrumbeatsMediaPlayer.mp.start();
+			DrumbeatsMediaPlayer.mp.setOnCompletionListener(new OnCompletionListener(){
+				  int count = 0; // initialize somewhere before, not sure if this will work here
+				  
+
+				  @Override
+				  public void onCompletion(MediaPlayer mediaPlayer) {
+				    if(count < maxCount) {
+				      count++;
+				      mediaPlayer.seekTo(0);
+				      mediaPlayer.start();
+				    } else {
+				    	playMusic(mfolder, mfilename);
+						
+													
+				    	
+				    }
+				}});
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public void playMusic(String folder, String file) {
+		if (DrumbeatsMediaPlayer.mp != null) {
+			if (DrumbeatsMediaPlayer.mp.isPlaying()) {
+				DrumbeatsMediaPlayer.mp.stop();
+				// mp.release();
+
+			}
+		} else
+			DrumbeatsMediaPlayer.mp = new MediaPlayer();
 		final String filename[] = getFileName(folder, file);
 		int rate = 0;
 		for (int i = 0; i < TextAdapter.arrayrate.length; i++) {
@@ -1224,12 +1287,12 @@ public class MainActivity extends Activity {
 		try {
 			fileplay = getResources().getAssets().openFd(
 					"music/" + folder + "/" + file + "/" + filename[rate]);
-			mp.reset();
-			mp.setDataSource(fileplay.getFileDescriptor(),
+			DrumbeatsMediaPlayer.mp.reset();
+			DrumbeatsMediaPlayer.mp.setDataSource(fileplay.getFileDescriptor(),
 					fileplay.getStartOffset(), fileplay.getLength());
-			mp.prepare();
-			mp.setLooping(true);
-			mp.start();
+			DrumbeatsMediaPlayer.mp.prepare();
+			DrumbeatsMediaPlayer.mp.setLooping(true);
+			DrumbeatsMediaPlayer.mp.start();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1241,9 +1304,9 @@ public class MainActivity extends Activity {
 		bplay = false;
 		setButtonPlay(bplay);
 		// playsong.setText("");
-		if (mp != null) {
-			if (mp.isPlaying()) {
-				mp.stop();
+		if (DrumbeatsMediaPlayer.mp != null) {
+			if (DrumbeatsMediaPlayer.mp.isPlaying()) {
+				DrumbeatsMediaPlayer.mp.stop();
 				// mp.release();
 
 			}
