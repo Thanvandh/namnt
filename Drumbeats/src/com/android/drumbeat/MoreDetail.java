@@ -154,6 +154,7 @@ public class MoreDetail extends Activity {
         
     public void playMusic(){
     	bplay = true;
+    	DrumbeatsMediaPlayer.bplay = false;
 		setButtonPlay(bplay);
 		playMusic(filedemo[position]);
     	
@@ -188,6 +189,7 @@ public class MoreDetail extends Activity {
 	public void stopMusic() {
 		bplay = false;
 		setButtonPlay(bplay);
+		DrumbeatsMediaPlayer.bplay = false;
 		// playsong.setText("");
 		if (DrumbeatsMediaPlayer.mp != null) {
 			if (DrumbeatsMediaPlayer.mp.isPlaying()) {

@@ -89,7 +89,6 @@ public class MainActivity extends Activity {
 	SeekBar volumeProgress;
 	TextView playsong;
 	//MediaPlayer mp;
-	boolean bplay = false;
 	String mfolder = "";
 	String mfilename = "";
 
@@ -199,7 +198,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (bplay)
+				if (DrumbeatsMediaPlayer.bplay)
 					stopMusic();
 				else
 					playMusic();
@@ -232,7 +231,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (bplay)
+				if (DrumbeatsMediaPlayer.bplay)
 					stopMusic();
 				else
 					playMusic();
@@ -277,7 +276,7 @@ public class MainActivity extends Activity {
 						bt_tempo_down.setEnabled(true);
 						bt_tempo_up.setEnabled(true);
 					}
-					if (bplay)
+					if (DrumbeatsMediaPlayer.bplay)
 						playMusic();
 				}
 
@@ -321,7 +320,7 @@ public class MainActivity extends Activity {
 						bt_tempo_down.setEnabled(true);
 						bt_tempo_up.setEnabled(true);
 					}
-					if (bplay)
+					if (DrumbeatsMediaPlayer.bplay)
 						playMusic();
 				}
 
@@ -357,7 +356,7 @@ public class MainActivity extends Activity {
 					bt_tempo_down.setEnabled(true);
 					bt_tempo_up.setEnabled(true);
 				}
-				if (bplay)
+				if (DrumbeatsMediaPlayer.bplay)
 					playMusic();
 			}
 		});
@@ -510,7 +509,7 @@ public class MainActivity extends Activity {
 						}
 						// srate = TextAdapter.mTemporary[lastPos];
 						tempo_view_text_on_top.setVisibility(View.GONE);
-						if (bplay)
+						if (DrumbeatsMediaPlayer.bplay)
 							playMusic();
 					}
 					return true;
@@ -720,6 +719,7 @@ public class MainActivity extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		initControlsvolume();
+		setButtonPlay(DrumbeatsMediaPlayer.bplay);
 		super.onResume();
 	}
 
@@ -1186,9 +1186,9 @@ public class MainActivity extends Activity {
 		
 		int maxCount = preferences.getInt("countoff", 0);
 		Log.d("test", "count " + maxCount);
-		if (maxCount > 0 && !bplay){
-			bplay = true;
-			setButtonPlay(bplay);
+		if (maxCount > 0 && !DrumbeatsMediaPlayer.bplay){
+			DrumbeatsMediaPlayer.bplay = true;
+			setButtonPlay(DrumbeatsMediaPlayer.bplay);
 			playsong.setText("･" + mfolder.toUpperCase() + " - "
 					+ mfilename.toUpperCase() + " ･");
 			String filename[] = getFileName(mfolder, mfilename);
@@ -1202,8 +1202,8 @@ public class MainActivity extends Activity {
 			String precount = filename[rate].substring(filename[rate].length() - 10);
 			playPrecount(precount, maxCount);
 		} else {
-			bplay = true;
-			setButtonPlay(bplay);
+			DrumbeatsMediaPlayer.bplay = true;
+			setButtonPlay(DrumbeatsMediaPlayer.bplay);
 			playsong.setText("･" + mfolder.toUpperCase() + " - "
 					+ mfilename.toUpperCase() + " ･");
 			playMusic(mfolder, mfilename);
@@ -1301,8 +1301,8 @@ public class MainActivity extends Activity {
 	}
 
 	public void stopMusic() {
-		bplay = false;
-		setButtonPlay(bplay);
+		DrumbeatsMediaPlayer.bplay = false;
+		setButtonPlay(DrumbeatsMediaPlayer.bplay);
 		// playsong.setText("");
 		if (DrumbeatsMediaPlayer.mp != null) {
 			if (DrumbeatsMediaPlayer.mp.isPlaying()) {
