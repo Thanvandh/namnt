@@ -1248,7 +1248,7 @@ public class MainActivity extends Activity {
 
 				  @Override
 				  public void onCompletion(MediaPlayer mediaPlayer) {
-				    if(count < maxCount) {
+				    if(count < maxCount-1) {
 				      count++;
 				      mediaPlayer.seekTo(0);
 				      mediaPlayer.start();
