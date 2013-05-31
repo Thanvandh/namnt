@@ -25,41 +25,49 @@
     <string name="string_more_text_price0">FREE</string>
     <string name="string_more_text_file_size0">Version: 3\nFile Size: 80.15MB</string>
     <string name="string_more_text_content0">Add a cool texture to your music with some funky, drum-machine inspired beats. This pack includes 12 R&amp;B-style loops that sound great over a variety of musical genres.</string>
+    <string name="string_more_text_file_demo0">RNB_PackSample.ogg</string>
     
     <string name="string_more_text_header1">World Beats Pack</string>
     <string name="string_more_text_price1">$2.99</string>
     <string name="string_more_text_file_size1">Version: 3\nFile Size: 80.15MB</string>
     <string name="string_more_text_content1">Enjoy 21 premium, world-famous rhythms, perfectly replicated for your educational, dancing or songwriting needs. Salsa, Rhumba, Bossa Nova, Merengue, Khaleegi, Samba - and more!</string>
+    <string name="string_more_text_file_demo1">WORLDBEATS_PackSample.ogg</string>
     
     <string name="string_more_text_header2">Tambourines</string>
     <string name="string_more_text_price2">$1.99</string>
     <string name="string_more_text_file_size2">Version: 3\nFile Size: 80.15MB</string>
     <string name="string_more_text_content2">Enjoy 10 naturally-played tambourine loops with various rhythms, perfect for all different types of applications.</string>
+    <string name="string_more_text_file_demo2">DrumBeats_TambourineAudioSample.ogg</string>
     
     <string name="string_more_text_header3">Latin Jazz</string>
     <string name="string_more_text_price3">$2.99</string>
     <string name="string_more_text_file_size3">Version: 3\nFile Size: 80.15MB</string>
     <string name="string_more_text_content3">20 crisp and polished Latin American rhythms! A great mix of Afro-Cuban/Brazilian beats - this pack some classic, highly-usable rhythms that\'ll keep the music flowing all night!</string>
+    <string name="string_more_text_file_demo3">LatinJazzPack_PackSample.ogg</string>
     
     <string name="string_more_text_header4">Heavy Metal 1</string>
     <string name="string_more_text_price4">$0.99</string>
     <string name="string_more_text_file_size4">Version: 3\nFile Size: 80.15MB</string>
     <string name="string_more_text_content4">Crank the volume to 11 and start smashing things. Heavy Metal 1 has 11 beats that should help you shred and wail to your heart\'s content.</string>
+    <string name="string_more_text_file_demo4">HEAVYMETAL_PackSample.ogg</string>
     
     <string name="string_more_text_header5">Country 1</string>
     <string name="string_more_text_price5">$0.99</string>
     <string name="string_more_text_file_size5">Version: 3\nFile Size: 80.15MB</string>
     <string name="string_more_text_content5">Sounds great with Pop, Rock and Alternative music as well. This sweet pack includes ballad beats, trains, shuffles, straight/poppy and even two-beat for use in many different styles of music.</string>
+    <string name="string_more_text_file_demo5">COUNTRY_PackSample.ogg</string>
     
     <string name="string_more_text_header6">Blues 1</string>
     <string name="string_more_text_price6">$0.99</string>
     <string name="string_more_text_file_size6">Version: 3\nFile Size: 80.15MB</string>
     <string name="string_more_text_content6">Enjoy 14 essential blues beats, with a mix of straight and shuffle, sticks and brushes. Great for all types of music.</string>
+    <string name="string_more_text_file_demo6">BLUES_PackSample.ogg</string>
     
     <string name="string_more_text_header7">Artificial 1</string>
     <string name="string_more_text_price7">$0.99</string>
     <string name="string_more_text_file_size7">Version: 3\nFile Size: 80.15MB</string>
     <string name="string_more_text_content7">Fake beats are surprisingly versatile. This pack contains 16 artificial-sounding beats that blend well with a variety of different styles of music.</string>
+    <string name="string_more_text_file_demo7">ARTIFICIAL_PackSample.ogg</string>
     
     <string name="title_activity_more_detail">MoreDetail</string>
 
