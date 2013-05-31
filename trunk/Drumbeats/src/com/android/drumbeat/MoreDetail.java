@@ -50,7 +50,7 @@ public class MoreDetail extends Activity {
         img[3] = getResources().getDrawable(R.drawable.latin_jazz_details);
         img[4] = getResources().getDrawable(R.drawable.heavy_metal1_details);
         img[5] = getResources().getDrawable(R.drawable.country1_details);
-        img[6] = null;
+        img[6] = getResources().getDrawable(R.drawable.blues1_details);
         img[7] = getResources().getDrawable(R.drawable.artificial1_details);
         
         header[0] = getResources().getString(R.string.string_more_text_header0);
