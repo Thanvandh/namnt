@@ -1,8 +1,12 @@
 package com.android.drumbeat;
 
+import java.io.IOException;
+
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.drawable.Drawable;
 import android.view.Menu;
 import android.view.View;
@@ -19,7 +23,11 @@ public class MoreDetail extends Activity {
 	    String[] filesize = new String[8];
 	    String[] content = new String [8];
 	    String[] price = new String [8];
+	    String[] filedemo = new String [8];
 	    ImageButton bt_back;
+	    Button bt_play;
+	    
+	    int position;
 	    
 	    ImageView logo_view;
 	    ImageView img_view;
@@ -27,13 +35,15 @@ public class MoreDetail extends Activity {
 	    TextView filesize_view;
 	    TextView content_view;
 	    TextView price_view;
+	    
+	    boolean bplay = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_more_detail);
 		Intent in = getIntent();
 		Bundle bundle = in.getExtras();
-		int position = bundle.getInt("position");
+		position = bundle.getInt("position");
 		
 		logo[0] = getResources().getDrawable(R.drawable.rnb_essentials1_icon);
         logo[1] = getResources().getDrawable(R.drawable.world_beats_icon);
@@ -43,6 +53,7 @@ public class MoreDetail extends Activity {
         logo[5] = getResources().getDrawable(R.drawable.country1_icon);
         logo[6] = getResources().getDrawable(R.drawable.blues1_icon);
         logo[7] = getResources().getDrawable(R.drawable.artificial1_icon);
+        
         
         img[0] = null;
         img[1] = getResources().getDrawable(R.drawable.world_beats_details);
@@ -89,6 +100,15 @@ public class MoreDetail extends Activity {
         price[6] = getResources().getString(R.string.string_more_text_price6);
         price[7] = getResources().getString(R.string.string_more_text_price7);
         
+        filedemo[0] = getResources().getString(R.string.string_more_text_file_demo0);
+        filedemo[1] = getResources().getString(R.string.string_more_text_file_demo1);
+        filedemo[2] = getResources().getString(R.string.string_more_text_file_demo2);
+        filedemo[3] = getResources().getString(R.string.string_more_text_file_demo3);
+        filedemo[4] = getResources().getString(R.string.string_more_text_file_demo4);
+        filedemo[5] = getResources().getString(R.string.string_more_text_file_demo5);
+        filedemo[6] = getResources().getString(R.string.string_more_text_file_demo6);
+        filedemo[7] = getResources().getString(R.string.string_more_text_file_demo7);
+        
         bt_back = (ImageButton) findViewById(R.id.more_detail_header_bt_back);
         bt_back.setOnClickListener(new OnClickListener() {
 			
@@ -96,6 +116,20 @@ public class MoreDetail extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				back();
+			}
+		});
+        
+        bt_play = (Button) findViewById(R.id.more_detail_bt_play);
+        bt_play.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (bplay)
+					stopMusic();
+				else 
+					playMusic();
+				
 			}
 		});
         
@@ -115,8 +149,64 @@ public class MoreDetail extends Activity {
         
         
         
+        
+	}
+        
+    public void playMusic(){
+    	bplay = true;
+		setButtonPlay(bplay);
+		playMusic(filedemo[position]);
+    	
+    }
+	public void playMusic(String file) {
+		if (DrumbeatsMediaPlayer.mp != null) {
+			if (DrumbeatsMediaPlayer.mp.isPlaying()) {
+				DrumbeatsMediaPlayer.mp.stop();
+				// mp.release();
+
+			}
+		} else
+			DrumbeatsMediaPlayer.mp = new MediaPlayer();
+
+		AssetFileDescriptor fileplay;
+		try {
+			fileplay = getResources().getAssets().openFd(
+					"demo/" + file);
+			DrumbeatsMediaPlayer.mp.reset();
+			DrumbeatsMediaPlayer.mp.setDataSource(fileplay.getFileDescriptor(),
+					fileplay.getStartOffset(), fileplay.getLength());
+			DrumbeatsMediaPlayer.mp.prepare();
+			DrumbeatsMediaPlayer.mp.setLooping(true);
+			DrumbeatsMediaPlayer.mp.start();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
+	public void stopMusic() {
+		bplay = false;
+		setButtonPlay(bplay);
+		// playsong.setText("");
+		if (DrumbeatsMediaPlayer.mp != null) {
+			if (DrumbeatsMediaPlayer.mp.isPlaying()) {
+				DrumbeatsMediaPlayer.mp.stop();
+				// mp.release();
+
+			}
+		}
+
+	}
+	
+	public void setButtonPlay(boolean b) {
+		if (b) {
+			bt_play.setBackgroundResource(R.drawable.stop_demo_button);
+		} else {
+			bt_play.setBackgroundResource(R.drawable.btn_play_demo);
+		}
+
+	}
 //	@Override
 //	public boolean onCreateOptionsMenu(Menu menu) {
 //		// Inflate the menu; this adds items to the action bar if it is present.
