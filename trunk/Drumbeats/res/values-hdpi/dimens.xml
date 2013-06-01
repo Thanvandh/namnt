@@ -147,7 +147,7 @@
     <dimen name="tempo_view_grid_item_height">75px</dimen>
     <dimen name="tempo_view_grid_last_item_height">70px</dimen>
     
-    <dimen name="facebook_popup_width">400dp</dimen>
-    <dimen name="facebook_popup_height">286dp</dimen>
+    <dimen name="facebook_popup_width">400px</dimen>
+    <dimen name="facebook_popup_height">286px</dimen>
     
 </resources>

@@ -3,6 +3,23 @@ package namnt.drumbeat;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.facebook.android.AsyncFacebookRunner;
+import com.facebook.android.Facebook;
+import namnt.drumbeat.facebook.FBLikeActivity;
+
+import namnt.drumbeat.MainActivity;
+import namnt.drumbeat.R;
+import namnt.drumbeat.facebook.Constants.ParseConstants;
+import namnt.drumbeat.facebook.BaseRequestListener;
+import namnt.drumbeat.facebook.SessionEvents;
+import namnt.drumbeat.facebook.SessionStore;
+
+import namnt.drumbeat.facebook.Utility;
+
 import namnt.drumbeat.facebook.Constants;
 
 import namnt.drumbeat.facebook.FacebookAuthButton;
@@ -15,7 +32,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -218,16 +237,34 @@ public class MoreDetail extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				
+				if(price[position].equalsIgnoreCase("free"))
+				{
+					showPopup(MoreDetail.this);
+					return;
+				}
+				
 				if (state[position].equalsIgnoreCase("1"))
 				Toast.makeText(MoreDetail.this, "Alreadly download", Toast.LENGTH_LONG).show();
 				else
 					confirmDownloadDialog();
-					//showPopup(MoreDetail.this);
 				
 			}
 		});
         
+        
+        //facebook popup
+        
+        mHandler = new Handler();
+        mLikeIds = new ArrayList<String>();
+        
+        
+        if (mDontBother){
+	        SharedPreferences sharedPref = getSharedPreferences(Constants.SharedPreference.NAME_COMMON, MODE_PRIVATE);
+	        mFacebookLiked = sharedPref.getBoolean(Constants.SharedPreference.NAME.FB_LIKED, false);
+        }
 	}
+	
 	private void confirmDownloadDialog() {
 		AlertDialog.Builder quitDialog = new AlertDialog.Builder(
 				MoreDetail.this);
@@ -327,15 +364,18 @@ public class MoreDetail extends Activity {
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
-		//super.onBackPressed();
+		stopMusic();
+		super.onBackPressed();
 		return;
 	}
 	
+	//============================================
+	//**** popup facebook like***//
+	
+	
 	// The method that displays the popup.
-	private void showPopup(final Activity context) {
-		
-		
-		
+	private void showPopup(final Activity context) 
+	{   
 	   int popupWidth = getResources().getDimensionPixelSize(R.dimen.facebook_popup_width);;
 	   int popupHeight = getResources().getDimensionPixelSize(R.dimen.facebook_popup_height);;
 	 
@@ -353,7 +393,7 @@ public class MoreDetail extends Activity {
 	 
 	   // Some offset to align the popup a bit to the right, and a bit down, relative to button's position.
 	   int OFFSET_X = 0;
-	   int OFFSET_Y = 0;
+	   int OFFSET_Y = 30;
 	 
 	   // Clear the default translucent background
 	   popup.setBackgroundDrawable(new BitmapDrawable());
@@ -370,6 +410,183 @@ public class MoreDetail extends Activity {
 	    	 popup.dismiss();
 	     }
 	   });
+	   
+	   //facebook update
+	   mAuthBtn = (FacebookAuthButton)layout.findViewById(R.id.btn_auth);
+       mLikeBtn = (Button)layout.findViewById(R.id.btn_like);
+	   showFacebookStatus();
+       initFacebook();
+       
+       mLikeBtn.setOnClickListener(new View.OnClickListener() {
+       	
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+       		/* Opens activity with webview to connect to the facebook page to follow. */
+       		Intent intent = new Intent(MoreDetail.this, FBLikeActivity.class);
+           	intent.putExtra(Constants.Common.INTENT_FB_LIKE, mFacebookLiked);
+       		startActivityForResult(intent, LIKE_ACTIVITY_RESULT_CODE);
+			}
+		});
 	}
+	
+	@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+        /*
+         * if this is the activity result from authorization flow, do a call
+         * back to authorizeCallback Source Tag: login_tag
+         */
+            case AUTHORIZE_ACTIVITY_RESULT_CODE: {
+                Utility.mFacebook.authorizeCallback(requestCode, resultCode, data);
+                break;
+            }
+            case LIKE_ACTIVITY_RESULT_CODE:{
+            	if (resultCode == RESULT_OK){
+            		boolean liked = data.getExtras().getBoolean(Constants.Common.INTENT_FB_LIKE);
+            		if (mFacebookLiked == liked)
+            			break;
+            		mFacebookLiked = liked;
+            		if (liked)
+            			mLikeIds.add(Constants.Common.FB_FOLLOW_ID);
+            		else{
+	            		for (String id : mLikeIds){
+	            			if (id.equals(Constants.Common.FB_FOLLOW_ID)){
+	                    		mLikeIds.remove(id);
+	                    		break;
+	            			}
+	            		}
+            		}
+            		showFacebookStatus();
+            	}
+            	break;
+            }
+        }
+    }
+	
+	//==================Facebook action
+	////////////////////////////////////
+	
+	private void initFacebook(){
+    	// Create the Facebook Object using the app id.
+        Utility.mFacebook = new Facebook(Constants.Common.FB_APP_ID);
+        // Instantiate the asynrunner object for asynchronous api calls.
+        Utility.mAsyncRunner = new AsyncFacebookRunner(Utility.mFacebook);
+
+        // restore session if one exists
+        SessionStore.restore(Utility.mFacebook, this);
+        
+        /* This listener will be called when succeed to log in. */
+        SessionEvents.addAuthListener(new SessionEvents.AuthListener() {
+			
+			@SuppressWarnings("deprecation")
+			@Override
+			public void onAuthSucceed() {
+				// TODO Auto-generated method stub
+
+				/* Log in succeed. specify parameters you need to get and request to async task */
+				Bundle params = new Bundle();
+		        params.putString("fields", "name, picture, likes");
+		        
+		        Utility.mAsyncRunner.request("me", params, new BaseRequestListener() {
+					
+					@Override
+					public void onComplete(String response, Object state) {
+						// TODO Auto-generated method stub
+
+			            JSONObject jsonObject;
+			            try {
+			                jsonObject = new JSONObject(response);
+
+			                /* Parse data you've requested. */
+//			                final String picURL = jsonObject.getJSONObject("picture")
+//			                        .getJSONObject("data").getString("url");
+			                Utility.userName = jsonObject.getString(ParseConstants.Facebook.User.NAME);
+			                Utility.userUID = jsonObject.getString(ParseConstants.Facebook.User.ID);
+			                Log.i("fb session", Utility.userName);
+
+							if (mFacebookLiked && mDontBother)
+								return;
+			                
+			                /* check if user previously liked the YOOII STUDIOS */
+			                JSONArray likesList = jsonObject.getJSONObject(ParseConstants.Facebook.Likes.LIKES).getJSONArray(ParseConstants.Facebook.Likes.DATA);
+			                mLikeIds.clear();
+			                for (int i = 0; i < likesList.length(); i++){
+			                	JSONObject obj = likesList.getJSONObject(i);
+			                	String likesId = obj.getString(ParseConstants.Facebook.Likes.ID);
+		                		mLikeIds.add(likesId);
+			                	
+			                	if (likesId.equals(Constants.Common.FB_FOLLOW_ID)){
+//			                		liked = true;
+			                		mFacebookLiked = true;
+//			                		break;
+			                	}
+			                }
+			                mHandler.post(new Runnable() {
+								
+								@Override
+								public void run() {
+							    	//여기에다가 좋아요 했으면 버튼 못누르게 설정.
+			                		Utility.storeFacebookLiked(MoreDetail.this, mFacebookLiked);
+									
+						        	showFacebookStatus();
+								}
+							});
+			            } catch (JSONException e) {
+			                e.printStackTrace();
+			            }
+					}
+				});
+			}
+			
+			@Override
+			public void onAuthFail(String error) {
+				// TODO Auto-generated method stub
+                Log.i("fb session", error);
+			}
+		});
+        SessionEvents.addLogoutListener(new SessionEvents.LogoutListener() {
+			
+			@Override
+			public void onLogoutFinish() {
+				// TODO Auto-generated method stub
+				showFacebookStatus();
+			}
+			
+			@Override
+			public void onLogoutBegin() {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+
+    	mAuthBtn.init(this, AUTHORIZE_ACTIVITY_RESULT_CODE, Utility.mFacebook, Constants.Common.permissions);
+    }
+	
+    private void showFacebookStatus(){
+    	final boolean loggedIn = (Utility.mFacebook != null) ? Utility.mFacebook.isSessionValid() : false;
+    	final boolean liked = mFacebookLiked;
+
+    	mAuthBtn.setVisibility(loggedIn ? View.INVISIBLE : View.VISIBLE);
+		mLikeBtn.setVisibility(loggedIn ? View.VISIBLE : View.INVISIBLE);
+		
+    	mLikeBtn.setText(loggedIn ? (liked ? getString(R.string.unliked) : getString(R.string.liked)) : "");
+    }
+//    @Override
+//    public void onResume(){
+//    	super.onResume();
+//    	showFacebookStatus();
+//    }
+//    
+//    @Override
+//    public void onDestroy(){
+//    	super.onDestroy();
+//    }
+//
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.more_detail, menu);
+//        return true;
+//    }
 
 }
