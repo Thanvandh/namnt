@@ -127,11 +127,11 @@ public class FBLikeActivity extends Activity {
 
 	}
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_fblike, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.activity_fblike, menu);
+//        return true;
+//    }
 
 	/** Allow user to navigate our facebook page.
 	 * If you don't override, android's back key will just lead user to go back to the main activity. */

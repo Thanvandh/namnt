@@ -12,7 +12,6 @@ import com.facebook.android.Facebook;
 import namnt.drumbeat.facebook.FBLikeActivity;
 
 import namnt.drumbeat.MainActivity;
-import namnt.drumbeat.R;
 import namnt.drumbeat.facebook.Constants.ParseConstants;
 import namnt.drumbeat.facebook.BaseRequestListener;
 import namnt.drumbeat.facebook.SessionEvents;
@@ -227,8 +226,14 @@ public class MoreDetail extends Activity {
         img_view.setImageDrawable(img[position]);
         header_view.setText(header[position]);
         filesize_view.setText(filesize[position]);
-        price_view.setText(price[position]);
+        if (state[position].equalsIgnoreCase("1")){
+        	price_view.setText(getResources().getString(R.string.bought));
+        	price_view.setTextSize(14);
+        }
+        else
+        	price_view.setText(price[position]);
         content_view.setText(content[position]);
+        
         
         
         btn_download = (ImageButton) findViewById(R.id.more_detail_header_bt_download);
@@ -238,16 +243,17 @@ public class MoreDetail extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				
-				if(price[position].equalsIgnoreCase("free"))
-				{
-					showPopup(MoreDetail.this);
-					return;
-				}
+				
 				
 				if (state[position].equalsIgnoreCase("1"))
-				Toast.makeText(MoreDetail.this, "Alreadly download", Toast.LENGTH_LONG).show();
-				else
+				Toast.makeText(MoreDetail.this, "Alreadly downloaded", Toast.LENGTH_LONG).show();
+				else{
+					if(price[position].equalsIgnoreCase("free"))
+					{
+						showPopup(MoreDetail.this);
+					} else 
 					confirmDownloadDialog();
+				}
 				
 			}
 		});
@@ -277,8 +283,8 @@ public class MoreDetail extends Activity {
 					public void onClick(DialogInterface dialog, int which) {
 						MainActivity.preferences.edit().putString(folder[position], "1").commit();
 						state[position] = MainActivity.preferences.getString(folder[position], getResources().getString(R.string.string_more_text_folder_name_status0));
-						Log.d("test more detail", "folder " + folder[position] + " state " + state[position]);
-						
+						price_view.setText(getResources().getString(R.string.bought));
+						price_view.setTextSize(14);
 
 					}
 				});
@@ -532,7 +538,6 @@ public class MoreDetail extends Activity {
 								
 								@Override
 								public void run() {
-							    	//여기에다가 좋아요 했으면 버튼 못누르게 설정.
 			                		Utility.storeFacebookLiked(MoreDetail.this, mFacebookLiked);
 									
 						        	showFacebookStatus();
@@ -579,6 +584,13 @@ public class MoreDetail extends Activity {
 		mLikeBtn.setBackgroundResource(liked ? R.drawable.btn_facebook_liked : R.drawable.btn_facebook_like);
 //		.setText(loggedIn ? (liked ? getString(R.string.unliked) : getString(R.string.liked)) : "");
 //    	mLikeBtn.setText(loggedIn ? (liked ? getString(R.string.unliked) : getString(R.string.liked)) : "");
+    	if (loggedIn && liked){
+    		MainActivity.preferences.edit().putString(folder[position], "1").commit();
+			state[position] = MainActivity.preferences.getString(folder[position], getResources().getString(R.string.string_more_text_folder_name_status0));
+			price_view.setText(getResources().getString(R.string.bought));
+			price_view.setTextSize(14);
+    	}
+    		
     }
     
 //    @Override
