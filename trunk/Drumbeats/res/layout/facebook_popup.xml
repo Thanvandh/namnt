@@ -6,15 +6,31 @@
    android:background="@drawable/background_popup"
    android:orientation="vertical" >
  
+	<Button
+   		android:id="@+id/close"
+		android:layout_marginTop="0dp"
+		android:layout_alignParentRight="true"
+		android:layout_width="30dp"
+		android:layout_height="30dp"
+		android:background="@drawable/btn_close"
+		android:text="" />
 
- 
-<Button
-   android:id="@+id/close"
-   android:layout_marginTop="0dp"
-   android:layout_alignParentRight="true"
-   android:layout_width="30dp"
-   android:layout_height="30dp"
-   android:background="@drawable/btn_close"
-   android:text="" />
+	<namnt.drumbeat.facebook.FacebookAuthButton
+        android:id="@+id/btn_auth"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:clickable="true"
+        android:background="@drawable/btn_facebook" />
+    
+    <Button
+        android:id="@+id/btn_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btn_auth"
+        android:layout_alignRight="@id/btn_auth"
+        android:text="Like"
+        android:visibility="invisible"/>
  
 </RelativeLayout>
