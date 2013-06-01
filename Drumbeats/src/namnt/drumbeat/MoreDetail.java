@@ -422,6 +422,12 @@ public class MoreDetail extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				
+				final boolean liked = mFacebookLiked;
+				if (liked) {
+					return;
+				}
+				
        		/* Opens activity with webview to connect to the facebook page to follow. */
        		Intent intent = new Intent(MoreDetail.this, FBLikeActivity.class);
            	intent.putExtra(Constants.Common.INTENT_FB_LIKE, mFacebookLiked);
@@ -570,8 +576,11 @@ public class MoreDetail extends Activity {
     	mAuthBtn.setVisibility(loggedIn ? View.INVISIBLE : View.VISIBLE);
 		mLikeBtn.setVisibility(loggedIn ? View.VISIBLE : View.INVISIBLE);
 		
-    	mLikeBtn.setText(loggedIn ? (liked ? getString(R.string.unliked) : getString(R.string.liked)) : "");
+		mLikeBtn.setBackgroundResource(liked ? R.drawable.btn_facebook_liked : R.drawable.btn_facebook_like);
+//		.setText(loggedIn ? (liked ? getString(R.string.unliked) : getString(R.string.liked)) : "");
+//    	mLikeBtn.setText(loggedIn ? (liked ? getString(R.string.unliked) : getString(R.string.liked)) : "");
     }
+    
 //    @Override
 //    public void onResume(){
 //    	super.onResume();
