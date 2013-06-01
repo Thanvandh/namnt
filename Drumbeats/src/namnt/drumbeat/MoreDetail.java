@@ -5,15 +5,21 @@ import java.io.IOException;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class MoreDetail extends Activity {
@@ -31,6 +37,7 @@ public class MoreDetail extends Activity {
 	    
 	    ImageView logo_view;
 	    ImageView img_view;
+	    ImageButton btn_download;
 	    TextView header_view;
 	    TextView filesize_view;
 	    TextView content_view;
@@ -148,7 +155,16 @@ public class MoreDetail extends Activity {
         content_view.setText(content[position]);
         
         
-        
+        btn_download = (ImageButton) findViewById(R.id.more_detail_header_bt_download);
+        btn_download.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				showPopup(MoreDetail.this);
+				
+			}
+		});
         
 	}
         
@@ -224,6 +240,44 @@ public class MoreDetail extends Activity {
 		// TODO Auto-generated method stub
 		//super.onBackPressed();
 		return;
+	}
+	
+	// The method that displays the popup.
+	private void showPopup(final Activity context) {
+	   int popupWidth = 200;
+	   int popupHeight = 150;
+	 
+	   // Inflate the popup_layout.xml
+	   RelativeLayout viewGroup = (RelativeLayout) context.findViewById(R.id.facbook_popup_for_free);
+	   LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	   View layout = layoutInflater.inflate(R.layout.facebook_popup, viewGroup);
+	 
+	   // Creating the PopupWindow
+	   final PopupWindow popup = new PopupWindow(context);
+	   popup.setContentView(layout);
+	   popup.setWidth(popupWidth);
+	   popup.setHeight(popupHeight);
+	   popup.setFocusable(true);
+	 
+	   // Some offset to align the popup a bit to the right, and a bit down, relative to button's position.
+	   int OFFSET_X = 30;
+	   int OFFSET_Y = 30;
+	 
+	   // Clear the default translucent background
+	   popup.setBackgroundDrawable(new BitmapDrawable());
+	 
+	   // Displaying the popup at the specified location, + offsets.
+	   popup.showAtLocation(layout, Gravity.CENTER, OFFSET_X, OFFSET_Y);
+	 
+	   // Getting a reference to Close button, and close the popup when clicked.
+	   Button close = (Button) layout.findViewById(R.id.close);
+	   close.setOnClickListener(new OnClickListener() {
+	 
+	     @Override
+	     public void onClick(View v) {
+	    	 popup.dismiss();
+	     }
+	   });
 	}
 
 }
