@@ -2,6 +2,7 @@ package namnt.drumbeat;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -115,7 +116,7 @@ public class MainActivity extends Activity {
 	int countoff;
 	ToggleButton bt_random;
 	boolean random;
-	SharedPreferences preferences;
+	static SharedPreferences preferences;
 
 	// favorite body
 	ArrayList<HashMap<String, String>> array_list_favorite_file;
@@ -750,6 +751,48 @@ public class MainActivity extends Activity {
 			e.printStackTrace();
 		}
 	}
+	public ArrayList<String> getListFolder(){
+		String[] folder = new String [12];
+	    String[] state = new String[12];
+	    
+	    folder[0] = getResources().getString(R.string.string_more_text_folder_name0);
+	    folder[1] = getResources().getString(R.string.string_more_text_folder_name1);
+	    folder[2] = getResources().getString(R.string.string_more_text_folder_name2);
+	    folder[3] = getResources().getString(R.string.string_more_text_folder_name3);
+	    folder[4] = getResources().getString(R.string.string_more_text_folder_name4);
+        folder[5] = getResources().getString(R.string.string_more_text_folder_name5);
+        folder[6] = getResources().getString(R.string.string_more_text_folder_name6);
+        folder[7] = getResources().getString(R.string.string_more_text_folder_name7);
+        folder[8] = getResources().getString(R.string.string_more_text_folder_name8);
+        folder[9] = getResources().getString(R.string.string_more_text_folder_name9);
+        folder[10] = getResources().getString(R.string.string_more_text_folder_name10);
+        folder[11] = getResources().getString(R.string.string_more_text_folder_name11);
+        
+        
+        state[0] = preferences.getString(folder[0], getResources().getString(R.string.string_more_text_folder_name_status0));
+        state[1] = preferences.getString(folder[1], getResources().getString(R.string.string_more_text_folder_name_status1));
+        state[2] = preferences.getString(folder[2], getResources().getString(R.string.string_more_text_folder_name_status2));
+        state[3] = preferences.getString(folder[3], getResources().getString(R.string.string_more_text_folder_name_status3));
+        state[4] = preferences.getString(folder[4], getResources().getString(R.string.string_more_text_folder_name_status4));
+        state[5] = preferences.getString(folder[5], getResources().getString(R.string.string_more_text_folder_name_status5));
+        state[6] = preferences.getString(folder[6], getResources().getString(R.string.string_more_text_folder_name_status6));
+        state[7] = preferences.getString(folder[7], getResources().getString(R.string.string_more_text_folder_name_status7));
+        state[8] = preferences.getString(folder[8], getResources().getString(R.string.string_more_text_folder_name_status8));
+        state[9] = preferences.getString(folder[9], getResources().getString(R.string.string_more_text_folder_name_status9));
+        state[10] = preferences.getString(folder[10], getResources().getString(R.string.string_more_text_folder_name_status10));
+        state[11] = preferences.getString(folder[11], getResources().getString(R.string.string_more_text_folder_name_status11));
+        
+        ArrayList<String> Listfolder = new ArrayList<String>();
+        for (int i = 0; i <12; i++){
+        	//Log.d("test", "folder " + folder[i] + " state " + state[i]);
+        	if (state[i].equalsIgnoreCase("1"))
+        		Listfolder.add(folder[i]);
+        }
+        return Listfolder;
+        
+        
+	    
+	}
 
 	public void showMainBodyHome() {
 		bt_settings.setImageResource(R.drawable.settingsbutton_white);
@@ -766,15 +809,17 @@ public class MainActivity extends Activity {
 		main_body_list.setVisibility(View.VISIBLE);
 		main_footer.setVisibility(View.VISIBLE);
 
-		final String array_folder[] = getFolder();
-		mfolder = array_folder[0];
+		//final String array_folder[] = getFolder();
+		final ArrayList<String> listfolder = getListFolder();
+		mfolder = listfolder.get(0);
 		String[] array_file = getFolderFile(mfolder);
+		if (array_file != null && array_file.length > 0)
 		mfilename = array_file[0];
 		ArrayList<HashMap<String, String>> array_list_folder = new ArrayList<HashMap<String, String>>();
 
-		for (int i = 0; i < array_folder.length; i++) {
+		for (int i = 0; i < listfolder.size(); i++) {
 			HashMap<String, String> map = new HashMap<String, String>();
-			map.put(KEY_FOLDER, array_folder[i]);
+			map.put(KEY_FOLDER, listfolder.get(i));
 			array_list_folder.add(map);
 		}
 
@@ -787,7 +832,7 @@ public class MainActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int postion, long arg3) {
 				// TODO Auto-generated method stub
-				mfolder = array_folder[postion];
+				mfolder = listfolder.get(postion);
 				state_main_body = state_main_body_file;
 				showMainBodyFile(mfolder);
 
@@ -1187,8 +1232,8 @@ public class MainActivity extends Activity {
 		if (maxCount > 0 && !DrumbeatsMediaPlayer.bplay){
 			DrumbeatsMediaPlayer.bplay = true;
 			setButtonPlay(DrumbeatsMediaPlayer.bplay);
-			playsong.setText("ï½¥" + mfolder.toUpperCase() + " - "
-					+ mfilename.toUpperCase() + " ï½¥");
+			playsong.setText("." + mfolder.toUpperCase() + " - "
+					+ mfilename.toUpperCase() + " .");
 			String filename[] = getFileName(mfolder, mfilename);
 			int rate = 0;
 			for (int i = 0; i < TextAdapter.arrayrate.length; i++) {
@@ -1202,8 +1247,8 @@ public class MainActivity extends Activity {
 		} else {
 			DrumbeatsMediaPlayer.bplay = true;
 			setButtonPlay(DrumbeatsMediaPlayer.bplay);
-			playsong.setText("ï½¥" + mfolder.toUpperCase() + " - "
-					+ mfilename.toUpperCase() + " ï½¥");
+			playsong.setText("." + mfolder.toUpperCase() + " - "
+					+ mfilename.toUpperCase() + " .");
 			playMusic(mfolder, mfilename);
 		}
 
@@ -1260,6 +1305,8 @@ public class MainActivity extends Activity {
 	}
 
 	public void playMusic(String folder, String file) {
+		if ((file == null )|| (file.length() == 0))
+			return;
 		if (DrumbeatsMediaPlayer.mp != null) {
 			if (DrumbeatsMediaPlayer.mp.isPlaying()) {
 				DrumbeatsMediaPlayer.mp.stop();
@@ -1296,7 +1343,7 @@ public class MainActivity extends Activity {
 	public void stopMusic() {
 		DrumbeatsMediaPlayer.bplay = false;
 		setButtonPlay(DrumbeatsMediaPlayer.bplay);
-		// playsong.setText("");
+		playsong.setText("");
 		if (DrumbeatsMediaPlayer.mp != null) {
 			if (DrumbeatsMediaPlayer.mp.isPlaying()) {
 				DrumbeatsMediaPlayer.mp.stop();
@@ -1329,6 +1376,7 @@ public class MainActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						stopMusic();
+						DrumbeatsMediaPlayer.mp.release();
 						finish();
 
 					}
