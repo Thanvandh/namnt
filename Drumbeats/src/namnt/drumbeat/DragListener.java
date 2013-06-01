@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.drumbeat;
+package namnt.drumbeat;
 
 import android.view.View;
 import android.widget.ListView;

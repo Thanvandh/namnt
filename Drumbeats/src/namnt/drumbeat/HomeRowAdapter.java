@@ -1,4 +1,4 @@
-package com.android.drumbeat;
+package namnt.drumbeat;
 
 import java.util.ArrayList;
 import java.util.HashMap;

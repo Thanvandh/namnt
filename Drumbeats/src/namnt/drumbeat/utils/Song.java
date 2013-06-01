@@ -1,4 +1,4 @@
-package com.android.drumbeat.utils;
+package namnt.drumbeat.utils;
 
 public class Song {
 	

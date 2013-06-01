@@ -1,4 +1,4 @@
-package com.android.drumbeat;
+package namnt.drumbeat;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,9 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import com.android.drumbeat.utils.DatabaseHandler;
-import com.android.drumbeat.utils.Song;
-
+import namnt.drumbeat.utils.*;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -1189,8 +1187,8 @@ public class MainActivity extends Activity {
 		if (maxCount > 0 && !DrumbeatsMediaPlayer.bplay){
 			DrumbeatsMediaPlayer.bplay = true;
 			setButtonPlay(DrumbeatsMediaPlayer.bplay);
-			playsong.setText("･" + mfolder.toUpperCase() + " - "
-					+ mfilename.toUpperCase() + " ･");
+			playsong.setText("ï½¥" + mfolder.toUpperCase() + " - "
+					+ mfilename.toUpperCase() + " ï½¥");
 			String filename[] = getFileName(mfolder, mfilename);
 			int rate = 0;
 			for (int i = 0; i < TextAdapter.arrayrate.length; i++) {
@@ -1204,8 +1202,8 @@ public class MainActivity extends Activity {
 		} else {
 			DrumbeatsMediaPlayer.bplay = true;
 			setButtonPlay(DrumbeatsMediaPlayer.bplay);
-			playsong.setText("･" + mfolder.toUpperCase() + " - "
-					+ mfilename.toUpperCase() + " ･");
+			playsong.setText("ï½¥" + mfolder.toUpperCase() + " - "
+					+ mfilename.toUpperCase() + " ï½¥");
 			playMusic(mfolder, mfilename);
 		}
 
