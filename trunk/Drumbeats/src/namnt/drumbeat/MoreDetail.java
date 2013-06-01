@@ -5,11 +5,14 @@ import java.io.IOException;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MoreDetail extends Activity {
 	 Drawable[] logo = new Drawable [8];
@@ -31,6 +35,8 @@ public class MoreDetail extends Activity {
 	    String[] content = new String [8];
 	    String[] price = new String [8];
 	    String[] filedemo = new String [8];
+	    String[] folder = new String [8];
+	    String[] state = new String [8];
 	    ImageButton bt_back;
 	    Button bt_play;
 	    
@@ -117,6 +123,26 @@ public class MoreDetail extends Activity {
         filedemo[6] = getResources().getString(R.string.string_more_text_file_demo6);
         filedemo[7] = getResources().getString(R.string.string_more_text_file_demo7);
         
+        folder[0] = getResources().getString(R.string.string_more_text_folder_name0);
+	    folder[1] = getResources().getString(R.string.string_more_text_folder_name1);
+	    folder[2] = getResources().getString(R.string.string_more_text_folder_name2);
+	    folder[3] = getResources().getString(R.string.string_more_text_folder_name3);
+	    folder[4] = getResources().getString(R.string.string_more_text_folder_name4);
+        folder[5] = getResources().getString(R.string.string_more_text_folder_name5);
+        folder[6] = getResources().getString(R.string.string_more_text_folder_name6);
+        folder[7] = getResources().getString(R.string.string_more_text_folder_name7);
+        
+        
+        state[0] = MainActivity.preferences.getString(folder[0], getResources().getString(R.string.string_more_text_folder_name_status0));
+        state[1] = MainActivity.preferences.getString(folder[1], getResources().getString(R.string.string_more_text_folder_name_status1));
+        state[2] = MainActivity.preferences.getString(folder[2], getResources().getString(R.string.string_more_text_folder_name_status2));
+        state[3] = MainActivity.preferences.getString(folder[3], getResources().getString(R.string.string_more_text_folder_name_status3));
+        state[4] = MainActivity.preferences.getString(folder[4], getResources().getString(R.string.string_more_text_folder_name_status4));
+        state[5] = MainActivity.preferences.getString(folder[5], getResources().getString(R.string.string_more_text_folder_name_status5));
+        state[6] = MainActivity.preferences.getString(folder[6], getResources().getString(R.string.string_more_text_folder_name_status6));
+        state[7] = MainActivity.preferences.getString(folder[7], getResources().getString(R.string.string_more_text_folder_name_status7));
+       
+        
         bt_back = (ImageButton) findViewById(R.id.more_detail_header_bt_back);
         bt_back.setOnClickListener(new OnClickListener() {
 			
@@ -162,11 +188,43 @@ public class MoreDetail extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				showPopup(MoreDetail.this);
+				if (state[position].equalsIgnoreCase("1"))
+				Toast.makeText(MoreDetail.this, "Alreadly download", Toast.LENGTH_LONG).show();
+				else
+					confirmDownloadDialog();
+					//showPopup(MoreDetail.this);
 				
 			}
 		});
         
+	}
+	private void confirmDownloadDialog() {
+		AlertDialog.Builder quitDialog = new AlertDialog.Builder(
+				MoreDetail.this);
+		quitDialog.setTitle("Do you want to download it?");
+
+		quitDialog.setPositiveButton("Yes",
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						MainActivity.preferences.edit().putString(folder[position], "1").commit();
+						state[position] = MainActivity.preferences.getString(folder[position], getResources().getString(R.string.string_more_text_folder_name_status0));
+						Log.d("test more detail", "folder " + folder[position] + " state " + state[position]);
+						
+
+					}
+				});
+		quitDialog.setNegativeButton("No",
+				new DialogInterface.OnClickListener() {
+
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+
+		quitDialog.show();
 	}
         
     public void playMusic(){
