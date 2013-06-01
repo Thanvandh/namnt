@@ -2,6 +2,7 @@ package namnt.drumbeat;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,6 +23,11 @@ import namnt.drumbeat.facebook.Utility;
 import namnt.drumbeat.facebook.Constants;
 
 import namnt.drumbeat.facebook.FacebookAuthButton;
+import net.robotmedia.billing.BillingController;
+import net.robotmedia.billing.BillingRequest.ResponseCode;
+import net.robotmedia.billing.helper.AbstractBillingObserver;
+import net.robotmedia.billing.model.Transaction;
+import net.robotmedia.billing.model.Transaction.PurchaseState;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -42,6 +48,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -97,6 +104,8 @@ public class MoreDetail extends Activity {
 		/* Constants */
 	    final static int AUTHORIZE_ACTIVITY_RESULT_CODE = 0;
 	    final static int LIKE_ACTIVITY_RESULT_CODE = 1;
+	    
+	    private AbstractBillingObserver mBillingObserver;
 	    
 	    
 	@Override
@@ -252,7 +261,8 @@ public class MoreDetail extends Activity {
 					{
 						showPopup(MoreDetail.this);
 					} else 
-					confirmDownloadDialog();
+					//confirmDownloadDialog();
+						BillingController.requestPurchase(MoreDetail.this, "android.test.purchased", true /* confirm */, null);
 				}
 				
 			}
@@ -269,6 +279,41 @@ public class MoreDetail extends Activity {
 	        SharedPreferences sharedPref = getSharedPreferences(Constants.SharedPreference.NAME_COMMON, MODE_PRIVATE);
 	        mFacebookLiked = sharedPref.getBoolean(Constants.SharedPreference.NAME.FB_LIKED, false);
         }
+        BillingController.setDebug(true);
+		BillingController.setConfiguration(new BillingController.IConfiguration() {
+			
+			public byte[] getObfuscationSalt() {
+				return new byte[] {41, -90, -116, -41, 66, -53, 122, -110, -127, -96, -88, 77, 127, 115, 1, 73, 57, 110, 48, -116};
+			}
+
+			public String getPublicKey() {
+				return "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvIpymtXEKC3eDyFkOEl3yYFIBPlCVlaBAxIpYOArpMRdtZdAqPtfiQZyMY1+dkLWiz6+YPs09qpLYZmy07VMBHCX6k4mHJlUjJvVeRZPAnBpe8fOvw5ioP+GhyB5T5p09dhd78LEihB3bgyiZgHW8TLe+GETJtbqbBP+hJ6SgYufpp29L3s2oyAas/fwIOqeQghVlvywV1dlionxAYnNYm/CPHLxACGMRnytpCoDngBWwXdkG+1vVC0NieXRb+ehvhv9Ct8X2R6hjM4TgHqfGml/esgSRt3v5CbdwePOmFoWyhMrw2aJKlrKz6jtPzFsIGn5+lXLDYizoO6CDA01UQIDAQAB";
+			}
+		});
+        
+        mBillingObserver = new AbstractBillingObserver(this) {
+
+			public void onBillingChecked(boolean supported) {
+				MoreDetail.this.onBillingChecked(supported);
+			}
+
+			public void onPurchaseStateChanged(String itemId, PurchaseState state) {
+				MoreDetail.this.onPurchaseStateChanged(itemId, state);
+			}
+
+			public void onRequestPurchaseResponse(String itemId, ResponseCode response) {
+				MoreDetail.this.onRequestPurchaseResponse(itemId, response);
+			}
+
+			public void onSubscriptionChecked(boolean supported) {
+				MoreDetail.this.onSubscriptionChecked(supported);
+			}
+		
+		};
+		
+		BillingController.registerObserver(mBillingObserver);
+		BillingController.checkBillingSupported(this);
+		BillingController.checkSubscriptionSupported(this);
 	}
 	
 	private void confirmDownloadDialog() {
@@ -592,7 +637,46 @@ public class MoreDetail extends Activity {
     	}
     		
     }
-    
+    private void updateItems() {
+		List<Transaction> transactions = BillingController.getTransactions(this);
+		for (Transaction t : transactions) {
+			if (t.purchaseState == PurchaseState.PURCHASED) {
+				MainActivity.preferences.edit().putString(folder[position], "1").commit();
+				state[position] = MainActivity.preferences.getString(folder[position], getResources().getString(R.string.string_more_text_folder_name_status0));
+				price_view.setText(getResources().getString(R.string.bought));
+				price_view.setTextSize(14);
+			}
+		}
+
+	}
+    private void restoreTransactions() {
+		if (!mBillingObserver.isTransactionsRestored()) {
+			BillingController.restoreTransactions(this);
+		}
+	}
+    @Override
+	protected void onDestroy() {
+		BillingController.unregisterObserver(mBillingObserver);
+		super.onDestroy();
+	}
+
+	public void onPurchaseStateChanged(String itemId, PurchaseState state) {
+		updateItems();
+	}
+	public void onBillingChecked(boolean supported) {
+		if (supported) {
+			restoreTransactions();
+			btn_download.setEnabled(true);
+		} else {
+			btn_download.setEnabled(false);
+		}
+	}
+	public void onRequestPurchaseResponse(String itemId, ResponseCode response) {
+	}
+	
+	public void onSubscriptionChecked(boolean supported) {
+		
+	}
 //    @Override
 //    public void onResume(){
 //    	super.onResume();
