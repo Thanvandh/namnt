@@ -1,9 +1,10 @@
-package com.android.drumbeat;
+package namnt.drumbeat;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.android.drumbeat.utils.DatabaseHandler;
+import namnt.drumbeat.utils.DatabaseHandler;
+
 
 
 import android.app.Activity;

@@ -1,4 +1,4 @@
-package com.android.drumbeat;
+package namnt.drumbeat;
 
 
 import android.content.Context;

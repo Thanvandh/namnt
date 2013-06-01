@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.drumbeat;
+package namnt.drumbeat;
 
 /**
  * Implement to handle an item being dropped.

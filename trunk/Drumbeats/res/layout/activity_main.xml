@@ -110,7 +110,7 @@
 	        android:choiceMode="singleChoice"
 	        android:visibility="visible"/>
 	
-	    <com.android.drumbeat.DraggableListView
+	    <namnt.drumbeat.DraggableListView
 	        android:id="@+id/main_body_listview_favorite"
 	        android:layout_width="fill_parent"
 	        android:layout_height="match_parent"

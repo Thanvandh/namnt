@@ -1,4 +1,4 @@
-package com.android.drumbeat.utils;
+package namnt.drumbeat.utils;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	// Database Version
 	private static final int DATABASE_VERSION = 1;
 	
-	private static String DB_PATH = "/data/data/com.android.drumbeat/databases/";
+	private static String DB_PATH = "/data/data/namnt.drumbeat/databases/";
 	 
 	private static String DB_NAME = "drumbeat";
 	
