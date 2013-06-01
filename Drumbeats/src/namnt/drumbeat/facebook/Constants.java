@@ -8,7 +8,7 @@ public class Constants {
 		 * Facebook id to follow. Should be an object id(String object in numeric form).<br> 
 		 */
 		public static final String FB_FOLLOW_ID = "142928839079107";//"168356489891715";
-		public static final String FB_APP_ID = "429606567129217";
+		public static final String FB_APP_ID = "163340287177727";//"429606567129217";
 		public static final String FB_PAGE_PREFIX = "http://m.facebook.com/";
 		public static final String INTENT_FB_LIKE = "like";
 
