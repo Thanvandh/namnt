@@ -1,9 +1,15 @@
 package namnt.drumbeat;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import namnt.drumbeat.facebook.Constants;
+
+import namnt.drumbeat.facebook.FacebookAuthButton;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -51,6 +57,30 @@ public class MoreDetail extends Activity {
 	    TextView price_view;
 	    
 	    boolean bplay = false;
+	    
+	    //facebook
+	    private FacebookAuthButton mAuthBtn;
+		private Button mLikeBtn;
+		
+		/* Objects */
+		private Handler mHandler;
+		private ArrayList<String> mLikeIds;
+		private boolean mFacebookLiked = false;
+
+		/* Primitives */
+		/**
+		 * true : if user clicked 'like' button previously, we don't check if the user still likes<br>
+		 * false : if user 'unliked' FB_FOLLOW_ID after 'liking', we do check if the user still like FB_FOLLOW_ID.<br>
+		 * 
+		 * @see Constants.Common#FB_FOLLOW_ID
+		 */
+		private boolean mDontBother = false;
+
+		/* Constants */
+	    final static int AUTHORIZE_ACTIVITY_RESULT_CODE = 0;
+	    final static int LIKE_ACTIVITY_RESULT_CODE = 1;
+	    
+	    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -303,6 +333,9 @@ public class MoreDetail extends Activity {
 	
 	// The method that displays the popup.
 	private void showPopup(final Activity context) {
+		
+		
+		
 	   int popupWidth = getResources().getDimensionPixelSize(R.dimen.facebook_popup_width);;
 	   int popupHeight = getResources().getDimensionPixelSize(R.dimen.facebook_popup_height);;
 	 
