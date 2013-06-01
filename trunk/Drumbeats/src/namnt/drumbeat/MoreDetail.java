@@ -18,6 +18,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -244,8 +245,8 @@ public class MoreDetail extends Activity {
 	
 	// The method that displays the popup.
 	private void showPopup(final Activity context) {
-	   int popupWidth = 200;
-	   int popupHeight = 150;
+	   int popupWidth = getResources().getDimensionPixelSize(R.dimen.facebook_popup_width);;
+	   int popupHeight = getResources().getDimensionPixelSize(R.dimen.facebook_popup_height);;
 	 
 	   // Inflate the popup_layout.xml
 	   RelativeLayout viewGroup = (RelativeLayout) context.findViewById(R.id.facbook_popup_for_free);
@@ -260,8 +261,8 @@ public class MoreDetail extends Activity {
 	   popup.setFocusable(true);
 	 
 	   // Some offset to align the popup a bit to the right, and a bit down, relative to button's position.
-	   int OFFSET_X = 30;
-	   int OFFSET_Y = 30;
+	   int OFFSET_X = 0;
+	   int OFFSET_Y = 0;
 	 
 	   // Clear the default translucent background
 	   popup.setBackgroundDrawable(new BitmapDrawable());
