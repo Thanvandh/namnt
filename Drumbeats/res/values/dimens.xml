@@ -193,4 +193,7 @@
             
     <dimen name="more_detail_body_mid_img_margin_top">10dp</dimen>
     
+    <dimen name="facebook_popup_width">200dp</dimen>
+    <dimen name="facebook_popup_height">143dp</dimen>
+    
 </resources>
