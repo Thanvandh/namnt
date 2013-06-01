@@ -17,7 +17,7 @@
 
 	<namnt.drumbeat.facebook.FacebookAuthButton
         android:id="@+id/btn_auth"
-        android:layout_width="50dp"
+        android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
@@ -27,11 +27,13 @@
     
     <Button
         android:id="@+id/btn_like"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/btn_auth"
-        android:layout_alignRight="@id/btn_auth"
-        android:text="Like"
-        android:visibility="invisible"/>
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="13dp"
+        android:text=""
+        android:background="@drawable/btn_facebook_like" 
+        android:visibility="invisible" />
  
 </RelativeLayout>
