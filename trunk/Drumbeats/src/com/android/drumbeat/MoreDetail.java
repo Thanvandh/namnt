@@ -195,7 +195,6 @@ public class MoreDetail extends Activity {
 			if (DrumbeatsMediaPlayer.mp.isPlaying()) {
 				DrumbeatsMediaPlayer.mp.stop();
 				// mp.release();
-
 			}
 		}
 
@@ -217,6 +216,7 @@ public class MoreDetail extends Activity {
 //		
 //	}
 	public void back(){
+		stopMusic();
 		super.onBackPressed();
 	}
 	@Override

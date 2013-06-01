@@ -256,7 +256,8 @@
 	            android:background="@drawable/btn_settings_top"
 	            android:text="@string/main_body_settings_bt_ratethisapp"
 	            android:textSize="@dimen/main_body_settings_button_text_size"
-	            android:textStyle="bold" />
+	            android:textStyle="bold"
+	            android:textColor="@drawable/btn_settings_text_color" />
 	
 	        <Button
 	            android:id="@+id/main_body_settings_bt_tellafriend"
@@ -267,7 +268,8 @@
 	            android:background="@drawable/btn_settings_mid"
 	            android:text="@string/main_body_settings_bt_tellafriend"
 	            android:textSize="@dimen/main_body_settings_button_text_size"
-	            android:textStyle="bold" />
+	            android:textStyle="bold"
+	            android:textColor="@drawable/btn_settings_text_color" />
 	
 	        <Button
 	            android:id="@+id/main_body_settings_bt_sendfeeback"
@@ -278,7 +280,8 @@
 	            android:background="@drawable/btn_settings_bottom"
 	            android:text="@string/main_body_settings_bt_sendfeeback"
 	            android:textSize="@dimen/main_body_settings_button_text_size"
-	            android:textStyle="bold" />
+	            android:textStyle="bold"
+	            android:textColor="@drawable/btn_settings_text_color" />
 	    </RelativeLayout>
 	
 	    <RelativeLayout

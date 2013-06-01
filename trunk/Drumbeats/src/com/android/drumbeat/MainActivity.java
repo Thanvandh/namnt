@@ -1227,10 +1227,10 @@ public class MainActivity extends Activity {
 			if (DrumbeatsMediaPlayer.mp.isPlaying()) {
 				DrumbeatsMediaPlayer.mp.stop();
 				// mp.release();
-
 			}
 		} else
 			DrumbeatsMediaPlayer.mp = new MediaPlayer();
+		
 		Log.d("test", "countmax " + maxCount);
 		AssetFileDescriptor fileplay;
 		try {
@@ -1245,7 +1245,6 @@ public class MainActivity extends Activity {
 			DrumbeatsMediaPlayer.mp.setOnCompletionListener(new OnCompletionListener(){
 				  int count = 0; // initialize somewhere before, not sure if this will work here
 				  
-
 				  @Override
 				  public void onCompletion(MediaPlayer mediaPlayer) {
 				    if(count < maxCount-1) {
@@ -1253,17 +1252,13 @@ public class MainActivity extends Activity {
 				      mediaPlayer.seekTo(0);
 				      mediaPlayer.start();
 				    } else {
-				    	playMusic(mfolder, mfilename);
-						
-													
-				    	
+				    	playMusic(mfolder, mfilename);	
 				    }
 				}});
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	public void playMusic(String folder, String file) {
