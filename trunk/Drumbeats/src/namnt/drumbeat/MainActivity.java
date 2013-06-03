@@ -11,9 +11,13 @@ import namnt.drumbeat.utils.*;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -92,6 +96,8 @@ public class MainActivity extends Activity {
 	String mfilename = "";
 
 	// tempo view
+	AnimatorSet animatorSet;
+	boolean justTouchDown;
 	RelativeLayout tempo_view;
 	Button bt_tempo_view_done;
 	Button bt_tempo_view_play;
@@ -125,6 +131,7 @@ public class MainActivity extends Activity {
 	boolean state_edit = false;
 	DatabaseHandler myDbHelper;
 
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -254,6 +261,7 @@ public class MainActivity extends Activity {
 						}
 					}
 					srate = TextAdapter.arrayrate[number - 1];
+					tempo_view_text_on_top.setText(srate);
 					Log.d("test", "selecteddownrate|" + srate);
 					for (int i = 0; i < TextAdapter.mTemporary.length; i++) {
 						if (srate.equalsIgnoreCase(TextAdapter.mTemporary[i])) {
@@ -299,6 +307,7 @@ public class MainActivity extends Activity {
 						}
 					}
 					srate = TextAdapter.arrayrate[number + 1];
+					tempo_view_text_on_top.setText(srate);
 					Log.d("test", "selecteduprate|" + srate);
 					for (int i = 0; i < TextAdapter.mTemporary.length; i++) {
 						if (srate.equalsIgnoreCase(TextAdapter.mTemporary[i])) {
@@ -423,13 +432,16 @@ public class MainActivity extends Activity {
 				gridheight, item_selected));
 		// tempo_view_text_on_top.setLayoutParams(new
 		// AbsoluteLayout.LayoutParams(200,200, 200,200));
-
+		
+		animatorSet = new AnimatorSet();
 		tempo_view_grid.setOnTouchListener(new OnTouchListener() {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				// TODO Auto-generated method stub
 				if (event.getAction() == MotionEvent.ACTION_MOVE) {
+					animatorSet.end();
+					justTouchDown = false;
 					int x = (int) event.getX();
 					int y = (int) event.getY();
 					int row = (y)
@@ -447,10 +459,12 @@ public class MainActivity extends Activity {
 						// tempo_view_grid.setSelection(lastPos);
 						srate = TextAdapter.mTemporary[lastPos];
 						tempo_view_text_on_top.setVisibility(View.VISIBLE);
+						tempo_view_text_on_top.setAlpha(1.0f);
 						tempo_view_text_on_top.setText(srate);
 					}
 					return true;
 				} else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					justTouchDown = true;
 					int x = (int) event.getX();
 					int y = (int) event.getY();
 					int row = (y)
@@ -471,7 +485,8 @@ public class MainActivity extends Activity {
 						tempo_view_grid.requestFocusFromTouch();
 						tempo_view_grid.setSelection(lastPos);
 						srate = TextAdapter.mTemporary[lastPos];
-						tempo_view_text_on_top.setVisibility(View.VISIBLE);
+//						tempo_view_text_on_top.setVisibility(View.VISIBLE);
+//						tempo_view_text_on_top.setAlpha(1.0f);
 						tempo_view_text_on_top.setText(srate);
 						return true;
 					} else {
@@ -507,7 +522,15 @@ public class MainActivity extends Activity {
 							bt_tempo_up.setEnabled(true);
 						}
 						// srate = TextAdapter.mTemporary[lastPos];
-						tempo_view_text_on_top.setVisibility(View.GONE);
+//						tempo_view_text_on_top.setVisibility(View.GONE);
+						 
+						if(!justTouchDown) {
+							ObjectAnimator animateFaceout = ObjectAnimator.ofFloat(tempo_view_text_on_top, "alpha", 0);
+							animateFaceout.setDuration(5000);
+							animatorSet.play(animateFaceout);
+							animatorSet.start();
+						}
+
 						if (DrumbeatsMediaPlayer.bplay)
 							playMusic();
 					}
