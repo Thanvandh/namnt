@@ -92,7 +92,8 @@ public class MainActivity extends Activity {
 	SeekBar volumeProgress;
 	TextView playsong;
 	//MediaPlayer mp;
-	String mfolder = "";
+	String mfolder = "";//for navigation
+	String mfolderPlay = "";//for play
 	String mfilename = "";
 
 	// tempo view
@@ -207,7 +208,7 @@ public class MainActivity extends Activity {
 				if (DrumbeatsMediaPlayer.bplay)
 					stopMusic();
 				else
-					playMusic();
+					playMusic(false);
 			}
 		});
 		
@@ -240,7 +241,7 @@ public class MainActivity extends Activity {
 				if (DrumbeatsMediaPlayer.bplay)
 					stopMusic();
 				else
-					playMusic();
+					playMusic(false);
 			}
 		});
 		bt_tempo_down.setOnClickListener(new OnClickListener() {
@@ -284,7 +285,7 @@ public class MainActivity extends Activity {
 						bt_tempo_up.setEnabled(true);
 					}
 					if (DrumbeatsMediaPlayer.bplay)
-						playMusic();
+						playMusic(false);
 				}
 
 			}
@@ -329,7 +330,7 @@ public class MainActivity extends Activity {
 						bt_tempo_up.setEnabled(true);
 					}
 					if (DrumbeatsMediaPlayer.bplay)
-						playMusic();
+						playMusic(false);
 				}
 
 			}
@@ -340,32 +341,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Random random = new Random();
-				int j = random.nextInt(26);
-				srate = TextAdapter.arrayrate[j];
-				tempo_view_grid.getChildAt(item_selected)
-						.setBackgroundResource(R.drawable.item_grid_selector);
-				// Log.d("test","rate|" + i + "|" + rate + "|" + srate);
-				for (int i = 0; i < TextAdapter.mTemporary.length; i++) {
-					if (srate.equalsIgnoreCase(TextAdapter.mTemporary[i])) {
-						item_selected = i;
-						break;
-					}
-				}
-				tempo_view_grid.getChildAt(item_selected)
-						.setBackgroundResource(R.drawable.item_press);
-				if (item_selected == 24) {
-					bt_tempo_down.setEnabled(false);
-					bt_tempo_up.setEnabled(true);
-				} else if (item_selected == 3) {
-					bt_tempo_down.setEnabled(true);
-					bt_tempo_up.setEnabled(false);
-				} else {
-					bt_tempo_down.setEnabled(true);
-					bt_tempo_up.setEnabled(true);
-				}
-				if (DrumbeatsMediaPlayer.bplay)
-					playMusic();
+				setrandom();
 			}
 		});
 
@@ -532,7 +508,7 @@ public class MainActivity extends Activity {
 						}
 
 						if (DrumbeatsMediaPlayer.bplay)
-							playMusic();
+							playMusic(false);
 					}
 					return true;
 				}
@@ -835,6 +811,7 @@ public class MainActivity extends Activity {
 		//final String array_folder[] = getFolder();
 		final ArrayList<String> listfolder = getListFolder();
 		mfolder = listfolder.get(0);
+		mfolderPlay = listfolder.get(0);
 		String[] array_file = getFolderFile(mfolder);
 		if (array_file != null && array_file.length > 0)
 		mfilename = array_file[0];
@@ -912,7 +889,7 @@ public class MainActivity extends Activity {
 					int postion, long arg3) {
 				// TODO Auto-generated method stub
 				mfilename = array_file[postion];
-				playMusic();
+				playMusic(true);
 
 			}
 		});
@@ -982,7 +959,7 @@ public class MainActivity extends Activity {
 							// TODO Auto-generated method stub
 							mfolder = favorite_songs.get(postion).getFolder();
 							mfilename = favorite_songs.get(postion).getName();
-							playMusic();
+							playMusic(true);
 
 						}
 					});
@@ -1248,16 +1225,21 @@ public class MainActivity extends Activity {
 
 	}
 
-	public void playMusic() {
+	public void playMusic(boolean isDirect) {
 		
 		int maxCount = preferences.getInt("countoff", 0);
+		
+		if (isDirect) {
+			mfolderPlay = mfolder;
+		} 
+		
 		Log.d("test", "count " + maxCount);
 		if (maxCount > 0 && !DrumbeatsMediaPlayer.bplay){
 			DrumbeatsMediaPlayer.bplay = true;
 			setButtonPlay(DrumbeatsMediaPlayer.bplay);
-			playsong.setText("." + mfolder.toUpperCase() + " - "
-					+ mfilename.toUpperCase() + " .");
-			String filename[] = getFileName(mfolder, mfilename);
+			playsong.setText("• " + mfolderPlay.toUpperCase() + " - "
+					+ mfilename.toUpperCase() + " •");
+			String filename[] = getFileName(mfolderPlay, mfilename);
 			int rate = 0;
 			for (int i = 0; i < TextAdapter.arrayrate.length; i++) {
 				if (srate.equalsIgnoreCase(TextAdapter.arrayrate[i])) {
@@ -1266,13 +1248,13 @@ public class MainActivity extends Activity {
 				}
 			}
 			String precount = filename[rate].substring(filename[rate].length() - 10);
-			playPrecount(precount, maxCount);
+			playPrecount(precount, maxCount, isDirect);
 		} else {
 			DrumbeatsMediaPlayer.bplay = true;
 			setButtonPlay(DrumbeatsMediaPlayer.bplay);
-			playsong.setText("." + mfolder.toUpperCase() + " - "
-					+ mfilename.toUpperCase() + " .");
-			playMusic(mfolder, mfilename);
+			playsong.setText("• " + mfolderPlay.toUpperCase() + " - "
+					+ mfilename.toUpperCase() + " •");
+			playMusic(mfolderPlay, mfilename);
 		}
 
 	}
@@ -1288,7 +1270,7 @@ public class MainActivity extends Activity {
 		return files;
 	}
 
-	public void playPrecount(String file, final int maxCount) {
+	public void playPrecount(String file, final int maxCount, final boolean isDirect) {
 		if (DrumbeatsMediaPlayer.mp != null) {
 			if (DrumbeatsMediaPlayer.mp.isPlaying()) {
 				DrumbeatsMediaPlayer.mp.stop();
@@ -1318,7 +1300,10 @@ public class MainActivity extends Activity {
 				      mediaPlayer.seekTo(0);
 				      mediaPlayer.start();
 				    } else {
-				    	playMusic(mfolder, mfilename);	
+				    	if (isDirect) {
+				    		mfolderPlay = mfolder;
+				    	}
+				    	playMusic(mfolderPlay, mfilename);	
 				    }
 				}});
 		} catch (IOException e) {
@@ -1366,7 +1351,7 @@ public class MainActivity extends Activity {
 	public void stopMusic() {
 		DrumbeatsMediaPlayer.bplay = false;
 		setButtonPlay(DrumbeatsMediaPlayer.bplay);
-		playsong.setText("");
+//		playsong.setText("");
 		if (DrumbeatsMediaPlayer.mp != null) {
 			if (DrumbeatsMediaPlayer.mp.isPlaying()) {
 				DrumbeatsMediaPlayer.mp.stop();
@@ -1417,26 +1402,45 @@ public class MainActivity extends Activity {
 	}
 
 	public void setrandom() {
+		final ArrayList<String> listfolder = getListFolder();
+		Random randomFolder = new Random();
+		int k = randomFolder.nextInt(listfolder.size() - 1);
+		Log.d("test", "k= " + k) ;
+		mfolderPlay = listfolder.get(k);
+		Log.d("test", " folder=" + mfolderPlay) ;
+		
 		boolean brandom = preferences.getBoolean("random", false);
 		if (brandom) {
-			String file[] = getFolderFile(mfolder);
+			tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_grid_selector);
+			
+			String file[] = getFolderFile(mfolderPlay);
 			Random random = new Random();
 			int i = random.nextInt(26);
 			srate = TextAdapter.arrayrate[i];
+			for (int j = 0; j < TextAdapter.mTemporary.length; j++) {
+				if (srate.equalsIgnoreCase(TextAdapter.mTemporary[j])) {
+					item_selected = j;
+					break;
+				}
+			}
+			tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_press);
 			// playMusic();
 			setRate();
 			int j = random.nextInt(file.length);
 			mfilename = file[j];
-			playMusic();
+//			playMusic();
 		} else {
-			String file[] = getFolderFile(mfolder);
+			String file[] = getFolderFile(mfolderPlay);
 			Random random = new Random();
 			int j = random.nextInt(file.length);
 			mfilename = file[j];
-			playMusic();
-			
-			
+//			playMusic();
 		}
+		
+		DrumbeatsMediaPlayer.bplay = true;
+		setButtonPlay(DrumbeatsMediaPlayer.bplay);
+		playsong.setText("• " + mfolderPlay.toUpperCase() + " - " + mfilename.toUpperCase() + " •");
+		playMusic(mfolderPlay, mfilename);
 
 	}
 
