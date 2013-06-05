@@ -682,6 +682,26 @@ public class MainActivity extends Activity {
 				}
 			}
 		});
+		
+		main_header_text.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if (state_main_body == state_main_body_file) {
+					state_main_body = state_main_body_home;
+					showMainBody(state_main_body);
+				} else {
+					if (state_main_body_file_active) {
+						state_main_body = state_main_body_file;
+						showMainBodyFile(DrumbeatsMediaPlayer.mfolder);
+					} else {
+						state_main_body = state_main_body_home;
+						showMainBody(state_main_body);
+					}
+				}
+			}
+		});
 
 		showMainBody(state_main_body);
 		setRate();

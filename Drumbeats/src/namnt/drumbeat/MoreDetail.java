@@ -370,7 +370,7 @@ public class MoreDetail extends Activity {
 			DrumbeatsMediaPlayer.mp.setDataSource(fileplay.getFileDescriptor(),
 					fileplay.getStartOffset(), fileplay.getLength());
 			DrumbeatsMediaPlayer.mp.prepare();
-			DrumbeatsMediaPlayer.mp.setLooping(true);
+			DrumbeatsMediaPlayer.mp.setLooping(false);
 			DrumbeatsMediaPlayer.mp.start();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
