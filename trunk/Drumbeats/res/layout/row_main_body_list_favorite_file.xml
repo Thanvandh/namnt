@@ -42,6 +42,17 @@
         android:textSize="@dimen/row_main_body_list_favorite_file_folder_text_size"
         android:textStyle="bold"
         android:textColor="@color/gray_text"/>
+     <ImageView
+        android:id="@+id/row_main_body_list_favorite_file_nowplaying"
+        android:layout_width="@dimen/row_main_body_list_file_favorite_bt_width"
+        android:layout_height="@dimen/row_main_body_list_file_favorite_bt_height"
+        android:layout_marginRight="@dimen/row_main_body_list_file_favorite_bt_margin_right"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:scaleType="center"
+        android:background="@null"
+        android:visibility="visible"
+        android:src="@drawable/nowplayingicon" />
     
     <ImageView
         android:id="@+id/row_main_body_list_favorite_file_bt_sort"
@@ -53,6 +64,7 @@
         android:scaleType="center"
         android:background="@null"
         android:clickable="false"
+        android:visibility="gone"
         android:src="@drawable/sort_favorite_button" 
         />
 
