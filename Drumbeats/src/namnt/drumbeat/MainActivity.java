@@ -83,6 +83,7 @@ public class MainActivity extends Activity {
 	RelativeLayout main_body_more;
 	DraggableListView main_body_favorite;
 	ListView main_body_more_listview;
+	FileRowAdapter filerowadapter;
 
 	// main footer
 	RelativeLayout main_footer;
@@ -92,9 +93,6 @@ public class MainActivity extends Activity {
 	SeekBar volumeProgress;
 	TextView playsong;
 	//MediaPlayer mp;
-	String mfolder = "";//for navigation
-	String mfolderPlay = "";//for play
-	String mfilename = "";
 
 	// tempo view
 	AnimatorSet animatorSet;
@@ -208,7 +206,7 @@ public class MainActivity extends Activity {
 				if (DrumbeatsMediaPlayer.bplay)
 					stopMusic();
 				else
-					playMusic(false);
+					playMusic();
 			}
 		});
 		
@@ -241,7 +239,7 @@ public class MainActivity extends Activity {
 				if (DrumbeatsMediaPlayer.bplay)
 					stopMusic();
 				else
-					playMusic(false);
+					playMusic();
 			}
 		});
 		bt_tempo_down.setOnClickListener(new OnClickListener() {
@@ -285,7 +283,7 @@ public class MainActivity extends Activity {
 						bt_tempo_up.setEnabled(true);
 					}
 					if (DrumbeatsMediaPlayer.bplay)
-						playMusic(false);
+						playMusic();
 				}
 
 			}
@@ -330,7 +328,7 @@ public class MainActivity extends Activity {
 						bt_tempo_up.setEnabled(true);
 					}
 					if (DrumbeatsMediaPlayer.bplay)
-						playMusic(false);
+						playMusic();
 				}
 
 			}
@@ -353,7 +351,7 @@ public class MainActivity extends Activity {
 				tempo_view.setVisibility(View.GONE);
 				main_header.setVisibility(View.VISIBLE);
 				if (state_main_body == state_main_body_file) {
-					showMainBodyFile(mfolder);
+					showMainBodyFile(DrumbeatsMediaPlayer.mfolder);
 				} else if (state_main_body == state_main_body_favorite) {
 					showMainBodyFavorite();
 				} else
@@ -409,7 +407,7 @@ public class MainActivity extends Activity {
 		// tempo_view_text_on_top.setLayoutParams(new
 		// AbsoluteLayout.LayoutParams(200,200, 200,200));
 		
-		animatorSet = new AnimatorSet();
+		//animatorSet = new AnimatorSet();
 		tempo_view_grid.setOnTouchListener(new OnTouchListener() {
 
 			@Override
@@ -508,7 +506,7 @@ public class MainActivity extends Activity {
 						}
 
 						if (DrumbeatsMediaPlayer.bplay)
-							playMusic(false);
+							playMusic();
 					}
 					return true;
 				}
@@ -676,7 +674,7 @@ public class MainActivity extends Activity {
 				} else {
 					if (state_main_body_file_active) {
 						state_main_body = state_main_body_file;
-						showMainBodyFile(mfolder);
+						showMainBodyFile(DrumbeatsMediaPlayer.mfolder);
 					} else {
 						state_main_body = state_main_body_home;
 						showMainBody(state_main_body);
@@ -688,6 +686,7 @@ public class MainActivity extends Activity {
 		showMainBody(state_main_body);
 		setRate();
 		initControlsvolume();
+		playsong.setText("• " + DrumbeatsMediaPlayer.mfolder.toUpperCase() + " - " + DrumbeatsMediaPlayer.mfilename.toUpperCase() + " •");
 
 	}
 
@@ -810,11 +809,10 @@ public class MainActivity extends Activity {
 
 		//final String array_folder[] = getFolder();
 		final ArrayList<String> listfolder = getListFolder();
-		mfolder = listfolder.get(0);
-		mfolderPlay = listfolder.get(0);
-		String[] array_file = getFolderFile(mfolder);
+		DrumbeatsMediaPlayer.mfolder = listfolder.get(0);
+		String[] array_file = getFolderFile(DrumbeatsMediaPlayer.mfolder);
 		if (array_file != null && array_file.length > 0)
-		mfilename = array_file[0];
+			DrumbeatsMediaPlayer.mfilename = array_file[0];
 		ArrayList<HashMap<String, String>> array_list_folder = new ArrayList<HashMap<String, String>>();
 
 		for (int i = 0; i < listfolder.size(); i++) {
@@ -832,9 +830,9 @@ public class MainActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int postion, long arg3) {
 				// TODO Auto-generated method stub
-				mfolder = listfolder.get(postion);
+				DrumbeatsMediaPlayer.mfolder = listfolder.get(postion);
 				state_main_body = state_main_body_file;
-				showMainBodyFile(mfolder);
+				showMainBodyFile(DrumbeatsMediaPlayer.mfolder);
 
 			}
 		});
@@ -880,16 +878,16 @@ public class MainActivity extends Activity {
 		}
 
 		// Getting adapter
-		FileRowAdapter adapter = new FileRowAdapter(this, array_list_file);
-		main_body_list.setAdapter(adapter);
+		filerowadapter = new FileRowAdapter(this, array_list_file);
+		main_body_list.setAdapter(filerowadapter);
 		main_body_list.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int postion, long arg3) {
 				// TODO Auto-generated method stub
-				mfilename = array_file[postion];
-				playMusic(true);
+				DrumbeatsMediaPlayer.mfilename = array_file[postion];
+				playMusic();
 
 			}
 		});
@@ -942,9 +940,9 @@ public class MainActivity extends Activity {
 				}
 
 				// Getting adapter
-				FavoritesRowAdapter adapter = new FavoritesRowAdapter(this,
+				row_favorite_adapter = new FavoritesRowAdapter(this,
 						array_list_favorite_file, false, 0);
-				main_body_favorite.setAdapter(adapter);
+				main_body_favorite.setAdapter(row_favorite_adapter);
 				main_body_favorite.setmove(false);
 				main_body_favorite.setSmoothScrollbarEnabled(true);
 			} else {
@@ -957,9 +955,9 @@ public class MainActivity extends Activity {
 						public void onItemClick(AdapterView<?> arg0, View arg1,
 								int postion, long arg3) {
 							// TODO Auto-generated method stub
-							mfolder = favorite_songs.get(postion).getFolder();
-							mfilename = favorite_songs.get(postion).getName();
-							playMusic(true);
+							DrumbeatsMediaPlayer.mfolder = favorite_songs.get(postion).getFolder();
+							DrumbeatsMediaPlayer.mfilename = favorite_songs.get(postion).getName();
+							playMusic();
 
 						}
 					});
@@ -1225,21 +1223,18 @@ public class MainActivity extends Activity {
 
 	}
 
-	public void playMusic(boolean isDirect) {
+	public void playMusic() {
 		
 		int maxCount = preferences.getInt("countoff", 0);
 		
-		if (isDirect) {
-			mfolderPlay = mfolder;
-		} 
-		
+
 		Log.d("test", "count " + maxCount);
 		if (maxCount > 0 && !DrumbeatsMediaPlayer.bplay){
 			DrumbeatsMediaPlayer.bplay = true;
 			setButtonPlay(DrumbeatsMediaPlayer.bplay);
-			playsong.setText("• " + mfolderPlay.toUpperCase() + " - "
-					+ mfilename.toUpperCase() + " •");
-			String filename[] = getFileName(mfolderPlay, mfilename);
+			playsong.setText("• " + DrumbeatsMediaPlayer.mfolder.toUpperCase() + " - "
+					+ DrumbeatsMediaPlayer.mfilename.toUpperCase() + " •");
+			String filename[] = getFileName(DrumbeatsMediaPlayer.mfolder, DrumbeatsMediaPlayer.mfilename);
 			int rate = 0;
 			for (int i = 0; i < TextAdapter.arrayrate.length; i++) {
 				if (srate.equalsIgnoreCase(TextAdapter.arrayrate[i])) {
@@ -1248,15 +1243,18 @@ public class MainActivity extends Activity {
 				}
 			}
 			String precount = filename[rate].substring(filename[rate].length() - 10);
-			playPrecount(precount, maxCount, isDirect);
+			playPrecount(precount, maxCount);
 		} else {
 			DrumbeatsMediaPlayer.bplay = true;
 			setButtonPlay(DrumbeatsMediaPlayer.bplay);
-			playsong.setText("• " + mfolderPlay.toUpperCase() + " - "
-					+ mfilename.toUpperCase() + " •");
-			playMusic(mfolderPlay, mfilename);
+			playsong.setText("• " + DrumbeatsMediaPlayer.mfolder.toUpperCase() + " - "
+					+ DrumbeatsMediaPlayer.mfilename.toUpperCase() + " •");
+			playMusic(DrumbeatsMediaPlayer.mfolder, DrumbeatsMediaPlayer.mfilename);
 		}
-
+		if (state_main_body == state_main_body_file)
+			filerowadapter.notifyDataSetChanged();
+		else if (state_main_body == state_main_body_favorite)
+			row_favorite_adapter.notifyDataSetChanged();
 	}
 
 	private String[] getFileName(String folder, String folderfile) {
@@ -1270,7 +1268,7 @@ public class MainActivity extends Activity {
 		return files;
 	}
 
-	public void playPrecount(String file, final int maxCount, final boolean isDirect) {
+	public void playPrecount(String file, final int maxCount) {
 		if (DrumbeatsMediaPlayer.mp != null) {
 			if (DrumbeatsMediaPlayer.mp.isPlaying()) {
 				DrumbeatsMediaPlayer.mp.stop();
@@ -1300,12 +1298,10 @@ public class MainActivity extends Activity {
 				      mediaPlayer.seekTo(0);
 				      mediaPlayer.start();
 				    } else {
-				    	if (isDirect) {
-				    		mfolderPlay = mfolder;
-				    	}
-				    	playMusic(mfolderPlay, mfilename);	
+				    	playMusic(DrumbeatsMediaPlayer.mfolder, DrumbeatsMediaPlayer.mfilename);	
 				    }
 				}});
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1359,6 +1355,10 @@ public class MainActivity extends Activity {
 
 			}
 		}
+		if (state_main_body == state_main_body_file)
+			filerowadapter.notifyDataSetChanged();
+		else if (state_main_body == state_main_body_favorite)
+			row_favorite_adapter.notifyDataSetChanged();
 
 	}
 
@@ -1405,15 +1405,13 @@ public class MainActivity extends Activity {
 		final ArrayList<String> listfolder = getListFolder();
 		Random randomFolder = new Random();
 		int k = randomFolder.nextInt(listfolder.size() - 1);
-		Log.d("test", "k= " + k) ;
-		mfolderPlay = listfolder.get(k);
-		Log.d("test", " folder=" + mfolderPlay) ;
+		DrumbeatsMediaPlayer.mfolder = listfolder.get(k);;
 		
 		boolean brandom = preferences.getBoolean("random", false);
 		if (brandom) {
 			tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_grid_selector);
 			
-			String file[] = getFolderFile(mfolderPlay);
+			String file[] = getFolderFile(DrumbeatsMediaPlayer.mfolder);
 			Random random = new Random();
 			int i = random.nextInt(26);
 			srate = TextAdapter.arrayrate[i];
@@ -1427,20 +1425,20 @@ public class MainActivity extends Activity {
 			// playMusic();
 			setRate();
 			int j = random.nextInt(file.length);
-			mfilename = file[j];
+			DrumbeatsMediaPlayer.mfilename = file[j];
 //			playMusic();
 		} else {
-			String file[] = getFolderFile(mfolderPlay);
+			String file[] = getFolderFile(DrumbeatsMediaPlayer.mfolder);
 			Random random = new Random();
 			int j = random.nextInt(file.length);
-			mfilename = file[j];
+			DrumbeatsMediaPlayer.mfilename = file[j];
 //			playMusic();
 		}
 		
 		DrumbeatsMediaPlayer.bplay = true;
 		setButtonPlay(DrumbeatsMediaPlayer.bplay);
-		playsong.setText("• " + mfolderPlay.toUpperCase() + " - " + mfilename.toUpperCase() + " •");
-		playMusic(mfolderPlay, mfilename);
+		playsong.setText("• " + DrumbeatsMediaPlayer.mfolder.toUpperCase() + " - " + DrumbeatsMediaPlayer.mfilename.toUpperCase() + " •");
+		playMusic(DrumbeatsMediaPlayer.mfolder, DrumbeatsMediaPlayer.mfilename);
 
 	}
 

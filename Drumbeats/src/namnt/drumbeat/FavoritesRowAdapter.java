@@ -63,6 +63,9 @@ public class FavoritesRowAdapter extends BaseAdapter {
 	        TextView folder = (TextView)vi.findViewById(R.id.row_main_body_list_favorite_file_folder);
 	        ImageView bt_delete = (ImageView)vi.findViewById(R.id.row_main_body_list_favorite_file_bt_delete);
 	        ImageView bt_sort = (ImageView)vi.findViewById(R.id.row_main_body_list_favorite_file_bt_sort);
+	        ImageView nowplaying = (ImageView) vi.findViewById(R.id.row_main_body_list_favorite_file_nowplaying);
+			nowplaying.setVisibility(View.GONE);
+			vi.setBackgroundResource(android.R.color.transparent);
 	        
 	        if (meditable){
 	        	bt_delete.setVisibility(View.VISIBLE);
@@ -89,8 +92,23 @@ public class FavoritesRowAdapter extends BaseAdapter {
 	        item = data.get(position);
 	        
 	        //Setting all values in listview
-	        name.setText(item.get(MainActivity.KEY_NAME));
-	        folder.setText(item.get(MainActivity.KEY_FOLDER));
+	        final String sfolder = item.get(MainActivity.KEY_FOLDER);
+			final String file = item.get(MainActivity.KEY_NAME);
+	        name.setText(file);
+	        folder.setText(sfolder);
+	        
+	        if (sfolder.equalsIgnoreCase(DrumbeatsMediaPlayer.mfolder) && file.equalsIgnoreCase(DrumbeatsMediaPlayer.mfilename)){
+				vi.setBackgroundResource(R.color.list_view_item_selected);
+				if (DrumbeatsMediaPlayer.bplay && (!meditable)){
+				nowplaying.setVisibility(View.VISIBLE);
+				RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)folder.getLayoutParams();
+	        	params.rightMargin = activity.getResources()
+						.getDimensionPixelSize(
+								R.dimen.row_main_body_list_favorite_file_folder_margin_right_editmode);;//getResources().getDimensionPixelSize(R.dimen.row_main_body_list_favorite_file_folder_margin_right_editmode);
+	        	folder.setLayoutParams(params);
+				}
+				
+			}
 	        
 	        return vi;
 	    }

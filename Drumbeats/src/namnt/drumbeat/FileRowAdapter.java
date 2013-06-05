@@ -24,6 +24,7 @@ public class FileRowAdapter extends BaseAdapter {
 	private ArrayList<HashMap<String, String>> data;
 	private static LayoutInflater inflater = null;
 	boolean [] favorites;
+	int selected = 0;
 
 	public FileRowAdapter(Activity a,
 			ArrayList<HashMap<String, String>> d) {
@@ -36,6 +37,9 @@ public class FileRowAdapter extends BaseAdapter {
 
 	public int getCount() {
 		return data.size();
+	}
+	public void setSelected(int input){
+		selected = input;
 	}
 
 	public Object getItem(int position) {
@@ -79,7 +83,9 @@ public class FileRowAdapter extends BaseAdapter {
 		TextView name = (TextView) vi.findViewById(R.id.row_main_body_list_file_name); // title
 		final ImageView bt_favorite = (ImageView) vi
 				.findViewById(R.id.row_main_body_list_file_favorite_bt);
-
+		ImageView nowplaying = (ImageView) vi.findViewById(R.id.row_main_body_list_file_nowplaying);
+		nowplaying.setVisibility(View.GONE);
+		vi.setBackgroundResource(android.R.color.transparent);
 		HashMap<String, String> item = new HashMap<String, String>();
 		item = data.get(position);
 		final String folder = item.get(MainActivity.KEY_FOLDER);
@@ -112,6 +118,14 @@ public class FileRowAdapter extends BaseAdapter {
 		// Setting all values in listview
 		number.setText(String.valueOf(position + 1));
 		name.setText(item.get(MainActivity.KEY_NAME));
+		
+		if (folder.equalsIgnoreCase(DrumbeatsMediaPlayer.mfolder) && file.equalsIgnoreCase(DrumbeatsMediaPlayer.mfilename)){
+			vi.setBackgroundResource(R.color.list_view_item_selected);
+			number.setTextColor(activity.getResources().getColor(R.color.white_text));
+			if (DrumbeatsMediaPlayer.bplay)
+			nowplaying.setVisibility(View.VISIBLE);
+			
+		}
 
 		return vi;
 	}

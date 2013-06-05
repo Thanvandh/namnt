@@ -17,7 +17,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/row_main_body_list_file_number_margin_left"
         android:textSize = "@dimen/row_main_body_list_file_number_text_size"
-        android:textColor="@color/gray_text"/>
+        android:textColor="@drawable/row_main_body_list_file_number_color"/>
 
     <!-- Displayname -->
 
@@ -32,6 +32,18 @@
         android:textStyle="bold"
         android:textColor="@android:color/white"/>
 
+    <ImageView
+        android:id="@+id/row_main_body_list_file_nowplaying"
+        android:layout_width="@dimen/row_main_body_list_file_favorite_bt_width"
+        android:layout_height="@dimen/row_main_body_list_file_favorite_bt_height"
+        android:layout_marginRight="@dimen/row_main_body_list_file_favorite_bt_margin_right"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/row_main_body_list_file_favorite_bt"
+        android:scaleType="center"
+        android:background="@null"
+        android:visibility="gone"
+        android:src="@drawable/nowplayingicon" />
+    
     <ImageView
         android:id="@+id/row_main_body_list_file_favorite_bt"
         android:layout_width="@dimen/row_main_body_list_file_favorite_bt_width"
