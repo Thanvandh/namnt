@@ -64,6 +64,11 @@ public class FavoritesRowAdapter extends BaseAdapter {
 	        ImageView bt_delete = (ImageView)vi.findViewById(R.id.row_main_body_list_favorite_file_bt_delete);
 	        ImageView bt_sort = (ImageView)vi.findViewById(R.id.row_main_body_list_favorite_file_bt_sort);
 	        ImageView nowplaying = (ImageView) vi.findViewById(R.id.row_main_body_list_favorite_file_nowplaying);
+	        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)folder.getLayoutParams();
+        	params.rightMargin = activity.getResources()
+					.getDimensionPixelSize(
+							R.dimen.row_main_body_list_favorite_file_name_margin_left);//getResources().getDimensionPixelSize(R.dimen.row_main_body_list_favorite_file_folder_margin_right_editmode);
+        	folder.setLayoutParams(params);
 			nowplaying.setVisibility(View.GONE);
 			vi.setBackgroundResource(android.R.color.transparent);
 	        
@@ -71,7 +76,7 @@ public class FavoritesRowAdapter extends BaseAdapter {
 	        	bt_delete.setVisibility(View.VISIBLE);
 	        	bt_sort.setVisibility(View.VISIBLE);
 	        	
-	        	RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)folder.getLayoutParams();
+	        	params = (RelativeLayout.LayoutParams)folder.getLayoutParams();
 	        	params.rightMargin = marginRight;//getResources().getDimensionPixelSize(R.dimen.row_main_body_list_favorite_file_folder_margin_right_editmode);
 	        	folder.setLayoutParams(params);
 	        } else {
@@ -101,7 +106,7 @@ public class FavoritesRowAdapter extends BaseAdapter {
 				vi.setBackgroundResource(R.color.list_view_item_selected);
 				if (DrumbeatsMediaPlayer.bplay && (!meditable)){
 				nowplaying.setVisibility(View.VISIBLE);
-				RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)folder.getLayoutParams();
+				params = (RelativeLayout.LayoutParams)folder.getLayoutParams();
 	        	params.rightMargin = activity.getResources()
 						.getDimensionPixelSize(
 								R.dimen.row_main_body_list_favorite_file_folder_margin_right_editmode);;//getResources().getDimensionPixelSize(R.dimen.row_main_body_list_favorite_file_folder_margin_right_editmode);
