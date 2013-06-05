@@ -12,10 +12,10 @@
     <string name="volumnDown"></string>
     <string name="volumnUp"></string>
     <string name="main_body_settings_text_count_off">Count-off</string>
-    <string name="main_body_settings_text_description_countoff">Turning this on will play a count-off before the beat starts. (Count-off will not play if a beat is already playing)</string>
+    <string name="main_body_settings_text_description_countoff">Turning this on will play a count-off before the beat starts. (Count-off will not play if a beat is already playing).</string>
     <string name="main_body_settings_text_random_tempo">Randomize Tempo</string>
-    <string name="main_body_settings_text_description_random_tempo">Turning this on if you\'d like the randomizer also change the tempo</string>
-    <string name="main_body_settings_bt_ratethisapp">Rate this Apllication</string>
+    <string name="main_body_settings_text_description_random_tempo">Turning this on if you\'d like the randomizer also change the tempo.</string>
+    <string name="main_body_settings_bt_ratethisapp">Rate this Application</string>
     <string name="main_body_settings_bt_tellafriend">Tell a Friend</string>
     <string name="main_body_settings_bt_sendfeeback">Send Feedback</string>
     <string name="tempo_view_header_text">Tempo</string>
