@@ -1403,8 +1403,15 @@ public class MainActivity extends Activity {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						stopMusic();
-						DrumbeatsMediaPlayer.mp.release();
+						//if (DrumbeatsMediaPlayer.mp != null) {
+						if (DrumbeatsMediaPlayer.mp.isPlaying()) {
+							DrumbeatsMediaPlayer.mp.stop();
+							DrumbeatsMediaPlayer.mp.release();
+							// mp.release();
+
+						}
+					
+						
 						finish();
 
 					}
