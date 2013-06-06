@@ -101,6 +101,9 @@
     <dimen name="row_main_body_list_file_favorite_bt_height">40dp</dimen>
     <dimen name="row_main_body_list_file_favorite_bt_margin_right">5dp</dimen>
     
+    <dimen name="row_main_body_favorite_playing_width">20dp</dimen>
+    <dimen name="row_main_body_favorite_playing_height">20dp</dimen>
+    
     <dimen name="row_main_body_list_favorite_file_bt_delete_width">40dp</dimen>
     <dimen name="row_main_body_list_favorite_file_bt_delete_height">40dp</dimen>
     <dimen name="row_main_body_list_favorite_file_bt_delete_margin_left">10dp</dimen>

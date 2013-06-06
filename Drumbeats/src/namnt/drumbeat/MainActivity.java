@@ -579,7 +579,7 @@ public class MainActivity extends Activity {
 				Intent i = new Intent(Intent.ACTION_SEND);
 				i.setType("message/rfc822");
 				i.putExtra(Intent.EXTRA_EMAIL, new String[] { "" });
-				i.putExtra(Intent.EXTRA_SUBJECT, "Beats+ App for Android");
+				i.putExtra(Intent.EXTRA_SUBJECT, "Drum Beats+ App for Android");
 				i.putExtra(Intent.EXTRA_TEXT,
 						"Hey, check out this app.:\nhttp://bit.ly/GetBeatsPlus");
 				try {
@@ -600,7 +600,7 @@ public class MainActivity extends Activity {
 				Intent i = new Intent(Intent.ACTION_SEND);
 				i.setType("message/rfc822");
 				i.putExtra(Intent.EXTRA_EMAIL,
-						new String[] { "support@ninebuzz.com" });
+						new String[] { "android@ninebuzz.com" });
 				i.putExtra(Intent.EXTRA_SUBJECT, "Drum Beats+ Support");
 				i.putExtra(Intent.EXTRA_TEXT, "");
 				try {
@@ -1041,32 +1041,10 @@ public class MainActivity extends Activity {
 	}
 
 	public void openRemoveDialog(final int position) {
-		AlertDialog.Builder RemoveDialog = new AlertDialog.Builder(
-				MainActivity.this);
-		RemoveDialog.setTitle("Do you remove this song from favorite list?");
-
-		RemoveDialog.setPositiveButton("Yes",
-				new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						removefavorite(position);
-						favorite_songs.remove(position);
-						array_list_favorite_file.remove(position);
-						row_favorite_adapter.notifyDataSetChanged();
-
-					}
-				});
-		RemoveDialog.setNegativeButton("No",
-				new DialogInterface.OnClickListener() {
-
-					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
-
-					}
-				});
-
-		RemoveDialog.show();
+		removefavorite(position);
+		favorite_songs.remove(position);
+		array_list_favorite_file.remove(position);
+		row_favorite_adapter.notifyDataSetChanged();
 	}
 
 	public void removefavorite(int position) {
