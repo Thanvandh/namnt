@@ -34,12 +34,12 @@
 
     <ImageView
         android:id="@+id/row_main_body_list_file_nowplaying"
-        android:layout_width="@dimen/row_main_body_list_file_favorite_bt_width"
-        android:layout_height="@dimen/row_main_body_list_file_favorite_bt_height"
+        android:layout_width="@dimen/row_main_body_favorite_playing_width"
+        android:layout_height="@dimen/row_main_body_favorite_playing_height"
         android:layout_marginRight="@dimen/row_main_body_list_file_favorite_bt_margin_right"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/row_main_body_list_file_favorite_bt"
-        android:scaleType="center"
+        android:scaleType="fitCenter"
         android:background="@null"
         android:visibility="gone"
         android:src="@drawable/nowplayingicon" />
