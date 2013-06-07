@@ -30,6 +30,7 @@ import net.robotmedia.billing.model.Transaction;
 import net.robotmedia.billing.model.Transaction.PurchaseState;
 
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.app.Activity;
@@ -69,6 +70,7 @@ public class MoreDetail extends Activity {
 	    String[] folder = new String [8];
 	    String[] state = new String [8];
 	    ImageButton bt_back;
+	    TextView detail_title;
 	    Button bt_play;
 	    
 	    int position;
@@ -199,6 +201,15 @@ public class MoreDetail extends Activity {
         state[6] = MainActivity.preferences.getString(folder[6], getResources().getString(R.string.string_more_text_folder_name_status6));
         state[7] = MainActivity.preferences.getString(folder[7], getResources().getString(R.string.string_more_text_folder_name_status7));
        
+        detail_title = (TextView) findViewById(R.id.more_detail_header_text);
+        detail_title.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				back();
+			}
+		});
         
         bt_back = (ImageButton) findViewById(R.id.more_detail_header_bt_back);
         bt_back.setOnClickListener(new OnClickListener() {
@@ -372,6 +383,13 @@ public class MoreDetail extends Activity {
 			DrumbeatsMediaPlayer.mp.prepare();
 			DrumbeatsMediaPlayer.mp.setLooping(false);
 			DrumbeatsMediaPlayer.mp.start();
+			DrumbeatsMediaPlayer.mp.setOnCompletionListener(new OnCompletionListener() {
+				  @Override
+				  public void onCompletion(MediaPlayer mediaPlayer) {
+					  	bplay = false;
+						setButtonPlay(bplay);
+						DrumbeatsMediaPlayer.bplay = false;
+				}});
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
