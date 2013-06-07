@@ -407,7 +407,7 @@ public class MainActivity extends Activity {
 		// tempo_view_text_on_top.setLayoutParams(new
 		// AbsoluteLayout.LayoutParams(200,200, 200,200));
 		
-		//animatorSet = new AnimatorSet();
+		animatorSet = new AnimatorSet();
 		tempo_view_grid.setOnTouchListener(new OnTouchListener() {
 
 			@Override
