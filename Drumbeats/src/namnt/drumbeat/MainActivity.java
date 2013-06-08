@@ -148,7 +148,6 @@ public class MainActivity extends Activity {
 		main_body_settings = (RelativeLayout) findViewById(R.id.main_body_settings);
 		main_body_more = (RelativeLayout) findViewById(R.id.main_body_more);
 		main_body_favorite = (DragSortListView) findViewById(R.id.main_body_listview_favorite);
-		main_body_favorite.setRemoveListener(null);
 
 		// more
 		main_body_more_listview = (ListView) findViewById(R.id.main_body_more_listview);
@@ -1453,10 +1452,10 @@ public class MainActivity extends Activity {
 	}
 
 	public void setrandom() {
-		final ArrayList<String> listfolder = getListFolder();
-		Random randomFolder = new Random();
-		int k = randomFolder.nextInt(listfolder.size() - 1);
-		DrumbeatsMediaPlayer.mfolder = listfolder.get(k);
+//		final ArrayList<String> listfolder = getListFolder();
+//		Random randomFolder = new Random();
+//		int k = randomFolder.nextInt(listfolder.size() - 1);
+//		DrumbeatsMediaPlayer.mfolder = listfolder.get(k);
 		
 		boolean brandom = preferences.getBoolean("random", false);
 		if (brandom) {
