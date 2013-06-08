@@ -57,15 +57,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/main_body_margin_top" 
+        android:layout_marginLeft="@dimen/more_detail_body_mid_content_margin_left"
+    	android:layout_marginRight="@dimen/more_detail_body_mid_content_margin_left"
         >
 
         <RelativeLayout
             android:id="@+id/more_detail_body_top"
-            android:layout_width="@dimen/more_detail_body_width"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/more_detail_body_height"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/more_detail_body_margin_top"
-            android:background="@drawable/background_header_more_detail" >
+            
+            android:background="@null" >
+            
+            <ImageView
+                android:id="@+id/more_detail_body_background"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/more_detail_body_height"
+                android:background="@drawable/background_header_more_detail" />
 
             <ImageView
                 android:id="@+id/more_detail_body_logo"
@@ -134,7 +143,7 @@
         </RelativeLayout>
       	<RelativeLayout 
       	    android:id="@+id/more_detail_body_mid"
-      	    android:layout_width= "@dimen/more_detail_body_width"
+      	    android:layout_width= "match_parent"
       	    android:layout_height="match_parent"
       	    android:layout_below="@+id/more_detail_body_top" 
       	    android:layout_centerHorizontal="true"
