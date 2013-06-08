@@ -120,8 +120,8 @@ public class FileRowAdapter extends BaseAdapter {
 		name.setText(item.get(MainActivity.KEY_NAME));
 		
 		if (folder.equalsIgnoreCase(DrumbeatsMediaPlayer.mfolder) && file.equalsIgnoreCase(DrumbeatsMediaPlayer.mfilename)){
-			vi.setBackgroundResource(R.color.list_view_item_selected);
-			number.setTextColor(activity.getResources().getColor(R.color.white_text));
+			//vi.setBackgroundResource(R.color.list_view_item_selected);
+			//number.setTextColor(activity.getResources().getColor(R.color.white_text));
 			if (DrumbeatsMediaPlayer.bplay)
 			nowplaying.setVisibility(View.VISIBLE);
 			

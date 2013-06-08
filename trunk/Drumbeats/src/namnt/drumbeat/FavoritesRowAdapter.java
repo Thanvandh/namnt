@@ -103,7 +103,7 @@ public class FavoritesRowAdapter extends BaseAdapter {
 	        folder.setText(sfolder);
 	        
 	        if (sfolder.equalsIgnoreCase(DrumbeatsMediaPlayer.mfolder) && file.equalsIgnoreCase(DrumbeatsMediaPlayer.mfilename)){
-				vi.setBackgroundResource(R.color.list_view_item_selected);
+				//vi.setBackgroundResource(R.color.list_view_item_selected);
 				if (DrumbeatsMediaPlayer.bplay && (!meditable)){
 				nowplaying.setVisibility(View.VISIBLE);
 				params = (RelativeLayout.LayoutParams)folder.getLayoutParams();
