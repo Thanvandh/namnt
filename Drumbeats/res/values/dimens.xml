@@ -111,8 +111,8 @@
     <dimen name="row_main_body_list_favorite_file_name_margin_left">15dp</dimen>
     <dimen name="row_main_body_list_favorite_file_name_text_size">18sp</dimen>
     
-    <dimen name="row_main_body_list_favorite_file_folder_margin_left">55dp</dimen>
-    <dimen name="row_main_body_list_favorite_file_folder_margin_right_editmode">50dp</dimen>
+    <dimen name="row_main_body_list_favorite_file_folder_margin_right">15dp</dimen>
+    <dimen name="row_main_body_list_favorite_file_folder_margin_right_editmode">55dp</dimen>
     <dimen name="row_main_body_list_favorite_file_folder_text_size">16sp</dimen>
     
     <dimen name="row_main_body_list_favorite_file_bt_sort_width">40dp</dimen>
