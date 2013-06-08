@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import com.mobeta.android.dslv.DragSortListView;
+
 import namnt.drumbeat.utils.*;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -80,7 +82,7 @@ public class MainActivity extends Activity {
 	ListView main_body_list;
 	RelativeLayout main_body_settings;
 	RelativeLayout main_body_more;
-	DraggableListView main_body_favorite;
+	DragSortListView main_body_favorite;
 	ListView main_body_more_listview;
 	FileRowAdapter filerowadapter;
 
@@ -145,7 +147,8 @@ public class MainActivity extends Activity {
 		main_body_list = (ListView) findViewById(R.id.main_body_listview);
 		main_body_settings = (RelativeLayout) findViewById(R.id.main_body_settings);
 		main_body_more = (RelativeLayout) findViewById(R.id.main_body_more);
-		main_body_favorite = (DraggableListView) findViewById(R.id.main_body_listview_favorite);
+		main_body_favorite = (DragSortListView) findViewById(R.id.main_body_listview_favorite);
+		main_body_favorite.setRemoveListener(null);
 
 		// more
 		main_body_more_listview = (ListView) findViewById(R.id.main_body_more_listview);
@@ -946,6 +949,25 @@ public class MainActivity extends Activity {
 		}
 		return files;
 	}
+    private DragSortListView.DropListener onDrop =
+            new DragSortListView.DropListener() {
+                @Override
+                public void drop(int from, int to) {
+                	Song tmp = favorite_songs.get(from);
+        			favorite_songs.remove(from);
+        			favorite_songs.add(to, tmp);
+        			myDbHelper.openDataBase();
+        			myDbHelper.updatealloderfavorite(favorite_songs);
+        			myDbHelper.close();
+        			array_list_favorite_file.remove(from);
+        			HashMap<String, String> map = new HashMap<String, String>();
+        			map.put(KEY_FOLDER, tmp.getFolder());
+        			map.put(KEY_NAME, tmp.getName());
+        			array_list_favorite_file.add(to, map);
+        			row_favorite_adapter.notifyDataSetChanged();
+                }
+            };
+
 
 	public void showMainBodyFavorite() {
 		bt_settings.setImageResource(R.drawable.settingsbutton_white);
@@ -986,7 +1008,7 @@ public class MainActivity extends Activity {
 				row_favorite_adapter = new FavoritesRowAdapter(this,
 						array_list_favorite_file, false, 0);
 				main_body_favorite.setAdapter(row_favorite_adapter);
-				main_body_favorite.setmove(false);
+				main_body_favorite.setDropListener(null);
 				main_body_favorite.setSmoothScrollbarEnabled(true);
 			} else {
 				main_body_favorite.setAdapter(null);
@@ -1035,11 +1057,12 @@ public class MainActivity extends Activity {
 								R.dimen.row_main_body_list_favorite_file_folder_margin_right_editmode);
 				row_favorite_adapter = new FavoritesRowAdapter(this,
 						array_list_favorite_file, true, marginRight);
-				main_body_favorite.setDropListener(mDropListener);
+				//main_body_favorite.setDropListener(mDropListener);
 				// main_body_favorite.setRemoveListener(mRemoveListener);
-				main_body_favorite.setDragListener(mDragListener);
+				//main_body_favorite.setDragListener(mDragListener);
+				main_body_favorite.setDropListener(onDrop);
 				main_body_favorite.setAdapter(row_favorite_adapter);
-				main_body_favorite.setmove(true);
+				//main_body_favorite.setmove(true);
 				main_body_favorite.setSmoothScrollbarEnabled(true);
 			} else {
 				main_body_favorite.setAdapter(null);
@@ -1087,30 +1110,30 @@ public class MainActivity extends Activity {
 		return files;
 	}
 
-	private DropListener mDropListener = new DropListener() {
-		public void onDrop(int from, int to) {
-			Song tmp = favorite_songs.get(from);
-			favorite_songs.remove(from);
-			favorite_songs.add(to, tmp);
-			myDbHelper.openDataBase();
-			myDbHelper.updatealloderfavorite(favorite_songs);
-			myDbHelper.close();
-			array_list_favorite_file.remove(from);
-			HashMap<String, String> map = new HashMap<String, String>();
-			map.put(KEY_FOLDER, tmp.getFolder());
-			map.put(KEY_NAME, tmp.getName());
-			array_list_favorite_file.add(to, map);
-			row_favorite_adapter.notifyDataSetChanged();
-			// objectlistchannel.onDrop(from, to);
-			// Log.v("movechannel", "From" + from + "To" + to);
-			// int temp = iodernumber.get(from);
-			// iodernumber.remove(from);
-			// iodernumber.add(to,temp);
-			// mObjectInfo.updateallodernumber(iodernumber, m_mode);
-			// GetInformation(0,izoomlevel, m_mode);
-			// myListView.invalidateViews();
-		}
-	};
+//	private DropListener mDropListener = new DropListener() {
+//		public void onDrop(int from, int to) {
+//			Song tmp = favorite_songs.get(from);
+//			favorite_songs.remove(from);
+//			favorite_songs.add(to, tmp);
+//			myDbHelper.openDataBase();
+//			myDbHelper.updatealloderfavorite(favorite_songs);
+//			myDbHelper.close();
+//			array_list_favorite_file.remove(from);
+//			HashMap<String, String> map = new HashMap<String, String>();
+//			map.put(KEY_FOLDER, tmp.getFolder());
+//			map.put(KEY_NAME, tmp.getName());
+//			array_list_favorite_file.add(to, map);
+//			row_favorite_adapter.notifyDataSetChanged();
+//			// objectlistchannel.onDrop(from, to);
+//			// Log.v("movechannel", "From" + from + "To" + to);
+//			// int temp = iodernumber.get(from);
+//			// iodernumber.remove(from);
+//			// iodernumber.add(to,temp);
+//			// mObjectInfo.updateallodernumber(iodernumber, m_mode);
+//			// GetInformation(0,izoomlevel, m_mode);
+//			// myListView.invalidateViews();
+//		}
+//	};
 	//
 	// private RemoveListener mRemoveListener = new RemoveListener() {
 	// public void onRemove(int which) {
@@ -1120,32 +1143,32 @@ public class MainActivity extends Activity {
 	// }
 	// };
 
-	private DragListener mDragListener = new DragListener() {
-
-		// int backgroundColor;
-		int defaultBackgroundColor;
-
-		public void onDrag(int x, int y, ListView listView) {
-			// TODO Auto-generated method stub
-		}
-
-		public void onStartDrag(View itemView) {
-			itemView.setVisibility(View.INVISIBLE);
-			defaultBackgroundColor = itemView.getDrawingCacheBackgroundColor();
-			itemView.setBackgroundResource(R.color.blue);
-			// ImageView iv = (ImageView)itemView.findViewById(R.id.icon);
-			// if (iv != null) iv.setVisibility(View.INVISIBLE);
-		}
-
-		public void onStopDrag(View itemView) {
-			itemView.setVisibility(View.VISIBLE);
-			itemView.setBackgroundColor(defaultBackgroundColor);
-			// ImageView iv =
-			// (ImageView)itemView.findViewById(R.id.iconchannel);
-			// if (iv != null) iv.setVisibility(View.VISIBLE);
-		}
-
-	};
+//	private DragListener mDragListener = new DragListener() {
+//
+//		// int backgroundColor;
+//		int defaultBackgroundColor;
+//
+//		public void onDrag(int x, int y, ListView listView) {
+//			// TODO Auto-generated method stub
+//		}
+//
+//		public void onStartDrag(View itemView) {
+//			itemView.setVisibility(View.INVISIBLE);
+//			defaultBackgroundColor = itemView.getDrawingCacheBackgroundColor();
+//			itemView.setBackgroundResource(R.color.blue);
+//			// ImageView iv = (ImageView)itemView.findViewById(R.id.icon);
+//			// if (iv != null) iv.setVisibility(View.INVISIBLE);
+//		}
+//
+//		public void onStopDrag(View itemView) {
+//			itemView.setVisibility(View.VISIBLE);
+//			itemView.setBackgroundColor(defaultBackgroundColor);
+//			// ImageView iv =
+//			// (ImageView)itemView.findViewById(R.id.iconchannel);
+//			// if (iv != null) iv.setVisibility(View.VISIBLE);
+//		}
+//
+//	};
 
 	public void showMainBodySettings() {
 		bt_settings.setImageResource(R.drawable.settingsbutton_white_pressed);
@@ -1404,12 +1427,13 @@ public class MainActivity extends Activity {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						//if (DrumbeatsMediaPlayer.mp != null) {
+						if (DrumbeatsMediaPlayer.mp != null) {
 						if (DrumbeatsMediaPlayer.mp.isPlaying()) {
 							DrumbeatsMediaPlayer.mp.stop();
 							DrumbeatsMediaPlayer.mp.release();
 							// mp.release();
 
+						}
 						}
 					
 						

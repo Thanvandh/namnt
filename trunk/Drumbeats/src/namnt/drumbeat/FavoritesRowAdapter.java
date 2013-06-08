@@ -64,25 +64,12 @@ public class FavoritesRowAdapter extends BaseAdapter {
 	        ImageView bt_delete = (ImageView)vi.findViewById(R.id.row_main_body_list_favorite_file_bt_delete);
 	        ImageView bt_sort = (ImageView)vi.findViewById(R.id.row_main_body_list_favorite_file_bt_sort);
 	        ImageView nowplaying = (ImageView) vi.findViewById(R.id.row_main_body_list_favorite_file_nowplaying);
-	        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)folder.getLayoutParams();
-        	params.rightMargin = activity.getResources()
-					.getDimensionPixelSize(
-							R.dimen.row_main_body_list_favorite_file_name_margin_left);//getResources().getDimensionPixelSize(R.dimen.row_main_body_list_favorite_file_folder_margin_right_editmode);
-        	folder.setLayoutParams(params);
+	      
+        	
 			nowplaying.setVisibility(View.GONE);
-			vi.setBackgroundResource(android.R.color.transparent);
+			//vi.setBackgroundResource(android.R.color.transparent);
 	        
-	        if (meditable){
-	        	bt_delete.setVisibility(View.VISIBLE);
-	        	bt_sort.setVisibility(View.VISIBLE);
-	        	
-	        	params = (RelativeLayout.LayoutParams)folder.getLayoutParams();
-	        	params.rightMargin = marginRight;//getResources().getDimensionPixelSize(R.dimen.row_main_body_list_favorite_file_folder_margin_right_editmode);
-	        	folder.setLayoutParams(params);
-	        } else {
-	        	bt_delete.setVisibility(View.GONE);
-	        	bt_sort.setVisibility(View.GONE);
-	        }
+	        
 	        final int fposistion = position;
 	        bt_delete.setOnClickListener(new OnClickListener() {
 				
@@ -102,18 +89,36 @@ public class FavoritesRowAdapter extends BaseAdapter {
 	        name.setText(file);
 	        folder.setText(sfolder);
 	        
-	        if (sfolder.equalsIgnoreCase(DrumbeatsMediaPlayer.mfolder) && file.equalsIgnoreCase(DrumbeatsMediaPlayer.mfilename)){
+	        if (meditable){
+	        	bt_delete.setVisibility(View.VISIBLE);
+	        	bt_sort.setVisibility(View.VISIBLE);
+	        	
+	        	 RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)folder.getLayoutParams();
+	        	 params.addRule(RelativeLayout.LEFT_OF, R.id.row_main_body_list_favorite_file_bt_sort);
+	        	 params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT,0);
+	        	 params.setMargins(0, 0, activity.getResources().getDimensionPixelSize(R.dimen.row_main_body_list_favorite_file_name_margin_left), 0);
+	        	folder.setLayoutParams(params);
+	        	
+	        } else if (sfolder.equalsIgnoreCase(DrumbeatsMediaPlayer.mfolder) && file.equalsIgnoreCase(DrumbeatsMediaPlayer.mfilename)){
 				//vi.setBackgroundResource(R.color.list_view_item_selected);
 				if (DrumbeatsMediaPlayer.bplay && (!meditable)){
-				nowplaying.setVisibility(View.VISIBLE);
-				params = (RelativeLayout.LayoutParams)folder.getLayoutParams();
-	        	params.rightMargin = activity.getResources()
-						.getDimensionPixelSize(
-								R.dimen.row_main_body_list_favorite_file_folder_margin_right_editmode);;//getResources().getDimensionPixelSize(R.dimen.row_main_body_list_favorite_file_folder_margin_right_editmode);
-	        	folder.setLayoutParams(params);
+					nowplaying.setVisibility(View.VISIBLE);
+					RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)folder.getLayoutParams();
+					params.addRule(RelativeLayout.LEFT_OF, R.id.row_main_body_list_favorite_file_nowplaying);
+					params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT,0);
+					params.setMargins(0, 0, activity.getResources().getDimensionPixelSize(R.dimen.row_main_body_list_favorite_file_name_margin_left), 0);
+				folder.setLayoutParams(params);
+				
 				}
 				
-			}
+			} else {
+	        	bt_delete.setVisibility(View.GONE);
+	        	bt_sort.setVisibility(View.GONE);
+	        	  RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)folder.getLayoutParams();
+	        	  params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT,1);
+	        	params.setMargins(0, 0, activity.getResources().getDimensionPixelSize(R.dimen.row_main_body_list_favorite_file_folder_margin_right), 0);
+	        	folder.setLayoutParams(params);
+	        }
 	        
 	        return vi;
 	    }
