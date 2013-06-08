@@ -429,7 +429,6 @@ public class MainActivity extends Activity {
 		
 		tempo_view_grid.setOnTouchListener(new OnTouchListener() {
 
-			@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				// TODO Auto-generated method stub
@@ -455,7 +454,7 @@ public class MainActivity extends Activity {
 						// tempo_view_grid.setSelection(lastPos);
 						srate = TextAdapter.mTemporary[lastPos];
 						tempo_view_text_on_top.setVisibility(View.VISIBLE);
-						tempo_view_text_on_top.setAlpha(1.0f);
+		//				tempo_view_text_on_top.setAlpha(1.0f);
 						tempo_view_text_on_top.setText(srate);
 					}
 					return true;
@@ -1461,11 +1460,13 @@ public class MainActivity extends Activity {
 		
 		boolean brandom = preferences.getBoolean("random", false);
 		if (brandom) {
-			tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_grid_selector);
+			
 			
 			String file[] = getFolderFile(DrumbeatsMediaPlayer.mfolder);
+			if (file == null)
+				return;
 			Random random = new Random();
-			int i = random.nextInt(26);
+			int i = random.nextInt(file.length);
 			srate = TextAdapter.arrayrate[i];
 			for (int j = 0; j < TextAdapter.mTemporary.length; j++) {
 				if (srate.equalsIgnoreCase(TextAdapter.mTemporary[j])) {
@@ -1473,6 +1474,7 @@ public class MainActivity extends Activity {
 					break;
 				}
 			}
+			tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_grid_selector);
 			tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_press);
 			// playMusic();
 			setRate();
@@ -1481,6 +1483,8 @@ public class MainActivity extends Activity {
 //			playMusic();
 		} else {
 			String file[] = getFolderFile(DrumbeatsMediaPlayer.mfolder);
+			if (file == null)
+				return;
 			Random random = new Random();
 			int j = random.nextInt(file.length);
 			DrumbeatsMediaPlayer.mfilename = file[j];
