@@ -15,8 +15,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -31,16 +29,17 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.Window;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -95,7 +94,7 @@ public class MainActivity extends Activity {
 	//MediaPlayer mp;
 
 	// tempo view
-	AnimatorSet animatorSet;
+	//AnimatorSet animatorSet;
 	boolean justTouchDown;
 	RelativeLayout tempo_view;
 	Button bt_tempo_view_done;
@@ -130,7 +129,6 @@ public class MainActivity extends Activity {
 	boolean state_edit = false;
 	DatabaseHandler myDbHelper;
 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -407,15 +405,15 @@ public class MainActivity extends Activity {
 		// tempo_view_text_on_top.setLayoutParams(new
 		// AbsoluteLayout.LayoutParams(200,200, 200,200));
 		
-		animatorSet = new AnimatorSet();
+		//animatorSet = new AnimatorSet();
 		tempo_view_grid.setOnTouchListener(new OnTouchListener() {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				// TODO Auto-generated method stub
 				if (event.getAction() == MotionEvent.ACTION_MOVE) {
-					animatorSet.end();
-					justTouchDown = false;
+					//animatorSet.end();
+					//justTouchDown = false;
 					int x = (int) event.getX();
 					int y = (int) event.getY();
 					int row = (y)
@@ -433,7 +431,7 @@ public class MainActivity extends Activity {
 						// tempo_view_grid.setSelection(lastPos);
 						srate = TextAdapter.mTemporary[lastPos];
 						tempo_view_text_on_top.setVisibility(View.VISIBLE);
-						tempo_view_text_on_top.setAlpha(1.0f);
+						//tempo_view_text_on_top.setAlpha(1.0f);
 						tempo_view_text_on_top.setText(srate);
 					}
 					return true;
@@ -496,14 +494,31 @@ public class MainActivity extends Activity {
 							bt_tempo_up.setEnabled(true);
 						}
 						// srate = TextAdapter.mTemporary[lastPos];
-//						tempo_view_text_on_top.setVisibility(View.GONE);
+						tempo_view_text_on_top.setVisibility(View.GONE);
+						AlphaAnimation fade_out = new AlphaAnimation(1.0f, 0.0f);
+						fade_out.setDuration(500);
+						fade_out.setAnimationListener(new AnimationListener()
+						{
+						    public void onAnimationStart(Animation arg0)
+						    {
+						    }
+						    public void onAnimationRepeat(Animation arg0)
+						    {
+						    }
+
+						    public void onAnimationEnd(Animation arg0)
+						    {
+						    	tempo_view_text_on_top.setVisibility(View.GONE);
+						    }
+						});
+						tempo_view_text_on_top.startAnimation(fade_out);
 						 
-						if(!justTouchDown) {
-							ObjectAnimator animateFaceout = ObjectAnimator.ofFloat(tempo_view_text_on_top, "alpha", 0);
-							animateFaceout.setDuration(5000);
-							animatorSet.play(animateFaceout);
-							animatorSet.start();
-						}
+//						if(!justTouchDown) {
+//							ObjectAnimator animateFaceout = ObjectAnimator.ofFloat(tempo_view_text_on_top, "alpha", 0);
+//							animateFaceout.setDuration(5000);
+//							animatorSet.play(animateFaceout);
+//							animatorSet.start();
+//						}
 
 						if (DrumbeatsMediaPlayer.bplay)
 							playMusic();
