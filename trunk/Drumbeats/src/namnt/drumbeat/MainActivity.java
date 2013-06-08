@@ -95,6 +95,7 @@ public class MainActivity extends Activity {
 
 	// tempo view
 	//AnimatorSet animatorSet;
+	AlphaAnimation fade_out;
 	boolean justTouchDown;
 	RelativeLayout tempo_view;
 	Button bt_tempo_view_done;
@@ -406,14 +407,34 @@ public class MainActivity extends Activity {
 		// AbsoluteLayout.LayoutParams(200,200, 200,200));
 		
 		//animatorSet = new AnimatorSet();
+		fade_out = new AlphaAnimation(1.0f, 0.0f);
+		fade_out.setDuration(5000);
+		fade_out.setAnimationListener(new AnimationListener()
+		{
+		    public void onAnimationStart(Animation arg0)
+		    {
+		    }
+		    public void onAnimationRepeat(Animation arg0)
+		    {
+		    }
+
+		    public void onAnimationEnd(Animation arg0)
+		    {
+		    	tempo_view_text_on_top.setVisibility(View.GONE);
+		    }
+		});
+		
 		tempo_view_grid.setOnTouchListener(new OnTouchListener() {
 
+			@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				// TODO Auto-generated method stub
 				if (event.getAction() == MotionEvent.ACTION_MOVE) {
 					//animatorSet.end();
-					//justTouchDown = false;
+					justTouchDown = false;
+					tempo_view_text_on_top.clearAnimation();
+					
 					int x = (int) event.getX();
 					int y = (int) event.getY();
 					int row = (y)
@@ -431,7 +452,7 @@ public class MainActivity extends Activity {
 						// tempo_view_grid.setSelection(lastPos);
 						srate = TextAdapter.mTemporary[lastPos];
 						tempo_view_text_on_top.setVisibility(View.VISIBLE);
-						//tempo_view_text_on_top.setAlpha(1.0f);
+						tempo_view_text_on_top.setAlpha(1.0f);
 						tempo_view_text_on_top.setText(srate);
 					}
 					return true;
@@ -495,23 +516,10 @@ public class MainActivity extends Activity {
 						}
 						// srate = TextAdapter.mTemporary[lastPos];
 						tempo_view_text_on_top.setVisibility(View.GONE);
-						AlphaAnimation fade_out = new AlphaAnimation(1.0f, 0.0f);
-						fade_out.setDuration(500);
-						fade_out.setAnimationListener(new AnimationListener()
-						{
-						    public void onAnimationStart(Animation arg0)
-						    {
-						    }
-						    public void onAnimationRepeat(Animation arg0)
-						    {
-						    }
-
-						    public void onAnimationEnd(Animation arg0)
-						    {
-						    	tempo_view_text_on_top.setVisibility(View.GONE);
-						    }
-						});
-						tempo_view_text_on_top.startAnimation(fade_out);
+						
+						if(!justTouchDown) {
+							tempo_view_text_on_top.startAnimation(fade_out);
+						}
 						 
 //						if(!justTouchDown) {
 //							ObjectAnimator animateFaceout = ObjectAnimator.ofFloat(tempo_view_text_on_top, "alpha", 0);
