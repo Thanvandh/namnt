@@ -1451,18 +1451,17 @@ public class MainActivity extends Activity {
 
 	public void setrandom() 
 	{
-//		final ArrayList<String> listfolder = getListFolder();
-//		Random randomFolder = new Random();
-//		int k = randomFolder.nextInt(listfolder.size() - 1);
-//		DrumbeatsMediaPlayer.mfolder = listfolder.get(k);
+		final ArrayList<String> listfolder = getListFolder();
+		Random randomFolder = new Random();
+		int k = randomFolder.nextInt(listfolder.size() - 1);
+		DrumbeatsMediaPlayer.mfolder = listfolder.get(k);
 		
 		boolean brandom = preferences.getBoolean("random", false);
 		if (brandom) {
 			
-//			if (tempo_view_grid.getChildCount() != 0) {
-			if (tempo_view.getVisibility() == View.VISIBLE)
+			if (tempo_view.getVisibility() == View.VISIBLE) {
 				tempo_view_grid.getChildAt(DrumbeatsMediaPlayer.mitem_selected).setBackgroundResource(R.drawable.item_grid_selector);
-//			}
+			}
 			String file[] = getFolderFile(DrumbeatsMediaPlayer.mfolder);
 			if (file == null)
 				return;
@@ -1476,10 +1475,9 @@ public class MainActivity extends Activity {
 				}
 			}
 			
-//			if (tempo_view_grid.getChildCount() != 0) {
-			if (tempo_view.getVisibility() == View.VISIBLE)
+			if (tempo_view.getVisibility() == View.VISIBLE) {
 				tempo_view_grid.getChildAt(DrumbeatsMediaPlayer.mitem_selected).setBackgroundResource(R.drawable.item_press);
-//			}
+			}
 			// playMusic();
 			setRate();
 			int j = random.nextInt(file.length);
