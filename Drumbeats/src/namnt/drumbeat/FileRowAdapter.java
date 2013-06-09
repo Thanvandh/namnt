@@ -85,7 +85,6 @@ public class FileRowAdapter extends BaseAdapter {
 				.findViewById(R.id.row_main_body_list_file_favorite_bt);
 		ImageView nowplaying = (ImageView) vi.findViewById(R.id.row_main_body_list_file_nowplaying);
 		nowplaying.setVisibility(View.GONE);
-		vi.setBackgroundResource(android.R.color.transparent);
 		HashMap<String, String> item = new HashMap<String, String>();
 		item = data.get(position);
 		final String folder = item.get(MainActivity.KEY_FOLDER);
