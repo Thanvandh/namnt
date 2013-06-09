@@ -39,7 +39,7 @@
     <dimen name="main_footer_volume_down_margin_bottom">17dp</dimen>
     
     <dimen name="main_footer_volume_up_width">24dp</dimen>
-    <dimen name="main_footer_volume_up_height">20dp</dimen>
+    <dimen name="main_footer_volume_up_height">24dp</dimen>
     <dimen name="main_footer_volume_up_margin_right">18dp</dimen>
     <dimen name="main_footer_volume_up_margin_bottom">14dp</dimen>
     
