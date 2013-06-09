@@ -196,27 +196,25 @@
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/main_body_settings_bt_onebar"
                     android:layout_toRightOf="@+id/main_body_settings_bt_onebar" />
-
-                <TextView
+            </RelativeLayout>
+            
+            <TextView
                     android:id="@+id/main_body_settings_text_description_countoff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/main_body_settings_bt_countoff"
-                    android:layout_alignRight="@+id/main_body_settings_bt_twobar"
-                    android:layout_below="@+id/main_body_settings_bt_onebar"
+                    android:layout_below="@+id/main_body_settings_layout_bt_countoff"
                     android:layout_marginTop="@dimen/main_body_settings_text_description_countoff_margin_top"
                     android:paddingLeft="@dimen/main_body_settings_text_description_padding"
                     android:paddingRight="@dimen/main_body_settings_text_description_padding"
                     android:text="@string/main_body_settings_text_description_countoff"
                     android:textColor="#ddf8f8f8"
                     android:textSize="@dimen/main_body_settings_text_description_countoff_text_size" />
-            </RelativeLayout>
 
             <TextView
                 android:id="@+id/main_body_settings_text_random_tempo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/main_body_settings_layout_bt_countoff"
+                android:layout_below="@+id/main_body_settings_text_description_countoff"
                 android:layout_marginLeft="@dimen/main_body_settings_text_random_tempo_margin_left"
                 android:layout_marginTop="@dimen/main_body_settings_text_random_tempo_margin_top"
                 android:text="@string/main_body_settings_text_random_tempo"
@@ -241,26 +239,25 @@
                     android:textOff=""
                     android:textOn="" />
 
-                <TextView
+            </RelativeLayout>
+            
+            <TextView
                     android:id="@+id/main_body_settings_text_description_random_tempo"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/main_body_settings_bt_random_tempo"
-                    android:layout_alignRight="@+id/main_body_settings_bt_random_tempo"
-                    android:layout_below="@+id/main_body_settings_bt_random_tempo"
+                    android:layout_below="@+id/main_body_settings_layout_bt_random_tempo"
                     android:layout_marginTop="@dimen/main_body_settings_text_description_random_tempo_margin_top"
                     android:paddingLeft="@dimen/main_body_settings_text_description_padding"
                     android:paddingRight="@dimen/main_body_settings_text_description_padding"
                     android:text="@string/main_body_settings_text_description_random_tempo"
                     android:textColor="#ddf8f8f8"
                     android:textSize="@dimen/main_body_settings_text_description_random_tempo_text_size" />
-            </RelativeLayout>
 
             <Button
                 android:id="@+id/main_body_settings_bt_ratethisapp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/main_body_settings_layout_bt_random_tempo"
+                android:layout_below="@+id/main_body_settings_text_description_random_tempo"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/main_body_settings_bt_ratethisapp_margin_top"
                 android:background="@drawable/btn_settings_top"
