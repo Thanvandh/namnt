@@ -8,5 +8,6 @@ public class DrumbeatsMediaPlayer {
 	static boolean bplay = false;
 	static String mfolder = "";
 	static String mfilename = "";
+	static int mitem_selected = 12;
 	
 }

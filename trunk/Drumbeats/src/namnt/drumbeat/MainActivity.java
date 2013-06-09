@@ -106,7 +106,6 @@ public class MainActivity extends Activity {
 	RelativeLayout tempo_view_layout_grid;
 	GridView tempo_view_grid;
 	int lastPos;
-	int item_selected;
 	String srate;
 	TextView tempo_view_text_on_top;
 	ImageButton bt_tempo_up;
@@ -248,9 +247,8 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Log.d("test", "selecteddown|" + item_selected);
-				if (item_selected != 24 && item_selected != 27) {
-					tempo_view_grid.getChildAt(item_selected)
+				if (DrumbeatsMediaPlayer.mitem_selected != 24 && DrumbeatsMediaPlayer.mitem_selected != 27) {
+					tempo_view_grid.getChildAt(DrumbeatsMediaPlayer.mitem_selected)
 							.setBackgroundResource(
 									R.drawable.item_grid_selector);
 					int number = 0;
@@ -262,21 +260,19 @@ public class MainActivity extends Activity {
 					}
 					srate = TextAdapter.arrayrate[number - 1];
 					tempo_view_text_on_top.setText(srate);
-					Log.d("test", "selecteddownrate|" + srate);
 					for (int i = 0; i < TextAdapter.mTemporary.length; i++) {
 						if (srate.equalsIgnoreCase(TextAdapter.mTemporary[i])) {
-							item_selected = i;
+							DrumbeatsMediaPlayer.mitem_selected = i;
 							break;
 						}
 					}
-					Log.d("test", "selecteddown|" + item_selected);
-					tempo_view_grid.getChildAt(item_selected)
+					tempo_view_grid.getChildAt(DrumbeatsMediaPlayer.mitem_selected)
 							.setBackgroundResource(R.drawable.item_press);
 
-					if (item_selected == 24) {
+					if (DrumbeatsMediaPlayer.mitem_selected == 24) {
 						bt_tempo_down.setEnabled(false);
 						bt_tempo_up.setEnabled(true);
-					} else if (item_selected == 3) {
+					} else if (DrumbeatsMediaPlayer.mitem_selected == 3) {
 						bt_tempo_down.setEnabled(true);
 						bt_tempo_up.setEnabled(false);
 					} else {
@@ -294,9 +290,8 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Log.d("test", "selectedup|" + item_selected);
-				if (item_selected != 3 && item_selected != 27) {
-					tempo_view_grid.getChildAt(item_selected)
+				if (DrumbeatsMediaPlayer.mitem_selected != 3 && DrumbeatsMediaPlayer.mitem_selected != 27) {
+					tempo_view_grid.getChildAt(DrumbeatsMediaPlayer.mitem_selected)
 							.setBackgroundResource(
 									R.drawable.item_grid_selector);
 					int number = 0;
@@ -311,17 +306,17 @@ public class MainActivity extends Activity {
 					Log.d("test", "selecteduprate|" + srate);
 					for (int i = 0; i < TextAdapter.mTemporary.length; i++) {
 						if (srate.equalsIgnoreCase(TextAdapter.mTemporary[i])) {
-							item_selected = i;
+							DrumbeatsMediaPlayer.mitem_selected = i;
 							break;
 						}
 					}
-					Log.d("test", "selectedup|" + item_selected);
-					tempo_view_grid.getChildAt(item_selected)
+					Log.d("test", "selectedup|" + DrumbeatsMediaPlayer.mitem_selected);
+					tempo_view_grid.getChildAt(DrumbeatsMediaPlayer.mitem_selected)
 							.setBackgroundResource(R.drawable.item_press);
-					if (item_selected == 24) {
+					if (DrumbeatsMediaPlayer.mitem_selected == 24) {
 						bt_tempo_down.setEnabled(false);
 						bt_tempo_up.setEnabled(true);
-					} else if (item_selected == 3) {
+					} else if (DrumbeatsMediaPlayer.mitem_selected == 3) {
 						bt_tempo_down.setEnabled(true);
 						bt_tempo_up.setEnabled(false);
 					} else {
@@ -361,56 +356,15 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		int statusBarHeight = 0;
-		int resourceId = getResources().getIdentifier("status_bar_height",
-				"dimen", "android");
-		if (resourceId > 0) {
-			statusBarHeight = getResources().getDimensionPixelSize(resourceId);
-		}
+		
 
-		DisplayMetrics metrics = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		tempo_view_layout_grid.getLayoutParams().height = metrics.heightPixels
-				- statusBarHeight
-				- getResources().getDimensionPixelSize(
-						R.dimen.main_header_height)
-				- getResources().getDimensionPixelSize(
-						R.dimen.tempo_view_footer_height)
-				+ getResources().getDimensionPixelSize(
-						R.dimen.tempo_spacing_bottom);
-		;
-		tempo_view_layout_grid.setLayoutParams(tempo_view_layout_grid
-				.getLayoutParams());
-		// int itemHeight = tempo_view_grid.getHeight()/7;
-		// item_selected =
-		// Integer.valueOf(getResources().getString(R.string.string_default_item_selected));
-		// tempo_view_grid.setAdapter(new
-		// TextAdapter(this,itemHeight,itemHeight,item_selected));
-		// int h = metrics.heightPixels;
-		// int h2 = metrics.widthPixels;
-		int h = tempo_view_layout_grid.getLayoutParams().height;
-		int gridheight = tempo_view_layout_grid.getLayoutParams().height / 7;// getResources().getDimensionPixelSize(R.dimen.tempo_view_grid_item_height);
-		RelativeLayout tempo_footer = (RelativeLayout) findViewById(R.id.tempo_view_footer);
-		tempo_footer.getLayoutParams().height = getResources()
-				.getDimensionPixelSize(R.dimen.tempo_view_footer_height)
-				+ tempo_view_layout_grid.getLayoutParams().height
-				- gridheight
-				* 7;
-		tempo_footer.setLayoutParams(tempo_footer.getLayoutParams());
-		tempo_view_layout_grid.getLayoutParams().height = gridheight * 7;
-		tempo_view_layout_grid.setLayoutParams(tempo_view_layout_grid
-				.getLayoutParams());
-
-		item_selected = Integer.valueOf(getResources().getString(
-				R.string.string_default_item_selected));
-		tempo_view_grid.setAdapter(new TextAdapter(this, gridheight,
-				gridheight, item_selected));
+		
 		// tempo_view_text_on_top.setLayoutParams(new
 		// AbsoluteLayout.LayoutParams(200,200, 200,200));
 		
 		//animatorSet = new AnimatorSet();
 		fade_out = new AlphaAnimation(1.0f, 0.0f);
-		fade_out.setDuration(5000);
+		fade_out.setDuration(500);
 		fade_out.setAnimationListener(new AnimationListener()
 		{
 		    public void onAnimationStart(Animation arg0)
@@ -499,16 +453,16 @@ public class MainActivity extends Activity {
 					// return true;
 					// }
 					if (lastPos != 27) {
-						tempo_view_grid.getChildAt(item_selected)
+						tempo_view_grid.getChildAt(DrumbeatsMediaPlayer.mitem_selected)
 								.setBackgroundResource(
 										R.drawable.item_grid_selector);
-						item_selected = lastPos;
-						tempo_view_grid.getChildAt(item_selected)
+						DrumbeatsMediaPlayer.mitem_selected = lastPos;
+						tempo_view_grid.getChildAt(DrumbeatsMediaPlayer.mitem_selected)
 								.setBackgroundResource(R.drawable.item_press);
-						if (item_selected == 24) {
+						if (DrumbeatsMediaPlayer.mitem_selected == 24) {
 							bt_tempo_down.setEnabled(false);
 							bt_tempo_up.setEnabled(true);
-						} else if (item_selected == 3) {
+						} else if (DrumbeatsMediaPlayer.mitem_selected == 3) {
 							bt_tempo_down.setEnabled(true);
 							bt_tempo_up.setEnabled(false);
 						} else {
@@ -1261,7 +1215,52 @@ public class MainActivity extends Activity {
 		main_body_favorite.setVisibility(View.GONE);
 		main_footer.setVisibility(View.GONE);
 		main_body_more.setVisibility(View.GONE);
+		int statusBarHeight = 0;
+		int resourceId = getResources().getIdentifier("status_bar_height",
+				"dimen", "android");
+		if (resourceId > 0) {
+			statusBarHeight = getResources().getDimensionPixelSize(resourceId);
+		}
+		DisplayMetrics metrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		tempo_view_layout_grid.getLayoutParams().height = metrics.heightPixels
+				- statusBarHeight
+				- getResources().getDimensionPixelSize(
+						R.dimen.main_header_height)
+				- getResources().getDimensionPixelSize(
+						R.dimen.tempo_view_footer_height)
+				+ getResources().getDimensionPixelSize(
+						R.dimen.tempo_spacing_bottom);
+		;
+		tempo_view_layout_grid.setLayoutParams(tempo_view_layout_grid
+				.getLayoutParams());
+		// int itemHeight = tempo_view_grid.getHeight()/7;
+		// item_selected =
+		// Integer.valueOf(getResources().getString(R.string.string_default_item_selected));
+		// tempo_view_grid.setAdapter(new
+		// TextAdapter(this,itemHeight,itemHeight,item_selected));
+		// int h = metrics.heightPixels;
+		// int h2 = metrics.widthPixels;
+		int h = tempo_view_layout_grid.getLayoutParams().height;
+		int gridheight = tempo_view_layout_grid.getLayoutParams().height / 7;// getResources().getDimensionPixelSize(R.dimen.tempo_view_grid_item_height);
+		RelativeLayout tempo_footer = (RelativeLayout) findViewById(R.id.tempo_view_footer);
+		tempo_footer.getLayoutParams().height = getResources()
+				.getDimensionPixelSize(R.dimen.tempo_view_footer_height)
+				+ tempo_view_layout_grid.getLayoutParams().height
+				- gridheight
+				* 7;
+		tempo_footer.setLayoutParams(tempo_footer.getLayoutParams());
+		tempo_view_layout_grid.getLayoutParams().height = gridheight * 7;
+		tempo_view_layout_grid.setLayoutParams(tempo_view_layout_grid
+				.getLayoutParams());
+
+		
+		tempo_view_grid.setAdapter(new TextAdapter(this, gridheight,
+				gridheight));
 		tempo_view.setVisibility(View.VISIBLE);
+//		for (int i = 0; i<27; i++)
+//			tempo_view_grid.getChildAt(i).setBackgroundResource(R.drawable.item_grid_selector);
+//		tempo_view_grid.getChildAt(DrumbeatsMediaPlayer.mitem_selected).setBackgroundResource(R.drawable.item_press);
 
 	}
 
@@ -1452,16 +1451,17 @@ public class MainActivity extends Activity {
 
 	public void setrandom() 
 	{
-		final ArrayList<String> listfolder = getListFolder();
-		Random randomFolder = new Random();
-		int k = randomFolder.nextInt(listfolder.size() - 1);
-		DrumbeatsMediaPlayer.mfolder = listfolder.get(k);
+//		final ArrayList<String> listfolder = getListFolder();
+//		Random randomFolder = new Random();
+//		int k = randomFolder.nextInt(listfolder.size() - 1);
+//		DrumbeatsMediaPlayer.mfolder = listfolder.get(k);
 		
 		boolean brandom = preferences.getBoolean("random", false);
 		if (brandom) {
 			
 //			if (tempo_view_grid.getChildCount() != 0) {
-				tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_grid_selector);
+			if (tempo_view.getVisibility() == View.VISIBLE)
+				tempo_view_grid.getChildAt(DrumbeatsMediaPlayer.mitem_selected).setBackgroundResource(R.drawable.item_grid_selector);
 //			}
 			String file[] = getFolderFile(DrumbeatsMediaPlayer.mfolder);
 			if (file == null)
@@ -1471,13 +1471,14 @@ public class MainActivity extends Activity {
 			srate = TextAdapter.arrayrate[i];
 			for (int j = 0; j < TextAdapter.mTemporary.length; j++) {
 				if (srate.equalsIgnoreCase(TextAdapter.mTemporary[j])) {
-					item_selected = j;
+					DrumbeatsMediaPlayer.mitem_selected = j;
 					break;
 				}
 			}
 			
 //			if (tempo_view_grid.getChildCount() != 0) {
-				tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_press);
+			if (tempo_view.getVisibility() == View.VISIBLE)
+				tempo_view_grid.getChildAt(DrumbeatsMediaPlayer.mitem_selected).setBackgroundResource(R.drawable.item_press);
 //			}
 			// playMusic();
 			setRate();
