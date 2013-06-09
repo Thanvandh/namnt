@@ -1401,7 +1401,6 @@ public class MainActivity extends Activity {
 			filerowadapter.notifyDataSetChanged();
 		else if (state_main_body == state_main_body_favorite)
 			row_favorite_adapter.notifyDataSetChanged();
-
 	}
 
 	public void setButtonPlay(boolean b) {

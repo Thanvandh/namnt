@@ -101,15 +101,17 @@ public class FavoritesRowAdapter extends BaseAdapter {
 	        	
 	        } else if (sfolder.equalsIgnoreCase(DrumbeatsMediaPlayer.mfolder) && file.equalsIgnoreCase(DrumbeatsMediaPlayer.mfilename)){
 				//vi.setBackgroundResource(R.color.list_view_item_selected);
+	        	RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)folder.getLayoutParams();
 				if (DrumbeatsMediaPlayer.bplay && (!meditable)){
 					nowplaying.setVisibility(View.VISIBLE);
-					RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)folder.getLayoutParams();
 					params.addRule(RelativeLayout.LEFT_OF, R.id.row_main_body_list_favorite_file_nowplaying);
 					params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT,0);
-					params.setMargins(0, 0, activity.getResources().getDimensionPixelSize(R.dimen.row_main_body_list_favorite_file_name_margin_left), 0);
-				folder.setLayoutParams(params);
-				
+				} else {
+					params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT,1);
 				}
+				
+				params.setMargins(0, 0, activity.getResources().getDimensionPixelSize(R.dimen.row_main_body_list_favorite_file_name_margin_left), 0);
+				folder.setLayoutParams(params);
 				
 			} else {
 	        	bt_delete.setVisibility(View.GONE);
