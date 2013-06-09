@@ -231,7 +231,7 @@ public class MainActivity extends Activity {
 
 		bt_tempo_down = (ImageButton) findViewById(R.id.tempo_view_header_decrease);
 		bt_tempo_up = (ImageButton) findViewById(R.id.tempo_view_header_increase);
-
+	
 		bt_tempo_view_play.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -1450,16 +1450,19 @@ public class MainActivity extends Activity {
 		quitDialog.show();
 	}
 
-	public void setrandom() {
-//		final ArrayList<String> listfolder = getListFolder();
-//		Random randomFolder = new Random();
-//		int k = randomFolder.nextInt(listfolder.size() - 1);
-//		DrumbeatsMediaPlayer.mfolder = listfolder.get(k);
+	public void setrandom() 
+	{
+		final ArrayList<String> listfolder = getListFolder();
+		Random randomFolder = new Random();
+		int k = randomFolder.nextInt(listfolder.size() - 1);
+		DrumbeatsMediaPlayer.mfolder = listfolder.get(k);
 		
 		boolean brandom = preferences.getBoolean("random", false);
 		if (brandom) {
 			
-			tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_grid_selector);
+//			if (tempo_view_grid.getChildCount() != 0) {
+				tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_grid_selector);
+//			}
 			String file[] = getFolderFile(DrumbeatsMediaPlayer.mfolder);
 			if (file == null)
 				return;
@@ -1473,7 +1476,9 @@ public class MainActivity extends Activity {
 				}
 			}
 			
-			tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_press);
+//			if (tempo_view_grid.getChildCount() != 0) {
+				tempo_view_grid.getChildAt(item_selected).setBackgroundResource(R.drawable.item_press);
+//			}
 			// playMusic();
 			setRate();
 			int j = random.nextInt(file.length);
@@ -1493,6 +1498,7 @@ public class MainActivity extends Activity {
 		setButtonPlay(DrumbeatsMediaPlayer.bplay);
 		playsong.setText("• " + DrumbeatsMediaPlayer.mfolder.toUpperCase() + " - " + DrumbeatsMediaPlayer.mfilename.toUpperCase() + " •");
 		playMusic(DrumbeatsMediaPlayer.mfolder, DrumbeatsMediaPlayer.mfilename);
+		
 		if (state_main_body == state_main_body_file)
 			filerowadapter.notifyDataSetChanged();
 		else if (state_main_body == state_main_body_favorite)
