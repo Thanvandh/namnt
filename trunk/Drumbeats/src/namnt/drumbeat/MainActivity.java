@@ -807,10 +807,10 @@ public class MainActivity extends Activity {
 
 		//final String array_folder[] = getFolder();
 		final ArrayList<String> listfolder = getListFolder();
-		DrumbeatsMediaPlayer.mfolder = listfolder.get(0);
-		String[] array_file = getFolderFile(DrumbeatsMediaPlayer.mfolder);
-		if (array_file != null && array_file.length > 0)
-			DrumbeatsMediaPlayer.mfilename = array_file[0];
+//		DrumbeatsMediaPlayer.mfolder = listfolder.get(0);
+//		String[] array_file = getFolderFile(DrumbeatsMediaPlayer.mfolder);
+//		if (array_file != null && array_file.length > 0)
+//			DrumbeatsMediaPlayer.mfilename = array_file[0];
 		ArrayList<HashMap<String, String>> array_list_folder = new ArrayList<HashMap<String, String>>();
 
 		for (int i = 0; i < listfolder.size(); i++) {
