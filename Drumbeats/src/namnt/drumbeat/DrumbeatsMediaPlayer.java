@@ -8,6 +8,6 @@ public class DrumbeatsMediaPlayer {
 	static boolean bplay = false;
 	static String mfolder = "Starter Pack";
 	static String mfilename = "AlphaStraight120A";
-	static int mitem_selected = 12;
+	static int mitem_selected = 13;
 	
 }
