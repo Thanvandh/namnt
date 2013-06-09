@@ -22,13 +22,17 @@
     
     <TextView
         android:id="@+id/row_main_body_list_favorite_file_name"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/row_main_body_list_favorite_file_name_margin_left"
         android:layout_toRightOf="@+id/row_main_body_list_favorite_file_bt_delete"
+        android:layout_toLeftOf="@+id/row_main_body_list_favorite_file_folder"
         android:layout_centerVertical="true"
         android:textSize="@dimen/row_main_body_list_favorite_file_name_text_size"
         android:textStyle="bold"
+        android:gravity="left"
+        android:lines="1"
+ 		android:ellipsize="end"
         android:textColor="@android:color/white"/>
 
     <!-- Displayname -->
