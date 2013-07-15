@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
       <item type="id" name="id_label_name" />
-      <item type="id" name="id_text_name" />
+      <item type="id" name="id_txt_name" />
       <item type="id" name="id_label_birthday" />
-      <item type="id" name="id_text_birthday" />
+      <item type="id" name="id_txt_birthday" />
       <item type="id" name="id_label_birthday_time" />
-      <item type="id" name="id_text_birthday_time" />
+      <item type="id" name="id_txt_birthday_time" />
       <item type="id" name="id_label_gender" />
       <item type="id" name="id_droplist_gender" />
       <item type="id" name="id_bt_ansao" />
