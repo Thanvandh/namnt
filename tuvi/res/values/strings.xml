@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">tuvi</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="name">Họ tên</string>
+    <string name="birthday">Ngày sinh</string>
+    <string name="birthday_time">Giờ sinh</string>
+    <string name="gender">Giới tính</string>
+    <string name="ansao">An sao</string>
+
+</resources>
