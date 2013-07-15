@@ -17,7 +17,7 @@
         android:layout_marginTop="@dimen/label_name_margin_top"
         android:text="@string/name" />
     <EditText 
-        android:id="@id/id_text_name"
+        android:id="@id/id_txt_name"
         android:layout_toRightOf="@id/id_label_name"
         android:layout_width="@dimen/value_width"
         android:layout_height="@dimen/value_height"
@@ -26,18 +26,64 @@
         android:background="@color/white"/>
     <TextView
         android:id="@id/id_label_birthday"
+        android:layout_below="@id/id_label_name"
         android:layout_width="@dimen/label_width"
         android:layout_height="@dimen/label_height"
         android:layout_marginLeft="@dimen/label_birthday_margin_left"
         android:layout_marginTop="@dimen/label_birthday_margin_top"
         android:text="@string/birthday" />
     <EditText 
-        android:id="@id/id_text_birthday"
-        android:layout_toRightOf="@id/id_label_name"
+        android:id="@id/id_txt_birthday"
+        android:layout_toRightOf="@id/id_label_birthday"
+        android:layout_below="@id/id_txt_name"
         android:layout_width="@dimen/value_width"
         android:layout_height="@dimen/value_height"
-        android:layout_marginLeft="@dimen/txt_name_margin_left"
-        android:layout_marginTop="@dimen/txt_name_margin_top"
+        android:layout_marginLeft="@dimen/txt_birthday_margin_left"
+        android:layout_marginTop="@dimen/txt_birthday_margin_top"
         android:background="@color/white"/>
+    
+    <TextView
+        android:id="@id/id_label_birthday_time"
+        android:layout_below="@id/id_label_birthday"
+        android:layout_width="@dimen/label_width"
+        android:layout_height="@dimen/label_height"
+        android:layout_marginLeft="@dimen/label_birthday_time_margin_left"
+        android:layout_marginTop="@dimen/label_birthday_time_margin_top"
+        android:text="@string/birthday_time" />
+    <EditText 
+        android:id="@id/id_txt_birthday_time"
+        android:layout_toRightOf="@id/id_label_birthday_time"
+        android:layout_below="@id/id_txt_birthday"
+        android:layout_width="@dimen/value_width"
+        android:layout_height="@dimen/value_height"
+        android:layout_marginLeft="@dimen/txt_birthday_time_margin_left"
+        android:layout_marginTop="@dimen/txt_birthday_time_margin_top"
+        android:background="@color/white"/>
+    
+    <TextView
+        android:id="@id/id_label_gender"
+        android:layout_below="@id/id_label_birthday_time"
+        android:layout_width="@dimen/label_width"
+        android:layout_height="@dimen/label_height"
+        android:layout_marginLeft="@dimen/label_gender_margin_left"
+        android:layout_marginTop="@dimen/label_gender_margin_top"
+        android:text="@string/gender" />
+    <EditText 
+        android:id="@id/id_droplist_gender"
+        android:layout_toRightOf="@id/id_label_gender"
+        android:layout_below="@id/id_txt_birthday_time"
+        android:layout_width="@dimen/value_width"
+        android:layout_height="@dimen/value_height"
+        android:layout_marginLeft="@dimen/droplist_gender_margin_left"
+        android:layout_marginTop="@dimen/droplist_gender_margin_top"
+        android:background="@color/white"/>
+    <Button 
+        android:id="@id/id_bt_ansao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/bt_ansao_margin_top"
+        android:layout_below="@id/id_label_gender"
+        android:layout_centerHorizontal="true"
+        android:text="An sao"/>
 
 </RelativeLayout>
