@@ -4,7 +4,7 @@ import android.graphics.Color;
 
 
 
-interface StarConst
+public interface StarConst
 {
   public static final int thuy = 2;
   public static final int moc = 3;

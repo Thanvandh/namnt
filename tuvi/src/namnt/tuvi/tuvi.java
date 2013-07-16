@@ -1,17 +1,12 @@
-import java.applet.Applet;
-import java.awt.Button;
-import java.awt.Choice;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Event;
-import java.awt.Label;
-import java.awt.TextComponent;
-import java.awt.TextField;
-import java.util.Date;
+package namnt.tuvi;
 
-public class tuvi extends Applet
-  implements StarConst
+import namnt.tuvi.utils.StarConst;
+import namnt.tuvi.utils.Tcung;
+import android.app.Activity;
+import android.os.Bundle;
+
+
+public class tuvi extends Activity implements StarConst
 {
   String name;
   int ngay;
@@ -60,17 +55,18 @@ public class tuvi extends Applet
   TextField NgayDuong;
   Label[] TieuHanStr;
 
-  public String getAppletInfo()
-  {
-    return "Name: Tu vi\r\nAuthor: Quang Tri\r\n";
-  }
 
+
+  @Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.tuvi);
+		init();
+		
+	}
   public void init()
   {
-    setLayout(null);
-    resize(800, 640);
-
-    setBackground(new Color(160, 160, 160));
+    //setBackground(new Color(160, 160, 160));
 
     this.sao = new int[120];
     this.cung = new Tcung[12];
