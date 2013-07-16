@@ -1,33 +1,46 @@
 package namnt.tuvi.utils;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.view.View;
 
 
 
-class Tcung extends Canvas
+public class Tcung extends View
   implements StarConst
 {
-  String name;
+  public Tcung(Context context) {
+		super(context);
+		// TODO Auto-generated constructor stub
+	}
+
+String name;
   String hanstr;
   int chi;
   int numsao;
   int[] sao = new int[100];
   boolean tuan;
   boolean triet;
-  Color mycolor = new Color();
-  public void paint(Graphics g)
-  {
-    g.setColor(StarConst.nguhanhcolor[(StarConst.nguhanhcung[this.chi] - 2)]);
-    g.drawRect(4, 4, 192, 152);
-    g.drawRect(3, 3, 194, 154);
-    g.setColor(Color.blue);
-    g.drawString(this.name, 10, 15);
+  @Override
+	protected void onDraw(Canvas g) {
+		
+	Paint mypaint = new Paint();
+    //g.drawColor(StarConst.nguhanhcolor[(StarConst.nguhanhcung[this.chi] - 2)]);
+    mypaint.setColor(StarConst.nguhanhcolor[(StarConst.nguhanhcung[this.chi] - 2)]);
+    Rect r = new Rect(4, 4, 192, 152);
+    g.drawRect(r,mypaint);
+    r.set(3, 3, 194, 154);
+    g.drawRect(r,mypaint);
+    mypaint.setColor(Color.BLUE);
+    g.drawText(this.name, 10, 15, mypaint);
     if ((this.tuan) && (this.triet)) {
-      g.drawString("TuanTriet", 120, 15);
+    	g.drawText("TuanTriet", 120, 15, mypaint);
     } else {
-      if (this.tuan) g.drawString("Tuan", 150, 15);
-      if (this.triet) g.drawString("Triet", 150, 15);
+      if (this.tuan) g.drawText("Tuan", 150, 15, mypaint);
+      if (this.triet) g.drawText("Triet", 150, 15, mypaint);
     }
 
     int i = 0;
@@ -35,8 +48,9 @@ class Tcung extends Canvas
     String[] dstr = { "", "(H) ", "(B) ", "(D) ", "(V) ", "(M) " };
     while (this.sao[i] < 14)
     {
-      g.setColor(StarConst.nguhanhcolor[(StarConst.nguhanhsao[this.sao[i]] - 2)]);
-      g.drawString(String.valueOf(dstr[StarConst.dialoi[this.sao[i]][this.chi]]).concat(String.valueOf(StarConst.strsao[this.sao[i]])), 60, 28 + i * 13);
+      mypaint.setColor(StarConst.nguhanhcolor[(StarConst.nguhanhsao[this.sao[i]] - 2)]);
+      g.drawText(String.valueOf(dstr[StarConst.dialoi[this.sao[i]][this.chi]]).concat(String.valueOf(StarConst.strsao[this.sao[i]])), 60, 28 + i * 13, mypaint);
+     
       i++;
     }
 
@@ -54,8 +68,8 @@ class Tcung extends Canvas
     for (i = 0; i < this.numsao; i++) {
       if (StarConst.strsao[this.sao[i]].charAt(0) != '+')
         continue;
-      g.setColor(StarConst.nguhanhcolor[(StarConst.nguhanhsao[this.sao[i]] - 2)]);
-      g.drawString(StarConst.strsao[this.sao[i]], x, y);
+      mypaint.setColor(StarConst.nguhanhcolor[(StarConst.nguhanhsao[this.sao[i]] - 2)]);
+      g.drawText(StarConst.strsao[this.sao[i]], x, y,mypaint);
       if (j < max) { y += 12; j++; } else {
         x += 100; y = 55; j = 0;
       }
@@ -64,14 +78,14 @@ class Tcung extends Canvas
     for (i = 0; i < this.numsao; i++) {
       if (StarConst.strsao[this.sao[i]].charAt(0) != '-')
         continue;
-      g.setColor(StarConst.nguhanhcolor[(StarConst.nguhanhsao[this.sao[i]] - 2)]);
-      g.drawString(StarConst.strsao[this.sao[i]], x, y);
+      mypaint.setColor(StarConst.nguhanhcolor[(StarConst.nguhanhsao[this.sao[i]] - 2)]);
+      g.drawText(StarConst.strsao[this.sao[i]], x, y, mypaint);
       if (j < 8) { y += 12; j++; } else {
         x += 100; y = 55; j = 0;
       }
     }
-    g.setColor(new Color(220, 220, 220));
-    g.drawString(this.hanstr, 90, 152);
+    mypaint.setARGB(255, 220, 220, 220);
+    g.drawText(this.hanstr, 90, 152, mypaint);
   }
 
   void Setname(String s, int c, String st)
@@ -92,9 +106,9 @@ class Tcung extends Canvas
     this.triet = true;
   }
 
-  void Add(int s) {
+  public void Add(int s) {
     this.sao[this.numsao] = s;
     this.numsao += 1;
-    repaint();
+    invalidate();
   }
 }
