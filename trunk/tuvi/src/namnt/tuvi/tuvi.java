@@ -1,9 +1,13 @@
 package namnt.tuvi;
 
+import java.util.Date;
+
 import namnt.tuvi.utils.StarConst;
 import namnt.tuvi.utils.Tcung;
+import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.TextView;
 
 
 public class tuvi extends Activity implements StarConst
@@ -24,36 +28,36 @@ public class tuvi extends Activity implements StarConst
   Tcung[] cung;
   int[] sao;
   Date ToDate;
-  Label phaistr;
-  Label tenstr;
-  TextField ten;
-  Choice phai_;
-  Label ngaystr;
-  Label giostr;
-  Choice gio_;
-  Choice ngay_;
-  Label thangstr;
-  Choice thang_;
-  Label namstr;
-  Choice nam_;
-  Choice can_;
-  Label amlichstr;
-  Label TuoiAmDuong;
-  Label TuoiMenh;
-  Label TuoiCuc;
-  Label SaoChuMenh;
-  Label SaoChuThan;
-  Button BDDate;
-  Button BIDate;
-  Button BDMonth;
-  TextField ThangDuong;
-  Button BIMonth;
-  Button BIYear;
-  TextField NamDuong;
-  Button BDYear;
-  Button AmSangDuong;
-  TextField NgayDuong;
-  Label[] TieuHanStr;
+  TextView phaistr;
+  TextView tenstr;
+  TextView ten;
+//  Choice phai_;
+  TextView ngaystr;
+  TextView giostr;
+//  Choice gio_;
+//  Choice ngay_;
+  TextView thangstr;
+//  Choice thang_;
+  TextView namstr;
+//  Choice nam_;
+//  Choice can_;
+  TextView amlichstr;
+  TextView TuoiAmDuong;
+  TextView TuoiMenh;
+  TextView TuoiCuc;
+  TextView SaoChuMenh;
+  TextView SaoChuThan;
+//  Button BDDate;
+//  Button BIDate;
+//  Button BDMonth;
+  TextView ThangDuong;
+//  Button BIMonth;
+//  Button BIYear;
+  TextView NamDuong;
+//  Button BDYear;
+//  Button AmSangDuong;
+  TextView NgayDuong;
+  TextView[] TieuHanStr;
 
 
 
@@ -71,15 +75,16 @@ public class tuvi extends Activity implements StarConst
     this.sao = new int[120];
     this.cung = new Tcung[12];
 
-    this.TieuHanStr = new Label[12];
+    this.TieuHanStr = new TextView[12];
 
     int[] dx = { 2, 1, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3 };
     int[] dy = { 3, 3, 3, 2, 1, 0, 0, 0, 0, 1, 2, 3 };
 
     for (int i = 0; i < 12; i++)
     {
-      this.cung[i] = new Tcung();
-      this.cung[i].reshape(dx[i] * 200, dy[i] * 160, 200, 160);
+      this.cung[i] = new Tcung(this.getApplicationContext());
+      this.cung[i].setLayoutParams(null);
+      reshape(dx[i] * 200, dy[i] * 160, 200, 160);
       add(this.cung[i]);
 
       this.TieuHanStr[i] = new Label("Mao");
@@ -210,36 +215,36 @@ public class tuvi extends Activity implements StarConst
     Create(this.gio_.getSelectedIndex() + 1, this.ngay_.getSelectedIndex() + 1, this.thang_.getSelectedIndex() + 1, this.nam_.getSelectedIndex() + 1, this.can_.getSelectedIndex() + 1, this.phai_.getSelectedIndex() + 1);
   }
 
-  public boolean action(Event e, Object o)
-  {
-    if ((e.target instanceof Button))
-    {
-      if (e.target == this.AmSangDuong)
-      {
-        DuonglichQuaAmlich temp = new DuonglichQuaAmlich(this.ToDate.getDate(), this.ToDate.getMonth() + 1, this.ToDate.getYear());
-
-        this.ngay_.select(temp.getngay() - 1);
-        this.thang_.select(temp.getthang() - 1);
-        this.nam_.select(temp.getchi());
-        this.can_.select(temp.getcan());
-      }
-      else {
-        if ((e.target == this.BDDate) && (this.ToDate.getDate() > 1)) this.ToDate.setDate(this.ToDate.getDate() - 1);
-        if ((e.target == this.BIDate) && (this.ToDate.getDate() < 31)) this.ToDate.setDate(this.ToDate.getDate() + 1);
-        if ((e.target == this.BDMonth) && (this.ToDate.getMonth() > 0)) this.ToDate.setMonth(this.ToDate.getMonth() - 1);
-        if ((e.target == this.BIMonth) && (this.ToDate.getMonth() < 11)) this.ToDate.setMonth(this.ToDate.getMonth() + 1);
-        if ((e.target == this.BDYear) && (this.ToDate.getYear() > 1)) this.ToDate.setYear(this.ToDate.getYear() - 1);
-        if ((e.target == this.BIYear) && (this.ToDate.getYear() < 99)) this.ToDate.setYear(this.ToDate.getYear() + 1);
-        UpdateDuong();
-        return true;
-      }
-
-    }
-
-    Create(this.gio_.getSelectedIndex() + 1, this.ngay_.getSelectedIndex() + 1, this.thang_.getSelectedIndex() + 1, this.nam_.getSelectedIndex() + 1, this.can_.getSelectedIndex() + 1, this.phai_.getSelectedIndex() + 1);
-
-    return true;
-  }
+//  public boolean action(Event e, Object o)
+//  {
+//    if ((e.target instanceof Button))
+//    {
+//      if (e.target == this.AmSangDuong)
+//      {
+//        DuonglichQuaAmlich temp = new DuonglichQuaAmlich(this.ToDate.getDate(), this.ToDate.getMonth() + 1, this.ToDate.getYear());
+//
+//        this.ngay_.select(temp.getngay() - 1);
+//        this.thang_.select(temp.getthang() - 1);
+//        this.nam_.select(temp.getchi());
+//        this.can_.select(temp.getcan());
+//      }
+//      else {
+//        if ((e.target == this.BDDate) && (this.ToDate.getDate() > 1)) this.ToDate.setDate(this.ToDate.getDate() - 1);
+//        if ((e.target == this.BIDate) && (this.ToDate.getDate() < 31)) this.ToDate.setDate(this.ToDate.getDate() + 1);
+//        if ((e.target == this.BDMonth) && (this.ToDate.getMonth() > 0)) this.ToDate.setMonth(this.ToDate.getMonth() - 1);
+//        if ((e.target == this.BIMonth) && (this.ToDate.getMonth() < 11)) this.ToDate.setMonth(this.ToDate.getMonth() + 1);
+//        if ((e.target == this.BDYear) && (this.ToDate.getYear() > 1)) this.ToDate.setYear(this.ToDate.getYear() - 1);
+//        if ((e.target == this.BIYear) && (this.ToDate.getYear() < 99)) this.ToDate.setYear(this.ToDate.getYear() + 1);
+//        UpdateDuong();
+//        return true;
+//      }
+//
+//    }
+//
+//    Create(this.gio_.getSelectedIndex() + 1, this.ngay_.getSelectedIndex() + 1, this.thang_.getSelectedIndex() + 1, this.nam_.getSelectedIndex() + 1, this.can_.getSelectedIndex() + 1, this.phai_.getSelectedIndex() + 1);
+//
+//    return true;
+//  }
 
   public void destroy()
   {
@@ -304,7 +309,7 @@ public class tuvi extends Activity implements StarConst
     Add(5, (tu_vi + 4) % 12);
 
     int thien_phu = (16 - tu_vi) % 12;
-    for (i = 0; i < 7; i++)
+    for (int i = 0; i < 7; i++)
       Add(6 + i, (thien_phu + i) % 12);
     Add(13, (thien_phu + 10) % 12);
     Add(14, (this.thang + 3) % 12);
@@ -384,13 +389,13 @@ public class tuvi extends Activity implements StarConst
       Add(59, (this.gio - 1 + hoa_tinh[((this.nam - 1) % 4)]) % 12);
     else Add(59, (13 - this.gio + hoa_tinh[((this.nam - 1) % 4)]) % 12);
 
-    for (i = 0; i < 12; i++) Add(61 + i, (this.nam - 1 + i) % 12);
+    for (int i = 0; i < 12; i++) Add(61 + i, (this.nam - 1 + i) % 12);
     Add(73, (this.nam + 10) % 12);
     Add(74, this.nam % 12);
     Add(53, (this.nam + 23 - this.thang + this.gio) % 12);
     int[] loc_ton = { 2, 3, 5, 6, 5, 6, 8, 9, 11, 0 };
     Add(75, loc_ton[(this.can - 1)]);
-    for (i = 0; i < 12; i++)
+    for (int i = 0; i < 12; i++)
       if (this.amduong == this.namnu - 1)
         Add(76 + i, (loc_ton[(this.can - 1)] + i) % 12);
       else Add(76 + i, (loc_ton[(this.can - 1)] + 12 - i) % 12);
@@ -398,7 +403,7 @@ public class tuvi extends Activity implements StarConst
     Add(89, (this.sao[75] + 11) % 12);
 
     int[] trang_sinh = { 8, 11, 5, 8, 2 };
-    for (i = 0; i < 12; i++) {
+    for (int i = 0; i < 12; i++) {
       if (this.amduong == this.namnu - 1)
         Add(90 + i, (trang_sinh[(this.cuc - 2)] + i) % 12);
       else Add(90 + i, (trang_sinh[(this.cuc - 2)] + 12 - i) % 12);

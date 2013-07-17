@@ -88,7 +88,7 @@ String name;
     g.drawText(this.hanstr, 90, 152, mypaint);
   }
 
-  void Setname(String s, int c, String st)
+  public void Setname(String s, int c, String st)
   {
     this.chi = c;
     this.name = s;
@@ -98,11 +98,11 @@ String name;
     this.hanstr = st;
   }
 
-  void Settuan() {
+  public void Settuan() {
     this.tuan = true;
   }
 
-  void Settriet() {
+  public void Settriet() {
     this.triet = true;
   }
 
