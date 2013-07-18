@@ -9,5 +9,6 @@
     <string name="birthday_time">Giờ sinh</string>
     <string name="gender">Giới tính</string>
     <string name="ansao">An sao</string>
+    <string name="title_activity_ansao">AnsaoActivity</string>
 
 </resources>
