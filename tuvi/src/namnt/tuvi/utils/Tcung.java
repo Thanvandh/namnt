@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.View;
 
@@ -41,15 +42,19 @@ public class Tcung extends View
   @Override
 	protected void onDraw(Canvas g) {
 		
-	Paint mypaint = new Paint();
+	Paint mypaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     //g.drawColor(StarConst.nguhanhcolor[(StarConst.nguhanhcung[this.chi] - 2)]);
     mypaint.setColor(StarConst.nguhanhcolor[(StarConst.nguhanhcung[this.chi] - 2)]);
     mypaint.setStyle(Style.STROKE);
+    mypaint.setTextSize(getResources().getDimensionPixelSize(R.dimen.text_size_cung));
     Log.v("test", "width " + (Utils.width_cung - Utils.offset_right_cung) + " height " + (Utils.height_cung - Utils.offset_bottom_cung));
     Rect r = new Rect(Utils.offset_left_cung, Utils.offset_top_cung, Utils.width_cung - Utils.offset_right_cung, Utils.height_cung - Utils.offset_bottom_cung);
     g.drawRect(r,mypaint);
     //r.set(Utils.offset_left_cung - 2, Utils.offset_top_cung - 2, Utils.width_cung - Utils.offset_right_cung - 2, Utils.height_cung - Utils.offset_bottom_cung -2);
    // g.drawRect(r,mypaint);
+    mypaint.setStyle(Style.FILL);
+    mypaint.setTypeface(Typeface.DEFAULT_BOLD);
+   // mypaint.setAntiAlias(true);
     mypaint.setColor(Color.BLUE);
     g.drawText(this.name, getResources().getDimensionPixelSize(R.dimen.x_name_cung), getResources().getDimensionPixelSize(R.dimen.y_name_cung), mypaint);
     if ((this.tuan) && (this.triet)) {
@@ -65,7 +70,7 @@ public class Tcung extends View
     while (this.sao[i] < 14)
     {
       mypaint.setColor(StarConst.nguhanhcolor[(StarConst.nguhanhsao[this.sao[i]] - 2)]);
-      g.drawText(String.valueOf(dstr[StarConst.dialoi[this.sao[i]][this.chi]]).concat(String.valueOf(StarConst.strsao[this.sao[i]])), getResources().getDimensionPixelSize(R.dimen.x_line2_cung), getResources().getDimensionPixelSize(R.dimen.y_line2_cung) + i * getResources().getDimensionPixelSize(R.dimen.y_line2_step_cung), mypaint);
+      g.drawText(String.valueOf(dstr[StarConst.dialoi[this.sao[i]][this.chi]]).concat(String.valueOf(StarConst.strsao[this.sao[i]])), getResources().getDimensionPixelSize(R.dimen.x_part2_cung), getResources().getDimensionPixelSize(R.dimen.y_part2_cung) + i * getResources().getDimensionPixelSize(R.dimen.y_part2_step_cung), mypaint);
      
       i++;
     }
@@ -79,15 +84,15 @@ public class Tcung extends View
     }
     if ((j > 8) || (max > 8)) max = 8;
 
-    int y = 55;
+    int y = getResources().getDimensionPixelSize(R.dimen.y_part3_cung);//55;
     j = 1;
     for (i = 0; i < this.numsao; i++) {
       if (StarConst.strsao[this.sao[i]].charAt(0) != '+')
         continue;
       mypaint.setColor(StarConst.nguhanhcolor[(StarConst.nguhanhsao[this.sao[i]] - 2)]);
       g.drawText(StarConst.strsao[this.sao[i]], x, y,mypaint);
-      if (j < max) { y += 12; j++; } else {
-        x += 100; y = 55; j = 0;
+      if (j < max) { y +=  getResources().getDimensionPixelSize(R.dimen.y_part3_step_cung); j++; } else {
+        x += getResources().getDimensionPixelSize(R.dimen.x_part3_colum2_cung); y = getResources().getDimensionPixelSize(R.dimen.y_part3_cung); j = 0;
       }
     }
 
@@ -96,12 +101,12 @@ public class Tcung extends View
         continue;
       mypaint.setColor(StarConst.nguhanhcolor[(StarConst.nguhanhsao[this.sao[i]] - 2)]);
       g.drawText(StarConst.strsao[this.sao[i]], x, y, mypaint);
-      if (j < 8) { y += 12; j++; } else {
-        x += 100; y = 55; j = 0;
+      if (j < 8) { y += getResources().getDimensionPixelSize(R.dimen.y_part3_step_cung); j++; } else {
+    	  x += getResources().getDimensionPixelSize(R.dimen.x_part3_colum2_cung); y = getResources().getDimensionPixelSize(R.dimen.y_part3_cung); j = 0;
       }
     }
     mypaint.setARGB(255, 220, 220, 220);
-    g.drawText(this.hanstr, 90, 152, mypaint);
+    g.drawText(this.hanstr, getResources().getDimensionPixelSize(R.dimen.x_part4_cung), getResources().getDimensionPixelSize(R.dimen.y_part4_cung), mypaint);
   }
 
   public void Setname(String s, int c, String st)
