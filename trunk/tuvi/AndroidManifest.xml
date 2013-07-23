@@ -7,6 +7,7 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -20,9 +21,7 @@
         </activity>
         <activity
             android:name="namnt.tuvi.AnsaoActivity"
-            android:label="@string/title_activity_ansao" 
-            android:configChanges="orientation"
-            android:screenOrientation="landscape">
+            android:label="@string/title_activity_ansao" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

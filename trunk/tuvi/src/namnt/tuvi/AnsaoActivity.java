@@ -1,20 +1,35 @@
 package namnt.tuvi;
 
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.Date;
 
 import namnt.tuvi.utils.StarConst;
 import namnt.tuvi.utils.Tcung;
 import namnt.tuvi.utils.Utils;
 import android.os.Bundle;
+import android.os.Environment;
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.PointF;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.FloatMath;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.MeasureSpec;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 import android.widget.AbsoluteLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class AnsaoActivity extends Activity implements StarConst{
@@ -45,13 +60,26 @@ public class AnsaoActivity extends Activity implements StarConst{
 	TextView NamDuong;
 	TextView NgayDuong;
 	
+	AbsoluteLayout mainview;
+	 static final int NONE = 0;
+	 static final int DRAG = 1;
+	 static final int ZOOM = 2;
+	 int mode = NONE;
+	 PointF start = new PointF();
+	 PointF mid = new PointF();
+
+	 float oldDist = 1f;
+	 PointF oldDistPoint = new PointF();
+
+	 public static String TAG = "ZOOM";
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_ansao);
-		AbsoluteLayout mainview = (AbsoluteLayout)findViewById(R.id.id_layout_ansao);
+		mainview = (AbsoluteLayout)findViewById(R.id.id_layout_ansao);
 		if (mainview == null){
 			Log.v("test", "null");
 			return;
@@ -86,6 +114,14 @@ public class AnsaoActivity extends Activity implements StarConst{
 		Log.v("test", "width " + width + " height " + height);
 		int[] dx = { 2, 1, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3 };
 		int[] dy = { 3, 3, 3, 2, 1, 0, 0, 0, 0, 1, 2, 3 };
+		TextView txt = new TextView(this.getApplicationContext());
+		AbsoluteLayout.LayoutParams lp1 = new AbsoluteLayout.LayoutParams(width/4, height/4, width/4 * 2, height/4 * 2);
+		txt.setLayoutParams(lp1);
+		txt.setTextSize(getResources().getDimensionPixelSize(R.dimen.text_size_cung));
+		txt.setTextColor(Color.BLUE);
+		txt.setText("test");
+		mainview.addView(txt);
+		
 		for (int i = 0; i < 12; i++)
 	    {
 		
@@ -97,9 +133,138 @@ public class AnsaoActivity extends Activity implements StarConst{
 		//lp = new AbsoluteLayout.LayoutParams(width/4, height/4, width/4 * dx[i], height/4 * dy[i]);
 	
 	    }
-		
+		Log.v("test", "mainview width " + mainview.getWidth() + " mainview height " + mainview.getHeight());
+//		mainview.setOnTouchListener(new OnTouchListener() {
+//			   @Override
+//			   public boolean onTouch(View v, MotionEvent event) {
+//			    Log.d(TAG, "mode=DRAG");
+//			    switch (event.getAction() & MotionEvent.ACTION_MASK) {
+//			    case MotionEvent.ACTION_DOWN:
+//			     start.set(event.getX(), event.getY());
+//			     Log.d(TAG, "mode=DRAG");
+//			     mode = DRAG;
+//
+//			     break;
+//			    case MotionEvent.ACTION_POINTER_DOWN:
+//			     oldDist = spacing(event);
+//			     oldDistPoint = spacingPoint(event);
+//			     Log.d(TAG, "oldDist=" + oldDist);
+//			     if (oldDist > 10f) {
+//			      midPoint(mid, event);
+//			      mode = ZOOM;
+//			      Log.d(TAG, "mode=ZOOM");
+//			     }
+//			     System.out.println("current time :" + System.currentTimeMillis());
+//			     break;// return !gestureDetector.onTouchEvent(event);
+//			    case MotionEvent.ACTION_UP:
+//			    case MotionEvent.ACTION_POINTER_UP:
+//			     Log.d(TAG, "mode=NONE");
+//			     mode = NONE;
+//			     break;
+//			    case MotionEvent.ACTION_MOVE:
+//			     if (mode == DRAG) {
+//
+//			     } else if (mode == ZOOM) {
+//			      PointF newDist = spacingPoint(event);
+//			      float newD = spacing(event);
+//			      Log.e(TAG, "newDist=" + newDist);
+//			      float[] old = new float[9];
+//			      float[] newm = new float[9];
+//			      Log.e(TAG, "x=" + old[0] + ":&:" + old[2]);
+//			      Log.e(TAG, "y=" + old[4] + ":&:" + old[5]);
+//			      float scale = newD / oldDist;
+//			      float scalex = newDist.x / oldDistPoint.x;
+//			      float scaley = newDist.y / oldDistPoint.y;
+//			      zoom(scale, scale, start);
+//			     }
+//			     break;
+//			    }
+//			    return true;
+//			   }
+//			  });
+		//zoom(2f,2f,new PointF(0,0));  
+		//Bitmap bmp = getBitmapFromView(mainview);
+		mainview.setDrawingCacheEnabled(true);
+	      // this is the important code :)  
+	      // Without it the view will have a dimension of 0,0 and the bitmap will be null          
+
+		mainview.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED), 
+	            MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+
+		mainview.layout(0, 0, mainview.getMeasuredWidth(), mainview.getMeasuredHeight()); 
+		mainview.buildDrawingCache(true);
+	      Bitmap b = Bitmap.createBitmap(mainview.getDrawingCache());
+	      mainview.setDrawingCacheEnabled(false); 
+		saveImageToExternalStorage(b);
 		
 	}
+	public void zoom(Float scaleX,Float scaleY,PointF pivot){
+		mainview.setPivotX(pivot.x);
+		mainview.setPivotY(pivot.y);  
+		mainview.setScaleX(scaleX);
+		mainview.setScaleY(scaleY);  
+		 } 
+	public Bitmap getBitmapFromView(View view) {
+	    Bitmap returnedBitmap = Bitmap.createBitmap(width, height,Bitmap.Config.ARGB_8888);
+	    Canvas canvas = new Canvas(returnedBitmap);
+	    Drawable bgDrawable =view.getBackground();
+	    if (bgDrawable!=null) 
+	        bgDrawable.draw(canvas);
+	    else 
+	        canvas.drawColor(Color.WHITE);
+	    view.draw(canvas);
+	    return returnedBitmap;
+	}
+	public void saveImageToExternalStorage(Bitmap image) {
+		//image=scaleCenterCrop(image,200,200);
+		String fullPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
+		try
+		{
+		File dir = new File(fullPath);
+		if (!dir.exists()) {
+		dir.mkdirs();
+		}
+		OutputStream fOut = null;
+		File file = new File(fullPath, "photo1.png");
+
+		if(file.exists())
+		file.delete();
+
+		file.createNewFile();
+		fOut = new FileOutputStream(file);
+		// 100 means no compression, the lower you go, the stronger the compression
+		image.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+		fOut.flush();
+		fOut.close();
+		}
+		catch (Exception e)
+		{
+		Log.e("saveToExternalStorage()", e.getMessage());
+		}
+		}
+	private float spacing(MotionEvent event) {
+		  // ...
+		  float x = event.getX(0) - event.getX(1);
+		  float y = event.getY(0) - event.getY(1);
+		  return FloatMath.sqrt(x * x + y * y);
+		 }
+
+		 private PointF spacingPoint(MotionEvent event) {
+		  PointF f = new PointF();
+		  f.x = event.getX(0) - event.getX(1);
+		  f.y = event.getY(0) - event.getY(1);
+		  return f;
+		 }
+
+		 /**
+		  * the mid point of the first two fingers
+		  */
+		 private void midPoint(PointF point, MotionEvent event) {
+		  // ...
+		  float x = event.getX(0) + event.getX(1);
+		  float y = event.getY(0) + event.getY(1);
+		  point.set(x / 2, y / 2);
+		 }
 	public void Create(int gio_, int ngay_, int thang_, int nam_, int can_, int namnu_)
 	  {
 	    this.gio = gio_;

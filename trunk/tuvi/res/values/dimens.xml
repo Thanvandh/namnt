@@ -42,17 +42,26 @@
     <dimen name="value_width">340dp</dimen>
     <dimen name="value_height">20dp</dimen>
 	
+    <dimen name="text_size_cung">5sp</dimen>
     <dimen name="x_name_cung">10dp</dimen>
     <dimen name="y_name_cung">15dp</dimen>
     
-    <dimen name="x_tuantriet_cung">60dp</dimen>
+    <dimen name="x_tuantriet_cung">50dp</dimen>
     <dimen name="y_tuantriet_cung">15dp</dimen>
     
-    <dimen name="x_tuanortriet_cung">70dp</dimen>
+    <dimen name="x_tuanortriet_cung">60dp</dimen>
     <dimen name="y_tuanortriet_cung">15dp</dimen>
     
-    <dimen name="x_line2_cung">40dp</dimen>
-    <dimen name="y_line2_cung">28dp</dimen>
-    <dimen name="y_line2_step_cung">13dp</dimen>
+    <dimen name="x_part2_cung">30dp</dimen>
+    <dimen name="y_part2_cung">25dp</dimen>
+    <dimen name="y_part2_step_cung">10dp</dimen>
+    
+    <dimen name="x_part3_cung">5dp</dimen>
+    <dimen name="x_part3_colum2_cung">35dp</dimen>
+    <dimen name="y_part3_cung">45dp</dimen>
+    <dimen name="y_part3_step_cung">10dp</dimen>
+    
+     <dimen name="x_part4_cung">40dp</dimen>
+    <dimen name="y_part4_cung">120dp</dimen>
     
 </resources>
