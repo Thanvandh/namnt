@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.Date;
 
+import com.polites.android.GestureImageView;
+
 import namnt.tuvi.utils.StarConst;
 import namnt.tuvi.utils.Tcung;
 import namnt.tuvi.utils.Utils;
@@ -22,6 +24,7 @@ import android.util.DisplayMetrics;
 import android.util.FloatMath;
 import android.util.Log;
 import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -72,18 +75,26 @@ public class AnsaoActivity extends Activity implements StarConst{
 	 PointF oldDistPoint = new PointF();
 
 	 public static String TAG = "ZOOM";
-	
+	 GestureImageView img_ansao;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		int gio_ = 0;
+		int ngay_ = 0;
+		int thang_ = 0;
+		int nam_ = 0;
+		int can = 0;
+		int namnu_ = 0;
 		
 		setContentView(R.layout.activity_ansao);
-		mainview = (AbsoluteLayout)findViewById(R.id.id_layout_ansao);
+		LayoutInflater inflater = LayoutInflater.from(this);
+		mainview = (AbsoluteLayout) inflater.inflate(R.layout.layout_ansao, null);
 		if (mainview == null){
 			Log.v("test", "null");
 			return;
 		}
+		img_ansao = (GestureImageView)findViewById(R.id.id_image_ansao);
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
@@ -190,11 +201,14 @@ public class AnsaoActivity extends Activity implements StarConst{
 
 		mainview.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED), 
 	            MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
-
+		Log.v("test", "mainview.getMeasuredWidth() " + mainview.getMeasuredWidth() + " mainview.getMeasuredHeight() " + mainview.getMeasuredHeight());
 		mainview.layout(0, 0, mainview.getMeasuredWidth(), mainview.getMeasuredHeight()); 
+		
+		//mainview.layout(0, 0, width*4, height*4);
 		mainview.buildDrawingCache(true);
-	      Bitmap b = Bitmap.createBitmap(mainview.getDrawingCache());
-	      mainview.setDrawingCacheEnabled(false); 
+	    Bitmap b = Bitmap.createBitmap(mainview.getDrawingCache());
+	    mainview.setDrawingCacheEnabled(false); 
+	    img_ansao.setImageBitmap(b);
 		saveImageToExternalStorage(b);
 		
 	}
