@@ -1,18 +1,24 @@
 package namnt.tuvi;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
+import namnt.tuvi.utils.VietCalendar;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends Activity {
@@ -25,6 +31,9 @@ public class MainActivity extends Activity {
 	 private int mDay;
 	 Spinner mBirthtime;
 	 Spinner mSex;
+	 
+	 TextView mTextName;
+	 Button mBtAnsao;
 	
 	 
 	@Override
@@ -33,6 +42,8 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		mBirthday = (EditText) findViewById(R.id.id_txt_birthday);
 		mBirthtime = (Spinner) findViewById(R.id.id_txt_birthday_time);
+		mBtAnsao = (Button) findViewById(R.id.id_bt_ansao);
+		mTextName = (TextView) findViewById(R.id.id_txt_name);
 		mSex = (Spinner) findViewById(R.id.id_droplist_gender);
 		ArrayAdapter<CharSequence> birthtime_adapter_ = ArrayAdapter.createFromResource(this,
 		        R.array.giosinh_array, android.R.layout.simple_spinner_item);
@@ -65,6 +76,32 @@ public class MainActivity extends Activity {
 		  mDay = c.get(Calendar.DAY_OF_MONTH);
 		 
 		  updateDisplay();
+		  mBtAnsao.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				String name_ = mTextName.getText().toString();
+				int [] amlich_ = VietCalendar.convertSolar2Lunar(mDay, mMonth, mYear, 7);
+				int giosinh_ = mBirthtime.getSelectedItemPosition();
+				int sex_ = mSex.getSelectedItemPosition();
+				Intent intent_ = new Intent(MainActivity.this, AnsaoActivity.class);
+				Bundle bundle_ = new Bundle();
+				bundle_.putString(AnsaoActivity.INTENT_NAME, name_);
+				bundle_.putInt(AnsaoActivity.INTENT_NGAY, amlich_[0] + 1);
+				bundle_.putInt(AnsaoActivity.INTENT_THANG, amlich_[1] + 1);
+				bundle_.putInt(AnsaoActivity.INTENT_NAM, ((amlich_[2] + 8) % 12) + 1);
+				bundle_.putInt(AnsaoActivity.INTENT_CAN, ((amlich_[2] + 6) % 10) + 1);
+				bundle_.putInt(AnsaoActivity.INTENT_GIO, giosinh_ + 1);
+				bundle_.putInt(AnsaoActivity.INTENT_GIOITINH, sex_ + 1);
+				intent_.putExtras(bundle_);
+				startActivity(intent_);
+				//String[] canchiinfo_ = VietCalendar.getCanChiInfo(amlich_[0] + 1, amlich_[1] +1, amlich_[2], mDay, mMonth, mYear);
+//				Toast.makeText(MainActivity.this, " Ten la " + name_ + "\nngay sinh " + (amlich_[0] +1) + "/" + (amlich_[1] +1) + "/" + amlich_[2] +
+//						"\nGio sinh " + (giosinh_ + 1) + "\nGioi Tinh " + (sex_ + 1)+ "\n Can " + ((amlich_[2] + 6) % 10) + "\n Nam " +((amlich_[2] + 8) % 12) , Toast.LENGTH_LONG).show();
+				
+			}
+		});
 		
 	}
 	@Override

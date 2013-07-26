@@ -1,4 +1,5 @@
 package namnt.tuvi.utils;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -7,7 +8,7 @@ import java.util.Locale;
 import android.util.Log;
 
 /**
-* @author H? Ng?c ??c
+* @author Hồ Ngọc Đức
 * 
 */
 public class VietCalendar {
@@ -21,29 +22,29 @@ public class VietCalendar {
     public static final byte HOUR = 3;
     public static final byte TIET_KHI = 4;
     
-    public static String[] CAN = new String[] {"Gi�p", "?t", "B�nh", "?inh", "M?u", "K?", "Canh", "T�n", "Nh�m", "Qu�"};
-    public static String[] CHI = new String[] {"T�", "S?u", "D?n", "M?o", "Th�n", "T?", "Ng?", "M�i", "Th�n", "D?u", "Tu?t", "H?i"};
-    public static String[] TIETKHI = new String[] {"Xu�n ph�n", "Thanh minh", "C\u1ED1c v\u0169", "L\u1EADp h\u1EA1", "Ti\u1EC3u m\u00E3n", "Mang ch\u1EE7ng",
+    public static String[] CAN = new String[] {"Giáp", "Ất", "Bính", "Đinh", "Mậu", "Kỷ", "Canh", "Tân", "Nhâm", "Quý"};
+    public static String[] CHI = new String[] {"Tý", "Sửu", "Dần", "Mẹo", "Thìn", "Tỵ", "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi"};
+    public static String[] TIETKHI = new String[] {"Xuân phân", "Thanh minh", "C\u1ED1c v\u0169", "L\u1EADp h\u1EA1", "Ti\u1EC3u m\u00E3n", "Mang ch\u1EE7ng",
     		"H\u1EA1 ch\u00ED", "Ti\u1EC3u th\u1EED", "\u0110\u1EA1i th\u1EED", "L\u1EADp thu", "X\u1EED th\u1EED", "B\u1EA1ch l\u1ED9",
     		"Thu ph\u00E2n", "H\u00E0n l\u1ED9", "S\u01B0\u01A1ng gi\u00E1ng", "L\u1EADp \u0111\u00F4ng", "Ti\u1EC3u tuy\u1EBFt", "\u0110\u1EA1i tuy\u1EBFt",
     		"\u0110\u00F4ng ch\u00ED", "Ti\u1EC3u h\u00E0n", "\u0110\u1EA1i h\u00E0n", "L\u1EADp xu\u00E2n", "V\u0169 Th\u1EE7y", "Kinh tr\u1EADp"
     };    
     public static Holiday[] HOLIDAYS = null;
     
-    private static String[] dayOfWeekInVietnamese = new String[] {"Ch? nh?t", "Th? hai", "Th? ba", "Th? t?", "Th? n?m", "Th? s�u", "Th? b?y"};
+    private static String[] dayOfWeekInVietnamese = new String[] {"Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"};
 	
     static {
-    	Holiday h1 = new Holiday(1, 1, false, true, "M?ng m?t t?t �m l?ch");
-    	Holiday h2 = new Holiday(2, 1, false, true, "M?ng hai t?t �m l?ch");
-    	Holiday h3 = new Holiday(3, 1, false, true, "M?ng ba t?t �m l?ch");
-    	Holiday h4 = new Holiday(10, 3, false, true, "Gi? t? H�ng V??ng");
-    	Holiday h5 = new Holiday(1, 1, true, true, "T?t D??ng l?ch");
-    	Holiday h6 = new Holiday(30, 4, true, true, "Ng�y th?ng nh?t ??t n??c");
-    	Holiday h7 = new Holiday(1, 5, true, true, "Ng�y Qu?c t? lao ??ng");
-    	Holiday h8 = new Holiday(2, 9, true, true, "Ng�y Qu?c kh�nh");
-    	Holiday h9 = new Holiday(14, 2, true, false, "Ng�y l? t�nh nh�n");
-    	Holiday h10 = new Holiday(8, 3, true, false, "Ng�y qu?c t? ph? n?");
-    	Holiday h11 = new Holiday(20, 10, true, false, "Ng�y ph? n? Vi?t Nam");
+    	Holiday h1 = new Holiday(1, 1, false, true, "Mồng một tết Âm lịch");
+    	Holiday h2 = new Holiday(2, 1, false, true, "Mồng hai tết Âm lịch");
+    	Holiday h3 = new Holiday(3, 1, false, true, "Mồng ba tết Âm lịch");
+    	Holiday h4 = new Holiday(10, 3, false, true, "Giỗ tổ Hùng Vương");
+    	Holiday h5 = new Holiday(1, 1, true, true, "Tết Dương lịch");
+    	Holiday h6 = new Holiday(30, 4, true, true, "Ngày thống nhất đất nước");
+    	Holiday h7 = new Holiday(1, 5, true, true, "Ngày Quốc tế lao động");
+    	Holiday h8 = new Holiday(2, 9, true, true, "Ngày Quốc khánh");
+    	Holiday h9 = new Holiday(14, 2, true, false, "Ngày lễ tình nhân");
+    	Holiday h10 = new Holiday(8, 3, true, false, "Ngày quốc tế phụ nữ");
+    	Holiday h11 = new Holiday(20, 10, true, false, "Ngày phụ nữ Việt Nam");
     	HOLIDAYS = new Holiday[] {h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11};
     }
     
@@ -233,11 +234,11 @@ public class VietCalendar {
     }
     
     /**
-     * H�m chuy?n ??i t? D??ng L?ch sang �m L?ch
-     * @param dd : Ng�y d??ng l?ch 1 - 31
-     * @param mm : Th�ng d??ng l?ch 1 - 12
-     * @param yy : N?m d??ng l?ch
-     * @param timeZone : M�i gi? 0 - 11
+     * Hàm chuyển đổi từ Dương Lịch sang Âm Lịch
+     * @param dd : Ngày dương lịch 1 - 31
+     * @param mm : Tháng dương lịch 1 - 12
+     * @param yy : Năm dương lịch
+     * @param timeZone : Múi giờ 0 - 11
      * @return array of [lunarDay, lunarMonth, lunarYear, leapOrNot]
      */
     public static int[] convertSolar2Lunar(int dd, int mm, int yy, double timeZone) {
@@ -358,10 +359,10 @@ public class VietCalendar {
     }
     
     /**
-     * H�m chuy?n ??i t? �m L?ch sang D??ng L?ch
-     * @param lunarDay : ng�y �m L?ch 0 - 30
-     * @param lunarMonth : th�ng �m L?ch 1 - 12
-     * @param lunarYear : n?m �m L?ch
+     * Hàm chuyển đổi từ Âm Lịch sang Dương Lịch
+     * @param lunarDay : ngày Âm Lịch 0 - 30
+     * @param lunarMonth : tháng Âm Lịch 1 - 12
+     * @param lunarYear : năm Âm Lịch
      * @param timeZone
      * @return
      */
@@ -376,10 +377,10 @@ public class VietCalendar {
     }
     
     /**
-     * H�m chuy?n ??i t? �m L?ch sang D??ng L?ch
-     * @param lunarDay ng�y �m L?ch 1-30
-     * @param lunarMonth th�ng �m L?ch 1 - 12
-     * @param lunarYear n?m �m L?ch
+     * Hàm chuyển đổi từ Âm Lịch sang Dương Lịch
+     * @param lunarDay ngày Âm Lịch 1-30
+     * @param lunarMonth tháng Âm Lịch 1 - 12
+     * @param lunarYear năm Âm Lịch
      * @return
      */
     public static int[] convertLunar2Solar(int lunarDay, int lunarMonth, int lunarYear) {
@@ -410,11 +411,11 @@ public class VietCalendar {
     }
     
     /**
-     * H�m chuy?n ??i t? �m L?ch sang D??ng L?ch
-     * @param lunarDay : ng�y �m L?ch 1 - 30
-     * @param lunarMonth : th�ng �m L?ch 1 - 12
-     * @param lunarYear : n?m �m L?ch
-     * @param lunarLeap : n?m nhu?n? 0 - 1
+     * Hàm chuyển đổi từ Âm Lịch sang Dương Lịch
+     * @param lunarDay : ngày Âm Lịch 1 - 30
+     * @param lunarMonth : tháng Âm Lịch 1 - 12
+     * @param lunarYear : năm Âm Lịch
+     * @param lunarLeap : năm nhuận? 0 - 1
      * @param timeZone
      * @return
      */
