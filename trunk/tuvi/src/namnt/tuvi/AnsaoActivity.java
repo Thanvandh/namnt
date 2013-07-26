@@ -36,6 +36,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class AnsaoActivity extends Activity implements StarConst{
+	public static final String INTENT_NAME = "name";
+	public static final String INTENT_NGAY = "ngay";
+	public static final String INTENT_THANG = "thang";
+	public static final String INTENT_NAM = "nam";
+	public static final String INTENT_GIO = "gio";
+	public static final String INTENT_CAN = "can";
+	public static final String INTENT_GIOITINH = "gioitinh";
+	
 	Tcung[] cung = new Tcung[12];
 	TextView[] TieuHanStr;
 	int width;
@@ -80,12 +88,12 @@ public class AnsaoActivity extends Activity implements StarConst{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		int gio_ = 0;
-		int ngay_ = 0;
-		int thang_ = 0;
-		int nam_ = 0;
-		int can = 0;
-		int namnu_ = 0;
+		int gio_ = getIntent().getExtras().getInt(INTENT_GIO);
+		int ngay_ = getIntent().getExtras().getInt(INTENT_NGAY);
+		int thang_ = getIntent().getExtras().getInt(INTENT_THANG);
+		int nam_ = getIntent().getExtras().getInt(INTENT_NAM);
+		int can_ = getIntent().getExtras().getInt(INTENT_CAN);
+		int namnu_ = getIntent().getExtras().getInt(INTENT_GIOITINH);
 		
 		setContentView(R.layout.activity_ansao);
 		LayoutInflater inflater = LayoutInflater.from(this);
@@ -121,7 +129,7 @@ public class AnsaoActivity extends Activity implements StarConst{
 		ThangDuong = new TextView(this.getApplicationContext());
 		NamDuong = new TextView(this.getApplicationContext());
 		NgayDuong = new TextView(this.getApplicationContext());
-	    Create(5,3,8,4,4,1);
+	    Create(gio_,ngay_,thang_,nam_,can_,namnu_);
 		Log.v("test", "width " + width + " height " + height);
 		int[] dx = { 2, 1, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3 };
 		int[] dy = { 3, 3, 3, 2, 1, 0, 0, 0, 0, 1, 2, 3 };
@@ -279,6 +287,15 @@ public class AnsaoActivity extends Activity implements StarConst{
 		  float y = event.getY(0) + event.getY(1);
 		  point.set(x / 2, y / 2);
 		 }
+		 /**
+		  * Ham tao
+		  * @param gio_ gio sinh
+		  * @param ngay_ ngay sinh am lich 
+		  * @param thang_ thang sinh am lich
+		  * @param nam_ nam sinh am lich
+		  * @param can_ can
+		  * @param namnu_ nam hay nu
+		  */
 	public void Create(int gio_, int ngay_, int thang_, int nam_, int can_, int namnu_)
 	  {
 	    this.gio = gio_;
@@ -286,7 +303,7 @@ public class AnsaoActivity extends Activity implements StarConst{
 	    this.thang = thang_;
 	    this.nam = nam_;
 	    this.can = can_;
-
+	   // Log.v("test", "android gio " + gio_ + " ngay " + ngay_ + " thang " + thang_ + " nam " + nam_ + " can " + can_);
 	    if (this.nam % 2 != this.can % 2) this.can = (this.can % 10 + 1);
 
 	    this.namnu = namnu_;
