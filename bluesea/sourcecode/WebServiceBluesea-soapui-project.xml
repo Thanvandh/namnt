@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="WebServiceBluesea" resourceRoot="" soapui-version="4.5.1" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="ReceiveWebServiceSoap" type="wsdl" bindingName="{http://tempuri.org/}ReceiveWebServiceSoap" soapVersion="1_1" anonymous="optional" definition="http://localhost:57128/receivewebservice.asmx?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache/><con:endpoints><con:endpoint>http://localhost:57128/receivewebservice.asmx</con:endpoint></con:endpoints><con:operation isOneWay="false" action="http://tempuri.org/receivemoservice" name="receivemoservice" bindingOperationName="receivemoservice" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:57128/receivewebservice.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tem:receivemoservice>
+         <!--Optional:-->
+         
+         <!--Optional:-->
+         <tem:User_ID>23124</tem:User_ID>
+         <!--Optional:-->
+         <tem:Service_ID>erqrq</tem:Service_ID>
+         <!--Optional:-->
+         <tem:Command_Code>adsfadsf</tem:Command_Code>
+         <!--Optional:-->
+         <tem:Message>afdasf</tem:Message><tem:Request_ID>afdsaf</tem:Request_ID>
+      </tem:receivemoservice>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/receivemoservice"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="ReceiveWebServiceSoap12" type="wsdl" bindingName="{http://tempuri.org/}ReceiveWebServiceSoap12" soapVersion="1_2" anonymous="optional" definition="http://localhost:57128/receivewebservice.asmx?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:57128/receivewebservice.asmx?wsdl"><con:part><con:url>http://localhost:57128/receivewebservice.asmx?wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://tempuri.org/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="receivemoservice">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="User_ID" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="Service_ID" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="Command_Code" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="Request_ID" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="receivemoserviceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="receivemoserviceResult" type="s:int"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="receivemoserviceSoapIn">
+    <wsdl:part name="parameters" element="tns:receivemoservice"/>
+  </wsdl:message>
+  <wsdl:message name="receivemoserviceSoapOut">
+    <wsdl:part name="parameters" element="tns:receivemoserviceResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="ReceiveWebServiceSoap">
+    <wsdl:operation name="receivemoservice">
+      <wsdl:input message="tns:receivemoserviceSoapIn"/>
+      <wsdl:output message="tns:receivemoserviceSoapOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ReceiveWebServiceSoap" type="tns:ReceiveWebServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="receivemoservice">
+      <soap:operation soapAction="http://tempuri.org/receivemoservice" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ReceiveWebServiceSoap12" type="tns:ReceiveWebServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="receivemoservice">
+      <soap12:operation soapAction="http://tempuri.org/receivemoservice" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ReceiveWebService">
+    <wsdl:port name="ReceiveWebServiceSoap" binding="tns:ReceiveWebServiceSoap">
+      <soap:address location="http://localhost:57128/receivewebservice.asmx"/>
+    </wsdl:port>
+    <wsdl:port name="ReceiveWebServiceSoap12" binding="tns:ReceiveWebServiceSoap12">
+      <soap12:address location="http://localhost:57128/receivewebservice.asmx"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:57128/receivewebservice.asmx</con:endpoint></con:endpoints><con:operation isOneWay="false" action="http://tempuri.org/receivemoservice" name="receivemoservice" bindingOperationName="receivemoservice" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:57128/receivewebservice.asmx</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:tem="http://tempuri.org/">
+   <soap:Header/>
+   <soap:Body>
+      <tem:receivemoservice>
+         <!--Optional:-->
+         <tem:User_ID>?</tem:User_ID>
+         <!--Optional:-->
+         <tem:Service_ID>?</tem:Service_ID>
+         <!--Optional:-->
+         <tem:Command_Code>?</tem:Command_Code>
+         <!--Optional:-->
+         <tem:Message>?</tem:Message>
+         <!--Optional:-->
+         <tem:Request_ID>?</tem:Request_ID>
+      </tem:receivemoservice>
+   </soap:Body>
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://tempuri.org/ReceiveWebServiceSoap/receivemoserviceRequest"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:databaseConnectionContainer/></con:soapui-project>
