@@ -31,6 +31,12 @@ namespace WebApiBluesea.Controllers
 
         }
 
+        public HttpResponseMessage Get()
+        {
+            logAll.Info("request GET|" + HttpContext.Current.Request.UserHostAddress + "|" + HttpContext.Current.Request.Url.AbsoluteUri);
+            string response = "0|Test ket noi";
 
+            return new HttpResponseMessage() { Content = new StringContent(response) };
+        }
     }
 }
