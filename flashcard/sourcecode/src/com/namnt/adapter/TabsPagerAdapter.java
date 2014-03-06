@@ -3,21 +3,29 @@ package com.namnt.adapter;
 import com.namnt.flashcard.ListWordFragment;
 import com.namnt.utils.XMLParser;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.View;
 
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
 	public static final String URL = "http://api.androidhive.info/music/music.xml";
 	String value;
+	ProgressDialog barProgressDialog;
+	Handler updateBarHandler;
+
 	public TabsPagerAdapter(FragmentManager fm) {
 		super(fm);
-		XMLParser parser = new XMLParser();
-		value = parser.getXmlFromUrl(URL);
-	}
+		//XMLParser parser = new XMLParser();
+		//updateBarHandler = new Handler();
 
+		//value = parser.getXmlFromUrl(URL);
+	}
+	
 	@Override
 	public Fragment getItem(int index) {
 

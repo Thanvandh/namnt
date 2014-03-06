@@ -23,7 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-public class ListWordFragment extends Fragment {
+public class ListOnline extends Fragment {
 	
 	// XML node keys
 	public static final String URL = "http://api.androidhive.info/music/music.xml";
