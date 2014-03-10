@@ -12,8 +12,14 @@ namespace WebApiBluesea
         readonly log4net.ILog log = log4net.LogManager.GetLogger("request_response");
         protected void Page_Load(object sender, EventArgs e)
         {
-            log.Info("returnurl|" + HttpContext.Current.Request.UserHostAddress + "|" + HttpContext.Current.Request.Url.AbsoluteUri);
-            Response.Write("Ketqua");
+            Crypto crypto = new Crypto();
+            HttpContext context = HttpContext.Current;
+            log.Info("returnurl|" + context.Request.UserHostAddress + "|" + context.Request.Url.AbsoluteUri);
+            String encrypted = Request.QueryString["r"];
+            String decrypted = crypto.decrypt(encrypted.Replace(' ', '+'));
+            log.Info("returnurl decrypted|" + decrypted);
+           // System.out.println(encrypted + " decrypted is " + decrypted );
+            Response.Write( "returnurl|" + context.Request.UserHostAddress + "|" + context.Request.Url.AbsoluteUri + "\n\r Ket qua: " + decrypted);
         }
     }
 }

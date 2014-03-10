@@ -10,13 +10,13 @@
     <form id="form1" runat="server">
     <div>
        <asp:Label id="Label1" 
-         runat="server" Text="Label" >
+         runat="server" Text="WapCharing" >
       </asp:Label>
       <br />
       <asp:Button id="Button1" 
          runat="server" 
          onclick="Button1_Click" 
-         Text="Button" >
+         Text="Checkout" >
        </asp:Button>
     </div>
     </form>
