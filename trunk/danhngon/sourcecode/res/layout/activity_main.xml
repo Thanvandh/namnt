@@ -8,9 +8,38 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/quotepager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_bar"
+        android:background="@drawable/nhim" />
+
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:id="@+id/bottom_bar"
+        android:layout_alignParentBottom="true">
+        <Button 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           	android:id="@+id/bt_back"
+           	android:layout_marginRight="10dip"
+           	android:layout_toLeftOf="@+id/bt_share"
+            android:text="Back"/>
+        <Button 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           	android:id="@+id/bt_share"
+           	android:layout_centerInParent="true"
+            android:text="Share"/>
+        <Button 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           	android:id="@+id/bt_next"
+           	android:layout_marginLeft="10dip"
+           	android:layout_toRightOf="@+id/bt_share"
+            android:text="Next"/>
+    </RelativeLayout>
 
 </RelativeLayout>
