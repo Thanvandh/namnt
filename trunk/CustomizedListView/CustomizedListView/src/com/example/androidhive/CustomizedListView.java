@@ -9,6 +9,7 @@ import org.w3c.dom.NodeList;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -38,6 +39,7 @@ public class CustomizedListView extends Activity {
 
 		XMLParser parser = new XMLParser();
 		String xml = parser.getXmlFromUrl(URL); // getting XML from URL
+		Log.v("test", xml);
 		Document doc = parser.getDomElement(xml); // getting DOM element
 		
 		NodeList nl = doc.getElementsByTagName(KEY_SONG);
