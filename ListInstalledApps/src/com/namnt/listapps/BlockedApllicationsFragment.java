@@ -19,7 +19,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,14 +29,13 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class AllApllicationsFragment extends SherlockFragment {
+public class BlockedApllicationsFragment extends SherlockFragment {
 	
 	
 	private PackageManager packageManager = null;
-	ListView lsvAllApps;
+	ListView lsvBlockedApps;
 	private List<ApplicationInfo> applist = null;
 	private ApplicationAdapter listadaptor = null;
-	int iPosition;
 	
 	
 	@Override
@@ -45,15 +43,15 @@ public class AllApllicationsFragment extends SherlockFragment {
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		
-		View rootView = inflater.inflate(R.layout.fragment_all_apps, container, false);
+		View rootView = inflater.inflate(R.layout.fragment_blocked_apps, container, false);
 		
 		setHasOptionsMenu(true);
  
-		lsvAllApps=(ListView)rootView.findViewById(R.id.lsvAllApps);
+		lsvBlockedApps=(ListView)rootView.findViewById(R.id.lsvBlockedApps);
 		packageManager = getActivity().getApplication().getPackageManager();
 		new LoadApplications().execute();
 		
-		lsvAllApps.setOnItemClickListener(new OnItemClickListener() {
+		lsvBlockedApps.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
@@ -63,8 +61,7 @@ public class AllApllicationsFragment extends SherlockFragment {
 						getActivity());
 				//alert.setTitle(R.string.app_name);
 				//alert.setIcon(R.drawable.ic_launcher);
-				iPosition = position;
-				alert.setMessage("Do you want to uninstall this application?");
+				alert.setMessage("Do you want to enable this application?");
 			
 				alert.setPositiveButton("Yes",
 						new DialogInterface.OnClickListener() {
@@ -74,10 +71,6 @@ public class AllApllicationsFragment extends SherlockFragment {
 								 //you may open Interstitial Ads here
 								//interstitial.loadAd(adRequest);
 								//finish();
-								Uri packageURI = Uri.parse("package:"+applist.get(iPosition).packageName);
-								Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
-
-								startActivity(uninstallIntent);
 							}
 								 
 			
@@ -99,7 +92,6 @@ public class AllApllicationsFragment extends SherlockFragment {
 				
 			}
 		});
-		
 		return rootView;
 	}
 	
@@ -138,7 +130,7 @@ public class AllApllicationsFragment extends SherlockFragment {
 
 		@Override
 		protected void onPostExecute(Void result) {
-			lsvAllApps.setAdapter(listadaptor);
+			lsvBlockedApps.setAdapter(listadaptor);
 			progress.dismiss();
 			super.onPostExecute(result);
 		}

@@ -19,10 +19,10 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 			return new AllApllicationsFragment();
 		case 1:
 			// AllPhotos fragment activity
-			return new AllVideosFragment();
-		case 2:
-			// Favorite fragment activity
-			return new FavoriteFragment();
+			return new AllApllicationsFragment();
+//		case 2:
+//			// Favorite fragment activity
+//			return new FavoriteFragment();
 		}
 
 		return null;
@@ -31,7 +31,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 	@Override
 	public int getCount() {
 		// get item count - equal to number of tabs
-		return 3;
+		return 2;
 	}
 
 }
