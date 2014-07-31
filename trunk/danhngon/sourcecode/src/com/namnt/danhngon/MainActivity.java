@@ -21,13 +21,16 @@ import android.database.SQLException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,10 +39,11 @@ public class MainActivity extends Activity {
 	private int NUM_AWESOME_VIEWS = 20;
 	private Context cxt;
 	private AwesomePagerAdapter awesomeAdapter;
-	private Button mBtRandom;
-	private Button mBtShare;
+	private ImageButton mBtRandom;
+	private ImageButton mBtShare;
 	List<Quote> mListQuote;
 	private int mIntPosition = 0;
+	Typeface mTypeface;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +73,13 @@ public class MainActivity extends Activity {
 			 }
 		 localdatabase.close();
 	        
+		 
+		mTypeface = Typeface.createFromAsset(getAssets(),"fonts/UVNBenXuan.TTF"); 
 	    awesomeAdapter = new AwesomePagerAdapter();
 	    awesomePager = (ViewPager) findViewById(R.id.quotepager);
 	    awesomePager.setAdapter(awesomeAdapter);
-	    mBtRandom = (Button) findViewById(R.id.bt_random);
-	    mBtShare = (Button) findViewById(R.id.bt_share);
+	    mBtRandom = (ImageButton) findViewById(R.id.bt_random);
+	    mBtShare = (ImageButton) findViewById(R.id.bt_share);
 	    
 	    mBtRandom.setOnClickListener(new OnClickListener() {
 			
@@ -101,7 +107,7 @@ public class MainActivity extends Activity {
 //		           .show();
 				Intent sharingIntent = new Intent(Intent.ACTION_SEND);
 			    sharingIntent.setType("text/plain");
-			    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, mListQuote.get(mIntPosition).getDanhngon());
+			    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, mListQuote.get(mIntPosition+1).getDanhngon());
 			    sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject");
 			    startActivity(Intent.createChooser(sharingIntent, "Share using"));
 				
@@ -154,8 +160,11 @@ public class MainActivity extends Activity {
 				TextView tv = new TextView(cxt);
 				mIntPosition = position;
 				tv.setText(mListQuote.get(mIntPosition).getDanhngon());
-				tv.setTextColor(Color.BLACK);
+				tv.setTypeface(mTypeface);
+				tv.setTextColor(Color.WHITE);
 				tv.setTextSize(30);
+				//tv.setPadding(0, 30, 0, 0);
+				tv.setGravity(Gravity.CENTER);
 				
 				collection.addView(tv,0);
 				
