@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.namnt.danhngon.R.string;
 import com.namnt.utils.LocalDatabase;
 
 import android.media.MediaPlayer;
@@ -90,12 +92,11 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-
+				
 				mIntPosition = new Random().nextInt(NUM_AWESOME_VIEWS);
 				// Toast.makeText(MainActivity.this, "position " + mIntPosition,
 				// Toast.LENGTH_LONG).show();
-				awesomePager.setCurrentItem(mIntPosition);
-				awesomeAdapter.notifyDataSetChanged();
+				awesomePager.setCurrentItem(mIntPosition,true);
 				
 				// awesomePager.invalidate();
 
@@ -140,7 +141,8 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				awesomePager.setCurrentItem(awesomePager.getCurrentItem()-1);
-				awesomeAdapter.notifyDataSetChanged();
+				
+				//awesomeAdapter.notifyDataSetChanged();
 				
 			}
 		});
@@ -151,7 +153,8 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 
 				awesomePager.setCurrentItem(awesomePager.getCurrentItem()+1);
-				awesomeAdapter.notifyDataSetChanged();
+				
+				//awesomeAdapter.notifyDataSetChanged();
 				
 			}
 		});
@@ -160,15 +163,48 @@ public class MainActivity extends Activity {
 
 	@Override
 	public void onBackPressed() {
-		new AlertDialog.Builder(this)
-				.setMessage("Are you sure you want to exit?")
-				.setCancelable(false)
-				.setPositiveButton("Yes",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-								MainActivity.this.finish();
-							}
-						}).setNegativeButton("No", null).show();
+		
+//		new AlertDialog.Builder(this)
+//				.setMessage("Are you sure you want to exit?")
+//				.setCancelable(false)
+//				.setPositiveButton("Yes",
+//						new DialogInterface.OnClickListener() {
+//							public void onClick(DialogInterface dialog, int id) {
+//								MainActivity.this.finish();
+//							}
+//						}).setNegativeButton("No", null).show();
+		
+		AlertDialog.Builder alert = new AlertDialog.Builder(
+				MainActivity.this);
+		alert.setTitle(string.app_name);
+		alert.setIcon(R.drawable.ic_launcher);
+		alert.setMessage("Are You Sure You Want To Quit?");
+	
+		alert.setPositiveButton("Yes",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,
+							int whichButton) {
+						
+						 //you may open Interstitial Ads here
+						//interstitial.loadAd(adRequest);
+						stopMusic();
+						finish();
+					}
+						 
+	
+					 
+				});
+	
+		alert.setNegativeButton("NO",
+				new DialogInterface.OnClickListener() {
+	
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						 
+						 
+					}
+				});
+		alert.show();
 	}
 
 	// @Override
@@ -209,9 +245,8 @@ public class MainActivity extends Activity {
 		public Object instantiateItem(ViewGroup collection, int position) {
 			TextView tv = new TextView(cxt);
 			//mIntPosition = position;
-			Toast.makeText(MainActivity.this, "position init" + awesomePager.getCurrentItem(),
-			Toast.LENGTH_LONG).show();
-			tv.setText(mListQuote.get(awesomePager.getCurrentItem()).getDanhngon());
+
+			tv.setText(mListQuote.get(position).getDanhngon());
 			tv.setTypeface(mTypeface);
 			tv.setTextColor(Color.WHITE);
 			tv.setTextSize(30);
@@ -295,7 +330,7 @@ public class MainActivity extends Activity {
 //
 //			}
 //		}
-		mMediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.music);
+		mMediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.kisstherain);
 		mMediaPlayer.setLooping(true);
 		mMediaPlayer.start();
 		mBtMusic.setImageResource(R.drawable.volume_up);
@@ -313,5 +348,17 @@ public class MainActivity extends Activity {
 		mBtMusic.setImageResource(R.drawable.volume_down);
 		mBooleanPlay = false;
 	}
+	 @Override
+		public void onStart() {
+			super.onStart();
+			EasyTracker.getInstance(this).activityStart(this);
+		}
+
+		@Override
+		public void onStop() {
+			super.onStop();
+			EasyTracker.getInstance(this).activityStop(this);
+		}
+		
 
 }
