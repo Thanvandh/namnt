@@ -187,6 +187,7 @@ public class MainActivity extends Activity {
 						
 						 //you may open Interstitial Ads here
 						//interstitial.loadAd(adRequest);
+						if (mBooleanPlay)
 						stopMusic();
 						finish();
 					}
